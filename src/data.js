@@ -1,0 +1,38 @@
+export const products = [
+  {
+    name: 'Adilette Cloud',
+    brand: 'Adidas',
+    color: 'white',
+    sizes: '220-300',
+    imageUrl: '',
+    glbFile: '',
+    uszdFile: '',
+  },
+  {
+    name: 'Falcon Green',
+    brand: 'Adidas',
+    color: 'white',
+    sizes: '220-300',
+    imageUrl: '',
+    glbFile: '',
+    uszdFile: '',
+  },
+  {
+    name: 'Cloudfoam Pure',
+    brand: 'Adidas',
+    color: 'white',
+    sizes: '220-300',
+    imageUrl: '',
+    glbFile: '',
+    uszdFile: '',
+  },
+  {
+    name: 'Continental 80',
+    brand: 'Adidas',
+    color: 'white',
+    sizes: '220-300',
+    imageUrl: '',
+    glbFile: '',
+    uszdFile: '',
+  },
+];
