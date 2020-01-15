@@ -1,66 +1,12 @@
-import React, { useState } from 'react';
+import React from 'react';
 import styled from 'styled-components';
 import { Link } from 'react-router-dom';
-
-const StyledMenu = styled.nav`
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  background: #000;
-  transform: ${({ open }) => (open ? 'translateX(0)' : 'translateX(-100%)')};
-  height: 100vh;
-  text-align: left;
-  padding: 2rem;
-  position: absolute;
-  top: 0;
-  left: 0;
-  transition: transform 0.3s ease-in-out;
-  @media (max-width: 576px) {
-    width: 100%;
-  }
-
-  a {
-    font-size: 2rem;
-    text-transform: uppercase;
-    padding: 2rem 0;
-    font-weight: bold;
-    letter-spacing: 0.5rem;
-    color: #fff;
-    text-decoration: none;
-    transition: color 0.3s linear;
-
-    @media (max-width: 576px) {
-      font-size: 1.5rem;
-      text-align: center;
-    }
-
-    &:hover {
-      color: #989898;
-    }
-  }
-`;
-
-const Menu = ({ open }) => {
-  return (
-    <StyledMenu open={open}>
-      <ul>
-        <li>
-          <Link to='/'>Home</Link>
-        </li>
-        <li>
-          <Link to='/about'>About</Link>
-        </li>
-        <li>
-          <Link to='/users'>Users</Link>
-        </li>
-      </ul>
-    </StyledMenu>
-  );
-};
+import yzedLogo from '../assets/images/yzed-logo.png';
+import MenuLinks from './MenuLinks';
 
 const StyledBurger = styled.button`
   position: absolute;
-  top: 5%;
+  top: 3%;
   left: 2rem;
   display: flex;
   flex-direction: column;
@@ -112,7 +58,17 @@ const StretchedNavStyles = styled.div`
   background-color: black;
   color: white;
   text-align: center;
-  height: 96px;
+  height: 10vh;
+  display: grid;
+  grid-template-columns: 1fr;
+  align-items: center;
+  justify-items: center;
+  img {
+    height: 10vh;
+    @media (max-width: 576px) {
+      height: 5vh;
+    }
+  }
 `;
 
 const NavigationDrawer = ({ children }) => {
@@ -120,11 +76,13 @@ const NavigationDrawer = ({ children }) => {
   const node = React.useRef();
   return (
     <div>
-      <StretchedNavStyles className='main-stretched-nav'>YZED</StretchedNavStyles>
+      <StretchedNavStyles className='main-stretched-nav'>
+        <img src={yzedLogo} alt='yzed logo' />
+      </StretchedNavStyles>
       <div>{children}</div>
       <div ref={node}>
         <Burger open={open} setOpen={setOpen} />
-        <Menu open={open} setOpen={setOpen} />
+        <MenuLinks open={open} setOpen={setOpen} />
       </div>
     </div>
   );
