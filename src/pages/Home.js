@@ -6,7 +6,9 @@ const HomeStyles = styled.div`
   margin: 0 auto;
   text-align: center;
   model-viewer {
-    width: 30%;
+    min-width: 30%;
+    min-height: 300px;
+    margin: 0 auto;
   }
 `;
 
@@ -21,7 +23,7 @@ const Home = () => {
           auto-rotate
           ar
           camera-controls
-          background-color='#455A64'></model-viewer>
+          background-color='#f9f9f9'></model-viewer>
       </div>
     </HomeStyles>
   );
