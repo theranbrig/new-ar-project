@@ -1,6 +1,7 @@
 import React from 'react';
 import { BrowserRouter as Router, Switch, Route, Link } from 'react-router-dom';
 import NavigationDrawer from './NavigationDrawer';
+import Home from '../pages/Home';
 
 export default function App() {
   return (
@@ -24,10 +25,6 @@ export default function App() {
       </div>
     </Router>
   );
-}
-
-function Home() {
-  return <h2>Home</h2>;
 }
 
 function About() {
