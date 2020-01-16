@@ -83,6 +83,21 @@ const BlackButton = styled.button`
   margin-bottom: 10px;
 `;
 
+const BottomBlackButton = styled.button`
+  border: 2px solid black;
+  border-radius: 0px;
+  height: 50px;
+  display: block;
+  margin: 0 auto;
+  font-size: 1.2rem;
+  padding: 5px 40px;
+  font-family: Montserrat;
+  background: black;
+  color: white;
+  min-width: 300px;
+  margin: 100px auto 50px;
+`;
+
 const Home = () => {
   return (
     <HomeStyles>
@@ -123,6 +138,7 @@ const Home = () => {
         <h2>RECOMMENDED FOR YOU</h2>
         <ProductThumbs />
         <MainPageCarousel />
+        <BottomBlackButton>BECOME A YZER</BottomBlackButton>
       </h3>
     </HomeStyles>
   );

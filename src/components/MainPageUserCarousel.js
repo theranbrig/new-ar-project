@@ -1,13 +1,12 @@
 import React from 'react';
 import AwesomeSlider from 'react-awesome-slider';
 import 'react-awesome-slider/dist/styles.css';
-
 import { users } from '../data';
 import styled from 'styled-components';
 
 const SliderStyles = styled.div`
   .awssld__wrapper {
-    height: 500px;
+    height: 520px;
     margin-top: 40px;
     border: 1px solid black;
     max-width: 90%;
@@ -18,9 +17,7 @@ const SliderStyles = styled.div`
   }
   .slider-cell {
     height: 100%;
-    h3 {
-      margin: 5px 0;
-    }
+
     .user-photo img {
       height: 300px;
       margin: 0 auto;
@@ -41,6 +38,27 @@ const SliderStyles = styled.div`
         display: inline;
       }
     }
+    .name {
+      margin: 10px 0 0;
+    }
+    .handle {
+      font-weight: 300;
+      margin-bottom: 10px;
+      margin-top: 10px;
+    }
+    .impressions,
+    .followers {
+      display: grid;
+      grid-template-columns: 1fr 4fr;
+      justify-content: center;
+      align-items: center;
+      margin: 0 30px;
+      h4 {
+        margin: 5px auto;
+        font-size: 1.1rem;
+        text-align: left;
+      }
+    }
   }
 `;
 
@@ -50,14 +68,28 @@ const MainPageCarousel = () => {
       <AwesomeSlider>
         {users.map(user => (
           <div className='slider-cell content'>
-            <h3>{user.name}</h3>
-            <h3>{user.handle}</h3>
+            <h3 className='name'>{user.name}</h3>
+            <h3 className='handle'>{user.handle}</h3>
             <div className='user-photo'>
               <div className='user-likes'>
                 <i class='fa fa-heart' aria-hidden='true'></i>
                 <p> {user.likes}</p>
               </div>
               <img src={user.profile_image_url} />
+              <div className='followers'>
+                <i class='fa fa-user'></i>
+                <div className='stats'>
+                  <h4>{user.followers}</h4>
+                  <h4>New Followers</h4>
+                </div>
+              </div>
+              <div className='impressions'>
+                <i class='fa fa-eye'></i>
+                <div className='stats'>
+                  <h4>{user.impressions}</h4>
+                  <h4>New Impressions</h4>
+                </div>
+              </div>
             </div>
           </div>
         ))}

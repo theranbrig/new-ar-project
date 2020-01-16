@@ -13,9 +13,10 @@ export const StyledMenu = styled.nav`
   height: 100vh;
   text-align: left;
   padding: 2rem;
-  position: absolute;
+  position: ${({ open }) => (open ? 'fixed' : 'absolute')};
   top: 0;
   left: 0;
+  z-index: 500;
   transition: transform 0.3s ease-in-out;
   @media (max-width: 576px) {
     width: 100%;
@@ -45,6 +46,9 @@ export const StyledMenu = styled.nav`
   }
   .social-icons {
     padding: 2rem 0;
+    @media (max-width: 576px) {
+      margin: 0 auto;
+    }
   }
   .social-icons a {
     display: inline;

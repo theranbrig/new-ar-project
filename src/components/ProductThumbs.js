@@ -23,6 +23,7 @@ export const ProductThumbsStyles = styled.div`
   }
   h3 {
     font-weight: 400;
+    font-size: 1.1rem;
   }
 `;
 
