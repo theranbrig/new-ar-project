@@ -7,7 +7,7 @@ import Subscribe from '../pages/Subscribe';
 export default function App() {
   return (
     <Router>
-      <div>
+      <div style={{ width: '100%' }}>
         <NavigationDrawer />
         <Switch>
           <Route path='/subscribe'>

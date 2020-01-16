@@ -64,7 +64,7 @@ const MenuLinks = ({ open }) => {
     <StyledMenu open={open}>
       <Link to='/'>Home</Link>
       <Link to='/subscribe'>Subscribe</Link>
-      <Link to='/users'>Users</Link>
+      {/* <Link to='/users'>Users</Link> */}
       <div className='social-icons'>
         <a href='https://facebook.com'>
           <img src={FBLogo} />

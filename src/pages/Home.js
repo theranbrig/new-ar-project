@@ -12,6 +12,9 @@ const HomeStyles = styled.div`
   font-family: Montserrat;
   margin-top: 50px;
   max-width: 500px;
+  @media (max-width: 576px) {
+    width: 100% !important ;
+  }
   model-viewer {
     width: 450px;
     height: 300px;
@@ -113,6 +116,7 @@ const Home = () => {
     <HomeStyles>
       <div className='model-box'>
         <model-viewer
+          id='main-viewer'
           src='https://res.cloudinary.com/dq7uyauun/raw/upload/v1579138896/Astronaut.glb'
           alt='A 3D model of an astronaut'
           auto-rotate
@@ -138,7 +142,9 @@ const Home = () => {
           <h4>Featured Today</h4>
         </div>
         <div className='top-buttons'>
-          <BlackButton>VIEW IN AR</BlackButton>
+          <BlackButton onClick={() => document.querySelector('model-viewer').activateAR()}>
+            VIEW IN AR
+          </BlackButton>
           <WhiteButton>
             <Link to='/subscribe'>BECOME A YZER</Link>
           </WhiteButton>
