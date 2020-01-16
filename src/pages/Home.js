@@ -90,16 +90,17 @@ const BlackButton = styled.button`
 `;
 
 const BottomBlackButton = styled.div`
+  width: 200px;
   border: 2px solid black;
   border-radius: 0px;
   height: 50px;
+  line-height: 50px;
   display: block;
   margin: 0 auto;
-  font-size: 1.2rem;
-  padding: 5px 40px;
-  font-family: Montserrat;
   background: black;
-  min-width: 300px;
+  font-size: 1.2rem;
+  padding: 0px 40px;
+  font-family: Montserrat;
   margin: 100px auto 50px;
   a {
     color: white;
