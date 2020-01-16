@@ -118,7 +118,7 @@ const Home = () => {
         </div>
         <div className='discover-box'>
           <h3>Discover yzed.</h3>
-          <img src={ArrowIcon} />
+          <img src={ArrowIcon} alt='down-arrow' />
         </div>
         <h2>RECOMMENDED FOR YOU</h2>
         <ProductThumbs />
