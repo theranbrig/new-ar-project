@@ -9,6 +9,7 @@ const HomeStyles = styled.div`
   text-align: center;
   font-family: Montserrat;
   margin-top: 50px;
+  max-width: 500px;
   model-viewer {
     width: 450px;
     height: 300px;
@@ -47,6 +48,9 @@ const HomeStyles = styled.div`
       margin: 50px 0 0;
       letter-spacing: 0.1rem;
       font-weight: 400;
+    }
+    img {
+      height: 150px;
     }
   }
 `;

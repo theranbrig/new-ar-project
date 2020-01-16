@@ -1,8 +1,10 @@
 import React from 'react';
 import styled from 'styled-components';
 import { Link } from 'react-router-dom';
+import FBLogo from '../assets/icons/facebook-5-64.png';
+import InstaLogo from '../assets/icons/instagram-5-64.png';
 
-const StyledMenu = styled.nav`
+export const StyledMenu = styled.nav`
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -19,7 +21,8 @@ const StyledMenu = styled.nav`
     width: 100%;
     padding: 0;
   }
-  a {
+  a,
+  i {
     font-size: 2rem;
     text-transform: uppercase;
     padding: 2rem 0;
@@ -48,6 +51,12 @@ const MenuLinks = ({ open }) => {
       <Link to='/'>Home</Link>
       <Link to='/about'>About</Link>
       <Link to='/users'>Users</Link>
+      <a href='https://facebook.com'>
+        <img src={FBLogo} />
+      </a>
+      <a href='https://instagram.com'>
+        <img src={InstaLogo} />
+      </a>
     </StyledMenu>
   );
 };
