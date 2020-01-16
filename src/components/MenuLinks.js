@@ -43,6 +43,16 @@ export const StyledMenu = styled.nav`
       color: #989898;
     }
   }
+  .social-icons {
+    padding: 2rem 0;
+  }
+  .social-icons a {
+    display: inline;
+    padding: 5px;
+    img {
+      height: 35px;
+    }
+  }
 `;
 
 const MenuLinks = ({ open }) => {
@@ -51,12 +61,14 @@ const MenuLinks = ({ open }) => {
       <Link to='/'>Home</Link>
       <Link to='/about'>About</Link>
       <Link to='/users'>Users</Link>
-      <a href='https://facebook.com'>
-        <img src={FBLogo} />
-      </a>
-      <a href='https://instagram.com'>
-        <img src={InstaLogo} />
-      </a>
+      <div className='social-icons'>
+        <a href='https://facebook.com'>
+          <img src={FBLogo} />
+        </a>
+        <a href='https://instagram.com'>
+          <img src={InstaLogo} />
+        </a>
+      </div>
     </StyledMenu>
   );
 };

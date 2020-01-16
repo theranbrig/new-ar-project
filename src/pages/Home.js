@@ -3,6 +3,7 @@ import styled from 'styled-components';
 import ProductThumbs from '../components/ProductThumbs';
 import '@google/model-viewer';
 import ArrowIcon from '../assets/images/down-arrow.png';
+import MainPageUserCarousel from '../components/MainPageUserCarousel';
 
 const HomeStyles = styled.div`
   margin: 0 auto;
@@ -95,6 +96,8 @@ const Home = () => {
           stage-light-intensity='3'
           environment-intensity='2'
           camera-controls
+          ios-src='https://res.cloudinary.com/dq7uyauun/raw/upload/v1579148925/Astronaut.usdz'
+          preload
           background-color='#f9f9f9'></model-viewer>
       </div>
       {/* <iframe
@@ -119,6 +122,7 @@ const Home = () => {
         </div>
         <h2>RECOMMENDED FOR YOU</h2>
         <ProductThumbs />
+        <MainPageUserCarousel />
       </h3>
     </HomeStyles>
   );
