@@ -2,11 +2,13 @@ import React from 'react';
 import styled from 'styled-components';
 import ProductThumbs from '../components/ProductThumbs';
 import '@google/model-viewer';
+import ArrowIcon from '../assets/images/down-arrow.png';
 
 const HomeStyles = styled.div`
   margin: 0 auto;
   text-align: center;
   font-family: Montserrat;
+  margin-top: 50px;
   model-viewer {
     width: 450px;
     height: 300px;
@@ -16,9 +18,64 @@ const HomeStyles = styled.div`
       max-width: 90%;
     }
   }
-  .product-title h2 {
-    font-weight: 300;
+  .main-product-title {
+    width: 450px;
+    text-align: left;
+    margin: 0 auto;
+    @media (max-width: 576px) {
+      max-width: 90%;
+    }
   }
+  .main-product-title h2 {
+    font-weight: 300;
+    font-size: 2rem;
+    margin: 0;
+  }
+  .main-product-title h3 {
+    font-weight: 400;
+    margin-bottom: 10px;
+  }
+  .main-product-title h4 {
+    font-weight: 400;
+    margin-bottom: 50px;
+    margin-top: 10px;
+    color: #c7c7c7;
+  }
+  .discover-box {
+    color: #c7c7c7;
+    h3 {
+      margin: 50px 0 0;
+      letter-spacing: 0.1rem;
+      font-weight: 400;
+    }
+  }
+`;
+
+const WhiteButton = styled.button`
+  border: 2px solid black;
+  border-radius: 0px;
+  height: 50px;
+  display: block;
+  margin: 0 auto;
+  font-size: 1.2rem;
+  padding: 5px 40px;
+  font-family: Montserrat;
+  min-width: 300px;
+`;
+
+const BlackButton = styled.button`
+  border: 2px solid black;
+  border-radius: 0px;
+  height: 50px;
+  display: block;
+  margin: 0 auto;
+  font-size: 1.2rem;
+  padding: 5px 40px;
+  font-family: Montserrat;
+  background: black;
+  color: white;
+  min-width: 300px;
+  margin-bottom: 10px;
 `;
 
 const Home = () => {
@@ -26,7 +83,7 @@ const Home = () => {
     <HomeStyles>
       <div className='model-box'>
         <model-viewer
-          src='../assets/images/Astronaut.glb'
+          src='https://res.cloudinary.com/dq7uyauun/raw/upload/v1579138896/Astronaut.glb'
           alt='A 3D model of an astronaut'
           auto-rotate
           ar
@@ -42,15 +99,23 @@ const Home = () => {
         frameborder='0'
         width='100%'
         height='480'></iframe> */}
-      <div className='product-title'>
-        <h3>Adidas</h3>
-        <h2>CRAZYCHAOS</h2>
-        <button>VIEW IN AR</button>
-        <button>BECOME A YZER</button>
-        <h3>Discover yzed.</h3>
+      <h3 className='product-title-area'>
+        <div className='main-product-title'>
+          <h3>ADIDAS</h3>
+          <h2>CRAZYCHAOS</h2>
+          <h4>Featured Today</h4>
+        </div>
+        <div className='top-buttons'>
+          <BlackButton>VIEW IN AR</BlackButton>
+          <WhiteButton>BECOME A YZER</WhiteButton>
+        </div>
+        <div className='discover-box'>
+          <h3>Discover yzed.</h3>
+          <img src={ArrowIcon} />
+        </div>
         <h2>RECOMMENDED FOR YOU</h2>
         <ProductThumbs />
-      </div>
+      </h3>
     </HomeStyles>
   );
 };

@@ -17,6 +17,7 @@ const ProductThumbs = () => {
     <ProductThumbsStyles className='product-thumbs'>
       {products.map(product => (
         <div>
+          <img src={product.imageUrl} alt={product.name} />
           <h4>{product.brand}</h4>
           <h3>{product.name}</h3>
         </div>
