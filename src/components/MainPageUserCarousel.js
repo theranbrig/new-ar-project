@@ -1,13 +1,26 @@
 import React from 'react';
-import Slider from 'react-slick';
+import AwesomeSlider from 'react-awesome-slider';
+import 'react-awesome-slider/dist/styles.css';
+
 import { users } from '../data';
 import styled from 'styled-components';
 
 const SliderStyles = styled.div`
-  .slider-cell {
-    margin-top: 50px;
+  .awssld__wrapper {
     height: 500px;
-    background-size: cover;
+    margin-top: 40px;
+    border: 1px solid black;
+    max-width: 90%;
+    margin-left: 5%;
+  }
+  .awssld__content {
+    background-color: white !important;
+  }
+  .slider-cell {
+    height: 100%;
+    h3 {
+      margin: 5px 0;
+    }
     .user-photo img {
       height: 300px;
       margin: 0 auto;
@@ -21,7 +34,7 @@ const SliderStyles = styled.div`
     .user-likes {
       position: absolute;
       top: 8px;
-      left: 16px;
+      left: 8px;
       background: white;
       padding: 5px 10px;
       p {
@@ -31,19 +44,12 @@ const SliderStyles = styled.div`
   }
 `;
 
-const MainPageUserCarousel = () => {
-  const settings = {
-    dots: true,
-    infinite: true,
-    speed: 500,
-    slidesToShow: 1,
-    slidesToScroll: 1,
-  };
+const MainPageCarousel = () => {
   return (
     <SliderStyles>
-      <Slider {...settings}>
+      <AwesomeSlider>
         {users.map(user => (
-          <div className='slider-cell'>
+          <div className='slider-cell content'>
             <h3>{user.name}</h3>
             <h3>{user.handle}</h3>
             <div className='user-photo'>
@@ -55,9 +61,11 @@ const MainPageUserCarousel = () => {
             </div>
           </div>
         ))}
-      </Slider>
+      </AwesomeSlider>
     </SliderStyles>
   );
 };
 
-export default MainPageUserCarousel;
+export default MainPageCarousel;
+
+// export default MainPageUserCarousel;

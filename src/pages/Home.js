@@ -3,7 +3,7 @@ import styled from 'styled-components';
 import ProductThumbs from '../components/ProductThumbs';
 import '@google/model-viewer';
 import ArrowIcon from '../assets/images/down-arrow.png';
-import MainPageUserCarousel from '../components/MainPageUserCarousel';
+import MainPageCarousel from '../components/MainPageUserCarousel';
 
 const HomeStyles = styled.div`
   margin: 0 auto;
@@ -122,7 +122,7 @@ const Home = () => {
         </div>
         <h2>RECOMMENDED FOR YOU</h2>
         <ProductThumbs />
-        <MainPageUserCarousel />
+        <MainPageCarousel />
       </h3>
     </HomeStyles>
   );
