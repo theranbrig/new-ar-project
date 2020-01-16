@@ -5,6 +5,7 @@ import styled from 'styled-components';
 
 const SliderStyles = styled.div`
   .slider-cell {
+    margin-top: 50px;
     height: 500px;
     background-size: cover;
     .user-photo img {
