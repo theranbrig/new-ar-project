@@ -2,6 +2,7 @@ import React from 'react';
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 import NavigationDrawer from './NavigationDrawer';
 import Home from '../pages/Home';
+import Subscribe from '../pages/Subscribe';
 
 export default function App() {
   return (
@@ -9,8 +10,8 @@ export default function App() {
       <div>
         <NavigationDrawer />
         <Switch>
-          <Route path='/about'>
-            <About />
+          <Route path='/subscribe'>
+            <Subscribe />
           </Route>
           <Route path='/users'>
             <Users />

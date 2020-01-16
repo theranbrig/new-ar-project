@@ -4,6 +4,7 @@ import ProductThumbs from '../components/ProductThumbs';
 import '@google/model-viewer';
 import ArrowIcon from '../assets/images/down-arrow.png';
 import MainPageCarousel from '../components/MainPageUserCarousel';
+import { Link } from 'react-router-dom';
 
 const HomeStyles = styled.div`
   margin: 0 auto;
@@ -56,34 +57,39 @@ const HomeStyles = styled.div`
   }
 `;
 
-const WhiteButton = styled.button`
+const WhiteButton = styled.div`
+  width: 200px;
   border: 2px solid black;
   border-radius: 0px;
   height: 50px;
+  line-height: 50px;
   display: block;
   margin: 0 auto;
   font-size: 1.2rem;
-  padding: 5px 40px;
+  padding: 0px 40px;
   font-family: Montserrat;
-  min-width: 300px;
+  a {
+    color: black;
+    text-decoration: none;
+  }
 `;
 
 const BlackButton = styled.button`
   border: 2px solid black;
   border-radius: 0px;
-  height: 50px;
+  height: 52px;
   display: block;
   margin: 0 auto;
   font-size: 1.2rem;
-  padding: 5px 40px;
+  padding: 5px 80px;
   font-family: Montserrat;
   background: black;
   color: white;
-  min-width: 300px;
+  min-width: 284px;
   margin-bottom: 10px;
 `;
 
-const BottomBlackButton = styled.button`
+const BottomBlackButton = styled.div`
   border: 2px solid black;
   border-radius: 0px;
   height: 50px;
@@ -93,9 +99,12 @@ const BottomBlackButton = styled.button`
   padding: 5px 40px;
   font-family: Montserrat;
   background: black;
-  color: white;
   min-width: 300px;
   margin: 100px auto 50px;
+  a {
+    color: white;
+    text-decoration: none;
+  }
 `;
 
 const Home = () => {
@@ -129,7 +138,9 @@ const Home = () => {
         </div>
         <div className='top-buttons'>
           <BlackButton>VIEW IN AR</BlackButton>
-          <WhiteButton>BECOME A YZER</WhiteButton>
+          <WhiteButton>
+            <Link to='/subscribe'>BECOME A YZER</Link>
+          </WhiteButton>
         </div>
         <div className='discover-box'>
           <h3>Discover yzed.</h3>
@@ -138,7 +149,9 @@ const Home = () => {
         <h2>RECOMMENDED FOR YOU</h2>
         <ProductThumbs />
         <MainPageCarousel />
-        <BottomBlackButton>BECOME A YZER</BottomBlackButton>
+        <BottomBlackButton>
+          <Link to='/subscribe'>BECOME A YZER</Link>
+        </BottomBlackButton>
       </h3>
     </HomeStyles>
   );
