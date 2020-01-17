@@ -1,52 +1,65 @@
-// Render Prop
 import React, { useState } from 'react';
-import { Formik, Form, Field, ErrorMessage } from 'formik';
-import styled from 'styled-components';
-
-export const FormStyles = styled.div`
-  width: 30%;
-  margin: 0 auto;
-  border: 1px solid black;
-`;
+import NetlifyForm from 'react-netlify-form';
+import { useHistory } from 'react-router-dom';
 
 const SubscriptionForm = () => {
-  const [submitting, setSubmitting] = useState(false);
-  if (submitting) return <h1>Submitting</h1>;
+  const [age, setAge] = useState('');
+  const [name, setName] = useState('');
+  const [email, setEmail] = useState('');
+  const [gender, setGender] = useState(null);
+
+  const history = useHistory();
+
+  const encode = data => {
+    return Object.keys(data)
+      .map(key => encodeURIComponent(key) + '=' + encodeURIComponent(data[key]))
+      .join('&');
+  };
+
+  const handleSubmit = e => {
+    fetch('/', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+      body: encode({ 'form-name': 'contact', age, gender, email, name }),
+    })
+      .then(() => {
+        alert('success');
+        history.push('/success');
+      })
+      .catch(error => alert(error));
+    history.push('/success');
+  };
+
   return (
-    <FormStyles>
-      <h1>SUBSCRIBE TO OUR NEWSLETTER</h1>
-      <Formik
-        initialValues={{ email: '', age: '' }}
-        validate={values => {
-          const errors = {};
-          if (!values.email) {
-            errors.email = 'Required';
-          } else if (!/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i.test(values.email)) {
-            errors.email = 'Invalid email address';
-          }
-          return errors;
-        }}
-        onSubmit={(values, { setSubmitting }) => {
-          setTimeout(() => {
-            alert(JSON.stringify(values, null, 2));
-            setSubmitting(false);
-          }, 400);
-        }}>
-        {({ isSubmitting }) => (
-          <Form>
-            <Field type='email' name='email' />
-            <ErrorMessage name='email' component='div' />
-            <Field type='select' name='gender' />
-            <ErrorMessage name='email' component='div' />
-            <Field type='number' name='age' />
-            <ErrorMessage name='number' component='div' />
-            <button type='submit' disabled={isSubmitting}>
-              Submit
-            </button>
-          </Form>
-        )}
-      </Formik>
-    </FormStyles>
+    <form onSubmit={() => handleSubmit()}>
+      <label>
+        Name: <input type='text' name='name' value={name} onChange={e => setName(e.target.value)} />
+      </label>
+      <label>
+        Your Age:{' '}
+        <input type='number' name='age' value={age} onChange={e => setAge(e.target.value)} />
+      </label>
+      <label>
+        Your Gender:{' '}
+        <select name='gender' onChange={e => setGender(e.target.value)} value={gender}>
+          <option>Choose</option>
+          <option value='female'>Female</option>
+          <option value='male'>Male</option>
+        </select>
+      </label>
+      <label>
+        Email:{' '}
+        <input
+          type='email'
+          name='email'
+          value={email}
+          onChange={e => setEmail(e.target.value)}
+          required
+        />
+      </label>
+      <button type='submit'>Send</button>
+    </form>
   );
 };
+
 export default SubscriptionForm;

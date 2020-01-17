@@ -5,7 +5,7 @@ import MenuLinks from './MenuLinks';
 
 const StyledBurger = styled.button`
   position: absolute;
-  top: 3%;
+  top: 20px;
   left: 2rem;
   display: flex;
   flex-direction: column;
