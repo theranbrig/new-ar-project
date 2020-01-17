@@ -3,6 +3,7 @@ import { products } from '../data';
 import styled from 'styled-components';
 import { LazyLoadImage } from 'react-lazy-load-image-component';
 import 'react-lazy-load-image-component/src/effects/blur.css';
+import { Link } from 'react-router-dom';
 
 export const ProductThumbsStyles = styled.div`
   display: grid;
@@ -26,6 +27,10 @@ export const ProductThumbsStyles = styled.div`
     font-weight: 400;
     font-size: 1.1rem;
   }
+  a {
+    color: black;
+    text-decoration: none;
+  }
 `;
 
 const ProductThumbs = ({ open }) => {
@@ -33,9 +38,11 @@ const ProductThumbs = ({ open }) => {
     <ProductThumbsStyles className='product-thumbs'>
       {products.map(product => (
         <div className='product-thumb' key={product.name}>
-          <LazyLoadImage src={product.imageUrl} alt={product.name} effect='blur' />
-          <h4>{product.brand}</h4>
-          <h3>{product.name}</h3>
+          <Link to={`product/${product.name}`}>
+            <LazyLoadImage src={product.imageUrl} alt={product.name} effect='blur' />
+            <h4>{product.brand}</h4>
+            <h3>{product.name}</h3>
+          </Link>
         </div>
       ))}
     </ProductThumbsStyles>

@@ -4,6 +4,7 @@ import NavigationDrawer from './NavigationDrawer';
 import Home from '../pages/Home';
 import Subscribe from '../pages/Subscribe';
 import Success from '../pages/Success';
+import Product from '../pages/Product';
 
 export default function App() {
   return (
@@ -16,6 +17,9 @@ export default function App() {
           </Route>
           <Route path='/success'>
             <Success />
+          </Route>
+          <Route path='/product/:id'>
+            <Product />
           </Route>
           <Route path='/'>
             <Home />

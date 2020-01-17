@@ -5,6 +5,7 @@ import '@google/model-viewer';
 import ArrowIcon from '../assets/images/down-arrow.png';
 import MainPageCarousel from '../components/MainPageUserCarousel';
 import { Link } from 'react-router-dom';
+import MediaViewer from '../components/MediaViewer';
 
 const HomeStyles = styled.div`
   margin: 0 auto;
@@ -14,7 +15,8 @@ const HomeStyles = styled.div`
   max-width: 500px;
   @media (max-width: 576px) {
     width: 100% !important ;
-  }
+  }import MediaViewer from '../components/MediaViewer';
+
   model-viewer {
     width: 450px;
     height: 300px;
@@ -114,21 +116,7 @@ const BottomBlackButton = styled.div`
 const Home = () => {
   return (
     <HomeStyles>
-      <div className='model-box'>
-        <model-viewer
-          id='main-viewer'
-          src='https://res.cloudinary.com/dq7uyauun/raw/upload/v1579138896/Astronaut.glb'
-          alt='A 3D model of an astronaut'
-          auto-rotate
-          ar
-          shadow-intensity='1'
-          stage-light-intensity='3'
-          environment-intensity='2'
-          camera-controls
-          ios-src='https://res.cloudinary.com/dq7uyauun/raw/upload/v1579148925/Astronaut.usdz'
-          preload
-          background-color='#f9f9f9'></model-viewer>
-      </div>
+      <MediaViewer />
       {/* <iframe
         id='d6c1f27d-6a27-4c7e-bd7d-bd19d7faa56c'
         src='https://www.vectary.com/viewer/v1/?model=d6c1f27d-6a27-4c7e-bd7d-bd19d7faa56c&turntable=-2'
