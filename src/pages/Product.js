@@ -3,6 +3,7 @@ import { useParams } from 'react-router-dom';
 import { products } from '../data';
 import styled from 'styled-components';
 import MediaViewer from '../components/MediaViewer';
+import { LazyLoadImage } from 'react-lazy-load-image-component';
 
 const ProductContainer = styled.div`
   min-height: 100vh;
@@ -13,6 +14,16 @@ const ProductContainer = styled.div`
     width: 90%;
     height: 300px;
     margin: 0 auto;
+  }
+  .picture-thumbs {
+    width: 90%;
+    margin: 10px auto;
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    grid-gap: 10px;
+    img {
+      max-width: 100%;
+    }
   }
 `;
 
@@ -27,6 +38,7 @@ const WhiteButton = styled.button`
   font-family: Montserrat;
   background: white;
   color: black;
+  width: 90%;
   min-width: 284px;
   margin-bottom: 10px;
 `;
@@ -49,6 +61,12 @@ const Product = () => {
     <ProductContainer>
       <h1>{product.name}</h1>
       <MediaViewer />
+      <div className='picture-thumbs'>
+        <LazyLoadImage src={product.imageUrl} />
+        {product.pictures.map(image => (
+          <LazyLoadImage src={image} />
+        ))}
+      </div>
       <WhiteButton onClick={() => document.querySelector('model-viewer').activateAR()}>
         VIEW IN AR
       </WhiteButton>
