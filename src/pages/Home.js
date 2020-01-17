@@ -135,7 +135,7 @@ const Home = () => {
         frameborder='0'
         width='100%'
         height='480'></iframe> */}
-      <h3 className='product-title-area'>
+      <div className='product-title-area'>
         <div className='main-product-title'>
           <h3>ADIDAS</h3>
           <h2>CRAZYCHAOS</h2>
@@ -159,7 +159,7 @@ const Home = () => {
         <BottomBlackButton>
           <Link to='/subscribe'>BECOME A YZER</Link>
         </BottomBlackButton>
-      </h3>
+      </div>
     </HomeStyles>
   );
 };

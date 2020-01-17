@@ -1,7 +1,8 @@
 import React from 'react';
 import { products } from '../data';
-
 import styled from 'styled-components';
+import { LazyLoadImage } from 'react-lazy-load-image-component';
+import 'react-lazy-load-image-component/src/effects/blur.css';
 
 export const ProductThumbsStyles = styled.div`
   display: grid;
@@ -31,8 +32,8 @@ const ProductThumbs = ({ open }) => {
   return (
     <ProductThumbsStyles className='product-thumbs'>
       {products.map(product => (
-        <div>
-          <img src={product.imageUrl} alt={product.name} />
+        <div className='product-thumb' key={product.name}>
+          <LazyLoadImage src={product.imageUrl} alt={product.name} effect='blur' />
           <h4>{product.brand}</h4>
           <h3>{product.name}</h3>
         </div>

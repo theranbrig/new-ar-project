@@ -3,6 +3,8 @@ import AwesomeSlider from 'react-awesome-slider';
 import 'react-awesome-slider/dist/styles.css';
 import { users } from '../data';
 import styled from 'styled-components';
+import { LazyLoadImage } from 'react-lazy-load-image-component';
+import 'react-lazy-load-image-component/src/effects/blur.css';
 
 const SliderStyles = styled.div`
   .awssld__wrapper {
@@ -67,24 +69,24 @@ const MainPageCarousel = () => {
     <SliderStyles>
       <AwesomeSlider>
         {users.map(user => (
-          <div className='slider-cell content'>
+          <div className='slider-cell content' key={user.handle}>
             <h3 className='name'>{user.name}</h3>
             <h3 className='handle'>{user.handle}</h3>
             <div className='user-photo'>
               <div className='user-likes'>
-                <i class='fa fa-heart' aria-hidden='true'></i>
+                <i className='fa fa-heart' aria-hidden='true'></i>
                 <p> {user.likes}</p>
               </div>
-              <img src={user.profile_image_url} alt={user.name} />
+              <LazyLoadImage src={user.profile_image_url} alt={user.name} effect='blur' />
               <div className='followers'>
-                <i class='fa fa-user'></i>
+                <i className='fa fa-user'></i>
                 <div className='stats'>
                   <h4>{user.followers}</h4>
                   <h4>New Followers</h4>
                 </div>
               </div>
               <div className='impressions'>
-                <i class='fa fa-eye'></i>
+                <i className='fa fa-eye'></i>
                 <div className='stats'>
                   <h4>{user.impressions}</h4>
                   <h4>New Impressions</h4>
