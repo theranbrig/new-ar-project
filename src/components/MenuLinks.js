@@ -59,17 +59,21 @@ export const StyledMenu = styled.nav`
   }
 `;
 
-const MenuLinks = ({ open }) => {
+const MenuLinks = ({ open, setOpen }) => {
   return (
     <StyledMenu open={open}>
-      <Link to='/'>Home</Link>
-      <Link to='/subscribe'>Subscribe</Link>
+      <Link to='/' onClick={() => setOpen(false)}>
+        Home
+      </Link>
+      <Link to='/subscribe' onClick={() => setOpen(false)}>
+        Subscribe
+      </Link>
       {/* <Link to='/users'>Users</Link> */}
       <div className='social-icons'>
-        <a href='https://facebook.com'>
+        <a href='https://facebook.com' onClick={() => setOpen(false)}>
           <img src={FBLogo} />
         </a>
-        <a href='https://instagram.com'>
+        <a href='https://instagram.com' onClick={() => setOpen(false)}>
           <img src={InstaLogo} />
         </a>
       </div>
