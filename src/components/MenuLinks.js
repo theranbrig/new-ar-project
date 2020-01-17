@@ -70,10 +70,18 @@ const MenuLinks = ({ open, setOpen }) => {
       </Link>
       {/* <Link to='/users'>Users</Link> */}
       <div className='social-icons'>
-        <a href='https://facebook.com' onClick={() => setOpen(false)}>
+        <a
+          href='https://facebook.com'
+          target='_blank'
+          rel='noopener noreferrer'
+          onClick={() => setOpen(false)}>
           <img src={FBLogo} />
         </a>
-        <a href='https://instagram.com' onClick={() => setOpen(false)}>
+        <a
+          href='https://instagram.com'
+          target='_blank'
+          rel='noopener noreferrer'
+          onClick={() => setOpen(false)}>
           <img src={InstaLogo} />
         </a>
       </div>
