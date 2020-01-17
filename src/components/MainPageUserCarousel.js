@@ -75,7 +75,7 @@ const MainPageCarousel = () => {
                 <i class='fa fa-heart' aria-hidden='true'></i>
                 <p> {user.likes}</p>
               </div>
-              <img src={user.profile_image_url} />
+              <img src={user.profile_image_url} alt={user.name} />
               <div className='followers'>
                 <i class='fa fa-user'></i>
                 <div className='stats'>

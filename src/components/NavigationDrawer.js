@@ -5,7 +5,7 @@ import MenuLinks from './MenuLinks';
 
 const StyledBurger = styled.button`
   position: absolute;
-  top: 20px;
+  top: 4%;
   left: 2rem;
   display: flex;
   flex-direction: column;
@@ -19,6 +19,10 @@ const StyledBurger = styled.button`
   z-index: 1000;
   &:focus {
     outline: none;
+  }
+  @media (max-width: 576px) {
+    left: 3%;
+    top: 3%;
   }
   div {
     width: 2rem;

@@ -75,14 +75,14 @@ const MenuLinks = ({ open, setOpen }) => {
           target='_blank'
           rel='noopener noreferrer'
           onClick={() => setOpen(false)}>
-          <img src={FBLogo} />
+          <img src={FBLogo} alt='facebook' />
         </a>
         <a
           href='https://instagram.com'
           target='_blank'
           rel='noopener noreferrer'
           onClick={() => setOpen(false)}>
-          <img src={InstaLogo} />
+          <img src={InstaLogo} alt='instagram' />
         </a>
       </div>
     </StyledMenu>

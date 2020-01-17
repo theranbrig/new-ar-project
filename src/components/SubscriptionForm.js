@@ -1,6 +1,80 @@
 import React, { useState } from 'react';
-import NetlifyForm from 'react-netlify-form';
-import { useHistory } from 'react-router-dom';
+import { useHistory, Link } from 'react-router-dom';
+import styled from 'styled-components';
+
+const FormStyles = styled.div`
+  margin: 0 auto;
+  width: 500px;
+  max-width: 80%;
+  font-family: Montserrat;
+  .box-area {
+    border: 1px solid;
+    margin: 50px 0;
+    padding: 20px;
+    h1 {
+      text-align: center;
+      font-size: 1.5rem;
+    }
+  }
+  .form-input {
+    display: flex;
+    margin: 20px 0;
+    input,
+    select {
+      flex: 2;
+      margin: 0 5px;
+      border: none;
+      border-radius: 0px !important;
+      border-bottom: 1px solid #c7c7c7;
+      background: white;
+      box-shadow: none;
+      height: 25px;
+      font-size: 1.1rem;
+      -webkit-appearance: none;
+      -webkit-border-radius: 0px;
+      margin-left: 10px;
+    }
+    label {
+      height: 25px;
+      line-height: 25px;
+      font-size: 1.1rem;
+    }
+  }
+`;
+
+const BlackButton = styled.button`
+  border: 2px solid black;
+  border-radius: 0px;
+  height: 52px;
+  display: block;
+  margin: 0 auto;
+  font-size: 1.2rem;
+  padding: 5px 80px;
+  font-family: Montserrat;
+  background: black;
+  color: white;
+  min-width: 284px;
+  margin-bottom: 10px;
+`;
+
+const BottomWhiteButton = styled.div`
+  width: 200px;
+  border: 2px solid black;
+  border-radius: 0px;
+  height: 50px;
+  line-height: 50px;
+  display: block;
+  margin: 0 auto;
+  font-size: 1.2rem;
+  padding: 0px 40px;
+  font-family: Montserrat;
+  margin: 50px auto 50px;
+  text-align: center;
+  a {
+    color: black;
+    text-decoration: none;
+  }
+`;
 
 const SubscriptionForm = () => {
   const [age, setAge] = useState('');
@@ -31,34 +105,45 @@ const SubscriptionForm = () => {
   };
 
   return (
-    <form onSubmit={() => handleSubmit()}>
-      <label>
-        Name: <input type='text' name='name' value={name} onChange={e => setName(e.target.value)} />
-      </label>
-      <label>
-        Your Age:{' '}
-        <input type='number' name='age' value={age} onChange={e => setAge(e.target.value)} />
-      </label>
-      <label>
-        Your Gender:{' '}
-        <select name='gender' onChange={e => setGender(e.target.value)} value={gender}>
-          <option>Choose</option>
-          <option value='female'>Female</option>
-          <option value='male'>Male</option>
-        </select>
-      </label>
-      <label>
-        Email:{' '}
-        <input
-          type='email'
-          name='email'
-          value={email}
-          onChange={e => setEmail(e.target.value)}
-          required
-        />
-      </label>
-      <button type='submit'>Send</button>
-    </form>
+    <>
+      <FormStyles>
+        <form onSubmit={() => handleSubmit()}>
+          <div className='box-area'>
+            <h1>SUBSCRIBE TO OUR NEWSLETTER</h1>
+            <div className='form-input'>
+              <label>Name: </label>
+              <input type='text' name='name' value={name} onChange={e => setName(e.target.value)} />
+            </div>
+            <div className='form-input'>
+              <label>Age: </label>
+              <input type='number' name='age' value={age} onChange={e => setAge(e.target.value)} />
+            </div>
+            <div className='form-input'>
+              <label>Gender: </label>
+              <select name='gender' onChange={e => setGender(e.target.value)} value={gender}>
+                <option> -</option>
+                <option value='female'>Female</option>
+                <option value='male'>Male</option>
+              </select>
+            </div>
+            <div className='form-input'>
+              <label>Email:</label>
+              <input
+                type='email'
+                name='email'
+                value={email}
+                onChange={e => setEmail(e.target.value)}
+                required
+              />
+            </div>
+          </div>
+          <BlackButton type='submit'>SUBMIT</BlackButton>
+        </form>
+      </FormStyles>
+      <BottomWhiteButton>
+        <Link to='/'>BACK TO HOME</Link>
+      </BottomWhiteButton>
+    </>
   );
 };
 
