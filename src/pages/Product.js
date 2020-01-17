@@ -5,6 +5,7 @@ import styled from 'styled-components';
 import MediaViewer from '../components/MediaViewer';
 import { LazyLoadImage } from 'react-lazy-load-image-component';
 import ThreeDSVG from '../components/ThreeDSVG';
+import 'react-lazy-load-image-component/src/effects/blur.css';
 
 const ProductContainer = styled.div`
   min-height: 100vh;
@@ -104,11 +105,15 @@ const Product = () => {
       </div>
       <div className='picture-thumbs'>
         <div className='ar-pic'>
-          <LazyLoadImage src={product.imageUrl} onClick={() => setMainDisplay('model')} />
+          <LazyLoadImage
+            src={product.imageUrl}
+            onClick={() => setMainDisplay('model')}
+            effect='blur'
+          />
           <ThreeDSVG setMainDisplay={setMainDisplay} />
         </div>
         {product.pictures.map(image => (
-          <LazyLoadImage src={image} onClick={() => setMainDisplay(image)} />
+          <LazyLoadImage src={image} onClick={() => setMainDisplay(image)} effect='blur' />
         ))}
       </div>
       <WhiteButton onClick={() => document.querySelector('model-viewer').activateAR()}>

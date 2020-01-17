@@ -7,6 +7,7 @@ import MainPageCarousel from '../components/MainPageUserCarousel';
 import { Link } from 'react-router-dom';
 import MediaViewer from '../components/MediaViewer';
 
+
 const HomeStyles = styled.div`
   margin: 0 auto;
   text-align: center;
