@@ -97,7 +97,6 @@ const SubscriptionForm = () => {
       body: encode({ 'form-name': 'contact', age, gender, email, name }),
     })
       .then(() => {
-        alert('success');
         history.push('/success');
       })
       .catch(error => alert(error));
