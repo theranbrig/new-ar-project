@@ -4,6 +4,7 @@ import { products } from '../data';
 import styled from 'styled-components';
 import MediaViewer from '../components/MediaViewer';
 import { LazyLoadImage } from 'react-lazy-load-image-component';
+import ThreeDSVG from '../components/ThreeDSVG';
 
 const ProductContainer = styled.div`
   min-height: 100vh;
@@ -31,14 +32,15 @@ const ProductContainer = styled.div`
   }
   div.ar-pic {
     position: relative !important;
-    top: 0;
+    top: 0;import ThreeDSVG from '../components/ThreeDSVG';
     left: 0;
     img {
       position: relative;
     }
     svg {
-      background: #34343434;
+      background: #f3f3f380;
       width: 80%;
+      height: 76%;
       padding: 10%;
       position: absolute;
       top: 0;
@@ -54,6 +56,9 @@ const ProductContainer = styled.div`
     img {
       max-width: 100%;
     }
+  }
+  .main-content-box {
+    text-align: center;
   }
 `;
 
@@ -94,11 +99,13 @@ const Product = () => {
         <h3>{product.brand}</h3>
         <h1>{product.name}</h1>
       </div>
-      {mainDisplay === 'model' ? <MediaViewer /> : <LazyLoadImage src={mainDisplay} />}
+      <div className='main-content-box'>
+        {mainDisplay === 'model' ? <MediaViewer /> : <LazyLoadImage src={mainDisplay} />}
+      </div>
       <div className='picture-thumbs'>
-        <div className="ar-pic">
+        <div className='ar-pic'>
           <LazyLoadImage src={product.imageUrl} onClick={() => setMainDisplay('model')} />
-          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200" onClick={() => setMainDisplay('model')}><title>Virtual Reality icons</title><path d="M145,57h41a10,10,0,0,1,10,10V175a10,10,0,0,1-10,10H14A10,10,0,0,1,4,175V67A10,10,0,0,1,14,57H55.5" fill="none" stroke="#220728" stroke-miterlimit="10" stroke-width="8"/><line x1="163.03" y1="56.97" x2="163.03" y2="185.03" fill="none" stroke="#220728" stroke-miterlimit="10" stroke-width="8"/><line x1="36.97" y1="56.97" x2="36.97" y2="185.03" fill="none" stroke="#220728" stroke-miterlimit="10" stroke-width="8"/><line x1="100" y1="62.23" x2="100" y2="110.23" fill="none" stroke="#ffc548" stroke-miterlimit="10" stroke-width="8"/><line x1="56" y1="35.8" x2="100" y2="62.79" fill="none" stroke="#ffc548" stroke-miterlimit="10" stroke-width="7.94"/><line x1="144" y1="35.8" x2="100" y2="62.79" fill="none" stroke="#ffc548" stroke-miterlimit="10" stroke-width="8"/><polygon points="144 35.8 144 84.58 100 111.9 56 84.91 56 35.8 99.5 8.7 144 35.8" fill="none" stroke="#ffc548" stroke-miterlimit="10" stroke-width="8"/><line x1="74" y1="131" x2="126" y2="131" fill="none" stroke="#220728" stroke-miterlimit="10" stroke-width="8"/></svg>
+          <ThreeDSVG setMainDisplay={setMainDisplay} />
         </div>
         {product.pictures.map(image => (
           <LazyLoadImage src={image} onClick={() => setMainDisplay(image)} />
