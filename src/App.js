@@ -1,8 +1,13 @@
 import React from 'react';
 import AppRouter from './components/AppRouter';
+import FirebaseProvider from './context/Firebase';
 
 function App() {
-  return <AppRouter />;
+  return (
+    <FirebaseProvider>
+      <AppRouter />
+    </FirebaseProvider>
+  );
 }
 
 export default App;
