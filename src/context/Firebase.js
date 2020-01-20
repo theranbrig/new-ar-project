@@ -1,11 +1,16 @@
 import * as firebase from 'firebase/app';
-import React from 'react';
+import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import '@firebase/firestore';
+import 'firebase/auth';
+
+const dotenv = require('dotenv');
+
+dotenv.config();
 
 // Initialize Firebase
 const firebaseConfig = {
-  apiKey: process.env.REACT_APP_apiKey,
+  apiKey: process.env.REACT_APP_API_KEY,
   authDomain: process.env.REACT_APP_authDomain,
   databaseURL: process.env.REACT_APP_databaseURL,
   projectId: 'yzed-a8bd1',
@@ -21,13 +26,44 @@ export const FirebaseContext = React.createContext();
 
 const dbh = firebase.firestore();
 
-
-
 const FirebaseProvider = ({ children }) => {
+  const [firebaseError, setFirebaseError] = useState(null);
+  const [userData, setUserData] = useState(null);
+
+  const registerUser = (email, password) => {
+    console.log(email);
+    console.log(password);
+    firebase
+      .auth()
+      .createUserWithEmailAndPassword(email, password)
+      .catch(function(error) {
+        setFirebaseError(error.message);
+      });
+  };
+
+  const loginUser = (email, password) => {
+    firebase
+      .auth()
+      .signInWithEmailAndPassword(email, password)
+      .catch(function(error) {
+        setFirebaseError(error.message);
+      });
+  };
+
+  firebase.auth().onAuthStateChanged(function(user) {
+    if (user) {
+      setUserData(user);
+    } else {
+      setUserData(null);
+    }
+  });
+
   return (
     <FirebaseContext.Provider
       value={{
-        firebase,
+        firebaseError,
+        registerUser,
+        userData,
       }}>
       {children}
     </FirebaseContext.Provider>

@@ -1,8 +1,9 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import styled from 'styled-components';
 import { NavLink } from 'react-router-dom';
 import FBLogo from '../assets/icons/facebook-5-64.png';
 import InstaLogo from '../assets/icons/instagram-5-64.png';
+import { FirebaseContext } from '../context/Firebase';
 
 export const StyledMenu = styled.nav`
   display: flex;
@@ -63,6 +64,9 @@ export const StyledMenu = styled.nav`
 `;
 
 const MenuLinks = ({ open, setOpen }) => {
+  
+  const { firebase, loginUser, firebaseError, userData } = useContext(FirebaseContext);
+
   return (
     <StyledMenu open={open}>
       <NavLink to='/' onClick={() => setOpen(false)} exact activeClassName='active-link'>
@@ -71,6 +75,11 @@ const MenuLinks = ({ open, setOpen }) => {
       <NavLink to='/subscribe' onClick={() => setOpen(false)} activeClassName='active-link'>
         Subscribe
       </NavLink>
+      {!userData && (
+        <NavLink to='/login' onClick={() => setOpen(false)} activeClassName='active-link'>
+          Login
+        </NavLink>
+      )}
       {/* <Link to='/users'>Users</Link> */}
       <div className='social-icons'>
         <a

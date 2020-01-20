@@ -5,6 +5,7 @@ import Home from '../pages/Home';
 import Subscribe from '../pages/Subscribe';
 import Success from '../pages/Success';
 import Product from '../pages/Product';
+import Login from '../pages/Login';
 
 export default function App() {
   return (
@@ -20,6 +21,9 @@ export default function App() {
           </Route>
           <Route path='/product/:id'>
             <Product />
+          </Route>
+          <Route path='/login'>
+            <Login />
           </Route>
           <Route path='/'>
             <Home />
