@@ -6,7 +6,7 @@ import ArrowIcon from '../assets/images/down-arrow.png';
 import MainPageCarousel from '../components/MainPageUserCarousel';
 import { Link } from 'react-router-dom';
 import MediaViewer from '../components/MediaViewer';
-
+import { Helmet } from 'react-helmet';
 
 const HomeStyles = styled.div`
   margin: 0 auto;
@@ -117,6 +117,9 @@ const BottomBlackButton = styled.div`
 const Home = () => {
   return (
     <HomeStyles>
+      <Helmet>
+        <title>YZED - HOME</title>
+      </Helmet>
       <MediaViewer />
       {/* <iframe
         id='d6c1f27d-6a27-4c7e-bd7d-bd19d7faa56c'

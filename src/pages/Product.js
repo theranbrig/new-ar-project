@@ -6,6 +6,7 @@ import MediaViewer from '../components/MediaViewer';
 import { LazyLoadImage } from 'react-lazy-load-image-component';
 import ThreeDSVG from '../components/ThreeDSVG';
 import 'react-lazy-load-image-component/src/effects/blur.css';
+import { Helmet } from 'react-helmet';
 
 const ProductContainer = styled.div`
   min-height: 100vh;
@@ -24,9 +25,7 @@ const ProductContainer = styled.div`
     margin: 0 auto;
     text-transform: uppercase;
   }
-  h3 {
-    margin-top: 50px;
-  }
+
   h1 {
     margin-bottom: 30px;
     font-weight: 300;
@@ -34,7 +33,8 @@ const ProductContainer = styled.div`
   div.ar-pic {
     position: relative !important;
     top: 0;import ThreeDSVG from '../components/ThreeDSVG';
-    left: 0;
+    left: 0import { Helmet } from 'react-helmet';
+;
     img {
       position: relative;
     }
@@ -60,6 +60,22 @@ const ProductContainer = styled.div`
   }
   .main-content-box {
     text-align: center;
+  }
+  .title-section {
+    margin-top: 50px;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    .title-name {
+      width: 100%;
+    }
+    .title-price {
+      text-align: right;
+      margin-right: 2.5%;
+      h2 {
+        font-size: 1.4rem;
+      }
+    }
   }
 `;
 
@@ -90,15 +106,22 @@ const Product = () => {
     const filteredProducts = products.filter(prod => prod.name === id);
     setProduct(filteredProducts[0]);
     setLoading(false);
-    console.log(product);
   }, [product]);
 
   if (!product || loading) return <h1>Loading...</h1>;
   return (
     <ProductContainer>
+      <Helmet>
+        <title>YZED - {product.name}</title>
+      </Helmet>
       <div className='title-section'>
-        <h3>{product.brand}</h3>
-        <h1>{product.name}</h1>
+        <div className='title-name'>
+          <h3>{product.brand}</h3>
+          <h1>{product.name}</h1>
+        </div>
+        <div className='title-price'>
+          <h2>{`$${(product.price / 100).toFixed(2)}`}</h2>
+        </div>
       </div>
       <div className='main-content-box'>
         {mainDisplay === 'model' ? <MediaViewer /> : <LazyLoadImage src={mainDisplay} />}

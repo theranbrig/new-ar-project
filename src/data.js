@@ -8,7 +8,7 @@ export const products = [
       'https://res.cloudinary.com/dq7uyauun/image/upload/c_scale,w_300/v1579138280/adi_adilette_cloud.jpg',
     glbFile: 'https://res.cloudinary.com/dq7uyauun/raw/upload/v1579138896/Astronaut.glb',
     uszdFile: '',
-    price: 9850,
+    price: 4350,
     pictures: [
       'https://res.cloudinary.com/dq7uyauun/image/upload/c_scale,w_300/v1579244918/adilette_1.jpg',
       'https://res.cloudinary.com/dq7uyauun/image/upload/c_scale,w_300/v1579244918/adilette_2.jpg',
@@ -24,6 +24,7 @@ export const products = [
       'https://res.cloudinary.com/dq7uyauun/image/upload/c_scale,w_300/v1579138280/adi_falcon_green.jpg',
     glbFile: '',
     uszdFile: '',
+    price: 14150,
     pictures: [
       'https://res.cloudinary.com/dq7uyauun/image/upload/c_scale,w_300/v1579244964/falcon_1.jpg',
       'https://res.cloudinary.com/dq7uyauun/image/upload/c_scale,w_300/v1579244964/falcon_2.jpg',
@@ -39,6 +40,7 @@ export const products = [
       'https://res.cloudinary.com/dq7uyauun/image/upload/c_scale,w_300/v1579138280/adi_cloudfoam_pure.jpg',
     glbFile: '',
     uszdFile: '',
+    price: 9850,
     pictures: [
       'https://res.cloudinary.com/dq7uyauun/image/upload/c_scale,w_300/v1579244964/cloudfoam_1.jpg',
       'https://res.cloudinary.com/dq7uyauun/image/upload/c_scale,w_300/v1579244919/cloudfoam_2.jpg',
@@ -54,6 +56,7 @@ export const products = [
       'https://res.cloudinary.com/dq7uyauun/image/upload/c_scale,w_300/v1579138764/adi_continental_80.jpg',
     glbFile: '',
     uszdFile: '',
+    price: 92350,
     pictures: [
       'https://res.cloudinary.com/dq7uyauun/image/upload/c_scale,w_300/v1579244964/continental_1.jpg',
       'https://res.cloudinary.com/dq7uyauun/image/upload/c_scale,w_300/v1579244919/continental_2.jpg',
