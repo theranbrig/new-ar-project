@@ -1,5 +1,6 @@
 export const products = [
   {
+    id: '1',
     name: 'Adilette Cloud',
     brand: 'Adidas',
     color: 'white',
@@ -44,6 +45,7 @@ export const products = [
     ],
   },
   {
+    id: '2',
     name: 'Falcon Green',
     brand: 'Adidas',
     color: 'white',
@@ -88,6 +90,7 @@ export const products = [
     ],
   },
   {
+    id: '3',
     name: 'Cloudfoam Pure',
     brand: 'Adidas',
     color: 'white',
@@ -132,6 +135,7 @@ export const products = [
     ],
   },
   {
+    id: '4',
     name: 'Continental 80',
     brand: 'Adidas',
     color: 'white',

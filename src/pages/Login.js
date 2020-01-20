@@ -12,11 +12,10 @@ export const LoginStyles = styled.div`
 const Login = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const [errorMessage, setErrorMessage] = useState(null);
 
   const history = useHistory();
 
-  const { firebase, loginUser, firebaseError, userData } = useContext(FirebaseContext);
+  const { loginUser, firebaseError, userData } = useContext(FirebaseContext);
 
   useEffect(() => {
     console.log(userData);

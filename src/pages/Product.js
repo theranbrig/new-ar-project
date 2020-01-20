@@ -36,6 +36,7 @@ const ProductContainer = styled.div`
   div.ar-pic {
     position: relative !important;
     top: 0;import AccordionSection from '../components/Accordion';
+import { FirebaseContext } from '../context/Firebase';
 
     left: 0;
     img {
@@ -122,7 +123,7 @@ const Product = () => {
     const filteredProducts = products.filter(prod => prod.name === id);
     setProduct(filteredProducts[0]);
     setLoading(false);
-  }, [product]);
+  }, [product, id]);
 
   if (!product || loading) return <h1>Loading...</h1>;
   return (
@@ -164,7 +165,7 @@ const Product = () => {
       <WhiteButton onClick={() => document.querySelector('model-viewer').activateAR()}>
         VIEW IN AR
       </WhiteButton>
-      <AddToCart sizes={product.sizes} />
+      <AddToCart sizes={product.sizes} productId={product.id} />
       <div className='accordions'>
         <Accordion title='PRODUCT INFORMATION' id='information-accordion'>
           <p>{product.productInformation}</p>

@@ -64,8 +64,7 @@ export const StyledMenu = styled.nav`
 `;
 
 const MenuLinks = ({ open, setOpen }) => {
-  
-  const { firebase, loginUser, firebaseError, userData } = useContext(FirebaseContext);
+  const { userData } = useContext(FirebaseContext);
 
   return (
     <StyledMenu open={open}>

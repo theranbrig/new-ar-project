@@ -1,5 +1,6 @@
-import React, { useState } from 'react';
+import React, { useState, useContext, useEffect } from 'react';
 import styled from 'styled-components';
+import { FirebaseContext } from '../context/Firebase';
 
 export const AddToCartStyles = styled.div`
   width: 95%;
@@ -55,11 +56,29 @@ const BlackButton = styled.button`
 
 const AddToCart = ({ sizes, productId }) => {
   const [selectedSize, setSelectedSize] = useState(null);
+  const { addToCart, userData } = useContext(FirebaseContext);
+
+  const addItemToCart = () => {
+    if (userData) {
+      console.log(userData.uid);
+      console.log(productId);
+      console.log(selectedSize);
+      addToCart(userData.uid, productId, selectedSize);
+    } else {}
+  };
+
+  useEffect(() => {
+    console.log('user', userData);
+  }, [userData]);
+
   return (
     <AddToCartStyles>
       <div className='select-wrapper'>
-        <select>
-          <option>Size...</option>
+        <select
+          onChange={e => setSelectedSize(e.target.value)}
+          value={selectedSize}
+          name='selectedSize'>
+          ><option>Size...</option>
           {sizes.map(size => (
             <option key={size} value={size}>
               {size}
@@ -67,7 +86,7 @@ const AddToCart = ({ sizes, productId }) => {
           ))}
         </select>
       </div>
-      <BlackButton>Add To Cart</BlackButton>
+      <BlackButton onClick={() => addItemToCart()}>Add To Cart</BlackButton>
     </AddToCartStyles>
   );
 };

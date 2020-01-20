@@ -50,6 +50,13 @@ const FirebaseProvider = ({ children }) => {
       });
   };
 
+  const addToCart = (userId, productId, size) => {
+    dbh
+      .collection('cartItems')
+      .doc()
+      .set({ userId, productId, size });
+  };
+
   firebase.auth().onAuthStateChanged(function(user) {
     if (user) {
       setUserData(user);
@@ -64,6 +71,8 @@ const FirebaseProvider = ({ children }) => {
         firebaseError,
         registerUser,
         userData,
+        loginUser,
+        addToCart,
       }}>
       {children}
     </FirebaseContext.Provider>
