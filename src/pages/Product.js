@@ -7,6 +7,7 @@ import { LazyLoadImage } from 'react-lazy-load-image-component';
 import ThreeDSVG from '../components/ThreeDSVG';
 import 'react-lazy-load-image-component/src/effects/blur.css';
 import { Helmet } from 'react-helmet';
+import AddToCart from '../components/AddToCart';
 
 const ProductContainer = styled.div`
   min-height: 100vh;
@@ -32,14 +33,13 @@ const ProductContainer = styled.div`
   }
   div.ar-pic {
     position: relative !important;
-    top: 0;import ThreeDSVG from '../components/ThreeDSVG';
-    left: 0import { Helmet } from 'react-helmet';
-;
+    top: 0;
+    left: 0;
     img {
       position: relative;
     }
     svg {
-      background: #f3f3f380;
+      background: #000000b3;
       width: 80%;
       height: 76%;
       padding: 10%;
@@ -142,6 +142,7 @@ const Product = () => {
       <WhiteButton onClick={() => document.querySelector('model-viewer').activateAR()}>
         VIEW IN AR
       </WhiteButton>
+      <AddToCart sizes={product.sizes} />
     </ProductContainer>
   );
 };

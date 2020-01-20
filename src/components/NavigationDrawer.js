@@ -5,7 +5,7 @@ import MenuLinks from './MenuLinks';
 
 const StyledBurger = styled.button`
   position: absolute;
-  top: 30px;
+  top: 2.5vh;
   left: 30px;
   display: flex;
   flex-direction: column;
@@ -46,6 +46,10 @@ const StyledBurger = styled.button`
       transform: ${({ open }) => (open ? 'rotate(-45deg)' : 'rotate(0)')};
     }
   }
+`;
+
+const BurgerDivStyles = styled.div`
+  display: grid;
 `;
 
 const Burger = ({ open, setOpen }) => {

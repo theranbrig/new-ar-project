@@ -1,6 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
-import { Link } from 'react-router-dom';
+import { NavLink } from 'react-router-dom';
 import FBLogo from '../assets/icons/facebook-5-64.png';
 import InstaLogo from '../assets/icons/instagram-5-64.png';
 
@@ -41,8 +41,11 @@ export const StyledMenu = styled.nav`
       text-align: center;
     }
     &:hover {
-      color: #989898;
+      color: #fff;
     }
+  }
+  a.active-link {
+    color: #fff;
   }
   .social-icons {
     padding: 2rem 0;
@@ -62,12 +65,12 @@ export const StyledMenu = styled.nav`
 const MenuLinks = ({ open, setOpen }) => {
   return (
     <StyledMenu open={open}>
-      <Link to='/' onClick={() => setOpen(false)}>
+      <NavLink to='/' onClick={() => setOpen(false)} exact activeClassName='active-link'>
         Home
-      </Link>
-      <Link to='/subscribe' onClick={() => setOpen(false)}>
+      </NavLink>
+      <NavLink to='/subscribe' onClick={() => setOpen(false)} activeClassName='active-link'>
         Subscribe
-      </Link>
+      </NavLink>
       {/* <Link to='/users'>Users</Link> */}
       <div className='social-icons'>
         <a
