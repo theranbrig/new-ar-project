@@ -52,6 +52,9 @@ const BlackButton = styled.button`
   color: white;
   width: 50%;
   display: inline;
+  &:disabled {
+    color: #989898;
+  }
 `;
 
 const AddToCart = ({ sizes, productId }) => {
@@ -59,12 +62,13 @@ const AddToCart = ({ sizes, productId }) => {
   const { addToCart, userData } = useContext(FirebaseContext);
 
   const addItemToCart = () => {
-    if (userData) {
+    if (userData && selectedSize) {
       console.log(userData.uid);
       console.log(productId);
       console.log(selectedSize);
       addToCart(userData.uid, productId, selectedSize);
-    } else {}
+    } else {
+    }
   };
 
   useEffect(() => {
@@ -78,7 +82,7 @@ const AddToCart = ({ sizes, productId }) => {
           onChange={e => setSelectedSize(e.target.value)}
           value={selectedSize}
           name='selectedSize'>
-          ><option>Size...</option>
+          ><option value={null}>Size...</option>
           {sizes.map(size => (
             <option key={size} value={size}>
               {size}
@@ -86,7 +90,9 @@ const AddToCart = ({ sizes, productId }) => {
           ))}
         </select>
       </div>
-      <BlackButton onClick={() => addItemToCart()}>Add To Cart</BlackButton>
+      <BlackButton disabled={!selectedSize} onClick={() => addItemToCart()}>
+        Add To Cart
+      </BlackButton>
     </AddToCartStyles>
   );
 };
