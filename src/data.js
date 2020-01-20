@@ -14,6 +14,34 @@ export const products = [
       'https://res.cloudinary.com/dq7uyauun/image/upload/c_scale,w_300/v1579244918/adilette_2.jpg',
       'https://res.cloudinary.com/dq7uyauun/image/upload/c_scale,w_300/v1579245351/adilette_3.jpg',
     ],
+    productInformation:
+      'Lorem ipsum dolor amet sartorial gastropub cred pork belly banh mi jean shorts distillery. Green juice narwhal wayfarers tofu crucifix butcher taxidermy DIY kombucha jianbing ennui coloring book listicle. Sustainable quinoa cold-pressed butcher. Etsy kogi truffaut taiyaki seitan freegan small batch franzen ramps portland.',
+    reviews: [
+      {
+        name: 'George',
+        stars: 5,
+        text:
+          'Gastropub vaporware artisan typewriter, craft beer blue bottle neutra pinterest post-ironic salvia bicycle rights umami celiac quinoa. Etsy wolf mlkshk trust fund cornhole VHS mustache sustainable readymade bushwick drinking vinegar. Pok pok cornhole pabst cliche, pour-over listicle glossier enamel pin everyday carry mustache four dollar toast +1 lomo skateboard.',
+      },
+      {
+        name: 'Paul',
+        stars: 2,
+        text:
+          'Pitchfork glossier quinoa letterpress bicycle rights distillery. Swag chicharrones tumblr narwhal cardigan crucifix hot chicken ramps edison bulb retro irony offal.',
+      },
+      {
+        name: 'Ringo',
+        stars: 4,
+        text:
+          'Sriracha fashion axe leggings thundercats seitan raclette. Whatever truffaut green juice listicle, artisan mixtape prism bespoke flannel godard. La croix taiyaki gochujang, direct trade sustainable before they sold out vape slow-carb gentrify raclette authentic everyday carry. Poke mixtape vaporware church-key iceland succulents.',
+      },
+      {
+        name: 'John',
+        stars: 3,
+        text:
+          'Messenger bag migas kitsch tumeric. Deep v copper mug coloring book semiotics blog. Adaptogen single-origin coffee swag cloud bread retro, la croix food truck vinyl keytar trust fund aesthetic. ',
+      },
+    ],
   },
   {
     name: 'Falcon Green',
@@ -29,6 +57,34 @@ export const products = [
       'https://res.cloudinary.com/dq7uyauun/image/upload/c_scale,w_300/v1579244964/falcon_1.jpg',
       'https://res.cloudinary.com/dq7uyauun/image/upload/c_scale,w_300/v1579244964/falcon_2.jpg',
       'https://res.cloudinary.com/dq7uyauun/image/upload/c_scale,w_300/v1579244906/falcon_3.jpg',
+    ],
+    productInformation:
+      'Lorem ipsum dolor amet sartorial gastropub cred pork belly banh mi jean shorts distillery. Green juice narwhal wayfarers tofu crucifix butcher taxidermy DIY kombucha jianbing ennui coloring book listicle. Sustainable quinoa cold-pressed butcher. Etsy kogi truffaut taiyaki seitan freegan small batch franzen ramps portland.',
+    reviews: [
+      {
+        name: 'George',
+        stars: 5,
+        text:
+          'Gastropub vaporware artisan typewriter, craft beer blue bottle neutra pinterest post-ironic salvia bicycle rights umami celiac quinoa. Etsy wolf mlkshk trust fund cornhole VHS mustache sustainable readymade bushwick drinking vinegar. Pok pok cornhole pabst cliche, pour-over listicle glossier enamel pin everyday carry mustache four dollar toast +1 lomo skateboard.',
+      },
+      {
+        name: 'Paul',
+        stars: 2,
+        text:
+          'Pitchfork glossier quinoa letterpress bicycle rights distillery. Swag chicharrones tumblr narwhal cardigan crucifix hot chicken ramps edison bulb retro irony offal.',
+      },
+      {
+        name: 'Ringo',
+        stars: 4,
+        text:
+          'Sriracha fashion axe leggings thundercats seitan raclette. Whatever truffaut green juice listicle, artisan mixtape prism bespoke flannel godard. La croix taiyaki gochujang, direct trade sustainable before they sold out vape slow-carb gentrify raclette authentic everyday carry. Poke mixtape vaporware church-key iceland succulents.',
+      },
+      {
+        name: 'John',
+        stars: 3,
+        text:
+          'Messenger bag migas kitsch tumeric. Deep v copper mug coloring book semiotics blog. Adaptogen single-origin coffee swag cloud bread retro, la croix food truck vinyl keytar trust fund aesthetic. ',
+      },
     ],
   },
   {
@@ -46,6 +102,34 @@ export const products = [
       'https://res.cloudinary.com/dq7uyauun/image/upload/c_scale,w_300/v1579244919/cloudfoam_2.jpg',
       'https://res.cloudinary.com/dq7uyauun/image/upload/c_scale,w_300/v1579244900/cloudfoam_3.jpg',
     ],
+    productInformation:
+      'Lorem ipsum dolor amet sartorial gastropub cred pork belly banh mi jean shorts distillery. Green juice narwhal wayfarers tofu crucifix butcher taxidermy DIY kombucha jianbing ennui coloring book listicle. Sustainable quinoa cold-pressed butcher. Etsy kogi truffaut taiyaki seitan freegan small batch franzen ramps portland.',
+    reviews: [
+      {
+        name: 'George',
+        stars: 5,
+        text:
+          'Gastropub vaporware artisan typewriter, craft beer blue bottle neutra pinterest post-ironic salvia bicycle rights umami celiac quinoa. Etsy wolf mlkshk trust fund cornhole VHS mustache sustainable readymade bushwick drinking vinegar. Pok pok cornhole pabst cliche, pour-over listicle glossier enamel pin everyday carry mustache four dollar toast +1 lomo skateboard.',
+      },
+      {
+        name: 'Paul',
+        stars: 2,
+        text:
+          'Pitchfork glossier quinoa letterpress bicycle rights distillery. Swag chicharrones tumblr narwhal cardigan crucifix hot chicken ramps edison bulb retro irony offal.',
+      },
+      {
+        name: 'Ringo',
+        stars: 4,
+        text:
+          'Sriracha fashion axe leggings thundercats seitan raclette. Whatever truffaut green juice listicle, artisan mixtape prism bespoke flannel godard. La croix taiyaki gochujang, direct trade sustainable before they sold out vape slow-carb gentrify raclette authentic everyday carry. Poke mixtape vaporware church-key iceland succulents.',
+      },
+      {
+        name: 'John',
+        stars: 3,
+        text:
+          'Messenger bag migas kitsch tumeric. Deep v copper mug coloring book semiotics blog. Adaptogen single-origin coffee swag cloud bread retro, la croix food truck vinyl keytar trust fund aesthetic. ',
+      },
+    ],
   },
   {
     name: 'Continental 80',
@@ -61,6 +145,34 @@ export const products = [
       'https://res.cloudinary.com/dq7uyauun/image/upload/c_scale,w_300/v1579244964/continental_1.jpg',
       'https://res.cloudinary.com/dq7uyauun/image/upload/c_scale,w_300/v1579244919/continental_2.jpg',
       'https://res.cloudinary.com/dq7uyauun/image/upload/c_scale,w_300/v1579244900/continental_3.jpg',
+    ],
+    productInformation:
+      'Lorem ipsum dolor amet sartorial gastropub cred pork belly banh mi jean shorts distillery. Green juice narwhal wayfarers tofu crucifix butcher taxidermy DIY kombucha jianbing ennui coloring book listicle. Sustainable quinoa cold-pressed butcher. Etsy kogi truffaut taiyaki seitan freegan small batch franzen ramps portland.',
+    reviews: [
+      {
+        name: 'George',
+        stars: 5,
+        text:
+          'Gastropub vaporware artisan typewriter, craft beer blue bottle neutra pinterest post-ironic salvia bicycle rights umami celiac quinoa. Etsy wolf mlkshk trust fund cornhole VHS mustache sustainable readymade bushwick drinking vinegar. Pok pok cornhole pabst cliche, pour-over listicle glossier enamel pin everyday carry mustache four dollar toast +1 lomo skateboard.',
+      },
+      {
+        name: 'Paul',
+        stars: 2,
+        text:
+          'Pitchfork glossier quinoa letterpress bicycle rights distillery. Swag chicharrones tumblr narwhal cardigan crucifix hot chicken ramps edison bulb retro irony offal.',
+      },
+      {
+        name: 'Ringo',
+        stars: 4,
+        text:
+          'Sriracha fashion axe leggings thundercats seitan raclette. Whatever truffaut green juice listicle, artisan mixtape prism bespoke flannel godard. La croix taiyaki gochujang, direct trade sustainable before they sold out vape slow-carb gentrify raclette authentic everyday carry. Poke mixtape vaporware church-key iceland succulents.',
+      },
+      {
+        name: 'John',
+        stars: 3,
+        text:
+          'Messenger bag migas kitsch tumeric. Deep v copper mug coloring book semiotics blog. Adaptogen single-origin coffee swag cloud bread retro, la croix food truck vinyl keytar trust fund aesthetic. ',
+      },
     ],
   },
 ];

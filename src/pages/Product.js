@@ -8,6 +8,8 @@ import ThreeDSVG from '../components/ThreeDSVG';
 import 'react-lazy-load-image-component/src/effects/blur.css';
 import { Helmet } from 'react-helmet';
 import AddToCart from '../components/AddToCart';
+import Reviews from '../components/Reviews';
+import Accordion from '../components/Accordion';
 
 const ProductContainer = styled.div`
   min-height: 100vh;
@@ -33,7 +35,8 @@ const ProductContainer = styled.div`
   }
   div.ar-pic {
     position: relative !important;
-    top: 0;
+    top: 0;import AccordionSection from '../components/Accordion';
+
     left: 0;
     img {
       position: relative;
@@ -76,6 +79,19 @@ const ProductContainer = styled.div`
         font-size: 1.4rem;
       }
     }
+  }
+  .accordions {
+    margin: 30px 0;
+    border-bottom: 1px solid #989898;
+  }
+  .accordions img {
+    width: 95%;
+    margin: 0 2.5%;
+  }
+  .accordions p {
+    width: 95%;
+    margin: 20px 2.5%;
+    font-weight: 300;
   }
 `;
 
@@ -132,17 +148,39 @@ const Product = () => {
             src={product.imageUrl}
             onClick={() => setMainDisplay('model')}
             effect='blur'
+            alt={product.imageUrl}
           />
           <ThreeDSVG setMainDisplay={setMainDisplay} />
         </div>
         {product.pictures.map(image => (
-          <LazyLoadImage src={image} onClick={() => setMainDisplay(image)} effect='blur' />
+          <LazyLoadImage
+            src={image}
+            onClick={() => setMainDisplay(image)}
+            effect='blur'
+            alt={image}
+          />
         ))}
       </div>
       <WhiteButton onClick={() => document.querySelector('model-viewer').activateAR()}>
         VIEW IN AR
       </WhiteButton>
       <AddToCart sizes={product.sizes} />
+      <div className='accordions'>
+        <Accordion title='PRODUCT INFORMATION' id='information-accordion'>
+          <p>{product.productInformation}</p>
+        </Accordion>
+        <Accordion title={`SIZING TABLE`}>
+          <LazyLoadImage
+            src={
+              'https://res.cloudinary.com/dq7uyauun/image/upload/v1579495625/size-guide-women-shoes.png'
+            }
+            effect='blur'
+          />
+        </Accordion>
+        <Accordion title={`REVIEWS (${product.reviews.length})`}>
+          <Reviews reviews={product.reviews} />
+        </Accordion>
+      </div>
     </ProductContainer>
   );
 };
