@@ -16,7 +16,7 @@ const ProductContainer = styled.div`
   width: 500px;
   max-width: 95%;
   margin: 0 auto;
-  font-family: Montserrat;
+  font-family: Montserrat, sans-serif;
   model-viewer {
     width: 95%;
     height: 300px;
@@ -104,7 +104,7 @@ const WhiteButton = styled.button`
   margin: 20px auto;
   font-size: 1.2rem;
   padding: 5px 80px;
-  font-family: Montserrat;
+  font-family: Montserrat, sans-serif;
   background: white;
   color: black;
   width: 95%;

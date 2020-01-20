@@ -13,7 +13,7 @@ export const AddToCartStyles = styled.div`
     select {
       border-radius: 0px;
       border: 2px solid black;
-      font-family: Montserrat;
+      font-family: Montserrat, sans-serif;
       border-radius: 0px !important;
       background: white;
       box-shadow: none;
@@ -47,7 +47,7 @@ const BlackButton = styled.button`
   margin: 0 auto;
   font-size: 1.2rem;
   padding: 5px auto;
-  font-family: Montserrat;
+  font-family: Montserrat, sans-serif;
   background: black;
   color: white;
   width: 50%;

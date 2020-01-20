@@ -24,7 +24,7 @@ const BottomWhiteButton = styled.div`
   margin: 0 auto;
   font-size: 1.2rem;
   padding: 0px 40px;
-  font-family: Montserrat;
+  font-family: Montserrat, sans-serif;
   margin: 50px auto 50px;
   text-align: center;
   a {

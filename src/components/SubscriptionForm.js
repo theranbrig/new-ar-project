@@ -6,7 +6,7 @@ const FormStyles = styled.div`
   margin: 0 auto;
   width: 500px;
   max-width: 80%;
-  font-family: Montserrat;
+  font-family: Montserrat, sans-serif;
   .box-area {
     border: 1px solid;
     margin: 50px 0;
@@ -50,7 +50,7 @@ const BlackButton = styled.button`
   margin: 0 auto;
   font-size: 1.2rem;
   padding: 5px 80px;
-  font-family: Montserrat;
+  font-family: Montserrat, sans-serif;
   background: black;
   color: white;
   min-width: 284px;
@@ -67,7 +67,7 @@ const BottomWhiteButton = styled.div`
   margin: 0 auto;
   font-size: 1.2rem;
   padding: 0px 40px;
-  font-family: Montserrat;
+  font-family: Montserrat, sans-serif;
   margin: 50px auto 50px;
   text-align: center;
   a {

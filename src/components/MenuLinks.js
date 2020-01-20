@@ -35,7 +35,7 @@ export const StyledMenu = styled.nav`
     -webkit-text-stroke-color: white;
     text-decoration: none;
     transition: color 0.3s linear;
-    font-family: Montserrat;
+    font-family: Montserrat, sans-serif;
 
     @media (max-width: 576px) {
       font-size: 1.5rem;

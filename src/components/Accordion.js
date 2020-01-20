@@ -15,7 +15,7 @@ const AccordionButton = styled.button`
   width: 95%;
   margin-left: 2.5%;
   height: 52px;
-  font-family: Montserrat;
+  font-family: Montserrat, sans-serif;
   background: white;
   border: none;
   border-top: 1px solid #989898;

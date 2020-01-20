@@ -11,7 +11,7 @@ import { Helmet } from 'react-helmet';
 const HomeStyles = styled.div`
   margin: 0 auto;
   text-align: center;
-  font-family: Montserrat;
+  font-family: Montserrat, sans-serif;
   margin-top: 50px;
   max-width: 500px;
   @media (max-width: 576px) {
@@ -73,7 +73,7 @@ const WhiteButton = styled.div`
   margin: 0 auto;
   font-size: 1.2rem;
   padding: 0px 40px;
-  font-family: Montserrat;
+  font-family: Montserrat, sans-serif;
   a {
     color: black;
     text-decoration: none;
@@ -88,7 +88,7 @@ const BlackButton = styled.button`
   margin: 0 auto;
   font-size: 1.2rem;
   padding: 5px 80px;
-  font-family: Montserrat;
+  font-family: Montserrat, sans-serif;
   background: black;
   color: white;
   min-width: 284px;
@@ -106,7 +106,7 @@ const BottomBlackButton = styled.div`
   background: black;
   font-size: 1.2rem;
   padding: 0px 40px;
-  font-family: Montserrat;
+  font-family: Montserrat, sans-serif;
   margin: 100px auto 50px;
   a {
     color: white;
