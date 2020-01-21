@@ -7,7 +7,7 @@ export const LoginStyles = styled.div`
   width: 500px;
   max-width: 95%;
   margin: 0 auto;
-  .user-form {
+  .register-form {
     border: 1px solid black;
     padding: 0 20px;
     margin-top: 50px;
@@ -96,13 +96,15 @@ const BottomWhiteButton = styled.div`
   }
 `;
 
-const Login = () => {
+const Register = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [confirmPassword, setConfirmPassword] = useState('');
+  const [passwordError, setPasswordError] = useState('');
 
   const history = useHistory();
 
-  const { loginUser, firebaseError, userData } = useContext(FirebaseContext);
+  const { registerUser, firebaseError, userData } = useContext(FirebaseContext);
 
   useEffect(() => {
     console.log(userData);
@@ -113,8 +115,8 @@ const Login = () => {
 
   return (
     <LoginStyles>
-      <div className='user-form'>
-        <h1>Sign In Today</h1>
+      <div className='register-form'>
+        <h1>Register Today</h1>
         <div className='form-input'>
           <label htmlFor='email'>Email</label>
           <input
@@ -134,24 +136,34 @@ const Login = () => {
             onChange={e => setPassword(e.target.value)}
           />
         </div>
+        <div className='form-input'>
+          <label htmlFor='confirmPassword'>Password</label>
+          <input
+            name='confirmPassword'
+            type='password'
+            required
+            onChange={e => setConfirmPassword(e.target.value)}
+          />
+        </div>
         <BlackButton
+          disabled={password !== confirmPassword}
           onClick={() => {
-            loginUser(email, password);
+            registerUser(email, password);
           }}>
           Submit
         </BlackButton>
       </div>
-      {firebaseError && (
+      {(firebaseError || passwordError) && (
         <div>
-          <h3>{firebaseError}</h3>
+          <h3>{firebaseError || passwordError}</h3>
         </div>
       )}
-      <BottomWhiteButton onClick={() => history.push('/register')}>
-        Not Yet A Member?
+      <BottomWhiteButton onClick={() => history.push('/login')}>
+        Already A Member?
       </BottomWhiteButton>
       <BottomWhiteButton onClick={() => history.push('/')}>Back To Home</BottomWhiteButton>
     </LoginStyles>
   );
 };
 
-export default Login;
+export default Register;

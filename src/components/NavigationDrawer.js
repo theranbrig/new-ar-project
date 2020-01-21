@@ -2,6 +2,7 @@ import React from 'react';
 import styled from 'styled-components';
 import yzedLogo from '../assets/images/yzed-logo.png';
 import MenuLinks from './MenuLinks';
+import ShoppingBagModal from './ShoppingBagModal';
 
 const StyledBurger = styled.button`
   position: absolute;
@@ -48,13 +49,9 @@ const StyledBurger = styled.button`
   }
 `;
 
-const BurgerDivStyles = styled.div`
-  display: grid;
-`;
-
 const Burger = ({ open, setOpen }) => {
   return (
-    <StyledBurger open={open} onClick={() => setOpen(!open)}>
+    <StyledBurger open={open} onClick={() => setOpen(!open)} aria-label='Toggle Menu'>
       <div />
       <div />
       <div />
@@ -71,22 +68,47 @@ const StretchedNavStyles = styled.div`
   grid-template-columns: 1fr;
   align-items: center;
   justify-items: center;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
   img {
     height: 10vh;
     @media (max-width: 576px) {
       height: 5vh;
     }
   }
+  button {
+    color: white;
+    font-size: 2rem;
+    width: 30px;
+    margin-right: 2%;
+    background: none;
+    border: none;
+  }
+  .hidden {
+    visibility: hidden;
+    width: 30px;
+  }
 `;
 
 const NavigationDrawer = ({ children }) => {
   const [open, setOpen] = React.useState(false);
+  const [openBag, setOpenBag] = React.useState(false);
   const node = React.useRef();
   return (
     <div>
       <StretchedNavStyles className='main-stretched-nav'>
+        <div className='hidden'></div>
         <img src={yzedLogo} alt='yzed logo' />
+        <button
+          onClick={() => {
+            setOpenBag(!openBag);
+          }}
+          aria-label='Toggle Cart'>
+          <i className='fa fa-shopping-cart'></i>
+        </button>
       </StretchedNavStyles>
+      <ShoppingBagModal openBag={openBag} />
       <div>{children}</div>
       <div ref={node}>
         <Burger open={open} setOpen={setOpen} />

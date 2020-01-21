@@ -19,6 +19,7 @@ const firebaseConfig = {
   appId: process.env.REACT_APP_appId,
   measurementId: process.env.REACT_APP_Id,
 };
+
 // Initialize Firebase
 firebase.initializeApp(firebaseConfig);
 
@@ -37,20 +38,27 @@ const FirebaseProvider = ({ children }) => {
       .auth()
       .createUserWithEmailAndPassword(email, password)
       .catch(function(error) {
+        console.log(error);
         setFirebaseError(error.message);
       });
   };
 
   const loginUser = (email, password) => {
+    console.log(email);
+    console.log(password);
     firebase
       .auth()
       .signInWithEmailAndPassword(email, password)
       .catch(function(error) {
+        console.log(error);
         setFirebaseError(error.message);
       });
   };
 
   const addToCart = (userId, productId, size) => {
+    console.log(userId);
+    console.log(productId);
+    console.log(size);
     dbh
       .collection('cartItems')
       .doc()
@@ -59,8 +67,10 @@ const FirebaseProvider = ({ children }) => {
 
   firebase.auth().onAuthStateChanged(function(user) {
     if (user) {
+      console.log(user);
       setUserData(user);
     } else {
+      console.log('No User');
       setUserData(null);
     }
   });

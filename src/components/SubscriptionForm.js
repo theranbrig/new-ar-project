@@ -120,7 +120,7 @@ const SubscriptionForm = () => {
             <div className='form-input'>
               <label>Gender: </label>
               <select name='gender' onChange={e => setGender(e.target.value)} value={gender}>
-                <option> -</option>
+                <option value=''>-</option>
                 <option value='female'>Female</option>
                 <option value='male'>Male</option>
               </select>

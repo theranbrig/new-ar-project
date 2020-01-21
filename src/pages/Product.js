@@ -155,6 +155,7 @@ const Product = () => {
         </div>
         {product.pictures.map(image => (
           <LazyLoadImage
+            key={image}
             src={image}
             onClick={() => setMainDisplay(image)}
             effect='blur'
@@ -175,6 +176,7 @@ const Product = () => {
             src={
               'https://res.cloudinary.com/dq7uyauun/image/upload/v1579495625/size-guide-women-shoes.png'
             }
+            alt='size-chart'
             effect='blur'
           />
         </Accordion>

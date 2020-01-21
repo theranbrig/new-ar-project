@@ -18,7 +18,7 @@ const Reviews = ({ reviews }) => {
   return (
     <ReviewStyles>
       {reviews.map(review => (
-        <div>
+        <div key={review.name}>
           <h3>
             {review.name} - {displayStars(review.stars)}
           </h3>

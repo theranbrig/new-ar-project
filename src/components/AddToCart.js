@@ -58,16 +58,14 @@ const BlackButton = styled.button`
 `;
 
 const AddToCart = ({ sizes, productId }) => {
-  const [selectedSize, setSelectedSize] = useState(null);
+  const [selectedSize, setSelectedSize] = useState('');
   const { addToCart, userData } = useContext(FirebaseContext);
 
   const addItemToCart = () => {
-    if (userData && selectedSize) {
-      console.log(userData.uid);
-      console.log(productId);
-      console.log(selectedSize);
-      addToCart(userData.uid, productId, selectedSize);
+    if ( selectedSize) {
+      addToCart("123456", productId, selectedSize);
     } else {
+      console.log('Oop');
     }
   };
 
@@ -79,10 +77,11 @@ const AddToCart = ({ sizes, productId }) => {
     <AddToCartStyles>
       <div className='select-wrapper'>
         <select
+          aria-label='Select Size'
           onChange={e => setSelectedSize(e.target.value)}
           value={selectedSize}
           name='selectedSize'>
-          ><option value={null}>Size...</option>
+          ><option value={''}>Size...</option>
           {sizes.map(size => (
             <option key={size} value={size}>
               {size}
