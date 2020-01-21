@@ -5,7 +5,7 @@ import { FirebaseContext } from '../context/Firebase';
 import { products } from '../data';
 
 export const ModalStyles = styled.div`
-  height: ${({ openBag }) => (openBag ? '200px' : '0px')};
+  height: ${({ openBag }) => (openBag ? '270px' : '0px')};
   transform: ${({ openBag }) => (openBag ? 'scaleY(100%)' : 'scaleY(0)')};
   -webkit-box-shadow: 0px 10px 0px 0px rgba(0, 0, 3, 0.28);
   -moz-box-shadow: 0px 10px 0px 0px rgba(0, 0, 3, 0.28);
@@ -24,14 +24,24 @@ export const ModalStyles = styled.div`
       color: white;
     }
   }
+  button {
+    margin: 20px 10%;
+    border: 0px;
+    width: 80%;
+    text-align: center;
+    padding: 10px 40px;
+    font-family: Montserrat, sans-serif;
+    font-size: 1.3rem;
+  }
 `;
 
-const ShoppingBagModal = ({ openBag, shoppingBag }) => {
+const ShoppingBagModal = ({ openBag, shoppingBag, setValue }) => {
   return (
     <ModalStyles openBag={openBag}>
       <div className='modal-content'>
         <h3>My Shopping Bag ({shoppingBag.length})</h3>
         <ShoppingBagItems items={shoppingBag} />
+        <button>PROCEED TO CHECKOUT</button>
       </div>
     </ModalStyles>
   );

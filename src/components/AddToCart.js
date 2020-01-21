@@ -1,6 +1,7 @@
 import React, { useState, useContext, useEffect } from 'react';
 import styled from 'styled-components';
 import { FirebaseContext } from '../context/Firebase';
+import { CartContext } from '../context/Cart';
 
 export const AddToCartStyles = styled.div`
   width: 95%;
@@ -15,7 +16,8 @@ export const AddToCartStyles = styled.div`
       border: 2px solid black;
       font-family: Montserrat, sans-serif;
       border-radius: 0px !important;
-      background: white;
+      background: white;import { CartContext } from '../context/Cart';
+
       box-shadow: none;
       height: 25px;
       font-size: 1.1rem;
@@ -59,22 +61,8 @@ const BlackButton = styled.button`
 
 const AddToCart = ({ sizes, productId }) => {
   const [selectedSize, setSelectedSize] = useState('');
-  const { addToCart, userData } = useContext(FirebaseContext);
-
-  const addItemToCart = () => {
-    if (userData) {
-      addToCart(userData.email, productId, selectedSize);
-    } else {
-      const cartItem = { productId, selectedSize };
-      const cart = JSON.parse(localStorage.getItem('shoppingCart'));
-      console.log(cart);
-      if (cart && cart.length) {
-        localStorage.setItem('shoppingCart', JSON.stringify([cartItem, ...cart]));
-      } else {
-        localStorage.setItem('shoppingCart', JSON.stringify([cartItem]));
-      }
-    }
-  };
+  const { userData } = useContext(FirebaseContext);
+  const { addItemToCart } = useContext(CartContext);
 
   useEffect(() => {
     console.log('user', userData);
@@ -96,7 +84,15 @@ const AddToCart = ({ sizes, productId }) => {
           ))}
         </select>
       </div>
-      <BlackButton disabled={!selectedSize} onClick={() => addItemToCart()}>
+      <BlackButton
+        disabled={!selectedSize}
+        onClick={() => {
+          if (userData) {
+            addItemToCart(userData.id, productId, selectedSize);
+          } else {
+            addItemToCart('nullUser', productId, selectedSize);
+          }
+        }}>
         Add To Cart
       </BlackButton>
     </AddToCartStyles>

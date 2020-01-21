@@ -4,6 +4,7 @@ import yzedLogo from '../assets/images/yzed-logo.png';
 import MenuLinks from './MenuLinks';
 import ShoppingBagModal from './ShoppingBagModal';
 import { FirebaseContext } from '../context/Firebase';
+import { CartContext } from '../context/Cart';
 import { products } from '../data';
 
 const StyledBurger = styled.button`
@@ -108,44 +109,16 @@ const StretchedNavStyles = styled.div`
 
 const NavigationDrawer = ({ children }) => {
   const [open, setOpen] = useState(false);
-  const [openBag, setOpenBag] = useState(false);
+  const [openBag, setOpenBag] = useState(true);
   const [shoppingBag, setShoppingBag] = useState([]);
   const { userData, dbh } = useContext(FirebaseContext);
+  const { cart } = useContext(CartContext);
 
   const node = React.useRef();
 
-  const getCartData = arr => {
-    const cart = arr.reduce((accum, item) => {
-      const product = products.find(product => item.productId === product.id);
-      console.log(product);
-      if (product) accum.push({ ...item, ...product });
-      return accum;
-    }, []);
-    setShoppingBag(cart);
-  };
-
   useEffect(() => {
-    if (userData) {
-      let cartItems = [];
-      dbh
-        .collection('cartItems')
-        .where('userId', '==', userData.email)
-        .onSnapshot(function(querySnapshot) {
-          querySnapshot.forEach(function(doc) {
-            cartItems.push(doc.data());
-          });
-          console.log('Cart', cartItems);
-          if (cartItems.length) {
-            getCartData(cartItems);
-          }
-        });
-    } else {
-      const cart = JSON.parse(localStorage.getItem('shoppingCart'));
-      if (cart.length) {
-        getCartData(cart);
-      }
-    }
-  }, [userData]);
+    setShoppingBag(cart);
+  }, [cart]);
 
   return (
     <div>
@@ -159,11 +132,11 @@ const NavigationDrawer = ({ children }) => {
             }}
             aria-label='Toggle Cart'>
             <i className='fa fa-shopping-bag' aria-hidden='true'></i>
-            <i className='cart-count'>{shoppingBag.length}</i>
+            <i className='cart-count'>{cart.length}</i>
           </button>
         </div>
       </StretchedNavStyles>
-      <ShoppingBagModal openBag={openBag} shoppingBag={shoppingBag} />
+      {/* <ShoppingBagModal openBag={openBag} shoppingBag={shoppingBag} /> */}
       <div>{children}</div>
       <div ref={node}>
         <Burger open={open} setOpen={setOpen} />

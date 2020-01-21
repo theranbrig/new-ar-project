@@ -10,11 +10,22 @@ export const ItemsStyles = styled.div`
   height: 120px;
   overflow-y: scroll;
   border-bottom: 1px solid white;
+  h2 {
+    font-size: 1.4rem;
+    margin-bottom: 0px;
+    font-weight: 400;
+  }
+  h3 {
+    font-size: 1.2rem;
+    margin-top: 0px;
+    font-weight: 300;
+  }
   .bag-item {
     display: grid;
     grid-template-columns: 75px 1fr;
     grid-gap: 20px;
     align-items: center;
+    padding: 0 10px;
     img {
       width: 75px;
     }
@@ -42,8 +53,10 @@ const ShoppingBagItems = ({ items }) => {
             <img src={item.imageUrl} alt={item.name} />
             <div className='item-info'>
               <div>
-                <h3>{item.brand}</h3>
-                <h2>{item.name}</h2>
+                <h2>{item.brand.toUpperCase()}</h2>
+                <h3>
+                  {item.name.toUpperCase()} - {item.selectedSize}
+                </h3>
               </div>
               <h4>{`$${(item.price / 100).toFixed(2)}`}</h4>
             </div>
