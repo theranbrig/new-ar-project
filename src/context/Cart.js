@@ -6,11 +6,13 @@ import { products } from '../data';
 export const CartContext = React.createContext();
 
 const CartProvider = ({ children }) => {
-  const [cart, setCart] = useState(localStorage.getItem('shoppingCart') || '');
+  const [cart, setCart] = useState([]);
+  const [cartLoading, setCartLoading] = useState(false);
 
   const { addToCart, userData, dbh } = useContext(FirebaseContext);
 
   const addItemToCart = (email, productId, selectedSize) => {
+    setCartLoading(true);
     if (userData) {
       addToCart(userData.email, productId, selectedSize);
     } else {
@@ -18,26 +20,26 @@ const CartProvider = ({ children }) => {
       const cart = JSON.parse(localStorage.getItem('shoppingCart'));
       if (cart && cart.length) {
         localStorage.setItem('shoppingCart', JSON.stringify([cartItem, ...cart]));
-        setCart(JSON.parse(localStorage.getItem('shoppingCart')));
       } else {
         localStorage.setItem('shoppingCart', JSON.stringify([cartItem]));
-        setCart(JSON.parse(localStorage.getItem('shoppingCart')));
       }
+      setCart(JSON.parse(localStorage.getItem('shoppingCart')));
     }
+    setCartLoading(false);
   };
 
   const getCartData = arr => {
-    const cart = arr.reduce((accum, item) => {
+    const tempCart = arr.reduce((accum, item) => {
       const product = products.find(product => item.productId === product.id);
+      console.log(product);
       if (product) accum.push({ ...item, ...product });
       return accum;
     }, []);
-    setCart(cart);
+    setCart(tempCart);
   };
 
-  const getLocalData = async () => {};
-
   useEffect(() => {
+    setCartLoading(true);
     if (userData) {
       let cartItems = [];
       dbh
@@ -54,19 +56,17 @@ const CartProvider = ({ children }) => {
         });
     } else {
       const localCart = JSON.parse(localStorage.getItem('shoppingCart'));
-
       getCartData(localCart);
-
-      console.log(cart);
     }
-    console.log(cart);
-  }, [userData, localStorage, setCart]);
+    setCartLoading(false);
+  }, [userData, setCart]);
 
   return (
     <CartContext.Provider
       value={{
         cart,
         addItemToCart,
+        cartLoading,
       }}>
       {children}
     </CartContext.Provider>

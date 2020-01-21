@@ -41,27 +41,36 @@ export const ItemsStyles = styled.div`
   }
 `;
 
-const ShoppingBagItems = ({ items }) => {
+const ShoppingBagItems = ({ items, cartLoading }) => {
   console.log('Items', items);
+  if (cartLoading)
+    return (
+      <ItemsStyles>
+        <h2>Cart Loading...</h2>
+      </ItemsStyles>
+    );
+
   return (
     <ItemsStyles>
       {!items ? (
         <h2>Nothing in Bag...</h2>
       ) : (
-        items.map(item => (
-          <div className='bag-item' key={item.id}>
-            <img src={item.imageUrl} alt={item.name} />
-            <div className='item-info'>
-              <div>
-                <h2>{item.brand.toUpperCase()}</h2>
-                <h3>
-                  {item.name.toUpperCase()} - {item.selectedSize}
-                </h3>
+        items.map(item => {
+          return (
+            <div className='bag-item' key={item.id}>
+              <img src={item.imageUrl} alt={item.name} />
+              <div className='item-info'>
+                <div>
+                  <h2>{item.brand.toUpperCase()}</h2>
+                  <h3>
+                    {item.name.toUpperCase()} - {item.selectedSize}
+                  </h3>
+                </div>
+                <h4>{`$${(item.price / 100).toFixed(2)}`}</h4>
               </div>
-              <h4>{`$${(item.price / 100).toFixed(2)}`}</h4>
             </div>
-          </div>
-        ))
+          );
+        })
       )}
     </ItemsStyles>
   );

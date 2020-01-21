@@ -112,7 +112,7 @@ const NavigationDrawer = ({ children }) => {
   const [openBag, setOpenBag] = useState(true);
   const [shoppingBag, setShoppingBag] = useState([]);
   const { userData, dbh } = useContext(FirebaseContext);
-  const { cart } = useContext(CartContext);
+  const { cart, cartLoading } = useContext(CartContext);
 
   const node = React.useRef();
 
@@ -136,7 +136,7 @@ const NavigationDrawer = ({ children }) => {
           </button>
         </div>
       </StretchedNavStyles>
-      {/* <ShoppingBagModal openBag={openBag} shoppingBag={shoppingBag} /> */}
+      <ShoppingBagModal openBag={openBag} shoppingBag={shoppingBag} cartLoading={cartLoading} />
       <div>{children}</div>
       <div ref={node}>
         <Burger open={open} setOpen={setOpen} />

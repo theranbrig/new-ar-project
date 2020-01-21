@@ -31,17 +31,28 @@ export const ModalStyles = styled.div`
     text-align: center;
     padding: 10px 40px;
     font-family: Montserrat, sans-serif;
-    font-size: 1.3rem;
+    font-size: 1.1rem;
   }
 `;
 
-const ShoppingBagModal = ({ openBag, shoppingBag, setValue }) => {
+const ShoppingBagModal = ({ openBag, shoppingBag, setValue, cartLoading }) => {
+  useEffect(() => {
+    console.log(shoppingBag);
+  }, [shoppingBag, cartLoading]);
+
   return (
     <ModalStyles openBag={openBag}>
       <div className='modal-content'>
-        <h3>My Shopping Bag ({shoppingBag.length})</h3>
-        <ShoppingBagItems items={shoppingBag} />
-        <button>PROCEED TO CHECKOUT</button>
+        {cartLoading ? (
+          <h3>Cart Loading...</h3>
+        ) : (
+          <>
+            <h3>My Shopping Bag ({shoppingBag.length})</h3>
+
+            {/* <ShoppingBagItems items={shoppingBag} cartLoading={cartLoading} /> */}
+            <button>PROCEED TO CHECKOUT</button>
+          </>
+        )}
       </div>
     </ModalStyles>
   );
