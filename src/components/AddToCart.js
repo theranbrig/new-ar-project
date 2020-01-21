@@ -62,8 +62,8 @@ const AddToCart = ({ sizes, productId }) => {
   const { addToCart, userData } = useContext(FirebaseContext);
 
   const addItemToCart = () => {
-    if ( selectedSize) {
-      addToCart("123456", productId, selectedSize);
+    if (userData && selectedSize) {
+      addToCart(userData.email, productId, selectedSize);
     } else {
       console.log('Oop');
     }

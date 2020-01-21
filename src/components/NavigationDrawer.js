@@ -1,8 +1,10 @@
-import React from 'react';
+import React, { useContext, useState, useEffect } from 'react';
 import styled from 'styled-components';
 import yzedLogo from '../assets/images/yzed-logo.png';
 import MenuLinks from './MenuLinks';
 import ShoppingBagModal from './ShoppingBagModal';
+import { FirebaseContext } from '../context/Firebase';
+import { products } from '../data';
 
 const StyledBurger = styled.button`
   position: absolute;
@@ -59,7 +61,6 @@ const Burger = ({ open, setOpen }) => {
   );
 };
 
-
 const StretchedNavStyles = styled.div`
   background-color: black;
   color: white;
@@ -82,9 +83,22 @@ const StretchedNavStyles = styled.div`
     color: white;
     font-size: 2rem;
     width: 30px;
-    margin-right: 2%;
+    margin-right: 20px;
     background: none;
     border: none;
+    position: relative;
+    .cart-count {
+      position: absolute;
+      bottom: -5px;
+      left: -5px;
+      font-size: 14px;
+      height: 20px;
+      width: 20px;
+      line-height: 20px;
+      border-radius: 50%;
+      background: linear-gradient(to top, #2a43a3 80%, #324fb3 20%);
+      padding: 5px;
+    }
   }
   .hidden {
     visibility: hidden;
@@ -93,23 +107,54 @@ const StretchedNavStyles = styled.div`
 `;
 
 const NavigationDrawer = ({ children }) => {
-  const [open, setOpen] = React.useState(false);
-  const [openBag, setOpenBag] = React.useState(false);
+  const [open, setOpen] = useState(false);
+  const [openBag, setOpenBag] = useState(false);
+  const [shoppingBag, setShoppingBag] = useState([]);
+  const { userData, dbh } = useContext(FirebaseContext);
+
   const node = React.useRef();
+
+  useEffect(() => {
+    if (userData) {
+      let cartItems = [];
+      dbh
+        .collection('cartItems')
+        .where('userId', '==', userData.email)
+        .onSnapshot(function(querySnapshot) {
+          querySnapshot.forEach(function(doc) {
+            cartItems.push(doc.data());
+          });
+          console.log('Cart', cartItems);
+          if (cartItems.length) {
+            const cart = cartItems.reduce((accum, item) => {
+              const product = products.find(product => item.productId === product.id);
+              console.log(product);
+              if (product) accum.push({ ...item, ...product });
+              return accum;
+            }, []);
+            setShoppingBag(cart);
+          }
+        });
+    }
+  }, [userData]);
+
   return (
     <div>
       <StretchedNavStyles className='main-stretched-nav'>
         <div className='hidden'></div>
         <img src={yzedLogo} alt='yzed logo' />
-        <button
-          onClick={() => {
-            setOpenBag(!openBag);
-          }}
-          aria-label='Toggle Cart'>
-          <i className='fa fa-shopping-cart'></i>
-        </button>
+        <div>
+          <button
+            onClick={() => {
+              setOpenBag(!openBag);
+            }}
+            aria-label='Toggle Cart'>
+            <i className='fa fa-shopping-bag' aria-hidden='true'></i>
+            <i className='cart-count'>{shoppingBag.length}</i>
+          </button>
+        </div>
       </StretchedNavStyles>
-      <ShoppingBagModal openBag={openBag} />
+      <ShoppingBagModal openBag={openBag} shoppingBag={shoppingBag} />
       <div>{children}</div>
       <div ref={node}>
         <Burger open={open} setOpen={setOpen} />

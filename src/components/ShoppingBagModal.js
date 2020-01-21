@@ -1,5 +1,8 @@
-import React from 'react';
+import React, { useEffect, useContext, useState } from 'react';
 import styled from 'styled-components';
+import ShoppingBagItems from './ShoppingBagItems';
+import { FirebaseContext } from '../context/Firebase';
+import { products } from '../data';
 
 export const ModalStyles = styled.div`
   height: ${({ openBag }) => (openBag ? '200px' : '0px')};
@@ -20,11 +23,12 @@ export const ModalStyles = styled.div`
   }
 `;
 
-const ShoppingBagModal = ({ openBag }) => {
+const ShoppingBagModal = ({ openBag, shoppingBag }) => {
   return (
     <ModalStyles openBag={openBag}>
       <div className='modal-content'>
-        <h3>My Shopping Bag</h3>
+        <h3>My Shopping Bag {shoppingBag.length}</h3>
+        <ShoppingBagItems items={shoppingBag} />
       </div>
     </ModalStyles>
   );
