@@ -59,6 +59,7 @@ const Burger = ({ open, setOpen }) => {
   );
 };
 
+
 const StretchedNavStyles = styled.div`
   background-color: black;
   color: white;
