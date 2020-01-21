@@ -53,6 +53,9 @@ const CartProvider = ({ children }) => {
         });
     } else {
       cartItems = JSON.parse(localStorage.getItem('shoppingCart'));
+      if (cartItems === null) {
+        cartItems = [];
+      }
     }
     getCartData(cartItems);
     setCartLoading(false);

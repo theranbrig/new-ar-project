@@ -49,7 +49,7 @@ const ShoppingBagModal = ({ openBag, shoppingBag, setValue, cartLoading }) => {
           <>
             <h3>My Shopping Bag ({shoppingBag.length})</h3>
 
-            {/* <ShoppingBagItems items={shoppingBag} cartLoading={cartLoading} /> */}
+            <ShoppingBagItems items={shoppingBag} cartLoading={cartLoading} />
             <button>PROCEED TO CHECKOUT</button>
           </>
         )}

@@ -43,6 +43,11 @@ export const ItemsStyles = styled.div`
 
 const ShoppingBagItems = ({ items, cartLoading }) => {
   console.log('Items', items);
+
+  React.useEffect(() => {
+    console.log(items);
+  }, [items, cartLoading]);
+
   if (cartLoading)
     return (
       <ItemsStyles>
