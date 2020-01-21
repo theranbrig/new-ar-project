@@ -40,8 +40,8 @@ const CartProvider = ({ children }) => {
 
   useEffect(() => {
     setCartLoading(true);
+    let cartItems = [];
     if (userData) {
-      let cartItems = [];
       dbh
         .collection('cartItems')
         .where('userId', '==', userData.email)
@@ -50,14 +50,11 @@ const CartProvider = ({ children }) => {
             cartItems.push(doc.data());
           });
           console.log('Cart', cartItems);
-          if (cartItems.length) {
-            getCartData(cartItems);
-          }
         });
     } else {
-      const localCart = JSON.parse(localStorage.getItem('shoppingCart'));
-      getCartData(localCart);
+      cartItems = JSON.parse(localStorage.getItem('shoppingCart'));
     }
+    getCartData(cartItems);
     setCartLoading(false);
   }, [userData, setCart]);
 
