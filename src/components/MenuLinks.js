@@ -17,7 +17,7 @@ export const StyledMenu = styled.nav`
   position: ${({ open }) => (open ? 'fixed' : 'absolute')};
   top: 0;
   left: 0;
-  z-index: 500;
+  z-index: 520;
   transition: transform 0.3s ease-in-out;
   @media (max-width: 576px) {
     width: 100%;

@@ -100,7 +100,6 @@ const Register = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
-  const [passwordError, setPasswordError] = useState('');
 
   const history = useHistory();
 
@@ -153,9 +152,9 @@ const Register = () => {
           Submit
         </BlackButton>
       </div>
-      {(firebaseError || passwordError) && (
+      {firebaseError && (
         <div>
-          <h3>{firebaseError || passwordError}</h3>
+          <h3>{firebaseError}</h3>
         </div>
       )}
       <BottomWhiteButton onClick={() => history.push('/login')}>

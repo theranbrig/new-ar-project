@@ -62,10 +62,17 @@ const AddToCart = ({ sizes, productId }) => {
   const { addToCart, userData } = useContext(FirebaseContext);
 
   const addItemToCart = () => {
-    if (userData && selectedSize) {
+    if (userData) {
       addToCart(userData.email, productId, selectedSize);
     } else {
-      console.log('Oop');
+      const cartItem = { productId, selectedSize };
+      const cart = JSON.parse(localStorage.getItem('shoppingCart'));
+      console.log(cart);
+      if (cart && cart.length) {
+        localStorage.setItem('shoppingCart', JSON.stringify([cartItem, ...cart]));
+      } else {
+        localStorage.setItem('shoppingCart', JSON.stringify([cartItem]));
+      }
     }
   };
 

@@ -114,6 +114,16 @@ const NavigationDrawer = ({ children }) => {
 
   const node = React.useRef();
 
+  const getCartData = arr => {
+    const cart = arr.reduce((accum, item) => {
+      const product = products.find(product => item.productId === product.id);
+      console.log(product);
+      if (product) accum.push({ ...item, ...product });
+      return accum;
+    }, []);
+    setShoppingBag(cart);
+  };
+
   useEffect(() => {
     if (userData) {
       let cartItems = [];
@@ -126,15 +136,14 @@ const NavigationDrawer = ({ children }) => {
           });
           console.log('Cart', cartItems);
           if (cartItems.length) {
-            const cart = cartItems.reduce((accum, item) => {
-              const product = products.find(product => item.productId === product.id);
-              console.log(product);
-              if (product) accum.push({ ...item, ...product });
-              return accum;
-            }, []);
-            setShoppingBag(cart);
+            getCartData(cartItems);
           }
         });
+    } else {
+      const cart = JSON.parse(localStorage.getItem('shoppingCart'));
+      if (cart.length) {
+        getCartData(cart);
+      }
     }
   }, [userData]);
 

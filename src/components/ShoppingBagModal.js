@@ -7,6 +7,9 @@ import { products } from '../data';
 export const ModalStyles = styled.div`
   height: ${({ openBag }) => (openBag ? '200px' : '0px')};
   transform: ${({ openBag }) => (openBag ? 'scaleY(100%)' : 'scaleY(0)')};
+  -webkit-box-shadow: 0px 10px 0px 0px rgba(0, 0, 3, 0.28);
+  -moz-box-shadow: 0px 10px 0px 0px rgba(0, 0, 3, 0.28);
+  box-shadow: 0px 10px 0px 0px rgba(0, 0, 3, 0.28);
   transition: 0.5s;
   background: #000000ee;
   position: absolute;
@@ -27,7 +30,7 @@ const ShoppingBagModal = ({ openBag, shoppingBag }) => {
   return (
     <ModalStyles openBag={openBag}>
       <div className='modal-content'>
-        <h3>My Shopping Bag {shoppingBag.length}</h3>
+        <h3>My Shopping Bag ({shoppingBag.length})</h3>
         <ShoppingBagItems items={shoppingBag} />
       </div>
     </ModalStyles>
