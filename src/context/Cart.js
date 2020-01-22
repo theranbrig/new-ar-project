@@ -11,7 +11,7 @@ const CartProvider = ({ children }) => {
 
   const { addToCart, userData, dbh } = useContext(FirebaseContext);
 
-  const addItemToCart = (email, productId, selectedSize) => {
+  const addItemToCart = (productId, selectedSize) => {
     setCartLoading(true);
     if (userData) {
       addToCart(userData.email, productId, selectedSize);
@@ -23,9 +23,8 @@ const CartProvider = ({ children }) => {
       } else {
         localStorage.setItem('shoppingCart', JSON.stringify([cartItem]));
       }
-      setCart(JSON.parse(localStorage.getItem('shoppingCart')));
+      getCartData(JSON.parse(localStorage.getItem('shoppingCart')));
     }
-    setCartLoading(false);
   };
 
   const getCartData = arr => {
@@ -36,26 +35,30 @@ const CartProvider = ({ children }) => {
       return accum;
     }, []);
     setCart(tempCart);
+    setCartLoading(false);
+  };
+
+  const getFirebaseCart = userData => {
+    setCartLoading(true);
+    let tempCart = [];
+    dbh
+      .collection('cartItems')
+      .where('userId', '==', userData.email)
+      .onSnapshot(function(querySnapshot) {
+        querySnapshot.forEach(function(doc) {
+          tempCart.push(doc.data());
+        });
+        return tempCart;
+      });
   };
 
   useEffect(() => {
     setCartLoading(true);
     let cartItems = [];
     if (userData) {
-      dbh
-        .collection('cartItems')
-        .where('userId', '==', userData.email)
-        .onSnapshot(function(querySnapshot) {
-          querySnapshot.forEach(function(doc) {
-            cartItems.push(doc.data());
-          });
-          console.log('Cart', cartItems);
-        });
+      cartItems = getFirebaseCart(userData);
     } else {
-      cartItems = JSON.parse(localStorage.getItem('shoppingCart'));
-      if (cartItems === null) {
-        cartItems = [];
-      }
+      cartItems = JSON.parse(localStorage.getItem('shoppingCart')) || [];
     }
     getCartData(cartItems);
     setCartLoading(false);

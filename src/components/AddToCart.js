@@ -87,11 +87,7 @@ const AddToCart = ({ sizes, productId }) => {
       <BlackButton
         disabled={!selectedSize}
         onClick={() => {
-          if (userData) {
-            addItemToCart(userData.id, productId, selectedSize);
-          } else {
-            addItemToCart('nullUser', productId, selectedSize);
-          }
+          addItemToCart(productId, selectedSize);
         }}>
         Add To Cart
       </BlackButton>

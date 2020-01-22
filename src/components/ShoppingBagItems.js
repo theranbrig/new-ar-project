@@ -10,6 +10,15 @@ export const ItemsStyles = styled.div`
   height: 120px;
   overflow-y: scroll;
   border-bottom: 1px solid white;
+  .left-content {
+    display: grid;
+    grid-template-columns: 15px 1fr;
+    align-items: center;
+    grid-gap: 5px;
+    h3 {
+      margin: 0;
+    }
+  }
   h2 {
     font-size: 1.4rem;
     margin-bottom: 0px;
@@ -22,7 +31,7 @@ export const ItemsStyles = styled.div`
   }
   .bag-item {
     display: grid;
-    grid-template-columns: 75px 1fr;
+    grid-template-columns: 95px 1fr;
     grid-gap: 20px;
     align-items: center;
     padding: 0 10px;
@@ -60,10 +69,13 @@ const ShoppingBagItems = ({ items, cartLoading }) => {
       {!items ? (
         <h2>Nothing in Bag...</h2>
       ) : (
-        items.map(item => {
+        items.map((item, index) => {
           return (
             <div className='bag-item' key={item.id}>
-              <img src={item.imageUrl} alt={item.name} />
+              <div className='left-content'>
+                <h3>{index + 1}</h3>
+                <img src={item.imageUrl} alt={item.name} />
+              </div>
               <div className='item-info'>
                 <div>
                   <h2>{item.brand.toUpperCase()}</h2>

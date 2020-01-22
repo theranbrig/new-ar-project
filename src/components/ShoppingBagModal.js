@@ -36,10 +36,6 @@ export const ModalStyles = styled.div`
 `;
 
 const ShoppingBagModal = ({ openBag, shoppingBag, setValue, cartLoading }) => {
-  useEffect(() => {
-    console.log(shoppingBag);
-  }, [shoppingBag, cartLoading]);
-
   return (
     <ModalStyles openBag={openBag}>
       <div className='modal-content'>
@@ -48,7 +44,6 @@ const ShoppingBagModal = ({ openBag, shoppingBag, setValue, cartLoading }) => {
         ) : (
           <>
             <h3>My Shopping Bag ({shoppingBag.length})</h3>
-
             <ShoppingBagItems items={shoppingBag} cartLoading={cartLoading} />
             <button>PROCEED TO CHECKOUT</button>
           </>

@@ -109,16 +109,11 @@ const StretchedNavStyles = styled.div`
 
 const NavigationDrawer = ({ children }) => {
   const [open, setOpen] = useState(false);
-  const [openBag, setOpenBag] = useState(true);
-  const [shoppingBag, setShoppingBag] = useState([]);
+  const [openBag, setOpenBag] = useState(false);
   const { userData, dbh } = useContext(FirebaseContext);
   const { cart, cartLoading } = useContext(CartContext);
 
   const node = React.useRef();
-
-  useEffect(() => {
-    setShoppingBag(cart);
-  }, [cart]);
 
   return (
     <div>
@@ -136,7 +131,7 @@ const NavigationDrawer = ({ children }) => {
           </button>
         </div>
       </StretchedNavStyles>
-      <ShoppingBagModal openBag={openBag} shoppingBag={shoppingBag} cartLoading={cartLoading} />
+      <ShoppingBagModal openBag={openBag} shoppingBag={cart} cartLoading={cartLoading} />
       <div>{children}</div>
       <div ref={node}>
         <Burger open={open} setOpen={setOpen} />
