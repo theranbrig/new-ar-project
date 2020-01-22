@@ -22,7 +22,7 @@ export const ItemsStyles = styled.div`
   h2 {
     font-size: 1.4rem;
     margin-bottom: 0px;
-    font-weight: 400;
+    font-weight: 300;
   }
   h3 {
     font-size: 1.2rem;

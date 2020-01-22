@@ -41,6 +41,9 @@ const BlackButton = styled.button`
   color: white;
   min-width: 284px;
   margin-bottom: 10px;
+  &:disabled {
+    color: #989898;
+  }
 `;
 
 const Checkout = () => {
@@ -73,6 +76,7 @@ const Checkout = () => {
         <h2>Total: {`$${(cartTotal / 100).toFixed(2)}`}</h2>
       </div>
       <BlackButton
+        disabled={!cart.length}
         onClick={() => {
           clearLocalCart();
           history.push('/order_success');

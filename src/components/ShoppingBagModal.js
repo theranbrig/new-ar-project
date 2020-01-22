@@ -20,6 +20,8 @@ export const ModalStyles = styled.div`
     font-family: Montserrat, sans-serif;
     h3 {
       color: white;
+      font-weight: 300;
+      padding: 0 0 0 2.5%;
     }
   }
   .modal-buttons {
@@ -43,6 +45,7 @@ export const ModalStyles = styled.div`
     }
     .edit-button {
       font-size: 1.5rem;
+      padding-left: 5px;
     }
   }
   /* .modal-shadow {
