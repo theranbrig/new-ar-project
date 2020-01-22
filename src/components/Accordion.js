@@ -22,7 +22,7 @@ const AccordionButton = styled.button`
   display: flex;
   flex-direction: row;
   justify-content: space-between;
-  font-size: 1.4rem;
+  font-size: 1.2rem;
 `;
 
 const Accordion = ({ children, title }) => {

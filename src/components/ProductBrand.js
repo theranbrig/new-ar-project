@@ -16,7 +16,7 @@ export const BrandStyles = styled.div`
   }
   .brand-info {
     display: grid;
-    grid-template-columns: 150px 5fr;
+    grid-template-columns: 120px 5fr;
     width: 95%;
     margin: 0 auto;
     grid-gap: 20px;
@@ -25,7 +25,7 @@ export const BrandStyles = styled.div`
   }
   img {
     padding: 10px;
-    width: 130px;
+    width: 100px;
     margin: 0;
     border: 1px solid #989898;
   }
@@ -46,6 +46,22 @@ export const BrandStyles = styled.div`
       letter-spacing: 0.15rem;
       i {
         margin-left: 10px;
+      }
+    }
+    @media (max-width: 500px) {
+      a {
+        font-size: 1rem;
+      }
+      h4 {
+        font-size: 1.1rem;
+      }
+    }
+    @media (max-width: 400px) {
+      a {
+        font-size: 0.8rem;
+      }
+      h4 {
+        font-size: 0.8rem;
       }
     }
   }

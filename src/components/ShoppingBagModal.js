@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
 import ShoppingBagItems from './ShoppingBagItems';
+import { useHistory } from 'react-router-dom';
 
 export const ModalStyles = styled.div`
   height: ${({ openBag }) => (openBag ? '270px' : '0px')};
@@ -58,6 +59,9 @@ export const ModalStyles = styled.div`
 
 const ShoppingBagModal = ({ openBag, shoppingBag, setValue, cartLoading, setOpenBag }) => {
   const [canEdit, setCanEdit] = useState(false);
+
+  const history = useHistory();
+
   return (
     <ModalStyles openBag={openBag}>
       <div className='modal-content'>
@@ -74,9 +78,14 @@ const ShoppingBagModal = ({ openBag, shoppingBag, setValue, cartLoading, setOpen
                 aria-label='Edit Button'>
                 <i className='fa fa-edit'></i>
               </button>
-              <a onClick={() => setOpenBag(false)} href='/checkout'>
+              {/* //TODO: FIX THIS LINK WHEN GOING TO CHECKOUT */}
+              <button
+                onClick={() => {
+                  setOpenBag(false);
+                  history.push('/checkout');
+                }}>
                 PROCEED TO CHECKOUT
-              </a>
+              </button>
             </div>
           </>
         )}

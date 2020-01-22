@@ -5,7 +5,7 @@ import styled from 'styled-components';
 const FormStyles = styled.div`
   margin: 0 auto;
   width: 500px;
-  max-width: 80%;
+  max-width: 90%;
   font-family: Montserrat, sans-serif;
   .box-area {
     border: 1px solid;
@@ -111,7 +111,23 @@ const SubscriptionForm = () => {
             <h1>SUBSCRIBE TO OUR NEWSLETTER</h1>
             <div className='form-input'>
               <label>Name: </label>
-              <input type='text' name='name' value={name} onChange={e => setName(e.target.value)} />
+              <input
+                type='text'
+                name='name'
+                value={name}
+                onChange={e => setName(e.target.value)}
+                required
+              />
+            </div>
+            <div className='form-input'>
+              <label>Email:</label>
+              <input
+                type='email'
+                name='email'
+                value={email}
+                onChange={e => setEmail(e.target.value)}
+                required
+              />
             </div>
             <div className='form-input'>
               <label>Age: </label>
@@ -124,16 +140,6 @@ const SubscriptionForm = () => {
                 <option value='female'>Female</option>
                 <option value='male'>Male</option>
               </select>
-            </div>
-            <div className='form-input'>
-              <label>Email:</label>
-              <input
-                type='email'
-                name='email'
-                value={email}
-                onChange={e => setEmail(e.target.value)}
-                required
-              />
             </div>
           </div>
           <BlackButton type='submit'>SUBMIT</BlackButton>
