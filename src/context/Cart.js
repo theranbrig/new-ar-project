@@ -38,10 +38,6 @@ const CartProvider = ({ children }) => {
         localStorage.setItem('shoppingCart', JSON.stringify([...cartData]));
         getCartData(JSON.parse(localStorage.getItem('shoppingCart')));
       } else {
-        const tempCart = [];
-        console.log(userData.email);
-        console.log(size);
-        console.log(productId);
         dbh
           .collection('cartItems')
           .where('userId', '==', userData.email)
