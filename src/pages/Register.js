@@ -7,6 +7,7 @@ export const LoginStyles = styled.div`
   width: 500px;
   max-width: 95%;
   margin: 0 auto;
+  min-height: calc(90vh - 50px);
   .register-form {
     border: 1px solid black;
     padding: 0 20px;

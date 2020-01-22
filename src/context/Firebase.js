@@ -49,6 +49,17 @@ const FirebaseProvider = ({ children }) => {
       });
   };
 
+  const logoutUser = () => {
+    if (window.confirm('Are you sure you want to logout?')) {
+      firebase
+        .auth()
+        .signOut()
+        .catch(function(error) {
+          setFirebaseError(error.message);
+        });
+    }
+  };
+
   const addToCart = (userId, productId, size) => {
     dbh
       .collection('cartItems')
@@ -73,6 +84,7 @@ const FirebaseProvider = ({ children }) => {
         loginUser,
         addToCart,
         dbh,
+        logoutUser,
       }}>
       {children}
     </FirebaseContext.Provider>

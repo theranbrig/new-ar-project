@@ -6,6 +6,7 @@ import { Link } from 'react-router-dom';
 const SuccessStyles = styled.div`
   text-align: center;
   margin-top: 100px;
+  min-height: calc(90vh - 100px);
   img {
     width: 200px;
     @media (max-width: 576px) {

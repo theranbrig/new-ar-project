@@ -10,7 +10,7 @@ export const CartStyles = styled.div`
   max-width: 95%;
   margin: 50px auto;
   color: black !important;
-  min-height: 70vh
+  min-height: calc(90vh - 100px);
   font-family: Montserrat, sans-serif;
   h1 {
     font-weight: 400;
@@ -57,7 +57,7 @@ const Checkout = () => {
     }
   }, [cart]);
 
-  if (cartLoading || !userData) {
+  if (cartLoading && !userData) {
     return (
       <CartStyles>
         <h1>Loading...</h1>;
