@@ -219,3 +219,15 @@ export const users = [
       'https://res.cloudinary.com/dq7uyauun/image/upload/w_1000,ar_1:1,c_fill,g_auto,e_art:hokusai/v1579148072/influencer4.jpg',
   },
 ];
+
+export const Brands = [
+  {
+    id: 1,
+    name: 'Adidas',
+    imageUrl:
+      'https://res.cloudinary.com/dq7uyauun/image/upload/c_scale,w_300/v1579661232/adidas_logo.jpg',
+    followers: 45664,
+    products: 54,
+    challenges: 4,
+  },
+];

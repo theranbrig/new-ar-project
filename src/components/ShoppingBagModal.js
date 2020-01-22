@@ -1,8 +1,6 @@
-import React, { useEffect, useContext, useState } from 'react';
+import React, { useState } from 'react';
 import styled from 'styled-components';
 import ShoppingBagItems from './ShoppingBagItems';
-import { FirebaseContext } from '../context/Firebase';
-import { products } from '../data';
 
 export const ModalStyles = styled.div`
   height: ${({ openBag }) => (openBag ? '270px' : '0px')};

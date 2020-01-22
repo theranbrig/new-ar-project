@@ -30,7 +30,6 @@ const dbh = firebase.firestore();
 const FirebaseProvider = ({ children }) => {
   const [firebaseError, setFirebaseError] = useState(null);
   const [userData, setUserData] = useState(null);
-  const [cartItems, setCartItems] = useState(null);
 
   const registerUser = (email, password) => {
     firebase

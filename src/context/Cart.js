@@ -68,7 +68,6 @@ const CartProvider = ({ children }) => {
       cartItems = JSON.parse(localStorage.getItem('shoppingCart')) || [];
     }
     getCartData(cartItems);
-    setCartLoading(false);
   }, [userData, setCart]);
 
   return (

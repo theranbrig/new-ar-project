@@ -48,10 +48,10 @@ const HomeStyles = styled.div`
     font-weight: 400;
     margin-bottom: 50px;
     margin-top: 10px;
-    color: #c7c7c7;
+    color: #989898;
   }
   .discover-box {
-    color: #c7c7c7;
+    color: #989898;
     h3 {
       margin: 50px 0 0;
       letter-spacing: 0.1rem;

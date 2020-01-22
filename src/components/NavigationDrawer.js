@@ -1,11 +1,9 @@
-import React, { useContext, useState, useEffect } from 'react';
+import React, { useContext, useState } from 'react';
 import styled from 'styled-components';
 import yzedLogo from '../assets/images/yzed-logo.png';
 import MenuLinks from './MenuLinks';
 import ShoppingBagModal from './ShoppingBagModal';
-import { FirebaseContext } from '../context/Firebase';
 import { CartContext } from '../context/Cart';
-import { products } from '../data';
 
 const StyledBurger = styled.button`
   position: absolute;
@@ -116,7 +114,6 @@ const StretchedNavStyles = styled.div`
 const NavigationDrawer = ({ children }) => {
   const [open, setOpen] = useState(false);
   const [openBag, setOpenBag] = useState(true);
-  const { userData, dbh } = useContext(FirebaseContext);
   const { cart, cartLoading } = useContext(CartContext);
 
   const node = React.useRef();
