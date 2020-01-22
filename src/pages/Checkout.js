@@ -3,15 +3,19 @@ import { CartContext } from '../context/Cart';
 import ShoppingBagItems from '../components/ShoppingBagItems';
 import styled from 'styled-components';
 import { useHistory } from 'react-router-dom';
+import { FirebaseContext } from '../context/Firebase';
 
 export const CartStyles = styled.div`
   width: 500px;
   max-width: 95%;
   margin: 50px auto;
   color: black !important;
-  min-height: 70import { useHistory } from 'react-router-dom';
-vh;
+  min-height: 70vh
   font-family: Montserrat, sans-serif;
+  h1 {
+    font-weight: 400;
+    text-align: center;
+  }
   .cart-details {
     width: 95%;
     margin: 0 auto;
@@ -42,6 +46,7 @@ const BlackButton = styled.button`
 const Checkout = () => {
   const [cartTotal, setCartTotal] = React.useState('');
   const { cart, cartLoading, clearLocalCart } = useContext(CartContext);
+  const { userData } = useContext(FirebaseContext);
 
   const history = useHistory();
 
@@ -52,8 +57,17 @@ const Checkout = () => {
     }
   }, [cart]);
 
+  if (cartLoading || !userData) {
+    return (
+      <CartStyles>
+        <h1>Loading...</h1>;
+      </CartStyles>
+    );
+  }
+
   return (
     <CartStyles>
+      {!cart.length && <h1>No Items in Bag...</h1>}
       <ShoppingBagItems canEdit={true} items={cart} cartLoading={cartLoading} mode='light' />
       <div className='cart-details'>
         <h2>Total: {`$${(cartTotal / 100).toFixed(2)}`}</h2>

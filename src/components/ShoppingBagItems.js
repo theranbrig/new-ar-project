@@ -83,14 +83,15 @@ const ShoppingBagItems = ({ items, cartLoading, canEdit, mode }) => {
                 <div>
                   <h2>{item.brand.toUpperCase()}</h2>
                   <h3>
-                    {item.name.toUpperCase()} - {item.selectedSize}
+                    {item.name.toUpperCase()} - {item.size}
                   </h3>
                 </div>
                 <h4>{`$${(item.price / 100).toFixed(2)}`}</h4>
                 {canEdit && (
                   <button
                     onClick={() => {
-                      removeItemFromCart(index);
+                      console.log(item.selectedSize);
+                      removeItemFromCart(index, item.id, item.size);
                     }}
                     className='delete-item-button'
                     aria-label='delete-item'>

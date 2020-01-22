@@ -29,13 +29,35 @@ const CartProvider = ({ children }) => {
     }
   };
 
-  const removeItemFromCart = index => {
+  const removeItemFromCart = (index, productId, size) => {
     if (window.confirm('Delete the item from your cart?')) {
-      setCartLoading(true);
-      const cartData = JSON.parse(localStorage.getItem('shoppingCart'));
-      cartData.splice(index, 1);
-      localStorage.setItem('shoppingCart', JSON.stringify([...cartData]));
-      getCartData(JSON.parse(localStorage.getItem('shoppingCart')));
+      if (!userData) {
+        setCartLoading(true);
+        const cartData = JSON.parse(localStorage.getItem('shoppingCart'));
+        cartData.splice(index, 1);
+        localStorage.setItem('shoppingCart', JSON.stringify([...cartData]));
+        getCartData(JSON.parse(localStorage.getItem('shoppingCart')));
+      } else {
+        const tempCart = [];
+        console.log(userData.email);
+        console.log(size);
+        console.log(productId);
+        dbh
+          .collection('cartItems')
+          .where('userId', '==', userData.email)
+          .where('size', '==', size)
+          .where('productId', '==', productId)
+          .onSnapshot(function(querySnapshot) {
+            if (!querySnapshot.empty) {
+              querySnapshot.docs[0].ref.delete();
+            } else {
+              console.log('No document corresponding to the query!');
+              return null;
+            }
+            setCart([]);
+            getFirebaseCart(userData);
+          });
+      }
     }
   };
 
