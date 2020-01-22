@@ -7,7 +7,7 @@ export const ItemsStyles = styled.div`
   font-family: Montserrat;
   width: 95%;
   margin: 0 auto;
-  height: 120px;
+  height: ${({ mode }) => (mode === 'light' ? '100%' : '120px')};
   overflow-y: scroll;
   border-bottom: 1px solid white;
   .left-content {
@@ -39,6 +39,7 @@ export const ItemsStyles = styled.div`
       width: 75px;
     }
     .item-info {
+      color: ${({ mode }) => (mode === 'light' ? 'black' : 'white')};
       display: flex;
       flex-direction: row;
       justify-content: space-between;
@@ -56,7 +57,7 @@ export const ItemsStyles = styled.div`
   }
 `;
 
-const ShoppingBagItems = ({ items, cartLoading, canEdit }) => {
+const ShoppingBagItems = ({ items, cartLoading, canEdit, mode }) => {
   const { removeItemFromCart } = useContext(CartContext);
 
   if (cartLoading)
@@ -67,9 +68,9 @@ const ShoppingBagItems = ({ items, cartLoading, canEdit }) => {
     );
 
   return (
-    <ItemsStyles>
-      {!items ? (
-        <h2>Nothing in Bag...</h2>
+    <ItemsStyles mode={mode}>
+      {!items.length ? (
+        <h2>Nothing in Shopping Bag...</h2>
       ) : (
         items.map((item, index) => {
           return (
@@ -88,7 +89,9 @@ const ShoppingBagItems = ({ items, cartLoading, canEdit }) => {
                 <h4>{`$${(item.price / 100).toFixed(2)}`}</h4>
                 {canEdit && (
                   <button
-                    onClick={() => removeItemFromCart(index)}
+                    onClick={() => {
+                      removeItemFromCart(index);
+                    }}
                     className='delete-item-button'
                     aria-label='delete-item'>
                     <i className='fa fa-times-circle' aria-hidden='true'></i>

@@ -28,11 +28,18 @@ const CartProvider = ({ children }) => {
   };
 
   const removeItemFromCart = index => {
-    setCartLoading(true);
-    const cartData = JSON.parse(localStorage.getItem('shoppingCart'));
-    cartData.splice(index, 1);
-    localStorage.setItem('shoppingCart', JSON.stringify([...cartData]));
-    getCartData(JSON.parse(localStorage.getItem('shoppingCart')));
+    if (window.confirm('Delete the item from your cart?')) {
+      setCartLoading(true);
+      const cartData = JSON.parse(localStorage.getItem('shoppingCart'));
+      cartData.splice(index, 1);
+      localStorage.setItem('shoppingCart', JSON.stringify([...cartData]));
+      getCartData(JSON.parse(localStorage.getItem('shoppingCart')));
+    }
+  };
+
+  const clearLocalCart = () => {
+    localStorage.clear();
+    setCart([]);
   };
 
   const getCartData = arr => {
@@ -77,6 +84,7 @@ const CartProvider = ({ children }) => {
         addItemToCart,
         cartLoading,
         removeItemFromCart,
+        clearLocalCart,
       }}>
       {children}
     </CartContext.Provider>

@@ -28,13 +28,18 @@ export const ModalStyles = styled.div`
     width: 95%;
     margin: 20px 2.5%;
     grid-gap: 10px;
-    button {
+    button,
+    a {
       border: 0px;
       width: 100%;
       padding: 10px 0;
       text-align: center;
       font-family: Montserrat, sans-serif;
       font-size: 1.1rem;
+      line-height: 1.6rem;
+      background: white;
+      text-decoration: none;
+      color: black;
     }
     .edit-button {
       font-size: 1.5rem;
@@ -60,10 +65,13 @@ const ShoppingBagModal = ({ openBag, shoppingBag, setValue, cartLoading }) => {
             <h3>My Shopping Bag ({shoppingBag.length})</h3>
             <ShoppingBagItems items={shoppingBag} cartLoading={cartLoading} canEdit={canEdit} />
             <div className='modal-buttons'>
-              <button onClick={() => setCanEdit(!canEdit)} className='edit-button'>
+              <button
+                onClick={() => setCanEdit(!canEdit)}
+                className='edit-button'
+                aria-label='Edit Button'>
                 <i className='fa fa-edit'></i>
               </button>
-              <button>PROCEED TO CHECKOUT</button>
+              <a href='/checkout'>PROCEED TO CHECKOUT</a>
             </div>
           </>
         )}
