@@ -135,7 +135,12 @@ const NavigationDrawer = ({ children }) => {
           </button>
         </div>
       </StretchedNavStyles>
-      <ShoppingBagModal openBag={openBag} shoppingBag={cart} cartLoading={cartLoading} />
+      <ShoppingBagModal
+        openBag={openBag}
+        shoppingBag={cart}
+        cartLoading={cartLoading}
+        setOpenBag={setOpenBag}
+      />
       <div>{children}</div>
       <div ref={node}>
         <Burger open={open} setOpen={setOpen} setOpenBag={setOpenBag} />

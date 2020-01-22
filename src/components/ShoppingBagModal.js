@@ -56,7 +56,7 @@ export const ModalStyles = styled.div`
   } */
 `;
 
-const ShoppingBagModal = ({ openBag, shoppingBag, setValue, cartLoading }) => {
+const ShoppingBagModal = ({ openBag, shoppingBag, setValue, cartLoading, setOpenBag }) => {
   const [canEdit, setCanEdit] = useState(false);
   return (
     <ModalStyles openBag={openBag}>
@@ -74,7 +74,9 @@ const ShoppingBagModal = ({ openBag, shoppingBag, setValue, cartLoading }) => {
                 aria-label='Edit Button'>
                 <i className='fa fa-edit'></i>
               </button>
-              <a href='/checkout'>PROCEED TO CHECKOUT</a>
+              <a onClick={() => setOpenBag(false)} href='/checkout'>
+                PROCEED TO CHECKOUT
+              </a>
             </div>
           </>
         )}
