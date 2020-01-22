@@ -14,7 +14,9 @@ const CartProvider = ({ children }) => {
   const addItemToCart = (productId, selectedSize) => {
     setCartLoading(true);
     if (userData) {
+      setCart([]);
       addToCart(userData.email, productId, selectedSize);
+      getFirebaseCart(userData);
     } else {
       const cartItem = { productId, selectedSize };
       const cart = JSON.parse(localStorage.getItem('shoppingCart'));
@@ -49,6 +51,7 @@ const CartProvider = ({ children }) => {
       return accum;
     }, []);
     setCart(tempCart);
+    console.log('GETCALLED', tempCart);
     setCartLoading(false);
   };
 
@@ -62,8 +65,9 @@ const CartProvider = ({ children }) => {
         querySnapshot.forEach(function(doc) {
           tempCart.push(doc.data());
         });
-        return tempCart;
+        getCartData(tempCart);
       });
+    return tempCart;
   };
 
   useEffect(() => {

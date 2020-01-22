@@ -8,6 +8,8 @@ import Product from '../pages/Product';
 import Login from '../pages/Login';
 import Register from '../pages/Register';
 import Checkout from '../pages/Checkout';
+import OrderSuccess from '../pages/OrderSuccess';
+import Profile from '../pages/Profile';
 
 export default function App() {
   return (
@@ -21,6 +23,9 @@ export default function App() {
           <Route path='/success'>
             <Success />
           </Route>
+          <Route path='/order_success'>
+            <OrderSuccess />
+          </Route>
           <Route path='/product/:id'>
             <Product />
           </Route>
@@ -32,6 +37,9 @@ export default function App() {
           </Route>
           <Route path='/register'>
             <Register />
+          </Route>
+          <Route path='/profile'>
+            <Profile />
           </Route>
           <Route path='/'>
             <Home />

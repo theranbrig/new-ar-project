@@ -77,9 +77,13 @@ const MenuLinks = ({ open, setOpen }) => {
       <NavLink to='/checkout' onClick={() => setOpen(false)} activeClassName='active-link'>
         My Bag
       </NavLink>
-      {!userData && (
+      {!userData ? (
         <NavLink to='/login' onClick={() => setOpen(false)} activeClassName='active-link'>
           Login
+        </NavLink>
+      ) : (
+        <NavLink to='/profile' onClick={() => setOpen(false)} activeClassName='active-link'>
+          Profile
         </NavLink>
       )}
       {/* <Link to='/users'>Users</Link> */}

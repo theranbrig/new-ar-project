@@ -61,7 +61,7 @@ const Checkout = () => {
       <BlackButton
         onClick={() => {
           clearLocalCart();
-          history.push('/');
+          history.push('/order_success');
         }}>
         Checkout
       </BlackButton>
