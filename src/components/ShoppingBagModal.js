@@ -24,18 +24,34 @@ export const ModalStyles = styled.div`
       color: white;
     }
   }
-  button {
-    margin: 20px 10%;
-    border: 0px;
-    width: 80%;
-    text-align: center;
-    padding: 10px 40px;
-    font-family: Montserrat, sans-serif;
-    font-size: 1.1rem;
+  .modal-buttons {
+    display: grid;
+    grid-template-columns: 1fr 6fr;
+    width: 95%;
+    margin: 20px 2.5%;
+    grid-gap: 10px;
+    button {
+      border: 0px;
+      width: 100%;
+      padding: 10px 0;
+      text-align: center;
+      font-family: Montserrat, sans-serif;
+      font-size: 1.1rem;
+    }
+    .edit-button {
+      font-size: 1.5rem;
+    }
   }
+  /* .modal-shadow {
+    position: sticky;
+    top: 0;
+    background: #000000a4;
+    height: calc(90vh - 250px);
+  } */
 `;
 
 const ShoppingBagModal = ({ openBag, shoppingBag, setValue, cartLoading }) => {
+  const [canEdit, setCanEdit] = useState(false);
   return (
     <ModalStyles openBag={openBag}>
       <div className='modal-content'>
@@ -44,11 +60,17 @@ const ShoppingBagModal = ({ openBag, shoppingBag, setValue, cartLoading }) => {
         ) : (
           <>
             <h3>My Shopping Bag ({shoppingBag.length})</h3>
-            <ShoppingBagItems items={shoppingBag} cartLoading={cartLoading} />
-            <button>PROCEED TO CHECKOUT</button>
+            <ShoppingBagItems items={shoppingBag} cartLoading={cartLoading} canEdit={canEdit} />
+            <div className='modal-buttons'>
+              <button onClick={() => setCanEdit(!canEdit)} className='edit-button'>
+                <i className='fa fa-edit'></i>
+              </button>
+              <button>PROCEED TO CHECKOUT</button>
+            </div>
           </>
         )}
       </div>
+      <div className='modal-shadow'></div>
     </ModalStyles>
   );
 };

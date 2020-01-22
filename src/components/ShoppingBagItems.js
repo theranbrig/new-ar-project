@@ -1,6 +1,6 @@
-import React from 'react';
-
+import React, { useContext } from 'react';
 import styled from 'styled-components';
+import { CartContext } from '../context/Cart';
 
 export const ItemsStyles = styled.div`
   color: white;
@@ -44,18 +44,20 @@ export const ItemsStyles = styled.div`
       justify-content: space-between;
       h4 {
         align-self: center;
-        font-size: 1.4rem;
+        font-size: 1.2rem;
       }
+    }
+    button.delete-item-button {
+      background: transparent;
+      border: none;
+      color: pink;
+      font-size: 1.2rem;
     }
   }
 `;
 
-const ShoppingBagItems = ({ items, cartLoading }) => {
-  console.log('Items', items);
-
-  React.useEffect(() => {
-    console.log(items);
-  }, [items, cartLoading]);
+const ShoppingBagItems = ({ items, cartLoading, canEdit }) => {
+  const { removeItemFromCart } = useContext(CartContext);
 
   if (cartLoading)
     return (
@@ -71,7 +73,7 @@ const ShoppingBagItems = ({ items, cartLoading }) => {
       ) : (
         items.map((item, index) => {
           return (
-            <div className='bag-item' key={item.id}>
+            <div className='bag-item' key={item.index}>
               <div className='left-content'>
                 <h3>{index + 1}</h3>
                 <img src={item.imageUrl} alt={item.name} />
@@ -84,6 +86,14 @@ const ShoppingBagItems = ({ items, cartLoading }) => {
                   </h3>
                 </div>
                 <h4>{`$${(item.price / 100).toFixed(2)}`}</h4>
+                {canEdit && (
+                  <button
+                    onClick={() => removeItemFromCart(index)}
+                    className='delete-item-button'
+                    aria-label='delete-item'>
+                    <i className='fa fa-times-circle' aria-hidden='true'></i>
+                  </button>
+                )}
               </div>
             </div>
           );

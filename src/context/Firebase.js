@@ -33,13 +33,10 @@ const FirebaseProvider = ({ children }) => {
   const [cartItems, setCartItems] = useState(null);
 
   const registerUser = (email, password) => {
-    console.log(email);
-    console.log(password);
     firebase
       .auth()
       .createUserWithEmailAndPassword(email, password)
       .catch(function(error) {
-        console.log(error);
         setFirebaseError(error.message);
       });
   };
@@ -49,7 +46,6 @@ const FirebaseProvider = ({ children }) => {
       .auth()
       .signInWithEmailAndPassword(email, password)
       .catch(function(error) {
-        console.log(error);
         setFirebaseError(error.message);
       });
   };
@@ -63,10 +59,8 @@ const FirebaseProvider = ({ children }) => {
 
   firebase.auth().onAuthStateChanged(function(user) {
     if (user) {
-      console.log(user);
       setUserData(user);
     } else {
-      console.log('No User');
       setUserData(null);
     }
   });

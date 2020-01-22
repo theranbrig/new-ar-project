@@ -9,7 +9,7 @@ import { products } from '../data';
 
 const StyledBurger = styled.button`
   position: absolute;
-  top: 2.5vh;
+  top: 3vh;
   left: 30px;
   display: flex;
   flex-direction: column;
@@ -52,9 +52,15 @@ const StyledBurger = styled.button`
   }
 `;
 
-const Burger = ({ open, setOpen }) => {
+const Burger = ({ open, setOpen, setOpenBag }) => {
   return (
-    <StyledBurger open={open} onClick={() => setOpen(!open)} aria-label='Toggle Menu'>
+    <StyledBurger
+      open={open}
+      onClick={() => {
+        setOpen(!open);
+        setOpenBag(false);
+      }}
+      aria-label='Toggle Menu'>
       <div />
       <div />
       <div />
@@ -109,7 +115,7 @@ const StretchedNavStyles = styled.div`
 
 const NavigationDrawer = ({ children }) => {
   const [open, setOpen] = useState(false);
-  const [openBag, setOpenBag] = useState(false);
+  const [openBag, setOpenBag] = useState(true);
   const { userData, dbh } = useContext(FirebaseContext);
   const { cart, cartLoading } = useContext(CartContext);
 
@@ -124,6 +130,7 @@ const NavigationDrawer = ({ children }) => {
           <button
             onClick={() => {
               setOpenBag(!openBag);
+              setOpen(false);
             }}
             aria-label='Toggle Cart'>
             <i className='fa fa-shopping-bag' aria-hidden='true'></i>
@@ -134,7 +141,7 @@ const NavigationDrawer = ({ children }) => {
       <ShoppingBagModal openBag={openBag} shoppingBag={cart} cartLoading={cartLoading} />
       <div>{children}</div>
       <div ref={node}>
-        <Burger open={open} setOpen={setOpen} />
+        <Burger open={open} setOpen={setOpen} setOpenBag={setOpenBag} />
         <MenuLinks open={open} setOpen={setOpen} />
       </div>
     </div>

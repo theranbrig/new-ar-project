@@ -27,10 +27,17 @@ const CartProvider = ({ children }) => {
     }
   };
 
+  const removeItemFromCart = index => {
+    setCartLoading(true);
+    const cartData = JSON.parse(localStorage.getItem('shoppingCart'));
+    cartData.splice(index, 1);
+    localStorage.setItem('shoppingCart', JSON.stringify([...cartData]));
+    getCartData(JSON.parse(localStorage.getItem('shoppingCart')));
+  };
+
   const getCartData = arr => {
     const tempCart = arr.reduce((accum, item) => {
       const product = products.find(product => item.productId === product.id);
-      console.log(product);
       if (product) accum.push({ ...item, ...product });
       return accum;
     }, []);
@@ -70,6 +77,7 @@ const CartProvider = ({ children }) => {
         cart,
         addItemToCart,
         cartLoading,
+        removeItemFromCart,
       }}>
       {children}
     </CartContext.Provider>
