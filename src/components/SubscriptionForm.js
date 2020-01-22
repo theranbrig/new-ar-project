@@ -80,7 +80,7 @@ const SubscriptionForm = () => {
   const [age, setAge] = useState('');
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
-  const [gender, setGender] = useState(null);
+  const [gender, setGender] = useState('');
 
   const history = useHistory();
 

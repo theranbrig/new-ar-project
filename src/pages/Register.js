@@ -10,7 +10,7 @@ export const LoginStyles = styled.div`
   min-height: calc(90vh - 50px);
   .register-form {
     border: 1px solid black;
-    padding: 0 20px;
+    padding: 30px 20px;
     margin-top: 50px;
     font-family: Montserrat, sans-serif;
     h1 {

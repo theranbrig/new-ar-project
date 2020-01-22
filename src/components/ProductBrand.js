@@ -61,7 +61,7 @@ export const BrandStyles = styled.div`
         font-size: 0.8rem;
       }
       h4 {
-        font-size: 0.8rem;
+        font-size: 1.1rem;
       }
     }
   }
@@ -86,7 +86,7 @@ const ProductBrand = ({ brand }) => {
           <h4>
             <span>{brand.challenges}</span> CHALLENGES
           </h4>
-          <a href='/brand/adidas'>
+          <a href='#'>
             BRAND PROFILE <i className='fa fa-chevron-right'></i>
           </a>
         </div>

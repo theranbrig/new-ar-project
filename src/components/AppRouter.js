@@ -10,6 +10,7 @@ import Register from '../pages/Register';
 import Checkout from '../pages/Checkout';
 import OrderSuccess from '../pages/OrderSuccess';
 import Profile from '../pages/Profile';
+import Shop from '../pages/Shop';
 
 export default function App() {
   return (
@@ -31,6 +32,9 @@ export default function App() {
           </Route>
           <Route path='/checkout'>
             <Checkout />
+          </Route>
+          <Route path='/shop'>
+            <Shop />
           </Route>
           <Route path='/login'>
             <Login />
