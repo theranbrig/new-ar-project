@@ -83,7 +83,7 @@ const ShoppingBagItems = ({ items, cartLoading, canEdit, mode }) => {
                 <div>
                   <h2>{item.brand.toUpperCase()}</h2>
                   <h3>
-                    {item.name.toUpperCase()} - {item.size}
+                    {item.name.toUpperCase()} - {item.selectedSize}
                   </h3>
                 </div>
                 <h4>{`$${(item.price / 100).toFixed(2)}`}</h4>
