@@ -121,16 +121,10 @@ const Home = () => {
         <title>YZED - HOME</title>
       </Helmet>
       <MediaViewer />
-      {/* <iframe
-        id='d6c1f27d-6a27-4c7e-bd7d-bd19d7faa56c'
-        src='https://www.vectary.com/viewer/v1/?model=d6c1f27d-6a27-4c7e-bd7d-bd19d7faa56c&turntable=-2'
-        frameborder='0'
-        width='100%'
-        height='480'></iframe> */}
       <div className='product-title-area'>
         <div className='main-product-title'>
-          <h3>ADIDAS</h3>
-          <h2>CRAZYCHAOS</h2>
+          <h3>LE SERRE</h3>
+          <h2>FUTURE PANTHER</h2>
           <h4>Featured Today</h4>
         </div>
         <div className='top-buttons'>

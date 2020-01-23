@@ -5,7 +5,7 @@ const MediaViewer = () => {
     <div className='model-box'>
       <model-viewer
         id='main-viewer'
-        src='https://res.cloudinary.com/dq7uyauun/raw/upload/v1579138896/Astronaut.glb'
+        src='https://oneoone-resource.s3.ap-northeast-2.amazonaws.com/3d/GLTF_DOWNSIZED_NEWTEX_TRENCHCOAT_V5.gltf'
         // src='https://oneoone-resource.s3.ap-northeast-2.amazonaws.com/3d/GLTF_LOWPUFFERQUAD4.gltf'
         alt='A 3D model of an astronaut'
         auto-rotate
