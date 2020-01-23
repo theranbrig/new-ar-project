@@ -5,7 +5,7 @@ import { CartContext } from '../context/Cart';
 export const ItemsStyles = styled.div`
   color: white;
   font-family: Montserrat;
-  width: 95%;
+  width: 98%;
   margin: 0 auto;
   height: ${({ mode }) => (mode === 'light' ? '100%' : '120px')};
   overflow-y: scroll;
@@ -35,17 +35,31 @@ export const ItemsStyles = styled.div`
     grid-gap: 20px;
     align-items: center;
     padding: 0 10px;
+    color: ${({ mode }) => (mode === 'light' ? 'black' : 'white')};
     img {
       width: 75px;
     }
     .item-info {
-      color: ${({ mode }) => (mode === 'light' ? 'black' : 'white')};
       display: flex;
       flex-direction: row;
       justify-content: space-between;
       h4 {
         align-self: center;
         font-size: 1.2rem;
+      }
+      h3 {
+        padding: 0;
+      }
+      @media (max-width: 600px) {
+        h2 {
+          font-size: 1.2rem;
+        }
+        h3 {
+          font-size: 0.9rem;
+        }
+        h4 {
+          font-size: 1rem;
+        }
       }
     }
     button.delete-item-button {
@@ -83,7 +97,7 @@ const ShoppingBagItems = ({ items, cartLoading, canEdit, mode }) => {
                 <div>
                   <h2>{item.brand.toUpperCase()}</h2>
                   <h3>
-                    {item.name.toUpperCase()} - {item.selectedSize}
+                    {item.name.toUpperCase()} ({item.selectedSize})
                   </h3>
                 </div>
                 <h4>{`$${(item.price / 100).toFixed(2)}`}</h4>
