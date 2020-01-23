@@ -59,8 +59,9 @@ const BlackButton = styled.button`
   }
 `;
 
-const AddToCart = ({ sizes, productId }) => {
+const AddToCart = ({ sizes, productId, setIsAdded }) => {
   const [selectedSize, setSelectedSize] = useState('');
+
   const { userData } = useContext(FirebaseContext);
   const { addItemToCart } = useContext(CartContext);
 
@@ -88,6 +89,7 @@ const AddToCart = ({ sizes, productId }) => {
         disabled={!selectedSize}
         onClick={() => {
           addItemToCart(productId, selectedSize);
+          setIsAdded(true);
         }}>
         Add To Cart
       </BlackButton>

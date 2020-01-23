@@ -87,7 +87,7 @@ const StretchedNavStyles = styled.div`
   button {
     color: white;
     font-size: 2rem;
-    width: 30px;
+    width: 45px;
     margin-right: 20px;
     background: none;
     border: none;

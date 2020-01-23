@@ -43,6 +43,7 @@ const CartProvider = ({ children }) => {
           .where('userId', '==', userData.email)
           .where('size', '==', size)
           .where('productId', '==', productId)
+          .limit(1)
           .onSnapshot(function(querySnapshot) {
             if (!querySnapshot.empty) {
               querySnapshot.docs[0].ref.delete();

@@ -11,6 +11,7 @@ import AddToCart from '../components/AddToCart';
 import Reviews from '../components/Reviews';
 import Accordion from '../components/Accordion';
 import ProductBrand from '../components/ProductBrand';
+import AddToCartSuccessModal from '../components/AddToCartSuccessModal';
 
 const ProductContainer = styled.div`
   min-height: 100vh;
@@ -36,7 +37,8 @@ const ProductContainer = styled.div`
   }
   div.ar-pic {
     position: relative !important;
-    top: 0
+    top: 0import AddToCartSuccessModal from '../components/AddToCartSuccessModal';
+
     left: 0;
     img {
       position: relative;
@@ -112,6 +114,7 @@ const WhiteButton = styled.button`
 const Product = () => {
   const [product, setProduct] = useState(null);
   const [loading, setLoading] = useState(false);
+  const [isAdded, setIsAdded] = useState(false);
   const [mainDisplay, setMainDisplay] = useState('model');
 
   let { id } = useParams();
@@ -129,6 +132,7 @@ const Product = () => {
       <Helmet>
         <title>YZED - {product.name}</title>
       </Helmet>
+      {isAdded && <AddToCartSuccessModal setIsAdded={setIsAdded} />}
       <div className='title-section'>
         <div className='title-name'>
           <h3>{product.brand}</h3>
@@ -164,7 +168,7 @@ const Product = () => {
       <WhiteButton onClick={() => document.querySelector('model-viewer').activateAR()}>
         VIEW IN AR
       </WhiteButton>
-      <AddToCart sizes={product.sizes} productId={product.id} />
+      <AddToCart sizes={product.sizes} productId={product.id} setIsAdded={setIsAdded} />
       <div className='accordions'>
         <Accordion title='PRODUCT INFORMATION' id='information-accordion'>
           <p>{product.productInformation}</p>
