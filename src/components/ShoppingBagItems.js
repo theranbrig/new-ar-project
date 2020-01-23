@@ -1,6 +1,7 @@
-import React, { useContext } from 'react';
+import React, { useContext, useEffect } from 'react';
 import styled from 'styled-components';
 import { CartContext } from '../context/Cart';
+import { FirebaseContext } from '../context/Firebase';
 
 export const ItemsStyles = styled.div`
   color: white;
@@ -74,6 +75,8 @@ export const ItemsStyles = styled.div`
 const ShoppingBagItems = ({ items, cartLoading, canEdit, mode }) => {
   const { removeItemFromCart } = useContext(CartContext);
 
+  const { userData } = useContext(FirebaseContext);
+
   if (cartLoading)
     return (
       <ItemsStyles>
@@ -87,6 +90,12 @@ const ShoppingBagItems = ({ items, cartLoading, canEdit, mode }) => {
         <h2>Nothing in Shopping Bag...</h2>
       ) : (
         items.map((item, index) => {
+          let size = 0;
+          if (userData) {
+            size = item.size;
+          } else {
+            size = item.selectedSize;
+          }
           return (
             <div className='bag-item' key={item.index}>
               <div className='left-content'>
@@ -97,7 +106,7 @@ const ShoppingBagItems = ({ items, cartLoading, canEdit, mode }) => {
                 <div>
                   <h2>{item.brand.toUpperCase()}</h2>
                   <h3>
-                    {item.name.toUpperCase()} ({item.selectedSize})
+                    {item.name.toUpperCase()} ({size})
                   </h3>
                 </div>
                 <h4>{`$${(item.price / 100).toFixed(2)}`}</h4>
@@ -105,7 +114,7 @@ const ShoppingBagItems = ({ items, cartLoading, canEdit, mode }) => {
                   <button
                     onClick={() => {
                       console.log(item.selectedSize);
-                      removeItemFromCart(index, item.id, item.size);
+                      removeItemFromCart(index, item.id, size);
                     }}
                     className='delete-item-button'
                     aria-label='delete-item'>
