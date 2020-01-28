@@ -4,6 +4,7 @@ import yzedLogo from '../assets/images/yzed-logo.png';
 import MenuLinks from './MenuLinks';
 import ShoppingBagModal from './ShoppingBagModal';
 import { CartContext } from '../context/Cart';
+import SearchModal from './SearchModal';
 
 const StyledBurger = styled.button`
   position: absolute;
@@ -50,13 +51,14 @@ const StyledBurger = styled.button`
   }
 `;
 
-const Burger = ({ open, setOpen, setOpenBag }) => {
+const Burger = ({ open, setOpen, setOpenBag, setOpenSearch }) => {
   return (
     <StyledBurger
       open={open}
       onClick={() => {
         setOpen(!open);
         setOpenBag(false);
+        setOpenSearch(false);
       }}
       aria-label='Toggle Menu'>
       <div />
@@ -114,6 +116,7 @@ const StretchedNavStyles = styled.div`
 const NavigationDrawer = ({ children }) => {
   const [open, setOpen] = useState(false);
   const [openBag, setOpenBag] = useState(false);
+  const [openSearch, setOpenSearch] = useState(false);
   const { cart, cartLoading } = useContext(CartContext);
 
   const node = React.useRef();
@@ -123,11 +126,21 @@ const NavigationDrawer = ({ children }) => {
       <StretchedNavStyles className='main-stretched-nav'>
         <div className='hidden'></div>
         <img src={yzedLogo} alt='yzed logo' />
-        <div>
+        <div className='right-icons'>
+          <button
+            onClick={() => {
+              setOpen(false);
+              setOpenBag(false);
+              setOpenSearch(!openSearch);
+            }}
+            aria-label='Search'>
+            <i className='fa fa-search' aria-hidden='true'></i>
+          </button>
           <button
             onClick={() => {
               setOpenBag(!openBag);
               setOpen(false);
+              setOpenSearch(false);
             }}
             aria-label='Toggle Cart'>
             <i className='fa fa-shopping-bag' aria-hidden='true'></i>
@@ -141,9 +154,15 @@ const NavigationDrawer = ({ children }) => {
         cartLoading={cartLoading}
         setOpenBag={setOpenBag}
       />
+      <SearchModal openSearch={openSearch} setOpenSearch={setOpenSearch} />
       <div>{children}</div>
       <div ref={node}>
-        <Burger open={open} setOpen={setOpen} setOpenBag={setOpenBag} />
+        <Burger
+          open={open}
+          setOpen={setOpen}
+          setOpenBag={setOpenBag}
+          setOpenSearch={setOpenSearch}
+        />
         <MenuLinks open={open} setOpen={setOpen} />
       </div>
     </div>
