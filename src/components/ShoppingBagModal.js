@@ -49,12 +49,6 @@ export const ModalStyles = styled.div`
       padding-left: 5px;
     }
   }
-  /* .modal-shadow {
-    position: sticky;
-    top: 0;
-    background: #000000a4;
-    height: calc(90vh - 250px);
-  } */
 `;
 
 const ShoppingBagModal = ({ openBag, shoppingBag, setValue, cartLoading, setOpenBag }) => {
@@ -78,7 +72,6 @@ const ShoppingBagModal = ({ openBag, shoppingBag, setValue, cartLoading, setOpen
                 aria-label='Edit Button'>
                 <i className='fa fa-edit'></i>
               </button>
-              {/* //TODO: FIX THIS LINK WHEN GOING TO CHECKOUT */}
               <button
                 onClick={() => {
                   setOpenBag(false);

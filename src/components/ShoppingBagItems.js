@@ -60,6 +60,8 @@ export const ItemsStyles = styled.div`
 const ShoppingBagItems = ({ items, cartLoading, canEdit, mode }) => {
   const { removeItemFromCart } = useContext(CartContext);
 
+  
+
   if (cartLoading)
     return (
       <ItemsStyles>

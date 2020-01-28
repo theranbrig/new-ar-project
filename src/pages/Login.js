@@ -2,6 +2,7 @@ import React, { useState, useContext, useEffect } from 'react';
 import styled from 'styled-components';
 import { FirebaseContext } from '../context/Firebase';
 import { useHistory } from 'react-router-dom';
+import { Helmet } from 'react-helmet';
 
 export const LoginStyles = styled.div`
   width: 500px;
@@ -114,6 +115,9 @@ const Login = () => {
 
   return (
     <LoginStyles>
+      <Helmet>
+        <title>YZED - Login</title>
+      </Helmet>
       <div className='user-form'>
         <h1>Sign In Today</h1>
         <div className='form-input'>
