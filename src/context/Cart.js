@@ -70,7 +70,6 @@ const CartProvider = ({ children }) => {
       return accum;
     }, []);
     setCart(tempCart);
-    console.log('GETCALLED', tempCart);
     setCartLoading(false);
   };
 

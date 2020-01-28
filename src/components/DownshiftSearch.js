@@ -1,23 +1,50 @@
-import React from 'react';
+import React, { useState } from 'react';
 import Downshift from 'downshift';
 import { products } from '../data';
 import { useHistory } from 'react-router-dom';
 import styled from 'styled-components';
 
 export const SearchStyles = styled.div`
+  font-family: Montserrat;
   li {
+    padding: 5px;
+    list-style: none;
     background: transparent;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    width: 90%:
+    margin: 0 auto;
+    img {
+      height: 50px;
+    }
+  }
+  input {
+    background: transparent;
+    color: white;
+    width: 80%;
+    margin: 0 10%;
+    border: none;
+    border-bottom: 1px solid white;
+    height: 30px;
+    line-height: 30px;
+    font-size: 20px;
+    &:focus {
+      outline: 0;
+    }
   }
 `;
 
-const DownshiftSearch = () => {
+const DownshiftSearch = ({ setOpenSearch }) => {
   const history = useHistory();
 
   return (
     <Downshift
-      onChange={selection =>
-        alert(selection ? `You selected ${selection.value}` : 'Selection Cleared')
-      }
+      onChange={selection => {
+        setOpenSearch(false);
+        history.push(`/product/${selection.name}`);
+      }}
       itemToString={item => (item ? item.value : '')}>
       {({
         getInputProps,
@@ -29,49 +56,37 @@ const DownshiftSearch = () => {
         highlightedIndex,
         selectedItem,
         getRootProps,
+        itemCount,
       }) => (
         <SearchStyles>
-          <label {...getLabelProps()}>Search YZED</label>
-          <div
-            style={{ display: 'inline-block' }}
-            {...getRootProps({}, { suppressRefError: true })}>
-            <input
-              {...getInputProps({
-                onKeyDown: event => {
-                  if (event.key === 'Enter') {
-                    // Prevent Downshift's default 'Enter' behavior.
-                    event.nativeEvent.preventDownshiftDefault = true;
-                    history.push('/');
-                  }
-                },
-              })}
-            />
+          <div {...getRootProps({}, { suppressRefError: true })}>
+            <input aria-label='search' {...getInputProps()} placeholder='Find Products' />
           </div>
           <ul {...getMenuProps()}>
             {isOpen
               ? products
+                  .slice(0, 4)
                   .filter(
-                    product =>
+                    item =>
                       !inputValue ||
-                      product.name.toLowerCase().includes(inputValue.toLowerCase()) ||
-                      product.brand.toLowerCase().includes(inputValue.toLowerCase())
+                      item.name.toLowerCase().includes(inputValue.toLowerCase()) ||
+                      item.brand.toLowerCase().includes(inputValue.toLowerCase())
                   )
-                  .map((product, index) => (
+                  .map((item, index) => (
                     <li
                       {...getItemProps({
-                        key: product.name,
+                        key: item.name,
                         index,
-                        product,
+                        item,
                         style: {
-                          backgroundColor: highlightedIndex === index ? 'lightgray' : 'white',
-                          fontWeight: selectedItem === product ? 'bold' : 'normal',
+                          backgroundColor: highlightedIndex === index ? '#ffffff98' : 'transparent',
+                          color: highlightedIndex === index ? 'black' : 'white',
+                          fontWeight: highlightedIndex === index ? 'bold' : 'normal',
                         },
-                      })}
-                      onClick={() => {
-                        history.push(`/product/${product.name}`);
-                      }}>
-                      {product.name}
-                      <img src={product.imageUrl} alt={product.name} />
+                      })}>
+                      <img src={item.imageUrl} alt={item.name} />
+                      {item.brand} - {item.name}
+                      <h1>{itemCount}</h1>
                     </li>
                   ))
               : null}

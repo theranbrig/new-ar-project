@@ -6,7 +6,7 @@ import Downshift from 'downshift';
 import DownshiftSearch from './DownshiftSearch';
 
 export const ModalStyles = styled.div`
-  height: ${({ openSearch }) => (openSearch ? '270px' : '0px')};
+  height: ${({ openSearch }) => (openSearch ? '500px' : '0px')};
   transform: ${({ openSearch }) => (openSearch ? 'scaleY(100%)' : 'scaleY(0)')};
   -webkit-box-shadow: 0px 10px 0px 0px rgba(0, 0, 3, 0.28);
   -moz-box-shadow: 0px 10px 0px 0px rgba(0, 0, 3, 0.28);
@@ -15,6 +15,7 @@ export const ModalStyles = styled.div`
   background: #000000ee;
   position: absolute;
   width: 100%;
+  overflow-y: scroll;
   z-index: 501;
   .modal-content {
     width: 500px;
@@ -27,17 +28,19 @@ export const ModalStyles = styled.div`
       padding: 0 0 0 2.5%;
     }
   }
-  .modal-buttons {
+  .modal-top {
     display: grid;
-    grid-template-columns: 1fr 6fr;
+    grid-template-columns: 6fr 1fr;
     width: 95%;
     margin: 20px 2.5%;
     grid-gap: 10px;
+    align-items: center;
     button,
     a {
       border: 0px;
       width: 100%;
-      padding: 10px 0;
+      height: 30px;
+      width: 30px;
       text-align: center;
       font-family: Montserrat, sans-serif;
       font-size: 1.1rem;
@@ -45,6 +48,7 @@ export const ModalStyles = styled.div`
       background: white;
       text-decoration: none;
       color: black;
+      justify-self: right;
     }
     .edit-button {
       font-size: 1.5rem;
@@ -59,17 +63,17 @@ const SearchModal = ({ openSearch, setOpenSearch }) => {
   return (
     <ModalStyles openSearch={openSearch}>
       <div className='modal-content'>
-        <h3>Search</h3>
-        <div className='modal-buttons'>
+        <div className='modal-top'>
+          <h3>Search YZED</h3>
           <button
             onClick={() => {
               setOpenSearch(false);
               history.push('/checkout');
             }}>
-            <i className='fa fa-close' aria-open='true'></i>
+            <i className='fa fa-close' aria-hidden='true'></i>
           </button>
         </div>
-        <DownshiftSearch />
+        <DownshiftSearch setOpenSearch={setOpenSearch} />
       </div>
       <div className='modal-shadow'></div>
     </ModalStyles>
