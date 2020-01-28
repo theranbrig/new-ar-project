@@ -143,7 +143,11 @@ const Product = () => {
         </div>
       </div>
       <div className='main-content-box'>
-        {mainDisplay === 'model' ? <MediaViewer /> : <LazyLoadImage src={mainDisplay} />}
+        {mainDisplay === 'model' ? (
+          <MediaViewer glbFile={product.glbFile} />
+        ) : (
+          <LazyLoadImage src={mainDisplay} />
+        )}
       </div>
       <div className='picture-thumbs'>
         <div className='ar-pic'>

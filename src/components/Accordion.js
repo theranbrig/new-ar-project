@@ -31,7 +31,7 @@ const Accordion = ({ children, title }) => {
     <>
       <AccordionButton onClick={() => setOpen(!open)}>
         {title}
-        <i className='fa fa-chevron-down'></i>
+        {open ? <i className='fa fa-chevron-up'></i> : <i className='fa fa-chevron-down'></i>}
       </AccordionButton>
       <AccordionStyles open={open}>{children}</AccordionStyles>
     </>

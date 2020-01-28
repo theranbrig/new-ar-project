@@ -7,7 +7,8 @@ export const products = [
     sizes: [200, 210, 220, 230, 240, 250],
     imageUrl:
       'https://res.cloudinary.com/dq7uyauun/image/upload/c_scale,w_300/v1579138280/adi_adilette_cloud.jpg',
-    glbFile: 'https://res.cloudinary.com/dq7uyauun/raw/upload/v1579138896/Astronaut.glb',
+    glbFile:
+      'https://oneoone-resource.s3.ap-northeast-2.amazonaws.com/3d/GLTF_CHUNKYJACKET_V2.gltf',
     uszdFile: '',
     price: 4350,
     pictures: [
@@ -52,7 +53,8 @@ export const products = [
     sizes: [200, 210, 220, 230, 240, 250],
     imageUrl:
       'https://res.cloudinary.com/dq7uyauun/image/upload/c_scale,w_300/v1579138280/adi_falcon_green.jpg',
-    glbFile: '',
+    glbFile:
+      'https://oneoone-resource.s3.ap-northeast-2.amazonaws.com/3d/GLTF_LOWFINALPUFFER_V1.gltf',
     uszdFile: '',
     price: 14150,
     pictures: [
@@ -97,7 +99,8 @@ export const products = [
     sizes: [200, 210, 220, 230, 240, 250],
     imageUrl:
       'https://res.cloudinary.com/dq7uyauun/image/upload/c_scale,w_300/v1579138280/adi_cloudfoam_pure.jpg',
-    glbFile: '',
+    glbFile:
+      'https://oneoone-resource.s3.ap-northeast-2.amazonaws.com/3d/GLTF_leather_robe_raw_v4.gltf',
     uszdFile: '',
     price: 9850,
     pictures: [
@@ -142,7 +145,8 @@ export const products = [
     sizes: [200, 210, 220, 230, 240, 250],
     imageUrl:
       'https://res.cloudinary.com/dq7uyauun/image/upload/c_scale,w_300/v1579138764/adi_continental_80.jpg',
-    glbFile: '',
+    glbFile:
+      'https://oneoone-resource.s3.ap-northeast-2.amazonaws.com/3d/GLTF_DOWNSIZED_NEWTEX_TRENCHCOAT_V5.gltf',
     uszdFile: '',
     price: 92350,
     pictures: [
