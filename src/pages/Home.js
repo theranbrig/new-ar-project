@@ -120,11 +120,7 @@ const Home = () => {
       <Helmet>
         <title>YZED - HOME</title>
       </Helmet>
-<<<<<<< HEAD
       <MediaViewer glbFile='https://oneoone-resource.s3.ap-northeast-2.amazonaws.com/3d/GLTF_DOWNSIZED_NEWTEX_TRENCHCOAT_V5.gltf' />
-=======
-      <MediaViewer />
->>>>>>> search-bar
       <div className='product-title-area'>
         <div className='main-product-title'>
           <h3>LE SERRE</h3>
