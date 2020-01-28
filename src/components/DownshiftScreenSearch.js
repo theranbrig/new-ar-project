@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import Downshift from 'downshift';
 import { products } from '../data';
-import { useHistory, Link } from 'react-router-dom';
+import { useHistory, Link, useParams } from 'react-router-dom';
 import styled from 'styled-components';
 
 export const SearchStyles = styled.div`
@@ -61,6 +61,8 @@ export const SearchStyles = styled.div`
 `;
 
 const DownshiftScreenSearch = ({ setOpenSearch }) => {
+  const { query } = useParams();
+
   const history = useHistory();
   const [displayedItems, setDisplayedItems] = useState([]);
 
@@ -69,7 +71,9 @@ const DownshiftScreenSearch = ({ setOpenSearch }) => {
       onChange={selection => {
         history.push(`/product/${selection.name}`);
       }}
-      itemToString={item => (item ? item.value : '')}>
+      itemToString={item => (item ? item.value : '')}
+      initialInputValue={query}
+      initialIsOpen={true}>
       {({
         getInputProps,
         getItemProps,

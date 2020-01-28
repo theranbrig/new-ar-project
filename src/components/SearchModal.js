@@ -3,7 +3,7 @@ import styled from 'styled-components';
 import ShoppingBagItems from './ShoppingBagItems';
 import { useHistory } from 'react-router-dom';
 import Downshift from 'downshift';
-import DownshiftSearch from './DownshiftScreenSearch';
+import DownshiftModalSearch from './DownshiftModalSearch';
 
 export const ModalStyles = styled.div`
   height: ${({ openSearch }) => (openSearch ? '500px' : '0px')};
@@ -73,7 +73,7 @@ const SearchModal = ({ openSearch, setOpenSearch }) => {
             <i className='fa fa-close' aria-hidden='true'></i>
           </button>
         </div>
-        <DownshiftSearch setOpenSearch={setOpenSearch} />
+        <DownshiftModalSearch setOpenSearch={setOpenSearch} />
       </div>
       <div className='modal-shadow'></div>
     </ModalStyles>

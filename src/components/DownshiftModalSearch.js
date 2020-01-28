@@ -6,10 +6,12 @@ import styled from 'styled-components';
 
 export const SearchStyles = styled.div`
   font-family: Montserrat;
+  font-family: Montserrat, sans-serif;
   width: 500px;
   text-align: center;
   max-width: 95%;
   margin: 0 auto;
+
   li {
     padding: 5px;
     list-style: none;
@@ -32,7 +34,8 @@ export const SearchStyles = styled.div`
   }
   input {
     background: transparent;
-    color: white;
+    background: transparent;
+    color: white !important;
     width: 80%;
     margin: 0 10%;
     border: none;
@@ -44,7 +47,7 @@ export const SearchStyles = styled.div`
       outline: 0;
     }
   }
-   a {
+   button {
      background: white;
      color: black;
      min-width: 300px;
@@ -55,14 +58,21 @@ export const SearchStyles = styled.div`
      text-align: center;
      font-size: 1.2rem;
    }
+
 `;
 
-const DownshiftSearch = ({ setOpenSearch }) => {
+const DownshiftModalSearch = ({ setOpenSearch }) => {
   const history = useHistory();
   const [displayedItems, setDisplayedItems] = useState([]);
+  const [input, setInput] = useState('');
 
   return (
     <Downshift
+      onStateChange={(changes, state) => {
+        if (changes.type === '__autocomplete_change_input__') {
+          setInput(changes.inputValue);
+        }
+      }}
       onChange={selection => {
         setOpenSearch(false);
         history.push(`/product/${selection.name}`);
@@ -82,7 +92,12 @@ const DownshiftSearch = ({ setOpenSearch }) => {
       }) => (
         <SearchStyles>
           <div {...getRootProps({}, { suppressRefError: true })}>
-            <input aria-label='search' {...getInputProps()} placeholder='Search YZED' />
+            <input
+              className='modal-search-input'
+              aria-label='search'
+              {...getInputProps()}
+              placeholder='Search YZED'
+            />
             <h1>{itemCount}</h1>
           </div>
           <ul {...getMenuProps()}>
@@ -114,13 +129,18 @@ const DownshiftSearch = ({ setOpenSearch }) => {
                   ))
               : null}
           </ul>
-          {isOpen && (
-            <Link to={{ pathname: '/search', search: `?query=${inputValue}` }}>VIEW ALL ITEMS</Link>
-          )}
+
+          <button
+            onClick={() => {
+              setOpenSearch(false);
+              history.push(`/search/${input}`);
+            }}>
+            VIEW ALL ITEMS
+          </button>
         </SearchStyles>
       )}
     </Downshift>
   );
 };
 
-export default DownshiftSearch;
+export default DownshiftModalSearch;

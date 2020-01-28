@@ -43,7 +43,7 @@ export default function App() {
           <Route path='/register'>
             <Register />
           </Route>
-          <Route path='/search'>
+          <Route path='/search/:query'>
             <Search />
           </Route>
           <Route path='/profile'>
