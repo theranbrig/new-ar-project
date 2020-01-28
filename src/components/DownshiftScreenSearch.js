@@ -1,11 +1,17 @@
 import React, { useState } from 'react';
 import Downshift from 'downshift';
 import { products } from '../data';
-import { useHistory } from 'react-router-dom';
+import { useHistory, Link } from 'react-router-dom';
 import styled from 'styled-components';
 
 export const SearchStyles = styled.div`
-  font-family: Montserrat;
+  font-family: Montserrat, sans-serif;
+  width: 500px;
+  text-align: center;
+  max-width: 95%;
+  margin: 0 auto;
+  margin-top: 50px;
+  min-height: calc(90vh - 50px);
   li {
     padding: 5px;
     list-style: none;
@@ -19,14 +25,21 @@ export const SearchStyles = styled.div`
     img {
       height: 50px;
     }
+    h3 {
+      font-size: 1.2rem;
+      color: black;
+    }
+  }
+  ul {
+    padding: 0;
   }
   input {
     background: transparent;
-    color: white;
+    color: black;
     width: 80%;
     margin: 0 10%;
     border: none;
-    border-bottom: 1px solid white;
+    border-bottom: 1px solid black;
     height: 30px;
     line-height: 30px;
     font-size: 20px;
@@ -34,15 +47,26 @@ export const SearchStyles = styled.div`
       outline: 0;
     }
   }
+   a {
+     background: black;
+     color: black;
+     min-width: 300px;
+     width: 90%;
+     margin: 0 auto;
+     padding: 5px 40px;
+     text-decoration: none;
+     text-align: center;
+     font-size: 1.2rem;
+   }
 `;
 
-const DownshiftSearch = ({ setOpenSearch }) => {
+const DownshiftScreenSearch = ({ setOpenSearch }) => {
   const history = useHistory();
+  const [displayedItems, setDisplayedItems] = useState([]);
 
   return (
     <Downshift
       onChange={selection => {
-        setOpenSearch(false);
         history.push(`/product/${selection.name}`);
       }}
       itemToString={item => (item ? item.value : '')}>
@@ -60,17 +84,16 @@ const DownshiftSearch = ({ setOpenSearch }) => {
       }) => (
         <SearchStyles>
           <div {...getRootProps({}, { suppressRefError: true })}>
-            <input aria-label='search' {...getInputProps()} placeholder='Find Products' />
+            <input aria-label='search' {...getInputProps()} placeholder='Search YZED' />
+            <h1>{itemCount}</h1>
           </div>
           <ul {...getMenuProps()}>
             {isOpen
               ? products
-                  .slice(0, 4)
                   .filter(
                     item =>
                       !inputValue ||
-                      item.name.toLowerCase().includes(inputValue.toLowerCase()) ||
-                      item.brand.toLowerCase().includes(inputValue.toLowerCase())
+                      `${item.brand} ${item.name}`.toLowerCase().includes(inputValue.toLowerCase())
                   )
                   .map((item, index) => (
                     <li
@@ -81,12 +104,13 @@ const DownshiftSearch = ({ setOpenSearch }) => {
                         style: {
                           backgroundColor: highlightedIndex === index ? '#ffffff98' : 'transparent',
                           color: highlightedIndex === index ? 'black' : 'white',
-                          fontWeight: highlightedIndex === index ? 'bold' : 'normal',
+                          fontWeight: highlightedIndex === index ? '400' : '600',
                         },
                       })}>
                       <img src={item.imageUrl} alt={item.name} />
-                      {item.brand} - {item.name}
-                      <h1>{itemCount}</h1>
+                      <h3>
+                        {item.brand} - {item.name}
+                      </h3>
                     </li>
                   ))
               : null}
@@ -97,4 +121,4 @@ const DownshiftSearch = ({ setOpenSearch }) => {
   );
 };
 
-export default DownshiftSearch;
+export default DownshiftScreenSearch;
