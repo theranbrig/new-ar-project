@@ -97,7 +97,7 @@ const ShoppingBagItems = ({ items, cartLoading, canEdit, mode }) => {
             size = item.selectedSize;
           }
           return (
-            <div className='bag-item' key={item.index}>
+            <div className='bag-item' key={index}>
               <div className='left-content'>
                 <h3>{index + 1}</h3>
                 <img src={item.imageUrl} alt={item.name} />
