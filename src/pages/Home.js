@@ -122,7 +122,7 @@ const Home = () => {
       </Helmet>
       <MediaViewer
         glbFile='https://oneoone-resource.s3.ap-northeast-2.amazonaws.com/3d/GLTF_DOWNSIZED_NEWTEX_TRENCHCOAT_V5.gltf'
-        usdzFile='https://oneoone-resource.s3.ap-northeast-2.amazonaws.com/3d/jacket.usdz'
+        usdzFile='https://oneoone-resource.s3.ap-northeast-2.amazonaws.com/3d/DOWNSIZED_NEWTEX_TRENCHCOAT_V5_1.usdz'
       />
       <div className='product-title-area'>
         <div className='main-product-title'>

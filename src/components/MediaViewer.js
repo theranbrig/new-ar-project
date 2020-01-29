@@ -10,8 +10,6 @@ const MediaViewer = ({ glbFile, usdzFile }) => {
         auto-rotate
         ar
         shadow-intensity='1'
-        stage-light-intensity='3'
-        environment-intensity='2'
         camera-controls
         ios-src={usdzFile}
         preload

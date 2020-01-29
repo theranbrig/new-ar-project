@@ -116,7 +116,7 @@ const ModalSearch = ({ setOpenSearch }) => {
                         index,
                         item,
                         style: {
-                          backgroundColor: highlightedIndex === index ? '#ffffff1a' : 'transparent',
+                          backgroundColor: highlightedIndex === index ? '#00000045' : 'transparent',
                           color: highlightedIndex === index ? 'black' : 'white',
                           fontWeight: highlightedIndex === index ? '400' : '600',
                         },
