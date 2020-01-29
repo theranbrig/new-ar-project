@@ -1,12 +1,11 @@
 import React from 'react';
 
-const MediaViewer = ({ glbFile }) => {
+const MediaViewer = ({ glbFile, usdzFile }) => {
   return (
     <div className='model-box'>
       <model-viewer
         id='main-viewer'
         src={glbFile}
-        // src='https://oneoone-resource.s3.ap-northeast-2.amazonaws.com/3d/GLTF_LOWPUFFERQUAD4.gltf'
         alt='A 3D model of an astronaut'
         auto-rotate
         ar
@@ -14,7 +13,7 @@ const MediaViewer = ({ glbFile }) => {
         stage-light-intensity='3'
         environment-intensity='2'
         camera-controls
-        ios-src='https://oneoone-resource.s3.ap-northeast-2.amazonaws.com/3d/jacket.usdz'
+        ios-src={usdzFile}
         preload
         background-color='#f9f9f9'></model-viewer>
     </div>

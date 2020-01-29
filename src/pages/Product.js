@@ -144,7 +144,7 @@ const Product = () => {
       </div>
       <div className='main-content-box'>
         {mainDisplay === 'model' ? (
-          <MediaViewer glbFile={product.glbFile} />
+          <MediaViewer glbFile={product.glbFile} usdzFile={product.usdzFile} />
         ) : (
           <LazyLoadImage src={mainDisplay} />
         )}
