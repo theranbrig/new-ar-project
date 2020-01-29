@@ -3,7 +3,7 @@ import styled from 'styled-components';
 import ShoppingBagItems from './ShoppingBagItems';
 import { useHistory } from 'react-router-dom';
 import Downshift from 'downshift';
-import ModalSearch from './ModalSearch';
+import ModalSearch from './DropdownSearch';
 
 export const ModalStyles = styled.div`
   height: ${({ openSearch }) => (openSearch ? '500px' : '0px')};
