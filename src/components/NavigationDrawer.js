@@ -109,7 +109,7 @@ const StretchedNavStyles = styled.div`
   }
   .hidden {
     visibility: hidden;
-    width: 30px;
+    width: 130px;
   }
 `;
 
