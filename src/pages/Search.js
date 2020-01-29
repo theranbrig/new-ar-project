@@ -1,10 +1,10 @@
 import React from 'react';
-import DownshiftScreenSearch from '../components/DownshiftScreenSearch';
+import MainSearchPage from '../components/MainSearchPage';
 
 const Search = () => {
   return (
     <div>
-      <DownshiftScreenSearch />
+      <MainSearchPage />
     </div>
   );
 };

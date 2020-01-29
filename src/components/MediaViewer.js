@@ -14,7 +14,7 @@ const MediaViewer = ({ glbFile }) => {
         stage-light-intensity='3'
         environment-intensity='2'
         camera-controls
-        ios-src='https://res.cloudinary.com/dq7uyauun/raw/upload/v1579148925/Astronaut.usdz'
+        ios-src='https://oneoone-resource.s3.ap-northeast-2.amazonaws.com/3d/jacket.usdz'
         preload
         background-color='#f9f9f9'></model-viewer>
     </div>

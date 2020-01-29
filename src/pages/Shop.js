@@ -1,6 +1,7 @@
 import React from 'react';
 import ShopThumbs from '../components/ShopThumbs';
 import styled from 'styled-components';
+import ProductsPageSearch from '../components/ProductsPageSearch';
 
 export const ShopStyles = styled.div`
   width: 500px;
@@ -19,7 +20,7 @@ const Shop = () => {
   return (
     <ShopStyles>
       <h1>SHOP YZED</h1>
-      <ShopThumbs />
+      <ProductsPageSearch />
     </ShopStyles>
   );
 };

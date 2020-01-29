@@ -27,7 +27,7 @@ export const ProductThumbsStyles = styled.div`
     font-weight: 400;
     font-size: 1.1rem;
   }
-  a {
+  .product-thumb a {
     color: black;
     text-decoration: none;
   }

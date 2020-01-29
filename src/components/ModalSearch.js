@@ -61,7 +61,7 @@ export const SearchStyles = styled.div`
 
 `;
 
-const DownshiftModalSearch = ({ setOpenSearch }) => {
+const ModalSearch = ({ setOpenSearch }) => {
   const history = useHistory();
   const [displayedItems, setDisplayedItems] = useState([]);
   const [input, setInput] = useState('');
@@ -143,4 +143,4 @@ const DownshiftModalSearch = ({ setOpenSearch }) => {
   );
 };
 
-export default DownshiftModalSearch;
+export default ModalSearch;
