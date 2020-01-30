@@ -40,6 +40,8 @@ export const SearchStyles = styled.div`
     margin: 0 10%;
     border: none;
     border-bottom: 1px solid black;
+    border-radius: 0px;
+    -webkit-border-radius:0px;
     height: 30px;
     line-height: 30px;
     font-size: 20px;
@@ -58,6 +60,25 @@ export const SearchStyles = styled.div`
      text-align: center;
      font-size: 1.2rem;
    }
+`;
+
+const WhiteButton = styled.div`
+  width: 500px;
+  max-width: 95%;
+  a {
+    border: 2px solid black;
+    border-radius: 0px;
+    height: 52px;
+    display: block;
+    margin: 70px auto 20px;
+    font-size: 1.2rem;
+    padding: 5px 80px;
+    font-family: Montserrat, sans-serif;
+    background: white;
+    color: black;
+    width: 95%;
+    min-width: 284px;
+  }
 `;
 
 const DownshiftScreenSearch = ({ setOpenSearch }) => {
@@ -119,6 +140,9 @@ const DownshiftScreenSearch = ({ setOpenSearch }) => {
                   ))
               : null}
           </ul>
+          <WhiteButton>
+            <Link>BROWSE MORE</Link>
+          </WhiteButton>
         </SearchStyles>
       )}
     </Downshift>

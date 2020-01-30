@@ -40,6 +40,8 @@ export const SearchStyles = styled.div`
     margin: 0 10%;
     border: none;
     border-bottom: 1px solid white;
+    border-radius: 0px;
+    -webkit-border-radius:0px;
     height: 30px;
     line-height: 30px;
     font-size: 20px;
@@ -129,14 +131,15 @@ const ModalSearch = ({ setOpenSearch }) => {
                   ))
               : null}
           </ul>
-
-          <button
-            onClick={() => {
-              setOpenSearch(false);
-              history.push(`/search/${input}`);
-            }}>
-            VIEW ALL ITEMS
-          </button>
+          {input && (
+            <button
+              onClick={() => {
+                setOpenSearch(false);
+                history.push(`/search/${input}`);
+              }}>
+              VIEW ALL ITEMS
+            </button>
+          )}
         </SearchStyles>
       )}
     </Downshift>

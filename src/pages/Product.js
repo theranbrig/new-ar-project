@@ -72,7 +72,7 @@ const ProductContainer = styled.div`
     }
   }
   .title-section {
-    margin-top: 50px;
+    margin-top: 30px;
     display: flex;
     flex-direction: row;
     justify-content: space-between;
@@ -102,6 +102,7 @@ const ProductContainer = styled.div`
   .back-button button {
     margin-top: 10px;
     border: none;
+    background: white;
     .fa-chevron-left {
       font-size: 1.4rem;
     }
