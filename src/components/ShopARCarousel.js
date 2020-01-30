@@ -14,6 +14,7 @@ const SliderStyles = styled.div`
     margin-top: 40px;
     max-width: 90%;
     margin-left: 5%;
+    margin-bottom: 50px;
   }
   .awssld__content {
     background-color: white !important;

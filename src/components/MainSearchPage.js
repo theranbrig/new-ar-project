@@ -64,7 +64,7 @@ export const SearchStyles = styled.div`
 
 const WhiteButton = styled.div`
   width: 500px;
-  max-width: 95%;
+  max-width: 90%;
   a {
     border: 2px solid black;
     border-radius: 0px;
@@ -72,7 +72,7 @@ const WhiteButton = styled.div`
     display: block;
     margin: 70px auto 20px;
     font-size: 1.2rem;
-    padding: 5px 80px;
+    line-height: 52px;
     font-family: Montserrat, sans-serif;
     background: white;
     color: black;
@@ -141,7 +141,7 @@ const DownshiftScreenSearch = ({ setOpenSearch }) => {
               : null}
           </ul>
           <WhiteButton>
-            <Link>BROWSE MORE</Link>
+            <Link to='/shop'>BROWSE MORE</Link>
           </WhiteButton>
         </SearchStyles>
       )}

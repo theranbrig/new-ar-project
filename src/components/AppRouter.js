@@ -12,6 +12,7 @@ import OrderSuccess from '../pages/OrderSuccess';
 import Profile from '../pages/Profile';
 import Shop from '../pages/Shop';
 import MainSearchPage from '../pages/Search';
+import ShopCategory from '../pages/ShopCategory';
 
 export default function App() {
   return (
@@ -34,8 +35,11 @@ export default function App() {
           <Route path='/checkout'>
             <Checkout />
           </Route>
-          <Route path='/shop'>
+          <Route exact path='/shop'>
             <Shop />
+          </Route>
+          <Route exact path='/shop/:category'>
+            <ShopCategory />
           </Route>
           <Route path='/login'>
             <Login />

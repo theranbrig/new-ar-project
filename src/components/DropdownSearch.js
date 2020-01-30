@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import Downshift from 'downshift';
 import { products } from '../data';
-import { useHistory, Link } from 'react-router-dom';
+import { useHistory } from 'react-router-dom';
 import styled from 'styled-components';
 
 export const SearchStyles = styled.div`

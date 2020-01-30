@@ -1,9 +1,8 @@
 import React, { useState } from 'react';
 import Downshift from 'downshift';
 import { products } from '../data';
-import { useHistory, Link, useParams } from 'react-router-dom';
+import { useHistory, useParams } from 'react-router-dom';
 import styled from 'styled-components';
-import ShopThumbs from '../components/ShopThumbs';
 
 export const SearchStyles = styled.div`
   font-family: Montserrat, sans-serif;
@@ -12,7 +11,6 @@ export const SearchStyles = styled.div`
   max-width: 95%;
   margin: 0 auto;
   margin-top: 50px;
-  min-height: calc(90vh - 50px);
   li {
     padding: 5px;
     list-style: none;
@@ -51,7 +49,7 @@ export const SearchStyles = styled.div`
 
 `;
 
-const ProductPageSearch = ({ setOpenSearch }) => {
+const ProductPageSearch = ({ setOpenSearch, children }) => {
   const { query } = useParams();
 
   const history = useHistory();
@@ -109,7 +107,7 @@ const ProductPageSearch = ({ setOpenSearch }) => {
                   ))
               : null}
           </ul>
-          <ShopThumbs />
+          {children}
         </SearchStyles>
       )}
     </Downshift>

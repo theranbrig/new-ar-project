@@ -1,8 +1,6 @@
-import React, { useState } from 'react';
+import React from 'react';
 import styled from 'styled-components';
-import ShoppingBagItems from './ShoppingBagItems';
 import { useHistory } from 'react-router-dom';
-import Downshift from 'downshift';
 import DropdownSearch from './DropdownSearch';
 
 export const ModalStyles = styled.div`
@@ -56,7 +54,6 @@ export const ModalStyles = styled.div`
     }
   }
 `;
-
 
 const SearchModal = ({ openSearch, setOpenSearch }) => {
   const history = useHistory();
