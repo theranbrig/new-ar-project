@@ -79,37 +79,37 @@ const ProductPageSearch = ({ setOpenSearch }) => {
         <SearchStyles>
           <div {...getRootProps({}, { suppressRefError: true })}>
             <input aria-label='search' {...getInputProps()} placeholder='Search YZED' />
+            <i className='fa fa-close-circle' aria-hidden='true'></i>
           </div>
           <ul {...getMenuProps()}>
-            {isOpen ? (
-              products
-                .filter(
-                  item =>
-                    !inputValue ||
-                    `${item.brand} ${item.name}`.toLowerCase().includes(inputValue.toLowerCase())
-                )
-                .map((item, index) => (
-                  <li
-                    {...getItemProps({
-                      key: item.name,
-                      index,
-                      item,
-                      style: {
-                        backgroundColor: highlightedIndex === index ? '#ffffff98' : 'transparent',
-                        color: highlightedIndex === index ? 'black' : 'white',
-                        fontWeight: highlightedIndex === index ? '400' : '600',
-                      },
-                    })}>
-                    <img src={item.imageUrl} alt={item.name} />
-                    <h3>
-                      {item.brand} - {item.name}
-                    </h3>
-                  </li>
-                ))
-            ) : (
-              <ShopThumbs />
-            )}
+            {isOpen
+              ? products
+                  .filter(
+                    item =>
+                      !inputValue ||
+                      `${item.brand} ${item.name}`.toLowerCase().includes(inputValue.toLowerCase())
+                  )
+                  .map((item, index) => (
+                    <li
+                      {...getItemProps({
+                        key: item.name,
+                        index,
+                        item,
+                        style: {
+                          backgroundColor: highlightedIndex === index ? '#ffffff98' : 'transparent',
+                          color: highlightedIndex === index ? 'black' : 'white',
+                          fontWeight: highlightedIndex === index ? '400' : '600',
+                        },
+                      })}>
+                      <img src={item.imageUrl} alt={item.name} />
+                      <h3>
+                        {item.brand} - {item.name}
+                      </h3>
+                    </li>
+                  ))
+              : null}
           </ul>
+          <ShopThumbs />
         </SearchStyles>
       )}
     </Downshift>
