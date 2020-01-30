@@ -13,6 +13,7 @@ import Profile from '../pages/Profile';
 import Shop from '../pages/Shop';
 import MainSearchPage from '../pages/Search';
 import ShopCategory from '../pages/ShopCategory';
+import Brand from '../pages/Brand';
 
 export default function App() {
   return (
@@ -37,6 +38,9 @@ export default function App() {
           </Route>
           <Route exact path='/shop'>
             <Shop />
+          </Route>
+          <Route exact path='/brand/:name'>
+            <Brand />
           </Route>
           <Route exact path='/shop/:category'>
             <ShopCategory />

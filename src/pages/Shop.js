@@ -5,6 +5,7 @@ import ShopPageProductCarousel from '../components/ShopARCarousel';
 import Accordion from '../components/Accordion';
 import ShopCategoryAccordionContent from '../components/ShopCategoryAccordionContent';
 import ShopThumbs from '../components/ShopThumbs';
+import BrandAccordionContent from '../components/BrandAccordionContent';
 
 export const ShopStyles = styled.div`
   width: 500px;
@@ -30,10 +31,10 @@ const Shop = () => {
       <Accordion title='Men'>
         <ShopCategoryAccordionContent title="men's" />
       </Accordion>
-      {/* <Accordion title='Brands'>
-        <h1>Hi</h1>
+      <Accordion title='Brands'>
+        <BrandAccordionContent title='brands' />
       </Accordion>
-      <Accordion title='Sale'>
+      {/* <Accordion title='Sale'>
         <h1>Hi</h1>
       </Accordion> */}
       <ShopPageProductCarousel />
