@@ -102,4 +102,3 @@ const MainPageCarousel = () => {
 
 export default MainPageCarousel;
 
-// export default MainPageUserCarousel;

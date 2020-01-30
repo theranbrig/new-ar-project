@@ -1,6 +1,6 @@
 import React from 'react';
 
-const MediaViewer = ({ glbFile, usdzFile }) => {
+const MediaViewer = ({ glbFile, usdzFile, imageUrl }) => {
   return (
     <div className='model-box'>
       <model-viewer
@@ -13,6 +13,7 @@ const MediaViewer = ({ glbFile, usdzFile }) => {
         camera-controls
         ios-src={usdzFile}
         preload
+        poster={imageUrl}
         background-color='#f9f9f9'></model-viewer>
     </div>
   );

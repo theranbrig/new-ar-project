@@ -1,20 +1,20 @@
 export const products = [
   {
     id: '1',
-    name: 'Adilette Cloud',
-    brand: 'Adidas',
-    color: 'white',
-    sizes: [200, 210, 220, 230, 240, 250],
+    name: 'Chunky Jacket',
+    brand: 'YZED',
+    color: 'Gold',
+    sizes: ['S', 'M', 'L'],
     imageUrl:
-      'https://res.cloudinary.com/dq7uyauun/image/upload/c_scale,w_300/v1579138280/adi_adilette_cloud.jpg',
+      'https://oneoone-resource.s3.ap-northeast-2.amazonaws.com/yzed/QUAD_CHUNKY_JACKET.png',
     glbFile:
       'https://oneoone-resource.s3.ap-northeast-2.amazonaws.com/3d/GLTF_CHUNKYJACKET_V2.gltf',
     uszdFile: 'https://oneoone-resource.s3.ap-northeast-2.amazonaws.com/3d/jacket.usdz',
     price: 4350,
     pictures: [
-      'https://res.cloudinary.com/dq7uyauun/image/upload/c_scale,w_300/v1579244918/adilette_1.jpg',
-      'https://res.cloudinary.com/dq7uyauun/image/upload/c_scale,w_300/v1579244918/adilette_2.jpg',
-      'https://res.cloudinary.com/dq7uyauun/image/upload/c_scale,w_300/v1579245351/adilette_3.jpg',
+      'https://oneoone-resource.s3.ap-northeast-2.amazonaws.com/yzed/QUAD_CHUNKY_JACKET_4.png',
+      'https://oneoone-resource.s3.ap-northeast-2.amazonaws.com/yzed/QUAD_CHUNKY_JACKET_2.png',
+      'https://oneoone-resource.s3.ap-northeast-2.amazonaws.com/yzed/QUAD_CHUNKY_JACKET_3.png',
     ],
     productInformation:
       'Lorem ipsum dolor amet sartorial gastropub cred pork belly banh mi jean shorts distillery. Green juice narwhal wayfarers tofu crucifix butcher taxidermy DIY kombucha jianbing ennui coloring book listicle. Sustainable quinoa cold-pressed butcher. Etsy kogi truffaut taiyaki seitan freegan small batch franzen ramps portland.',
@@ -47,20 +47,19 @@ export const products = [
   },
   {
     id: '2',
-    name: 'Falcon Green',
-    brand: 'Adidas',
-    color: 'white',
-    sizes: [200, 210, 220, 230, 240, 250],
-    imageUrl:
-      'https://res.cloudinary.com/dq7uyauun/image/upload/c_scale,w_300/v1579138280/adi_falcon_green.jpg',
+    name: 'Puffer Jacket',
+    brand: 'YZED',
+    color: 'Purple',
+    sizes: ['S', 'M', 'L'],
+    imageUrl: 'https://oneoone-resource.s3.ap-northeast-2.amazonaws.com/yzed/PUFFER+QUAD.png',
     glbFile:
       'https://oneoone-resource.s3.ap-northeast-2.amazonaws.com/3d/GLTF_LOWFINALPUFFER_V1.gltf',
     uszdFile: 'https://oneoone-resource.s3.ap-northeast-2.amazonaws.com/3d/jacket.usdz',
     price: 14150,
     pictures: [
-      'https://res.cloudinary.com/dq7uyauun/image/upload/c_scale,w_300/v1579244964/falcon_1.jpg',
-      'https://res.cloudinary.com/dq7uyauun/image/upload/c_scale,w_300/v1579244964/falcon_2.jpg',
-      'https://res.cloudinary.com/dq7uyauun/image/upload/c_scale,w_300/v1579244906/falcon_3.jpg',
+      'https://oneoone-resource.s3.ap-northeast-2.amazonaws.com/yzed/PUFFER+QUAD_1.png',
+      'https://oneoone-resource.s3.ap-northeast-2.amazonaws.com/yzed/PUFFER+QUAD_2.png',
+      'https://oneoone-resource.s3.ap-northeast-2.amazonaws.com/yzed/PUFFER+QUAD_3.png',
     ],
     productInformation:
       'Lorem ipsum dolor amet sartorial gastropub cred pork belly banh mi jean shorts distillery. Green juice narwhal wayfarers tofu crucifix butcher taxidermy DIY kombucha jianbing ennui coloring book listicle. Sustainable quinoa cold-pressed butcher. Etsy kogi truffaut taiyaki seitan freegan small batch franzen ramps portland.',
@@ -93,20 +92,19 @@ export const products = [
   },
   {
     id: '3',
-    name: 'Cloudfoam Pure',
-    brand: 'Adidas',
-    color: 'white',
-    sizes: [200, 210, 220, 230, 240, 250],
-    imageUrl:
-      'https://res.cloudinary.com/dq7uyauun/image/upload/c_scale,w_300/v1579138280/adi_cloudfoam_pure.jpg',
+    name: 'Leather Robe',
+    brand: 'YZED',
+    color: 'Black',
+    sizes: ['S', 'M', 'L'],
+    imageUrl: 'https://oneoone-resource.s3.ap-northeast-2.amazonaws.com/yzed/QUAD_LEATHERROBE.png',
     glbFile:
       'https://oneoone-resource.s3.ap-northeast-2.amazonaws.com/3d/GLTF_leather_robe_raw_v4.gltf',
     uszdFile: 'https://oneoone-resource.s3.ap-northeast-2.amazonaws.com/3d/jacket.usdz',
     price: 9850,
     pictures: [
-      'https://res.cloudinary.com/dq7uyauun/image/upload/c_scale,w_300/v1579244964/cloudfoam_1.jpg',
-      'https://res.cloudinary.com/dq7uyauun/image/upload/c_scale,w_300/v1579244919/cloudfoam_2.jpg',
-      'https://res.cloudinary.com/dq7uyauun/image/upload/c_scale,w_300/v1579244900/cloudfoam_3.jpg',
+      'https://oneoone-resource.s3.ap-northeast-2.amazonaws.com/yzed/QUAD_LEATHERROBE_1.png',
+      'https://oneoone-resource.s3.ap-northeast-2.amazonaws.com/yzed/QUAD_LEATHERROBE_2.png',
+      'https://oneoone-resource.s3.ap-northeast-2.amazonaws.com/yzed/QUAD_LEATHERROBE_3.png',
     ],
     productInformation:
       'Lorem ipsum dolor amet sartorial gastropub cred pork belly banh mi jean shorts distillery. Green juice narwhal wayfarers tofu crucifix butcher taxidermy DIY kombucha jianbing ennui coloring book listicle. Sustainable quinoa cold-pressed butcher. Etsy kogi truffaut taiyaki seitan freegan small batch franzen ramps portland.',
@@ -139,20 +137,109 @@ export const products = [
   },
   {
     id: '4',
-    name: 'Continental 80',
-    brand: 'Adidas',
+    name: 'Newtex Trenchcoat',
+    brand: 'YZED',
     color: 'white',
-    sizes: [200, 210, 220, 230, 240, 250],
-    imageUrl:
-      'https://res.cloudinary.com/dq7uyauun/image/upload/c_scale,w_300/v1579138764/adi_continental_80.jpg',
+    sizes: ['S', 'M', 'L'],
+    imageUrl: 'https://oneoone-resource.s3.ap-northeast-2.amazonaws.com/yzed/trenchcoat_yzed_3.png',
     glbFile:
       'https://oneoone-resource.s3.ap-northeast-2.amazonaws.com/3d/GLTF_DOWNSIZED_NEWTEX_TRENCHCOAT_V5.gltf',
     uszdFile: 'https://oneoone-resource.s3.ap-northeast-2.amazonaws.com/3d/jacket.usdz',
     price: 92350,
     pictures: [
-      'https://res.cloudinary.com/dq7uyauun/image/upload/c_scale,w_300/v1579244964/continental_1.jpg',
-      'https://res.cloudinary.com/dq7uyauun/image/upload/c_scale,w_300/v1579244919/continental_2.jpg',
-      'https://res.cloudinary.com/dq7uyauun/image/upload/c_scale,w_300/v1579244900/continental_3.jpg',
+      'https://oneoone-resource.s3.ap-northeast-2.amazonaws.com/yzed/trenchcoat_yzed_6.png',
+      'https://oneoone-resource.s3.ap-northeast-2.amazonaws.com/yzed/trenchcoat_yzed_4.png',
+      'https://oneoone-resource.s3.ap-northeast-2.amazonaws.com/yzed/trenchcoat_yzed_5.png',
+    ],
+    productInformation:
+      'Lorem ipsum dolor amet sartorial gastropub cred pork belly banh mi jean shorts distillery. Green juice narwhal wayfarers tofu crucifix butcher taxidermy DIY kombucha jianbing ennui coloring book listicle. Sustainable quinoa cold-pressed butcher. Etsy kogi truffaut taiyaki seitan freegan small batch franzen ramps portland.',
+    reviews: [
+      {
+        name: 'George',
+        stars: 5,
+        text:
+          'Gastropub vaporware artisan typewriter, craft beer blue bottle neutra pinterest post-ironic salvia bicycle rights umami celiac quinoa. Etsy wolf mlkshk trust fund cornhole VHS mustache sustainable readymade bushwick drinking vinegar. Pok pok cornhole pabst cliche, pour-over listicle glossier enamel pin everyday carry mustache four dollar toast +1 lomo skateboard.',
+      },
+      {
+        name: 'Paul',
+        stars: 2,
+        text:
+          'Pitchfork glossier quinoa letterpress bicycle rights distillery. Swag chicharrones tumblr narwhal cardigan crucifix hot chicken ramps edison bulb retro irony offal.',
+      },
+      {
+        name: 'Ringo',
+        stars: 4,
+        text:
+          'Sriracha fashion axe leggings thundercats seitan raclette. Whatever truffaut green juice listicle, artisan mixtape prism bespoke flannel godard. La croix taiyaki gochujang, direct trade sustainable before they sold out vape slow-carb gentrify raclette authentic everyday carry. Poke mixtape vaporware church-key iceland succulents.',
+      },
+      {
+        name: 'John',
+        stars: 3,
+        text:
+          'Messenger bag migas kitsch tumeric. Deep v copper mug coloring book semiotics blog. Adaptogen single-origin coffee swag cloud bread retro, la croix food truck vinyl keytar trust fund aesthetic. ',
+      },
+    ],
+  },
+  {
+    id: '5',
+    name: 'YZED Hoodie',
+    brand: 'YZED',
+    color: 'Lavender',
+    sizes: ['S', 'M', 'L'],
+    imageUrl: 'https://oneoone-resource.s3.ap-northeast-2.amazonaws.com/yzed/yzed_hoodie_v2_1.png',
+    glbFile:
+      'https://oneoone-resource.s3.ap-northeast-2.amazonaws.com/3d/GLTF_DOWNSIZED_NEWTEX_TRENCHCOAT_V5.gltf',
+    uszdFile: 'https://oneoone-resource.s3.ap-northeast-2.amazonaws.com/3d/jacket.usdz',
+    price: 7550,
+    pictures: [
+      'https://oneoone-resource.s3.ap-northeast-2.amazonaws.com/yzed/yzed_hoodie_v2_4.png',
+      'https://oneoone-resource.s3.ap-northeast-2.amazonaws.com/yzed/yzed_hoodie_v2_2.png',
+      'https://oneoone-resource.s3.ap-northeast-2.amazonaws.com/yzed/yzed_hoodie_v2_3.png',
+    ],
+    productInformation:
+      'Lorem ipsum dolor amet sartorial gastropub cred pork belly banh mi jean shorts distillery. Green juice narwhal wayfarers tofu crucifix butcher taxidermy DIY kombucha jianbing ennui coloring book listicle. Sustainable quinoa cold-pressed butcher. Etsy kogi truffaut taiyaki seitan freegan small batch franzen ramps portland.',
+    reviews: [
+      {
+        name: 'George',
+        stars: 5,
+        text:
+          'Gastropub vaporware artisan typewriter, craft beer blue bottle neutra pinterest post-ironic salvia bicycle rights umami celiac quinoa. Etsy wolf mlkshk trust fund cornhole VHS mustache sustainable readymade bushwick drinking vinegar. Pok pok cornhole pabst cliche, pour-over listicle glossier enamel pin everyday carry mustache four dollar toast +1 lomo skateboard.',
+      },
+      {
+        name: 'Paul',
+        stars: 2,
+        text:
+          'Pitchfork glossier quinoa letterpress bicycle rights distillery. Swag chicharrones tumblr narwhal cardigan crucifix hot chicken ramps edison bulb retro irony offal.',
+      },
+      {
+        name: 'Ringo',
+        stars: 4,
+        text:
+          'Sriracha fashion axe leggings thundercats seitan raclette. Whatever truffaut green juice listicle, artisan mixtape prism bespoke flannel godard. La croix taiyaki gochujang, direct trade sustainable before they sold out vape slow-carb gentrify raclette authentic everyday carry. Poke mixtape vaporware church-key iceland succulents.',
+      },
+      {
+        name: 'John',
+        stars: 3,
+        text:
+          'Messenger bag migas kitsch tumeric. Deep v copper mug coloring book semiotics blog. Adaptogen single-origin coffee swag cloud bread retro, la croix food truck vinyl keytar trust fund aesthetic. ',
+      },
+    ],
+  },
+  {
+    id: '6',
+    name: 'Jumper',
+    brand: 'YZED',
+    color: 'Midnight',
+    sizes: ['S', 'M', 'L'],
+    imageUrl: 'https://oneoone-resource.s3.ap-northeast-2.amazonaws.com/yzed/quad+jumper_1.png',
+    glbFile:
+      'https://oneoone-resource.s3.ap-northeast-2.amazonaws.com/3d/GLTF_DOWNSIZED_NEWTEX_TRENCHCOAT_V5.gltf',
+    uszdFile: 'https://oneoone-resource.s3.ap-northeast-2.amazonaws.com/3d/jacket.usdz',
+    price: 13450,
+    pictures: [
+      'https://oneoone-resource.s3.ap-northeast-2.amazonaws.com/yzed/quad+jumper_4.png',
+      'https://oneoone-resource.s3.ap-northeast-2.amazonaws.com/yzed/quad+jumper_2.png',
+      'https://oneoone-resource.s3.ap-northeast-2.amazonaws.com/yzed/quad+jumper_3.png',
     ],
     productInformation:
       'Lorem ipsum dolor amet sartorial gastropub cred pork belly banh mi jean shorts distillery. Green juice narwhal wayfarers tofu crucifix butcher taxidermy DIY kombucha jianbing ennui coloring book listicle. Sustainable quinoa cold-pressed butcher. Etsy kogi truffaut taiyaki seitan freegan small batch franzen ramps portland.',

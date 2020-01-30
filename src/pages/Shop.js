@@ -2,6 +2,7 @@ import React from 'react';
 import ShopThumbs from '../components/ShopThumbs';
 import styled from 'styled-components';
 import ProductsPageSearch from '../components/ProductsPageSearch';
+import ShopPageProductCarousel from '../components/ShopPageProductCarousel';
 
 export const ShopStyles = styled.div`
   width: 500px;
@@ -21,6 +22,7 @@ const Shop = () => {
     <ShopStyles>
       <h1>SHOP YZED</h1>
       <ProductsPageSearch />
+      <ShopPageProductCarousel />
     </ShopStyles>
   );
 };

@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { useParams } from 'react-router-dom';
+import { useParams, useHistory } from 'react-router-dom';
 import { products } from '../data';
 import styled from 'styled-components';
 import MediaViewer from '../components/MediaViewer';
@@ -37,8 +37,7 @@ const ProductContainer = styled.div`
   }
   div.ar-pic {
     position: relative !important;
-    top: 0import AddToCartSuccessModal from '../components/AddToCartSuccessModal';
-
+    top: 0;
     left: 0;
     img {
       position: relative;
@@ -58,13 +57,18 @@ const ProductContainer = styled.div`
     margin: 10px auto;
     display: grid;
     grid-template-columns: repeat(4, 1fr);
+    grid-auto-rows: 1fr;
     grid-gap: 10px;
     img {
-      max-width: 100%;
+      width: 100px;
+      height: 100px;
     }
   }
   .main-content-box {
     text-align: center;
+    img {
+      max-width: 90%;
+    }
   }
   .title-section {
     margin-top: 50px;
@@ -94,6 +98,13 @@ const ProductContainer = styled.div`
     margin: 20px 2.5%;
     font-weight: 300;
   }
+  .back-button button {
+    margin-top: 10px;
+    border: none;
+    .fa-chevron-left {
+      font-size: 1.4rem;
+    }
+  }
 `;
 
 const WhiteButton = styled.button`
@@ -117,6 +128,8 @@ const Product = () => {
   const [isAdded, setIsAdded] = useState(false);
   const [mainDisplay, setMainDisplay] = useState('model');
 
+  const history = useHistory();
+
   let { id } = useParams();
 
   useEffect(() => {
@@ -133,6 +146,11 @@ const Product = () => {
         <title>YZED - {product.name}</title>
       </Helmet>
       {isAdded && <AddToCartSuccessModal setIsAdded={setIsAdded} />}
+      <div className='back-button'>
+        <button aria-label='Back Button' onClick={() => history.goBack()}>
+          <i className='fa fa-chevron-left' aria-hidden='true'></i>
+        </button>
+      </div>
       <div className='title-section'>
         <div className='title-name'>
           <h3>{product.brand}</h3>
@@ -144,7 +162,11 @@ const Product = () => {
       </div>
       <div className='main-content-box'>
         {mainDisplay === 'model' ? (
-          <MediaViewer glbFile={product.glbFile} usdzFile={product.usdzFile} />
+          <MediaViewer
+            glbFile={product.glbFile}
+            usdzFile={product.usdzFile}
+            poster={product.imageUrl}
+          />
         ) : (
           <LazyLoadImage src={mainDisplay} />
         )}

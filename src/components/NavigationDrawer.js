@@ -144,7 +144,9 @@ const NavigationDrawer = ({ children }) => {
             }}
             aria-label='Toggle Cart'>
             <i className='fa fa-shopping-bag' aria-hidden='true'></i>
-            <i className='cart-count'>{cart.length}</i>
+            <i className='cart-count' aria-hidden='true'>
+              {cart.length}
+            </i>
           </button>
         </div>
       </StretchedNavStyles>
