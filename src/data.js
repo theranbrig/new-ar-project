@@ -9,7 +9,7 @@ export const products = [
       'https://oneoone-resource.s3.ap-northeast-2.amazonaws.com/yzed/QUAD_CHUNKY_JACKET.png',
     glbFile:
       'https://oneoone-resource.s3.ap-northeast-2.amazonaws.com/3d/GLTF_CHUNKYJACKET_V2.gltf',
-    uszdFile: 'https://oneoone-resource.s3.ap-northeast-2.amazonaws.com/yzed/CHUNKYJACKET_V2.usdz',
+    usdzFile: 'https://oneoone-resource.s3.ap-northeast-2.amazonaws.com/yzed/CHUNKYJACKET_V2.usdz',
     price: 4350,
     pictures: [
       'https://oneoone-resource.s3.ap-northeast-2.amazonaws.com/yzed/QUAD_CHUNKY_JACKET_4.png',
@@ -54,7 +54,7 @@ export const products = [
     imageUrl: 'https://oneoone-resource.s3.ap-northeast-2.amazonaws.com/yzed/PUFFER+QUAD.png',
     glbFile:
       'https://oneoone-resource.s3.ap-northeast-2.amazonaws.com/3d/GLTF_LOWFINALPUFFER_V1.gltf',
-    uszdFile: 'https://oneoone-resource.s3.ap-northeast-2.amazonaws.com/yzed/LOWFINALPUFFER.usdz',
+    usdzFile: 'https://oneoone-resource.s3.ap-northeast-2.amazonaws.com/yzed/LOWFINALPUFFER.usdz',
     price: 14150,
     pictures: [
       'https://oneoone-resource.s3.ap-northeast-2.amazonaws.com/yzed/PUFFER+QUAD_1.png',
@@ -99,7 +99,7 @@ export const products = [
     imageUrl: 'https://oneoone-resource.s3.ap-northeast-2.amazonaws.com/yzed/QUAD_LEATHERROBE.png',
     glbFile:
       'https://oneoone-resource.s3.ap-northeast-2.amazonaws.com/3d/GLTF_leather_robe_raw_v4.gltf',
-    uszdFile:
+    usdzFile:
       'https://oneoone-resource.s3.ap-northeast-2.amazonaws.com/yzed/leather_robe_raw_v4.usdz',
     price: 9850,
     pictures: [
@@ -145,7 +145,7 @@ export const products = [
     imageUrl: 'https://oneoone-resource.s3.ap-northeast-2.amazonaws.com/yzed/trenchcoat_yzed_3.png',
     glbFile:
       'https://oneoone-resource.s3.ap-northeast-2.amazonaws.com/3d/GLTF_DOWNSIZED_NEWTEX_TRENCHCOAT_V5.gltf',
-    uszdFile:
+    usdzFile:
       'https://oneoone-resource.s3.ap-northeast-2.amazonaws.com/yzed/DOWNSIZED_NEWTEX_TRENCHCOAT_V5.usdz',
     price: 92350,
     pictures: [
@@ -191,7 +191,7 @@ export const products = [
     imageUrl: 'https://oneoone-resource.s3.ap-northeast-2.amazonaws.com/yzed/yzed_hoodie_v2_1.png',
     glbFile:
       'https://oneoone-resource.s3.ap-northeast-2.amazonaws.com/yzed/GLTF_DOWNSIZED_HOODIE_V1.gltf',
-    uszdFile:
+    usdzFile:
       'https://oneoone-resource.s3.ap-northeast-2.amazonaws.com/yzed/DOWNSIZED_HOODIE_V1.usdz',
     price: 7550,
     pictures: [
@@ -237,7 +237,7 @@ export const products = [
     imageUrl: 'https://oneoone-resource.s3.ap-northeast-2.amazonaws.com/yzed/quad+jumper_1.png',
     glbFile:
       'https://oneoone-resource.s3.ap-northeast-2.amazonaws.com/yzed/GLTF_DOWNSIZED_JUMPERJACKET_V1.gltf',
-    uszdFile:
+    usdzFile:
       'https://oneoone-resource.s3.ap-northeast-2.amazonaws.com/yzed/DOWNSIZED_JUMPERJACKET_V1.usdz',
     price: 13450,
     pictures: [

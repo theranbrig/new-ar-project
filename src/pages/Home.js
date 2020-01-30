@@ -5,7 +5,7 @@ import '@google/model-viewer';
 import ArrowIcon from '../assets/images/down-arrow.png';
 import MainPageCarousel from '../components/MainPageUserCarousel';
 import { Link } from 'react-router-dom';
-import MediaViewer from '../components/MediaViewer';
+import MediaViewer from '../components/ModelViewer';
 import { Helmet } from 'react-helmet';
 
 const HomeStyles = styled.div`

@@ -1,6 +1,6 @@
 import React from 'react';
 
-const MediaViewer = ({ glbFile, usdzFile, imageUrl }) => {
+const ModelViewer = ({ glbFile, usdzFile, imageUrl }) => {
   return (
     <div className='model-box'>
       <model-viewer
@@ -19,4 +19,4 @@ const MediaViewer = ({ glbFile, usdzFile, imageUrl }) => {
   );
 };
 
-export default MediaViewer;
+export default ModelViewer;

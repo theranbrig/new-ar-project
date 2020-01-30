@@ -83,13 +83,13 @@ const StretchedNavStyles = styled.div`
   img {
     height: 10vh;
     @media (max-width: 576px) {
-      height: 5vh;
+      height: 4vh;
     }
   }
   button {
     color: white;
     font-size: 2rem;
-    width: 45px;
+    width: 30px;
     margin-right: 20px;
     background: none;
     border: none;
@@ -105,11 +105,22 @@ const StretchedNavStyles = styled.div`
       border-radius: 50%;
       background: linear-gradient(to top, #2a43a3 80%, #324fb3 20%);
       padding: 5px;
+      @media (max-width: 480px) {
+        font-size: 0.6rem;
+        padding: 3px;
+      }
+    }
+    @media (max-width: 480px) {
+      font-size: 1.6rem;
+      margin: 0px 10px 0;
     }
   }
   .hidden {
     visibility: hidden;
     width: 130px;
+    @media (max-width: 480px) {
+      width: 60px;
+    }
   }
 `;
 

@@ -5,9 +5,10 @@ import { products } from '../data';
 import styled from 'styled-components';
 import { LazyLoadImage } from 'react-lazy-load-image-component';
 import 'react-lazy-load-image-component/src/effects/blur.css';
-import MediaViewer from './MediaViewer';
+import MediaViewer from './ModelViewer';
 
 const SliderStyles = styled.div`
+  margin-top: 30px;
   .awssld__wrapper {
     height: 200px;
     margin-top: 40px;
@@ -19,7 +20,6 @@ const SliderStyles = styled.div`
   }
   .slider-cell {
     height: 100%;
-
     .product-info img {
       height: 150px;
       margin: 0 auto;
@@ -48,7 +48,7 @@ const ShopPageProductCarousel = () => {
   return (
     <SliderStyles>
       {currentARModel ? (
-        <MediaViewer glbFile={currentARModel.glbFile} />
+        <MediaViewer glbFile={currentARModel.glbFile} uszdFile={currentARModel.uszdFile} />
       ) : (
         <h1>Click items below to view more AR content</h1>
       )}

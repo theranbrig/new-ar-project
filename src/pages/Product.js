@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { useParams, useHistory } from 'react-router-dom';
 import { products } from '../data';
 import styled from 'styled-components';
-import MediaViewer from '../components/MediaViewer';
+import MediaViewer from '../components/ModelViewer';
 import { LazyLoadImage } from 'react-lazy-load-image-component';
 import ThreeDSVG from '../components/ThreeDSVG';
 import 'react-lazy-load-image-component/src/effects/blur.css';
@@ -62,6 +62,7 @@ const ProductContainer = styled.div`
     img {
       width: 100px;
       height: 100px;
+      max-width: 100%;
     }
   }
   .main-content-box {
@@ -137,6 +138,7 @@ const Product = () => {
     const filteredProducts = products.filter(prod => prod.name === id);
     setProduct(filteredProducts[0]);
     setLoading(false);
+    console.log(product);
   }, [product, id]);
 
   if (!product || loading) return <h1>Loading...</h1>;
