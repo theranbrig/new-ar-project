@@ -86,7 +86,7 @@ const ProductBrand = ({ brand }) => {
           <h4>
             <span>{brand.challenges}</span> CHALLENGES
           </h4>
-          <a href='#'>
+          <a href='/brand/adidas'>
             BRAND PROFILE <i className='fa fa-chevron-right'></i>
           </a>
         </div>

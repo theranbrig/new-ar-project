@@ -1,11 +1,10 @@
-import React, { useState } from 'react';
+import React from 'react';
 import AwesomeSlider from 'react-awesome-slider';
 import 'react-awesome-slider/dist/styles.css';
 import { products } from '../data';
 import styled from 'styled-components';
 import { LazyLoadImage } from 'react-lazy-load-image-component';
 import 'react-lazy-load-image-component/src/effects/blur.css';
-import MediaViewer from './ModelViewer';
 import AwesomeSliderStyles from 'react-awesome-slider/src/styled/cube-animation';
 import withAutoplay from 'react-awesome-slider/dist/autoplay';
 
@@ -50,7 +49,6 @@ const SliderStyles = styled.div`
 `;
 
 const ShopCategoryCarousel = () => {
-  const [currentARModel, setCurrentARModel] = useState(null);
   return (
     <SliderStyles>
       <h4>Featured Products</h4>
@@ -63,12 +61,7 @@ const ShopCategoryCarousel = () => {
         {products.map(product => (
           <div className='slider-cell content' key={product.id}>
             <div className='product-info'>
-              <LazyLoadImage
-                src={product.imageUrl}
-                alt={product.name}
-                effect='blur'
-                onClick={() => setCurrentARModel(product)}
-              />
+              <LazyLoadImage src={product.imageUrl} alt={product.name} effect='blur' />
               <h4>{product.name}</h4>
             </div>
           </div>

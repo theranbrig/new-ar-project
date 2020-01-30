@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import Downshift from 'downshift';
 import { products } from '../data';
 import { useHistory, Link, useParams } from 'react-router-dom';
@@ -85,7 +85,6 @@ const DownshiftScreenSearch = ({ setOpenSearch }) => {
   const { query } = useParams();
 
   const history = useHistory();
-  const [displayedItems, setDisplayedItems] = useState([]);
 
   return (
     <Downshift

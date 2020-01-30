@@ -1,7 +1,7 @@
-import React, { useState } from 'react';
+import React from 'react';
 import Downshift from 'downshift';
 import { products } from '../data';
-import { useHistory, useParams } from 'react-router-dom';
+import { useHistory } from 'react-router-dom';
 import styled from 'styled-components';
 
 export const SearchStyles = styled.div`
@@ -50,11 +50,7 @@ export const SearchStyles = styled.div`
 `;
 
 const ProductPageSearch = ({ setOpenSearch, children }) => {
-  const { query } = useParams();
-
   const history = useHistory();
-
-  const [displayedItems, setDisplayedItems] = useState([]);
 
   return (
     <Downshift

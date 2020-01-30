@@ -65,7 +65,6 @@ export const SearchStyles = styled.div`
 
 const ModalSearch = ({ setOpenSearch }) => {
   const history = useHistory();
-  const [displayedItems, setDisplayedItems] = useState([]);
   const [input, setInput] = useState('');
 
   return (
