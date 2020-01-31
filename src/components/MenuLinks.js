@@ -36,13 +36,18 @@ export const StyledMenu = styled.nav`
     text-decoration: none;
     transition: color 0.3s linear;
     font-family: Montserrat, sans-serif;
-
     @media (max-width: 576px) {
       font-size: 1.5rem;
       text-align: center;
     }
     &:hover {
       color: #fff;
+    }
+    span {
+      font-size: 0.8rem;
+      color: white;
+      font-weight: 300;
+      -webkit-text-stroke-width: 0px;
     }
   }
   a.active-link {
@@ -65,6 +70,8 @@ export const StyledMenu = styled.nav`
 
 const MenuLinks = ({ open, setOpen }) => {
   const { userData } = useContext(FirebaseContext);
+
+  console.log(userData);
 
   return (
     <StyledMenu open={open}>
@@ -90,9 +97,10 @@ const MenuLinks = ({ open, setOpen }) => {
       ) : (
         <NavLink to='/profile' onClick={() => setOpen(false)} activeClassName='active-link'>
           Profile
+          <br />
+          <span>{userData.email}</span>
         </NavLink>
       )}
-      {/* <Link to='/users'>Users</Link> */}
       <div className='social-icons'>
         <a
           href='https://facebook.com'
