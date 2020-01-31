@@ -38,7 +38,7 @@ const ShopThumbs = ({ open }) => {
     <ProductThumbsStyles className='product-thumbs'>
       {products.map(product => (
         <div className='product-thumb' key={product.name}>
-          <Link to={`product/${product.name}`}>
+          <Link to={`/product/${product.name}`}>
             <LazyLoadImage src={product.imageUrl} alt={product.name} effect='blur' />
             <h4>{product.brand}</h4>
             <h3>{product.name}</h3>

@@ -47,19 +47,19 @@ const ShopCategory = () => {
   return (
     <ShopCategoryStyles>
       <BackButton />
-      <h1>{formatedCategory}</h1>
-      <div className='category-buttons'>
-        <Link to={`/shop/${title}-tops`}>TOPS</Link>
-        <Link to={`/shop/${title}-bottoms`}>BOTTOMS</Link>
-        <Link to={`/shop/${title}-hats`}>HATS</Link>
-        <Link to={`/shop/${title}-bags`}>BAGS</Link>
-        <Link to={`/shop/${title}-accessories`}>ACCESSORIES</Link>
-        <Link to={`/shop/${title}-outerwear`}>OUTERWEAR</Link>
-      </div>
-      <div className='all-link'>
-        <Link to={`/shop`}>BROWSE ALL PRODUCTS</Link>
-      </div>
       <ProductsPageSearch>
+      <h1>{formatedCategory}</h1>
+        <div className='category-buttons'>
+          <Link to={`/shop/${title}-tops`}>TOPS</Link>
+          <Link to={`/shop/${title}-bottoms`}>BOTTOMS</Link>
+          <Link to={`/shop/${title}-hats`}>HATS</Link>
+          <Link to={`/shop/${title}-bags`}>BAGS</Link>
+          <Link to={`/shop/${title}-accessories`}>ACCESSORIES</Link>
+          <Link to={`/shop/${title}-outerwear`}>OUTERWEAR</Link>
+        </div>
+        <div className='all-link'>
+          <Link to={`/shop`}>BROWSE ALL PRODUCTS</Link>
+        </div>
         <ShopThumbs />
       </ProductsPageSearch>
     </ShopCategoryStyles>
