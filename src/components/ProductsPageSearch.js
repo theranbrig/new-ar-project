@@ -21,13 +21,18 @@ export const SearchStyles = styled.div`
     align-items: center;
     width: 90%:
     margin: 0 auto;
+    &[aria-selected="true"] h3 {
+      font-weight: 500;
+    }
     img {
       height: 50px;
     }
     h3 {
       font-size: 1.2rem;
+      font-weight: 300;
       color: black;
     }
+
   }
   ul {
     padding: 0;
@@ -91,8 +96,6 @@ const ProductPageSearch = ({ setOpenSearch, children }) => {
                         item,
                         style: {
                           backgroundColor: highlightedIndex === index ? '#00000016' : 'transparent',
-                          color: highlightedIndex === index ? 'black' : 'white',
-                          fontWeight: highlightedIndex === index ? '300 !important' : '600',
                         },
                       })}>
                       <img src={item.imageUrl} alt={item.name} />

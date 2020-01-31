@@ -28,6 +28,9 @@ export const SearchStyles = styled.div`
     h3 {
       font-size: 1.2rem;
     }
+    &[aria-selected="true"] h3 {
+      font-weight: 500;
+    }
   }
   ul {
     padding: 0;
@@ -109,7 +112,7 @@ const ModalSearch = ({ setOpenSearch }) => {
                       !inputValue ||
                       `${item.brand} ${item.name}`.toLowerCase().includes(inputValue.toLowerCase())
                   )
-                  .slice(0, 4)
+                  .slice(0, 3)
                   .map((item, index) => (
                     <li
                       {...getItemProps({
