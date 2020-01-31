@@ -8,7 +8,6 @@ export const BrandStyles = styled.div`
   width: 95%;
   margin: 0 auto;
   border-bottom: 1px solid #989898;
-  border-top: 1px solid #989898;
   margin-bottom: 50px;
   h3.brand-title {
     margin: 20px 2.5% 10px;

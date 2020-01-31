@@ -35,7 +35,7 @@ const Shop = () => {
       <Accordion title='Brands'>
         <BrandAccordionContent title='brands' />
       </Accordion>
-      <Accordion title='Sale'>
+      <Accordion title='Sale' last={true}>
         <SaleAccordionContent title='sale' />
       </Accordion>
       <ShopPageProductCarousel />

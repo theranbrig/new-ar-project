@@ -6,7 +6,6 @@ export const AccordionStyles = styled.div`
   overflow: hidden;
   transition-property: all;
   transition-duration: 0.7s;
-  /* transition-timing-function: cubic-bezier(0, 1, 0.5, 1); */
   font-family: Montserrat;
   padding: 0 2.5%;
 `;
@@ -19,17 +18,18 @@ const AccordionButton = styled.button`
   background: white;
   border: none;
   border-top: 1px solid #989898;
+  border-bottom: ${({ last }) => (last ? '1px solid #989898' : 'none')};
   display: flex;
   flex-direction: row;
   justify-content: space-between;
   font-size: 1.2rem;
 `;
 
-const Accordion = ({ children, title }) => {
+const Accordion = ({ children, title, last }) => {
   const [open, setOpen] = useState(false);
   return (
     <>
-      <AccordionButton onClick={() => setOpen(!open)}>
+      <AccordionButton onClick={() => setOpen(!open)} last={last}>
         {title}
         {open ? <i className='fa fa-chevron-up'></i> : <i className='fa fa-chevron-down'></i>}
       </AccordionButton>

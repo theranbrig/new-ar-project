@@ -211,7 +211,7 @@ const Product = () => {
             effect='blur'
           />
         </Accordion>
-        <Accordion title={`REVIEWS (${product.reviews.length})`}>
+        <Accordion title={`REVIEWS (${product.reviews.length})`} last={true}>
           <Reviews reviews={product.reviews} />
         </Accordion>
       </div>

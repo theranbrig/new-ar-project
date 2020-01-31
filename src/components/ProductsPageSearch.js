@@ -90,9 +90,9 @@ const ProductPageSearch = ({ setOpenSearch, children }) => {
                         index,
                         item,
                         style: {
-                          backgroundColor: highlightedIndex === index ? '#ffffff98' : 'transparent',
+                          backgroundColor: highlightedIndex === index ? '#00000016' : 'transparent',
                           color: highlightedIndex === index ? 'black' : 'white',
-                          fontWeight: highlightedIndex === index ? '400' : '600',
+                          fontWeight: highlightedIndex === index ? '300 !important' : '600',
                         },
                       })}>
                       <img src={item.imageUrl} alt={item.name} />
