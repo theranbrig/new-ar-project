@@ -3,6 +3,7 @@ import { useParams, Link } from 'react-router-dom';
 import ProductsPageSearch from '../components/ProductsPageSearch';
 import ShopThumbs from '../components/ShopThumbs';
 import styled from 'styled-components';
+import BackButton from '../components/BackButton';
 
 export const ShopCategoryStyles = styled.div`
   width: 500px;
@@ -54,6 +55,7 @@ const Brand = () => {
   }
   return (
     <ShopCategoryStyles>
+      <BackButton />
       <h1>{`${formatedName.toUpperCase()}`}</h1>
       <div className='category-buttons'>
         <Link to={`/brand/${brandName}-tops`}>TOPS</Link>

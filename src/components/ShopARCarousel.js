@@ -6,6 +6,10 @@ import styled from 'styled-components';
 import { LazyLoadImage } from 'react-lazy-load-image-component';
 import 'react-lazy-load-image-component/src/effects/blur.css';
 import MediaViewer from './ModelViewer';
+import AwesomeSliderStyles from 'react-awesome-slider/src/styled/cube-animation';
+import withAutoplay from 'react-awesome-slider/dist/autoplay';
+
+const AutoplaySlider = withAutoplay(AwesomeSlider);
 
 const SliderStyles = styled.div`
   margin-top: 30px;
@@ -42,6 +46,9 @@ const SliderStyles = styled.div`
     margin-top: 100px !important;
     font-weight: 300;
   }
+  div .awssld__timer {
+    background-color: transparent;
+  }
 `;
 
 const ShopPageProductCarousel = () => {
@@ -53,7 +60,12 @@ const ShopPageProductCarousel = () => {
       ) : (
         <h1>Click items below to view more AR content</h1>
       )}
-      <AwesomeSlider>
+      <AutoplaySlider
+        animation='cubeAnimation'
+        cssModule={AwesomeSliderStyles}
+        play={true}
+        interval={3000}
+        infinite={true}>
         {products.map(product => (
           <div className='slider-cell content' key={product.id}>
             <div className='product-info'>
@@ -67,7 +79,7 @@ const ShopPageProductCarousel = () => {
             </div>
           </div>
         ))}
-      </AwesomeSlider>
+      </AutoplaySlider>
     </SliderStyles>
   );
 };

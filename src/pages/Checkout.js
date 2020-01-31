@@ -4,6 +4,7 @@ import ShoppingBagItems from '../components/ShoppingBagItems';
 import styled from 'styled-components';
 import { useHistory } from 'react-router-dom';
 import { FirebaseContext } from '../context/Firebase';
+import BackButton from '../components/BackButton';
 
 export const CartStyles = styled.div`
   width: 500px;
@@ -70,6 +71,7 @@ const Checkout = () => {
 
   return (
     <CartStyles>
+      <BackButton />
       {!cart.length && <h1>No Items in Bag...</h1>}
       <ShoppingBagItems canEdit={true} items={cart} cartLoading={cartLoading} mode='light' />
       <div className='cart-details'>

@@ -2,6 +2,7 @@ import React from 'react';
 import styled from 'styled-components';
 import { useHistory } from 'react-router-dom';
 import DropdownSearch from './DropdownSearch';
+import BackButton from '../components/BackButton';
 
 export const ModalStyles = styled.div`
   height: ${({ openSearch }) => (openSearch ? '500px' : '0px')};
@@ -60,6 +61,7 @@ const SearchModal = ({ openSearch, setOpenSearch }) => {
 
   return (
     <ModalStyles openSearch={openSearch}>
+      <BackButton />
       <div className='modal-content'>
         <div className='modal-top'>
           <h3>TOP RESULTS ON YZED</h3>

@@ -5,16 +5,15 @@ export const products = [
     brand: 'YZED',
     color: 'Gold',
     sizes: ['S', 'M', 'L'],
-    imageUrl:
-      'https://oneoone-resource.s3.ap-northeast-2.amazonaws.com/yzed/QUAD_CHUNKY_JACKET.png',
+    imageUrl: 'https://oneoone-resource.s3.ap-northeast-2.amazonaws.com/yzed/chunkyjacket_1.jpg',
     glbFile:
       'https://oneoone-resource.s3.ap-northeast-2.amazonaws.com/3d/GLTF_CHUNKYJACKET_V2.gltf',
     usdzFile: 'https://oneoone-resource.s3.ap-northeast-2.amazonaws.com/yzed/CHUNKYJACKET_V2.usdz',
     price: 4350,
     pictures: [
-      'https://oneoone-resource.s3.ap-northeast-2.amazonaws.com/yzed/QUAD_CHUNKY_JACKET_4.png',
-      'https://oneoone-resource.s3.ap-northeast-2.amazonaws.com/yzed/QUAD_CHUNKY_JACKET_2.png',
-      'https://oneoone-resource.s3.ap-northeast-2.amazonaws.com/yzed/QUAD_CHUNKY_JACKET_3.png',
+      'https://oneoone-resource.s3.ap-northeast-2.amazonaws.com/yzed/chunkyjacket_2.jpg',
+      'https://oneoone-resource.s3.ap-northeast-2.amazonaws.com/yzed/chunkyjacket_3.jpg',
+      'https://oneoone-resource.s3.ap-northeast-2.amazonaws.com/yzed/chunkyjacket_4.jpg',
     ],
     productInformation:
       'Lorem ipsum dolor amet sartorial gastropub cred pork belly banh mi jean shorts distillery. Green juice narwhal wayfarers tofu crucifix butcher taxidermy DIY kombucha jianbing ennui coloring book listicle. Sustainable quinoa cold-pressed butcher. Etsy kogi truffaut taiyaki seitan freegan small batch franzen ramps portland.',
@@ -51,15 +50,15 @@ export const products = [
     brand: 'YZED',
     color: 'Purple',
     sizes: ['S', 'M', 'L'],
-    imageUrl: 'https://oneoone-resource.s3.ap-northeast-2.amazonaws.com/yzed/PUFFER+QUAD.png',
+    imageUrl: 'https://oneoone-resource.s3.ap-northeast-2.amazonaws.com/yzed/pufferjacket_1.jpg',
     glbFile:
       'https://oneoone-resource.s3.ap-northeast-2.amazonaws.com/3d/GLTF_LOWFINALPUFFER_V1.gltf',
     usdzFile: 'https://oneoone-resource.s3.ap-northeast-2.amazonaws.com/yzed/LOWFINALPUFFER.usdz',
     price: 14150,
     pictures: [
-      'https://oneoone-resource.s3.ap-northeast-2.amazonaws.com/yzed/PUFFER+QUAD_1.png',
-      'https://oneoone-resource.s3.ap-northeast-2.amazonaws.com/yzed/PUFFER+QUAD_2.png',
-      'https://oneoone-resource.s3.ap-northeast-2.amazonaws.com/yzed/PUFFER+QUAD_3.png',
+      'https://oneoone-resource.s3.ap-northeast-2.amazonaws.com/yzed/pufferjacket_2.jpg',
+      'https://oneoone-resource.s3.ap-northeast-2.amazonaws.com/yzed/pufferjacket_3.jpg',
+      'https://oneoone-resource.s3.ap-northeast-2.amazonaws.com/yzed/pufferjacket_4.jpg',
     ],
     productInformation:
       'Lorem ipsum dolor amet sartorial gastropub cred pork belly banh mi jean shorts distillery. Green juice narwhal wayfarers tofu crucifix butcher taxidermy DIY kombucha jianbing ennui coloring book listicle. Sustainable quinoa cold-pressed butcher. Etsy kogi truffaut taiyaki seitan freegan small batch franzen ramps portland.',
@@ -96,16 +95,16 @@ export const products = [
     brand: 'YZED',
     color: 'Black',
     sizes: ['S', 'M', 'L'],
-    imageUrl: 'https://oneoone-resource.s3.ap-northeast-2.amazonaws.com/yzed/QUAD_LEATHERROBE.png',
+    imageUrl: 'https://oneoone-resource.s3.ap-northeast-2.amazonaws.com/yzed/leatherrobe_1.jpg',
     glbFile:
       'https://oneoone-resource.s3.ap-northeast-2.amazonaws.com/3d/GLTF_leather_robe_raw_v4.gltf',
     usdzFile:
       'https://oneoone-resource.s3.ap-northeast-2.amazonaws.com/yzed/leather_robe_raw_v4.usdz',
     price: 9850,
     pictures: [
-      'https://oneoone-resource.s3.ap-northeast-2.amazonaws.com/yzed/QUAD_LEATHERROBE_1.png',
-      'https://oneoone-resource.s3.ap-northeast-2.amazonaws.com/yzed/QUAD_LEATHERROBE_2.png',
-      'https://oneoone-resource.s3.ap-northeast-2.amazonaws.com/yzed/QUAD_LEATHERROBE_3.png',
+      'https://oneoone-resource.s3.ap-northeast-2.amazonaws.com/yzed/leatherrobe_2.jpg',
+      'https://oneoone-resource.s3.ap-northeast-2.amazonaws.com/yzed/leatherrobe_3.jpg',
+      'https://oneoone-resource.s3.ap-northeast-2.amazonaws.com/yzed/leatherrobe_4.jpg',
     ],
     productInformation:
       'Lorem ipsum dolor amet sartorial gastropub cred pork belly banh mi jean shorts distillery. Green juice narwhal wayfarers tofu crucifix butcher taxidermy DIY kombucha jianbing ennui coloring book listicle. Sustainable quinoa cold-pressed butcher. Etsy kogi truffaut taiyaki seitan freegan small batch franzen ramps portland.',
@@ -142,16 +141,16 @@ export const products = [
     brand: 'YZED',
     color: 'white',
     sizes: ['S', 'M', 'L'],
-    imageUrl: 'https://oneoone-resource.s3.ap-northeast-2.amazonaws.com/yzed/trenchcoat_yzed_3.png',
+    imageUrl: 'https://oneoone-resource.s3.ap-northeast-2.amazonaws.com/yzed/trenchcoat_1.jpg',
     glbFile:
       'https://oneoone-resource.s3.ap-northeast-2.amazonaws.com/3d/GLTF_DOWNSIZED_NEWTEX_TRENCHCOAT_V5.gltf',
     usdzFile:
       'https://oneoone-resource.s3.ap-northeast-2.amazonaws.com/yzed/DOWNSIZED_NEWTEX_TRENCHCOAT_V5.usdz',
     price: 92350,
     pictures: [
-      'https://oneoone-resource.s3.ap-northeast-2.amazonaws.com/yzed/trenchcoat_yzed_6.png',
-      'https://oneoone-resource.s3.ap-northeast-2.amazonaws.com/yzed/trenchcoat_yzed_4.png',
-      'https://oneoone-resource.s3.ap-northeast-2.amazonaws.com/yzed/trenchcoat_yzed_5.png',
+      'https://oneoone-resource.s3.ap-northeast-2.amazonaws.com/yzed/trenchcoat_2.jpg',
+      'https://oneoone-resource.s3.ap-northeast-2.amazonaws.com/yzed/trenchcoat_3.jpg',
+      'https://oneoone-resource.s3.ap-northeast-2.amazonaws.com/yzed/trenchcoat_4.jpg',
     ],
     productInformation:
       'Lorem ipsum dolor amet sartorial gastropub cred pork belly banh mi jean shorts distillery. Green juice narwhal wayfarers tofu crucifix butcher taxidermy DIY kombucha jianbing ennui coloring book listicle. Sustainable quinoa cold-pressed butcher. Etsy kogi truffaut taiyaki seitan freegan small batch franzen ramps portland.',
@@ -188,16 +187,16 @@ export const products = [
     brand: 'YZED',
     color: 'Lavender',
     sizes: ['S', 'M', 'L'],
-    imageUrl: 'https://oneoone-resource.s3.ap-northeast-2.amazonaws.com/yzed/yzed_hoodie_v2_1.png',
+    imageUrl: 'https://oneoone-resource.s3.ap-northeast-2.amazonaws.com/yzed/hoodie_1.jpg',
     glbFile:
       'https://oneoone-resource.s3.ap-northeast-2.amazonaws.com/yzed/GLTF_DOWNSIZED_HOODIE_V1.gltf',
     usdzFile:
       'https://oneoone-resource.s3.ap-northeast-2.amazonaws.com/yzed/DOWNSIZED_HOODIE_V1.usdz',
     price: 7550,
     pictures: [
-      'https://oneoone-resource.s3.ap-northeast-2.amazonaws.com/yzed/yzed_hoodie_v2_4.png',
-      'https://oneoone-resource.s3.ap-northeast-2.amazonaws.com/yzed/yzed_hoodie_v2_2.png',
-      'https://oneoone-resource.s3.ap-northeast-2.amazonaws.com/yzed/yzed_hoodie_v2_3.png',
+      'https://oneoone-resource.s3.ap-northeast-2.amazonaws.com/yzed/hoodie_2.jpg',
+      'https://oneoone-resource.s3.ap-northeast-2.amazonaws.com/yzed/hoodie_3.jpg',
+      'https://oneoone-resource.s3.ap-northeast-2.amazonaws.com/yzed/hoodie_4.jpg',
     ],
     productInformation:
       'Lorem ipsum dolor amet sartorial gastropub cred pork belly banh mi jean shorts distillery. Green juice narwhal wayfarers tofu crucifix butcher taxidermy DIY kombucha jianbing ennui coloring book listicle. Sustainable quinoa cold-pressed butcher. Etsy kogi truffaut taiyaki seitan freegan small batch franzen ramps portland.',
@@ -234,16 +233,16 @@ export const products = [
     brand: 'YZED',
     color: 'Midnight',
     sizes: ['S', 'M', 'L'],
-    imageUrl: 'https://oneoone-resource.s3.ap-northeast-2.amazonaws.com/yzed/quad+jumper_1.png',
+    imageUrl: 'https://oneoone-resource.s3.ap-northeast-2.amazonaws.com/yzed/jumper_1.jpg',
     glbFile:
       'https://oneoone-resource.s3.ap-northeast-2.amazonaws.com/yzed/GLTF_DOWNSIZED_JUMPERJACKET_V1.gltf',
     usdzFile:
       'https://oneoone-resource.s3.ap-northeast-2.amazonaws.com/yzed/DOWNSIZED_JUMPERJACKET_V1.usdz',
     price: 13450,
     pictures: [
-      'https://oneoone-resource.s3.ap-northeast-2.amazonaws.com/yzed/quad+jumper_4.png',
-      'https://oneoone-resource.s3.ap-northeast-2.amazonaws.com/yzed/quad+jumper_2.png',
-      'https://oneoone-resource.s3.ap-northeast-2.amazonaws.com/yzed/quad+jumper_3.png',
+      'https://oneoone-resource.s3.ap-northeast-2.amazonaws.com/yzed/jumper_4.jpg',
+      'https://oneoone-resource.s3.ap-northeast-2.amazonaws.com/yzed/jumper_2.jpg',
+      'https://oneoone-resource.s3.ap-northeast-2.amazonaws.com/yzed/jumper_3.jpg',
     ],
     productInformation:
       'Lorem ipsum dolor amet sartorial gastropub cred pork belly banh mi jean shorts distillery. Green juice narwhal wayfarers tofu crucifix butcher taxidermy DIY kombucha jianbing ennui coloring book listicle. Sustainable quinoa cold-pressed butcher. Etsy kogi truffaut taiyaki seitan freegan small batch franzen ramps portland.',
