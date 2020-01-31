@@ -2,6 +2,7 @@ import React from 'react';
 import { LazyLoadImage } from 'react-lazy-load-image-component';
 import { Brands } from '../data';
 import styled from 'styled-components';
+import { Link } from 'react-router-dom';
 
 export const BrandStyles = styled.div`
   font-family: Montserrat, sans-serif;
@@ -85,9 +86,9 @@ const ProductBrand = ({ brand }) => {
           <h4>
             <span>{brand.challenges}</span> CHALLENGES
           </h4>
-          <a href='/brand/adidas'>
+          <Link to='/brand/adidas'>
             BRAND PROFILE <i className='fa fa-chevron-right'></i>
-          </a>
+          </Link>
         </div>
       </div>
     </BrandStyles>
