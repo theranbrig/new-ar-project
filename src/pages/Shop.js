@@ -27,10 +27,10 @@ const Shop = () => {
       <h1>SHOP YZED</h1>
       <ProductsPageSearch />
       <Accordion title='Women'>
-        <ShopCategoryAccordionContent title="women's" />
+        <ShopCategoryAccordionContent title="women" />
       </Accordion>
       <Accordion title='Men'>
-        <ShopCategoryAccordionContent title="men's" />
+        <ShopCategoryAccordionContent title="men" />
       </Accordion>
       <Accordion title='Brands'>
         <BrandAccordionContent title='brands' />

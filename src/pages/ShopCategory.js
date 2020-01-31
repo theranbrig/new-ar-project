@@ -42,8 +42,8 @@ export const ShopCategoryStyles = styled.div`
 
 const ShopCategory = () => {
   const { category } = useParams();
-  const formatedCategory = category.replace('-', ' ').toUpperCase();
-  const title = formatedCategory.slice(0, formatedCategory.indexOf(' ')).toLowerCase();
+  const formatedCategory = category.replace('-', "'s ").toUpperCase();
+  const title = formatedCategory.slice(0, formatedCategory.indexOf("'")).toLowerCase();
   return (
     <ShopCategoryStyles>
       <BackButton />
