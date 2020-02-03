@@ -36,11 +36,10 @@ const FirebaseProvider = ({ children }) => {
       .auth()
       .createUserWithEmailAndPassword(email, password)
       .then(() => {
-        console.log(firebase.auth().currentUser.uid);
         dbh
           .collection('users')
           .doc(firebase.auth().currentUser.uid)
-          .set({ userName, firstName, lastName });
+          .set({ userName, firstName, lastName, role: 'ADMIN' });
       })
       .catch(function(error) {
         setFirebaseError(error.message);
@@ -82,8 +81,8 @@ const FirebaseProvider = ({ children }) => {
         .get()
         .then(doc => {
           if (doc.exists) {
-            const { userName, firstName, lastName } = doc.data();
-            userDetails = { id: user.uid, email: user.email, userName, firstName, lastName };
+            const { userName, firstName, lastName, role } = doc.data();
+            userDetails = { id: user.uid, email: user.email, userName, firstName, lastName, role };
             if (!userData) {
               setUserData(userDetails);
             }
@@ -98,6 +97,38 @@ const FirebaseProvider = ({ children }) => {
     }
   });
 
+  // FIREBASE PRODUCT MUTATIONS
+
+  const createProduct = (
+    name,
+    brand,
+    mainImage,
+    color,
+    price,
+    sizes,
+    glbFile,
+    usdzFile,
+    pictures,
+    productInformation
+  ) => {
+    dbh
+      .collection('products')
+      .doc()
+      .set({
+        name,
+        brand,
+        mainImage,
+        color,
+        price,
+        sizes,
+        glbFile,
+        usdzFile,
+        pictures,
+        productInformation,
+      })
+      .catch(err => console.log(err));
+  };
+
   return (
     <FirebaseContext.Provider
       value={{
@@ -108,6 +139,7 @@ const FirebaseProvider = ({ children }) => {
         addToCart,
         dbh,
         logoutUser,
+        createProduct,
       }}>
       {children}
     </FirebaseContext.Provider>
