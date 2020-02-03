@@ -52,8 +52,8 @@ export const products = [
     sizes: ['S', 'M', 'L'],
     imageUrl: 'https://oneoone-resource.s3.ap-northeast-2.amazonaws.com/yzed/pufferjacket_1.jpg',
     glbFile:
-      'https://oneoone-resource.s3.ap-northeast-2.amazonaws.com/3d/GLTF_LOWFINALPUFFER_V1.gltf',
-    usdzFile: 'https://oneoone-resource.s3.ap-northeast-2.amazonaws.com/yzed/LOWFINALPUFFER.usdz',
+      'https://oneoone-resource.s3.ap-northeast-2.amazonaws.com/yzed/FINALGLTF_BAKEDRESIZED_PUFFERQUAD_v7_.gltf',
+    usdzFile: 'https://oneoone-resource.s3.ap-northeast-2.amazonaws.com/yzed/puffer_rebake.usdz',
     price: 14150,
     pictures: [
       'https://oneoone-resource.s3.ap-northeast-2.amazonaws.com/yzed/pufferjacket_2.jpg',
