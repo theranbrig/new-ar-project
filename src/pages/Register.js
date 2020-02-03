@@ -103,12 +103,15 @@ const Register = () => {
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
 
+  const userName = 'userPerson';
+  const firstName = 'Bill';
+  const lastName = 'Brasky';
+
   const history = useHistory();
 
   const { registerUser, firebaseError, userData } = useContext(FirebaseContext);
 
   useEffect(() => {
-    console.log(userData);
     if (userData) {
       history.push('/');
     }
@@ -152,7 +155,7 @@ const Register = () => {
         <BlackButton
           disabled={password !== confirmPassword}
           onClick={() => {
-            registerUser(email, password);
+            registerUser(email, password, userName, firstName, lastName);
           }}>
           Submit
         </BlackButton>

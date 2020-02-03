@@ -31,7 +31,7 @@ export const StyledMenu = styled.nav`
     font-weight: bold;
     letter-spacing: 0.5rem;
     color: #000;
-    -webkit-text-stroke-width: 1px;
+    -webkit-text-stroke-width: 2px;
     -webkit-text-stroke-color: white;
     text-decoration: none;
     transition: color 0.3s linear;
@@ -71,8 +71,6 @@ export const StyledMenu = styled.nav`
 const MenuLinks = ({ open, setOpen }) => {
   const { userData } = useContext(FirebaseContext);
 
-  console.log(userData);
-
   return (
     <StyledMenu open={open}>
       <NavLink to='/' onClick={() => setOpen(false)} exact activeClassName='active-link'>
@@ -98,7 +96,7 @@ const MenuLinks = ({ open, setOpen }) => {
         <NavLink to='/profile' onClick={() => setOpen(false)} activeClassName='active-link'>
           Profile
           <br />
-          <span>{userData.email}</span>
+          <span>{userData.userName}</span>
         </NavLink>
       )}
       <div className='social-icons'>

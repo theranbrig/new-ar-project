@@ -31,10 +31,17 @@ const FirebaseProvider = ({ children }) => {
   const [firebaseError, setFirebaseError] = useState(null);
   const [userData, setUserData] = useState(null);
 
-  const registerUser = (email, password) => {
+  const registerUser = (email, password, userName, firstName, lastName) => {
     firebase
       .auth()
       .createUserWithEmailAndPassword(email, password)
+      .then(() => {
+        console.log(firebase.auth().currentUser.uid);
+        dbh
+          .collection('users')
+          .doc(firebase.auth().currentUser.uid)
+          .set({ userName, firstName, lastName });
+      })
       .catch(function(error) {
         setFirebaseError(error.message);
       });
@@ -69,7 +76,23 @@ const FirebaseProvider = ({ children }) => {
 
   firebase.auth().onAuthStateChanged(function(user) {
     if (user) {
-      setUserData(user);
+      const userId = dbh.collection('users').doc(firebase.auth().currentUser.uid);
+      let userDetails;
+      userId
+        .get()
+        .then(doc => {
+          if (doc.exists) {
+            const { userName, firstName, lastName } = doc.data();
+            userDetails = { id: user.uid, email: user.email, userName, firstName, lastName };
+            if (!userData) {
+              setUserData(userDetails);
+            }
+          }
+        })
+        .catch(error => {
+          console.log(error);
+        });
+      console.log(userData);
     } else {
       setUserData(null);
     }
