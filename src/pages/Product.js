@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useContext } from 'react';
 import { useParams, useHistory } from 'react-router-dom';
 import { products } from '../data';
 import styled from 'styled-components';
@@ -12,6 +12,7 @@ import Reviews from '../components/Reviews';
 import Accordion from '../components/Accordion';
 import ProductBrand from '../components/ProductBrand';
 import AddToCartSuccessModal from '../components/AddToCartSuccessModal';
+import { ProductContext } from '../context/Product';
 
 const ProductContainer = styled.div`
   min-height: 100vh;
@@ -107,6 +108,32 @@ const ProductContainer = styled.div`
       font-size: 1.4rem;
     }
   }
+  .lds-dual-ring {
+    display: inline-block;
+    width: 80px;
+    height: 80px;
+    margin-top: 50px;
+    margin-left: calc(50% - 40px);
+  }
+  .lds-dual-ring:after {
+    content: ' ';
+    display: block;
+    width: 64px;
+    height: 64px;
+    margin: 8px;
+    border-radius: 50%;
+    border: 6px solid black;
+    border-color: black transparent black transparent;
+    animation: lds-dual-ring 1.2s linear infinite;
+  }
+  @keyframes lds-dual-ring {
+    0% {
+      transform: rotate(0deg);
+    }
+    100% {
+      transform: rotate(360deg);
+    }
+  }
 `;
 
 const WhiteButton = styled.button`
@@ -132,21 +159,25 @@ const Product = () => {
 
   const history = useHistory();
 
-  let { id } = useParams();
+  const { id } = useParams();
+
+  const { getProduct, firebaseProduct, setFirebaseProduct } = useContext(ProductContext);
 
   useEffect(() => {
-    setLoading(true);
-    const filteredProducts = products.filter(prod => prod.name === id);
-    setProduct(filteredProducts[0]);
-    setLoading(false);
-    console.log(product);
-  }, [product, id]);
+    setFirebaseProduct(null);
+    getProduct(id);
+  }, []);
 
-  if (!product || loading) return <h1>Loading...</h1>;
+  if (!firebaseProduct || loading)
+    return (
+      <ProductContainer>
+        <div class='lds-dual-ring'></div>
+      </ProductContainer>
+    );
   return (
     <ProductContainer>
       <Helmet>
-        <title>YZED - {product.name}</title>
+        <title>YZED - {firebaseProduct.name}</title>
       </Helmet>
       {isAdded && <AddToCartSuccessModal setIsAdded={setIsAdded} />}
       <div className='back-button'>
@@ -156,19 +187,19 @@ const Product = () => {
       </div>
       <div className='title-section'>
         <div className='title-name'>
-          <h3>{product.brand}</h3>
-          <h1>{product.name}</h1>
+          <h3>{firebaseProduct.brand}</h3>
+          <h1>{firebaseProduct.name}</h1>
         </div>
         <div className='title-price'>
-          <h2>{`$${(product.price / 100).toFixed(2)}`}</h2>
+          <h2>{`$${(firebaseProduct.price / 100).toFixed(2)}`}</h2>
         </div>
       </div>
       <div className='main-content-box'>
         {mainDisplay === 'model' ? (
           <MediaViewer
-            glbFile={product.glbFile}
-            usdzFile={product.usdzFile}
-            poster={product.imageUrl}
+            glbFile={firebaseProduct.glbFile}
+            usdzFile={firebaseProduct.usdzFile}
+            poster={firebaseProduct.imageUrl}
           />
         ) : (
           <LazyLoadImage src={mainDisplay} />
@@ -177,14 +208,14 @@ const Product = () => {
       <div className='picture-thumbs'>
         <div className='ar-pic'>
           <LazyLoadImage
-            src={product.imageUrl}
+            src={firebaseProduct.mainImage}
             onClick={() => setMainDisplay('model')}
             effect='blur'
-            alt={product.imageUrl}
+            alt={firebaseProduct.mainImage}
           />
           <ThreeDSVG setMainDisplay={setMainDisplay} />
         </div>
-        {product.pictures.map(image => (
+        {firebaseProduct.pictures.map(image => (
           <LazyLoadImage
             key={image}
             src={image}
@@ -197,10 +228,14 @@ const Product = () => {
       <WhiteButton onClick={() => document.querySelector('model-viewer').activateAR()}>
         VIEW IN AR
       </WhiteButton>
-      <AddToCart sizes={product.sizes} productId={product.id} setIsAdded={setIsAdded} />
+      <AddToCart
+        sizes={firebaseProduct.sizes}
+        productId={firebaseProduct.id}
+        setIsAdded={setIsAdded}
+      />
       <div className='accordions'>
         <Accordion title='PRODUCT INFORMATION' id='information-accordion'>
-          <p>{product.productInformation}</p>
+          <p>{firebaseProduct.productInformation}</p>
         </Accordion>
         <Accordion title={`SIZING TABLE`}>
           <LazyLoadImage
@@ -210,9 +245,6 @@ const Product = () => {
             alt='size-chart'
             effect='blur'
           />
-        </Accordion>
-        <Accordion title={`REVIEWS (${product.reviews.length})`} last={true}>
-          <Reviews reviews={product.reviews} />
         </Accordion>
       </div>
       <ProductBrand />

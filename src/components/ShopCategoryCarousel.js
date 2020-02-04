@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useContext, useEffect } from 'react';
 import AwesomeSlider from 'react-awesome-slider';
 import 'react-awesome-slider/dist/styles.css';
 import { products } from '../data';
@@ -7,6 +7,7 @@ import { LazyLoadImage } from 'react-lazy-load-image-component';
 import 'react-lazy-load-image-component/src/effects/blur.css';
 import AwesomeSliderStyles from 'react-awesome-slider/src/styled/cube-animation';
 import withAutoplay from 'react-awesome-slider/dist/autoplay';
+import { FirebaseContext } from '../context/Firebase';
 
 const AutoplaySlider = withAutoplay(AwesomeSlider);
 
@@ -49,6 +50,14 @@ const SliderStyles = styled.div`
 `;
 
 const ShopCategoryCarousel = () => {
+  const { getProducts, firebaseProducts } = useContext(FirebaseContext);
+
+  useEffect(() => {
+    getProducts();
+  }, []);
+
+  if (!firebaseProducts) return <h1>Hello</h1>;
+
   return (
     <SliderStyles>
       <h4>Featured Products</h4>
@@ -58,7 +67,7 @@ const ShopCategoryCarousel = () => {
         play={true}
         interval={3000}
         infinite={true}>
-        {products.map(product => (
+        {firebaseProducts.map(product => (
           <div className='slider-cell content' key={product.id}>
             <div className='product-info'>
               <LazyLoadImage src={product.imageUrl} alt={product.name} effect='blur' />

@@ -4,7 +4,7 @@ import styled from 'styled-components';
 import { LazyLoadImage } from 'react-lazy-load-image-component';
 import 'react-lazy-load-image-component/src/effects/blur.css';
 import { Link } from 'react-router-dom';
-import { FirebaseContext } from '../context/Firebase';
+import { ProductContext } from '../context/Product';
 
 export const ProductThumbsStyles = styled.div`
   display: grid;
@@ -35,7 +35,7 @@ export const ProductThumbsStyles = styled.div`
 `;
 
 const ProductThumbs = ({ open }) => {
-  const { getProducts, firebaseProducts } = useContext(FirebaseContext);
+  const { getProducts, firebaseProducts } = useContext(ProductContext);
 
   useEffect(() => {
     getProducts();

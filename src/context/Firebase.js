@@ -31,6 +31,7 @@ const FirebaseProvider = ({ children }) => {
   const [firebaseError, setFirebaseError] = useState(null);
   const [userData, setUserData] = useState(null);
   const [firebaseProducts, setFirebaseProducts] = useState([]);
+  const [firebaseProduct, setFirebaseProduct] = useState(null);
 
   const registerUser = (email, password, userName, firstName, lastName) => {
     firebase
@@ -115,11 +116,14 @@ const FirebaseProvider = ({ children }) => {
   const getProduct = id => {
     const query = dbh.collection('products').doc(id);
     let product;
-    product
+    query
       .get()
       .then(doc => {
         if (doc.exists) {
           product = doc.data();
+          setFirebaseProduct(product);
+          console.log('PROD', product);
+          console.log('FIRE', firebaseProduct);
           return product;
         } else {
           console.log('No document found');
@@ -173,6 +177,9 @@ const FirebaseProvider = ({ children }) => {
         createProduct,
         getProducts,
         firebaseProducts,
+        getProduct,
+        firebaseProduct,
+        setFirebaseProduct,
       }}>
       {children}
     </FirebaseContext.Provider>
