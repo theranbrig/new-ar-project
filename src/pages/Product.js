@@ -13,6 +13,7 @@ import Accordion from '../components/Accordion';
 import ProductBrand from '../components/ProductBrand';
 import AddToCartSuccessModal from '../components/AddToCartSuccessModal';
 import { ProductContext } from '../context/Product';
+import { FirebaseContext } from '../context/Firebase';
 
 const ProductContainer = styled.div`
   min-height: 100vh;
@@ -39,6 +40,7 @@ const ProductContainer = styled.div`
   div.ar-pic {
     position: relative !important;
     top: 0;
+
     left: 0;
     img {
       position: relative;
@@ -161,14 +163,27 @@ const Product = () => {
 
   const { id } = useParams();
 
-  const { getProduct, firebaseProduct, setFirebaseProduct } = useContext(ProductContext);
+  const { dbh } = useContext(FirebaseContext);
 
   useEffect(() => {
-    setFirebaseProduct(null);
-    getProduct(id);
+    const getData = async () => {
+      const fsProduct = await dbh
+        .collection('products')
+        .doc(id)
+        .get()
+        .then(doc => {
+          const id = doc.id;
+          const details = doc.data();
+          setProduct({ id, ...details });
+        })
+        .catch(err => {
+          console.log(err);
+        });
+    };
+    getData();
   }, []);
 
-  if (!firebaseProduct || loading)
+  if (!product || loading)
     return (
       <ProductContainer>
         <div class='lds-dual-ring'></div>
@@ -177,7 +192,7 @@ const Product = () => {
   return (
     <ProductContainer>
       <Helmet>
-        <title>YZED - {firebaseProduct.name}</title>
+        <title>YZED - {product.name}</title>
       </Helmet>
       {isAdded && <AddToCartSuccessModal setIsAdded={setIsAdded} />}
       <div className='back-button'>
@@ -187,19 +202,19 @@ const Product = () => {
       </div>
       <div className='title-section'>
         <div className='title-name'>
-          <h3>{firebaseProduct.brand}</h3>
-          <h1>{firebaseProduct.name}</h1>
+          <h3>{product.brand}</h3>
+          <h1>{product.name}</h1>
         </div>
         <div className='title-price'>
-          <h2>{`$${(firebaseProduct.price / 100).toFixed(2)}`}</h2>
+          <h2>{`$${(product.price / 100).toFixed(2)}`}</h2>
         </div>
       </div>
       <div className='main-content-box'>
         {mainDisplay === 'model' ? (
           <MediaViewer
-            glbFile={firebaseProduct.glbFile}
-            usdzFile={firebaseProduct.usdzFile}
-            poster={firebaseProduct.imageUrl}
+            glbFile={product.glbFile}
+            usdzFile={product.usdzFile}
+            poster={product.imageUrl}
           />
         ) : (
           <LazyLoadImage src={mainDisplay} />
@@ -208,14 +223,14 @@ const Product = () => {
       <div className='picture-thumbs'>
         <div className='ar-pic'>
           <LazyLoadImage
-            src={firebaseProduct.mainImage}
+            src={product.mainImage}
             onClick={() => setMainDisplay('model')}
             effect='blur'
-            alt={firebaseProduct.mainImage}
+            alt={product.mainImage}
           />
           <ThreeDSVG setMainDisplay={setMainDisplay} />
         </div>
-        {firebaseProduct.pictures.map(image => (
+        {product.pictures.map(image => (
           <LazyLoadImage
             key={image}
             src={image}
@@ -228,14 +243,10 @@ const Product = () => {
       <WhiteButton onClick={() => document.querySelector('model-viewer').activateAR()}>
         VIEW IN AR
       </WhiteButton>
-      <AddToCart
-        sizes={firebaseProduct.sizes}
-        productId={firebaseProduct.id}
-        setIsAdded={setIsAdded}
-      />
+      <AddToCart sizes={product.sizes} productId={product.id} setIsAdded={setIsAdded} />
       <div className='accordions'>
         <Accordion title='PRODUCT INFORMATION' id='information-accordion'>
-          <p>{firebaseProduct.productInformation}</p>
+          <p>{product.productInformation}</p>
         </Accordion>
         <Accordion title={`SIZING TABLE`}>
           <LazyLoadImage

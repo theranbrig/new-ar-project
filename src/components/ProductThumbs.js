@@ -5,6 +5,8 @@ import { LazyLoadImage } from 'react-lazy-load-image-component';
 import 'react-lazy-load-image-component/src/effects/blur.css';
 import { Link } from 'react-router-dom';
 import { ProductContext } from '../context/Product';
+import { FirebaseContext } from '../context/Firebase';
+import { useCollectionDataOnce } from 'react-firebase-hooks/firestore';
 
 export const ProductThumbsStyles = styled.div`
   display: grid;
@@ -35,15 +37,33 @@ export const ProductThumbsStyles = styled.div`
 `;
 
 const ProductThumbs = ({ open }) => {
+  const [products, setProducts] = useState([]);
+
   const { getProducts, firebaseProducts } = useContext(ProductContext);
+  const { dbh } = useContext(FirebaseContext);
 
   useEffect(() => {
-    getProducts();
+    const getData = async () => {
+      let fSProducts = [];
+      await dbh
+        .collection('products')
+        .get()
+        .then(querySnapshot => {
+          querySnapshot.forEach(doc => {
+            fSProducts.push({ id: doc.ref.id, ...doc.data() });
+          });
+          setProducts(fSProducts);
+        })
+        .catch(err => {
+          console.log(err);
+        });
+    };
+    getData();
   }, []);
 
   return (
     <ProductThumbsStyles className='product-thumbs'>
-      {firebaseProducts.map(product => (
+      {products.map(product => (
         <div className='product-thumb' key={product.id}>
           <Link to={`product/${product.id}`}>
             <LazyLoadImage src={product.mainImage} alt={product.name} effect='blur' />

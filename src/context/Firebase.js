@@ -25,7 +25,7 @@ firebase.initializeApp(firebaseConfig);
 
 export const FirebaseContext = React.createContext();
 
-const dbh = firebase.firestore();
+export const dbh = firebase.firestore();
 
 const FirebaseProvider = ({ children }) => {
   const [firebaseError, setFirebaseError] = useState(null);
@@ -99,71 +99,6 @@ const FirebaseProvider = ({ children }) => {
     }
   });
 
-  const getProducts = () => {
-    let products = [];
-    dbh
-      .collection('products')
-      .get()
-      .then(querySnapshot => {
-        querySnapshot.forEach(doc => {
-          products.push({ id: doc.ref.id, ...doc.data() });
-        });
-        setFirebaseProducts(products);
-      })
-      .catch(err => console.log(err));
-  };
-
-  const getProduct = id => {
-    const query = dbh.collection('products').doc(id);
-    let product;
-    query
-      .get()
-      .then(doc => {
-        if (doc.exists) {
-          product = doc.data();
-          setFirebaseProduct(product);
-          console.log('PROD', product);
-          console.log('FIRE', firebaseProduct);
-          return product;
-        } else {
-          console.log('No document found');
-        }
-      })
-      .catch(err => console.log(err));
-  };
-
-  // FIREBASE PRODUCT MUTATIONS
-
-  const createProduct = (
-    name,
-    brand,
-    mainImage,
-    color,
-    price,
-    sizes,
-    glbFile,
-    usdzFile,
-    pictures,
-    productInformation
-  ) => {
-    dbh
-      .collection('products')
-      .doc()
-      .set({
-        name,
-        brand,
-        mainImage,
-        color,
-        price,
-        sizes,
-        glbFile,
-        usdzFile,
-        pictures,
-        productInformation,
-      })
-      .catch(err => console.log(err));
-  };
-
   return (
     <FirebaseContext.Provider
       value={{
@@ -174,12 +109,7 @@ const FirebaseProvider = ({ children }) => {
         addToCart,
         dbh,
         logoutUser,
-        createProduct,
-        getProducts,
-        firebaseProducts,
-        getProduct,
-        firebaseProduct,
-        setFirebaseProduct,
+        firebase,
       }}>
       {children}
     </FirebaseContext.Provider>

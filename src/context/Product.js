@@ -13,7 +13,7 @@ const ProductProvider = ({ children }) => {
 
   const { firebaseError, setFirebaseError, dbh } = useContext(FirebaseContext);
 
-  const getProducts = () => {
+  const getProducts = async () => {
     let products = [];
     dbh
       .collection('products')
@@ -22,7 +22,9 @@ const ProductProvider = ({ children }) => {
         querySnapshot.forEach(doc => {
           products.push({ id: doc.ref.id, ...doc.data() });
         });
+        console.log(products);
         setFirebaseProducts(products);
+        return products;
       })
       .catch(err => {
         console.log(err);
