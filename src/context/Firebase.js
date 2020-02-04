@@ -68,13 +68,6 @@ const FirebaseProvider = ({ children }) => {
     }
   };
 
-  const addToCart = (userId, productId, size) => {
-    dbh
-      .collection('cartItems')
-      .doc()
-      .set({ userId, productId, size });
-  };
-
   firebase.auth().onAuthStateChanged(function(user) {
     if (user) {
       const userId = dbh.collection('users').doc(firebase.auth().currentUser.uid);
@@ -106,7 +99,6 @@ const FirebaseProvider = ({ children }) => {
         registerUser,
         userData,
         loginUser,
-        addToCart,
         dbh,
         logoutUser,
         firebase,

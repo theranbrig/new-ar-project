@@ -90,7 +90,7 @@ const ShoppingBagItems = ({ items, cartLoading, canEdit, mode }) => {
         <h2>Nothing in Shopping Bag...</h2>
       ) : (
         items.map((item, index) => {
-          let size = 0;
+          let size = '';
           if (userData) {
             size = item.size;
           } else {
@@ -100,7 +100,7 @@ const ShoppingBagItems = ({ items, cartLoading, canEdit, mode }) => {
             <div className='bag-item' key={index}>
               <div className='left-content'>
                 <h3>{index + 1}</h3>
-                <img src={item.imageUrl} alt={item.name} />
+                <img src={item.mainImage} alt={item.name} />
               </div>
               <div className='item-info'>
                 <div>

@@ -7,18 +7,26 @@ export const CartContext = React.createContext();
 
 const CartProvider = ({ children }) => {
   const [cart, setCart] = useState([]);
+  const [count, setCount] = useState(0);
   const [cartLoading, setCartLoading] = useState(false);
 
   const { addToCart, userData, dbh } = useContext(FirebaseContext);
 
-  const addItemToCart = (productId, selectedSize) => {
+  const addToFirebaseCart = (userId, productId, size, quantity) => {
+    dbh
+      .collection('cartItems')
+      .doc()
+      .set({ userId, productId, size, quantity });
+  };
+
+  const addItemToCart = (productId, selectedSize, quantity) => {
     setCartLoading(true);
     if (userData) {
       setCart([]);
-      addToCart(userData.email, productId, selectedSize);
-      getFirebaseCart(userData);
+      addToFirebaseCart(userData.id, productId, selectedSize, quantity);
+      getCartData(userData);
     } else {
-      const cartItem = { productId, selectedSize };
+      const cartItem = { productId, selectedSize, quantity };
       const cart = JSON.parse(localStorage.getItem('shoppingCart'));
       if (cart && cart.length) {
         localStorage.setItem('shoppingCart', JSON.stringify([cartItem, ...cart]));
@@ -29,7 +37,7 @@ const CartProvider = ({ children }) => {
     }
   };
 
-  const removeItemFromCart = (index, productId, size) => {
+  const removeItemFromCart = (index, cartItemId) => {
     if (window.confirm('Delete the item from your cart?')) {
       if (!userData) {
         setCartLoading(true);
@@ -40,20 +48,13 @@ const CartProvider = ({ children }) => {
       } else {
         dbh
           .collection('cartItems')
-          .where('userId', '==', userData.email)
-          .where('size', '==', size)
-          .where('productId', '==', productId)
-          .limit(1)
-          .onSnapshot(function(querySnapshot) {
-            if (!querySnapshot.empty) {
-              querySnapshot.docs[0].ref.delete();
-            } else {
-              console.log('No document corresponding to the query!');
-              return null;
-            }
+          .doc(cartItemId)
+          .delete()
+          .then(() => {
             setCart([]);
             getFirebaseCart(userData);
-          });
+          })
+          .catch(err => console.log(err));
       }
     }
   };
@@ -63,13 +64,19 @@ const CartProvider = ({ children }) => {
     setCart([]);
   };
 
-  const getCartData = arr => {
-    const tempCart = arr.reduce((accum, item) => {
-      const product = products.find(product => item.productId === product.id);
-      if (product) accum.push({ ...item, ...product });
+  const getCartData = async arr => {
+    const tempCart = await arr.reduce((accum, item) => {
+      const prod = dbh
+        .collection('products')
+        .doc(item.productId)
+        .get()
+        .then(doc => {
+          accum.push({ ...item, ...doc.data() });
+        });
       return accum;
     }, []);
     setCart(tempCart);
+
     setCartLoading(false);
   };
 
@@ -78,10 +85,10 @@ const CartProvider = ({ children }) => {
     let tempCart = [];
     dbh
       .collection('cartItems')
-      .where('userId', '==', userData.email)
+      .where('userId', '==', userData.id)
       .onSnapshot(function(querySnapshot) {
         querySnapshot.forEach(function(doc) {
-          tempCart.push(doc.data());
+          tempCart.push({ id: doc.ref.id, ...doc.data() });
         });
         getCartData(tempCart);
       });
@@ -97,6 +104,7 @@ const CartProvider = ({ children }) => {
       cartItems = JSON.parse(localStorage.getItem('shoppingCart')) || [];
     }
     getCartData(cartItems);
+    console.log('EFFECT CART', cart);
   }, [userData, setCart]);
 
   return (
@@ -107,6 +115,7 @@ const CartProvider = ({ children }) => {
         cartLoading,
         removeItemFromCart,
         clearLocalCart,
+        getCartData,
       }}>
       {children}
     </CartContext.Provider>

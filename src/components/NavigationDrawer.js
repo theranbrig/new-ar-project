@@ -1,4 +1,4 @@
-import React, { useContext, useState } from 'react';
+import React, { useContext, useState, useEffect } from 'react';
 import styled from 'styled-components';
 import yzedLogo from '../assets/images/yzed-logo.png';
 import MenuLinks from './MenuLinks';
@@ -128,7 +128,13 @@ const NavigationDrawer = ({ children }) => {
   const [open, setOpen] = useState(false);
   const [openBag, setOpenBag] = useState(false);
   const [openSearch, setOpenSearch] = useState(false);
-  const { cart, cartLoading } = useContext(CartContext);
+  const { cart, cartLoading, getCartData } = useContext(CartContext);
+
+  useEffect(() => {
+    console.log(cart);
+    const prods = [...cart];
+    console.log(prods);
+  }, [cart]);
 
   const node = React.useRef();
 
