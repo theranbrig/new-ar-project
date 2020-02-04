@@ -30,6 +30,7 @@ const dbh = firebase.firestore();
 const FirebaseProvider = ({ children }) => {
   const [firebaseError, setFirebaseError] = useState(null);
   const [userData, setUserData] = useState(null);
+  const [firebaseProducts, setFirebaseProducts] = useState([]);
 
   const registerUser = (email, password, userName, firstName, lastName) => {
     firebase
@@ -97,6 +98,36 @@ const FirebaseProvider = ({ children }) => {
     }
   });
 
+  const getProducts = () => {
+    let products = [];
+    dbh
+      .collection('products')
+      .get()
+      .then(querySnapshot => {
+        querySnapshot.forEach(doc => {
+          products.push({ id: doc.ref.id, ...doc.data() });
+        });
+        setFirebaseProducts(products);
+      })
+      .catch(err => console.log(err));
+  };
+
+  const getProduct = id => {
+    const query = dbh.collection('products').doc(id);
+    let product;
+    product
+      .get()
+      .then(doc => {
+        if (doc.exists) {
+          product = doc.data();
+          return product;
+        } else {
+          console.log('No document found');
+        }
+      })
+      .catch(err => console.log(err));
+  };
+
   // FIREBASE PRODUCT MUTATIONS
 
   const createProduct = (
@@ -140,6 +171,8 @@ const FirebaseProvider = ({ children }) => {
         dbh,
         logoutUser,
         createProduct,
+        getProducts,
+        firebaseProducts,
       }}>
       {children}
     </FirebaseContext.Provider>

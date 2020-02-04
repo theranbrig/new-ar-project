@@ -115,11 +115,7 @@ const Login = () => {
 
   const history = useHistory();
 
-  const { createProduct, firebaseError, userData, dbh } = useContext(FirebaseContext);
-
-  const setPictureArray = () => {
-    setPictures([picture1, picture2, picture3]);
-  };
+  const { createProduct, firebaseError, userData, dbh, getProducts } = useContext(FirebaseContext);
 
   useEffect(() => {
     console.log(userData);
@@ -187,7 +183,6 @@ const Login = () => {
             required
             onChange={e => {
               setPicture1(e.target.value);
-              setPictureArray();
             }}
           />
         </div>
@@ -199,7 +194,6 @@ const Login = () => {
             required
             onChange={e => {
               setPicture2(e.target.value);
-              setPictureArray();
             }}
           />
         </div>
@@ -211,7 +205,6 @@ const Login = () => {
             required
             onChange={e => {
               setPicture3(e.target.value);
-              setPictureArray();
             }}
           />
         </div>
@@ -224,24 +217,28 @@ const Login = () => {
           />
         </div>
         <BlackButton
-          onClick={() => {
-            setPictures([picture1, picture2, picture3]);
-            createProduct(
-              name,
-              brand,
-              mainImage,
-              color,
-              price,
-              sizes,
-              glbFile,
-              usdzFile,
-              pictures,
-              productInformation
-            );
-            history.push('/product');
+          onClick={async () => {
+            // createProduct(
+            //   name,
+            //   brand,
+            //   mainImage,
+            //   color,
+            //   price,
+            //   sizes,
+            //   glbFile,
+            //   usdzFile,
+            //   [picture1, picture2, picture3],
+            //   productInformation
+            // );
+            // history.push('/shop');
+            getProducts();
           }}>
           Submit
         </BlackButton>
+        <h1>{`${pictures}`}</h1>
+        <h1>{`${picture1}`}</h1>
+        <h1>{`${picture2}`}</h1>
+        <h1>{`${picture3}`}</h1>
       </div>
       {firebaseError && (
         <div>

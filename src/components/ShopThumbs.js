@@ -1,9 +1,9 @@
-import React from 'react';
-import { products } from '../data';
+import React, { useEffect, useContext, useState } from 'react';
 import styled from 'styled-components';
 import { LazyLoadImage } from 'react-lazy-load-image-component';
 import 'react-lazy-load-image-component/src/effects/blur.css';
 import { Link } from 'react-router-dom';
+import { FirebaseContext } from '../context/Firebase';
 
 export const ProductThumbsStyles = styled.div`
   display: grid;
@@ -34,12 +34,18 @@ export const ProductThumbsStyles = styled.div`
 `;
 
 const ShopThumbs = ({ open }) => {
+  const { getProducts, firebaseProducts } = useContext(FirebaseContext);
+
+  useEffect(() => {
+    getProducts();
+  }, []);
+
   return (
     <ProductThumbsStyles className='product-thumbs'>
-      {products.map(product => (
-        <div className='product-thumb' key={product.name}>
-          <Link to={`/product/${product.name}`}>
-            <LazyLoadImage src={product.imageUrl} alt={product.name} effect='blur' />
+      {firebaseProducts.map(product => (
+        <div className='product-thumb' key={product.id}>
+          <Link to={`/product/${product.id}`}>
+            <LazyLoadImage src={product.mainImage} alt={product.name} effect='blur' />
             <h4>{product.brand}</h4>
             <h3>{product.name}</h3>
             <h3>{`$${(product.price / 100).toFixed(2)}`}</h3>
