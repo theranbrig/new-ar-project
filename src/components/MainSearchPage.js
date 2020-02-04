@@ -1,8 +1,9 @@
-import React from 'react';
+import React, { useEffect, useState, useContext } from 'react';
 import Downshift from 'downshift';
 import { products } from '../data';
 import { useHistory, Link, useParams } from 'react-router-dom';
 import styled from 'styled-components';
+import { FirebaseContext } from '../context/Firebase';
 
 export const SearchStyles = styled.div`
   font-family: Montserrat, sans-serif;
@@ -82,14 +83,40 @@ const WhiteButton = styled.div`
 `;
 
 const DownshiftScreenSearch = ({ setOpenSearch }) => {
+  const [products, setProducts] = useState([]);
+  const [loading, setLoading] = useState(false);
+
   const { query } = useParams();
 
   const history = useHistory();
 
+  const { dbh } = useContext(FirebaseContext);
+
+  useEffect(() => {
+    setLoading(true);
+    const getData = async () => {
+      let fSProducts = [];
+      await dbh
+        .collection('products')
+        .get()
+        .then(querySnapshot => {
+          querySnapshot.forEach(doc => {
+            fSProducts.push({ id: doc.ref.id, ...doc.data() });
+          });
+          setProducts(fSProducts);
+        })
+        .catch(err => {
+          console.log(err);
+        });
+    };
+    getData();
+    setLoading(false);
+  }, []);
+
   return (
     <Downshift
       onChange={selection => {
-        history.push(`/product/${selection.name}`);
+        history.push(`/product/${selection.id}`);
       }}
       itemToString={item => (item ? item.value : '')}
       initialInputValue={query}
@@ -131,7 +158,7 @@ const DownshiftScreenSearch = ({ setOpenSearch }) => {
                           fontWeight: highlightedIndex === index ? '400' : '600',
                         },
                       })}>
-                      <img src={item.imageUrl} alt={item.name} />
+                      <img src={item.mainImage} alt={item.name} />
                       <h3>
                         {item.brand} - {item.name}
                       </h3>

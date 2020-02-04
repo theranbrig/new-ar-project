@@ -1,8 +1,9 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import Downshift from 'downshift';
 import { products } from '../data';
 import { useHistory } from 'react-router-dom';
 import styled from 'styled-components';
+import { FirebaseContext } from '../context/Firebase';
 
 export const SearchStyles = styled.div`
   font-family: Montserrat;
@@ -40,6 +41,7 @@ export const SearchStyles = styled.div`
     background: transparent;
     color: white !important;
     width: 80%;
+
     margin: 0 10%;
     border: none;
     border-bottom: 1px solid white;
@@ -70,6 +72,31 @@ const ModalSearch = ({ setOpenSearch }) => {
   const history = useHistory();
   const [input, setInput] = useState('');
 
+  const [products, setProducts] = useState([]);
+  const [loading, setLoading] = useState(false);
+  const { dbh } = useContext(FirebaseContext);
+
+  useEffect(() => {
+    setLoading(true);
+    const getData = async () => {
+      let fSProducts = [];
+      await dbh
+        .collection('products')
+        .get()
+        .then(querySnapshot => {
+          querySnapshot.forEach(doc => {
+            fSProducts.push({ id: doc.ref.id, ...doc.data() });
+          });
+          setProducts(fSProducts);
+        })
+        .catch(err => {
+          console.log(err);
+        });
+    };
+    getData();
+    setLoading(false);
+  }, []);
+
   return (
     <Downshift
       onStateChange={(changes, state) => {
@@ -78,8 +105,9 @@ const ModalSearch = ({ setOpenSearch }) => {
         }
       }}
       onChange={selection => {
+        console.log(selection);
         setOpenSearch(false);
-        history.push(`/product/${selection.name}`);
+        history.push(`/product/${selection.id}`);
       }}
       itemToString={item => (item ? item.value : '')}>
       {({
@@ -125,7 +153,7 @@ const ModalSearch = ({ setOpenSearch }) => {
                           fontWeight: highlightedIndex === index ? '400' : '600',
                         },
                       })}>
-                      <img src={item.imageUrl} alt={item.name} />
+                      <img src={item.mainImage} alt={item.name} />
                       <h3>
                         {item.brand} - {item.name}
                       </h3>

@@ -74,7 +74,6 @@ const SearchModal = ({ openSearch, setOpenSearch }) => {
         </div>
         <DropdownSearch setOpenSearch={setOpenSearch} />
       </div>
-
       <div className='modal-shadow'></div>
     </ModalStyles>
   );
