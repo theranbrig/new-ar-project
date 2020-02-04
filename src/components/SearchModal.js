@@ -61,7 +61,6 @@ const SearchModal = ({ openSearch, setOpenSearch }) => {
 
   return (
     <ModalStyles openSearch={openSearch}>
-      <BackButton />
       <div className='modal-content'>
         <div className='modal-top'>
           <h3>TOP RESULTS ON YZED</h3>

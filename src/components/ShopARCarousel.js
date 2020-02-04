@@ -1,7 +1,6 @@
 import React, { useState, useEffect, useContext } from 'react';
 import AwesomeSlider from 'react-awesome-slider';
 import 'react-awesome-slider/dist/styles.css';
-import { products } from '../data';
 import styled from 'styled-components';
 import { LazyLoadImage } from 'react-lazy-load-image-component';
 import 'react-lazy-load-image-component/src/effects/blur.css';

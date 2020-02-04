@@ -14,6 +14,7 @@ import ProductBrand from '../components/ProductBrand';
 import AddToCartSuccessModal from '../components/AddToCartSuccessModal';
 import { ProductContext } from '../context/Product';
 import { FirebaseContext } from '../context/Firebase';
+import LoadingSpinner from '../components/LoadingSpinner';
 
 const ProductContainer = styled.div`
   min-height: 100vh;
@@ -186,7 +187,7 @@ const Product = () => {
   if (!product || loading)
     return (
       <ProductContainer>
-        <div class='lds-dual-ring'></div>
+        <LoadingSpinner />
       </ProductContainer>
     );
   return (

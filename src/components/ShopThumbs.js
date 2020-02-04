@@ -5,6 +5,7 @@ import 'react-lazy-load-image-component/src/effects/blur.css';
 import { Link } from 'react-router-dom';
 import { ProductContext } from '../context/Product';
 import { FirebaseContext } from '../context/Firebase';
+import LoadingSpinner from './LoadingSpinner';
 
 export const ProductThumbsStyles = styled.div`
   display: grid;
@@ -36,10 +37,11 @@ export const ProductThumbsStyles = styled.div`
 
 const ShopThumbs = ({ open }) => {
   const [products, setProducts] = useState([]);
-
+  const [loading, setLoading] = useState(false);
   const { dbh } = useContext(FirebaseContext);
 
   useEffect(() => {
+    setLoading(true);
     const getData = async () => {
       let fSProducts = [];
       await dbh
@@ -56,7 +58,10 @@ const ShopThumbs = ({ open }) => {
         });
     };
     getData();
+    setLoading(false);
   }, []);
+
+  if (loading) return <LoadingSpinner />;
 
   return (
     <ProductThumbsStyles className='product-thumbs'>

@@ -1,7 +1,6 @@
 import React, { useContext, useEffect, useState } from 'react';
 import AwesomeSlider from 'react-awesome-slider';
 import 'react-awesome-slider/dist/styles.css';
-import { products } from '../data';
 import styled from 'styled-components';
 import { LazyLoadImage } from 'react-lazy-load-image-component';
 import 'react-lazy-load-image-component/src/effects/blur.css';
@@ -9,6 +8,7 @@ import AwesomeSliderStyles from 'react-awesome-slider/src/styled/cube-animation'
 import withAutoplay from 'react-awesome-slider/dist/autoplay';
 import { FirebaseContext } from '../context/Firebase';
 import { Link } from 'react-router-dom';
+import LoadingSpinner from './LoadingSpinner';
 
 const AutoplaySlider = withAutoplay(AwesomeSlider);
 
@@ -81,7 +81,7 @@ const ShopCategoryCarousel = () => {
     getData();
   }, []);
 
-  if (!products.length) return <h1>Hello</h1>;
+  if (!products.length) return <LoadingSpinner />;
 
   return (
     <SliderStyles>

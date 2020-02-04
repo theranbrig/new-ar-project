@@ -218,20 +218,19 @@ const Login = () => {
         </div>
         <BlackButton
           onClick={async () => {
-            // createProduct(
-            //   name,
-            //   brand,
-            //   mainImage,
-            //   color,
-            //   price,
-            //   sizes,
-            //   glbFile,
-            //   usdzFile,
-            //   [picture1, picture2, picture3],
-            //   productInformation
-            // );
-            // history.push('/shop');
-            getProducts();
+            createProduct(
+              name,
+              brand,
+              mainImage,
+              color,
+              price,
+              sizes,
+              glbFile,
+              usdzFile,
+              [picture1, picture2, picture3],
+              productInformation
+            );
+            history.push('/shop');
           }}>
           Submit
         </BlackButton>
