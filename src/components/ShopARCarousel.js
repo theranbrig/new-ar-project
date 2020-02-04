@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import AwesomeSlider from 'react-awesome-slider';
 import 'react-awesome-slider/dist/styles.css';
 import { products } from '../data';
@@ -8,6 +8,7 @@ import 'react-lazy-load-image-component/src/effects/blur.css';
 import MediaViewer from './ModelViewer';
 import AwesomeSliderStyles from 'react-awesome-slider/src/styled/cube-animation';
 import withAutoplay from 'react-awesome-slider/dist/autoplay';
+import { FirebaseContext } from '../context/Firebase';
 
 const AutoplaySlider = withAutoplay(AwesomeSlider);
 
@@ -53,6 +54,33 @@ const SliderStyles = styled.div`
 
 const ShopPageProductCarousel = () => {
   const [currentARModel, setCurrentARModel] = useState(null);
+  const [products, setProducts] = useState([]);
+  const { getProducts, firebaseProducts } = useContext(FirebaseContext);
+
+  const { dbh } = useContext(FirebaseContext);
+
+  useEffect(() => {
+    const getData = async () => {
+      let fSProducts = [];
+      await dbh
+        .collection('products')
+        .get()
+        .then(querySnapshot => {
+          querySnapshot.forEach(doc => {
+            fSProducts.push({ id: doc.ref.id, ...doc.data() });
+          });
+          setProducts(fSProducts);
+          console.log(products);
+        })
+        .catch(err => {
+          console.log(err);
+        });
+    };
+    getData();
+  }, []);
+
+  if (!products.length) return <h1>Hello</h1>;
+
   return (
     <SliderStyles>
       {currentARModel ? (
@@ -70,7 +98,7 @@ const ShopPageProductCarousel = () => {
           <div className='slider-cell content' key={product.id}>
             <div className='product-info'>
               <LazyLoadImage
-                src={product.imageUrl}
+                src={product.mainImage}
                 alt={product.name}
                 effect='blur'
                 onClick={() => setCurrentARModel(product)}
