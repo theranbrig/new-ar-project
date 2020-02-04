@@ -1,4 +1,4 @@
-import React, { useContext, useEffect } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import AwesomeSlider from 'react-awesome-slider';
 import 'react-awesome-slider/dist/styles.css';
 import { products } from '../data';
@@ -8,6 +8,7 @@ import 'react-lazy-load-image-component/src/effects/blur.css';
 import AwesomeSliderStyles from 'react-awesome-slider/src/styled/cube-animation';
 import withAutoplay from 'react-awesome-slider/dist/autoplay';
 import { FirebaseContext } from '../context/Firebase';
+import { Link } from 'react-router-dom';
 
 const AutoplaySlider = withAutoplay(AwesomeSlider);
 
@@ -44,38 +45,66 @@ const SliderStyles = styled.div`
     margin-top: 100px !important;
     font-weight: 300;
   }
+  a {
+    color: black;
+    font-weight: 300;
+    text-decoration: none;
+  }
   div .awssld__timer {
     background-color: transparent;
   }
 `;
 
 const ShopCategoryCarousel = () => {
+  const [products, setProducts] = useState([]);
   const { getProducts, firebaseProducts } = useContext(FirebaseContext);
 
+  const { dbh } = useContext(FirebaseContext);
+
   useEffect(() => {
-    getProducts();
+    const getData = async () => {
+      let fSProducts = [];
+      await dbh
+        .collection('products')
+        .get()
+        .then(querySnapshot => {
+          querySnapshot.forEach(doc => {
+            fSProducts.push({ id: doc.ref.id, ...doc.data() });
+          });
+          setProducts(fSProducts);
+          console.log(products);
+        })
+        .catch(err => {
+          console.log(err);
+        });
+    };
+    getData();
   }, []);
 
-  if (!firebaseProducts) return <h1>Hello</h1>;
+  if (!products.length) return <h1>Hello</h1>;
 
   return (
     <SliderStyles>
       <h4>Featured Products</h4>
-      <AutoplaySlider
-        animation='cubeAnimation'
-        cssModule={AwesomeSliderStyles}
-        play={true}
-        interval={3000}
-        infinite={true}>
-        {firebaseProducts.map(product => (
-          <div className='slider-cell content' key={product.id}>
-            <div className='product-info'>
-              <LazyLoadImage src={product.imageUrl} alt={product.name} effect='blur' />
-              <h4>{product.name}</h4>
+      {products.length && (
+        <AutoplaySlider
+          animation='cubeAnimation'
+          cssModule={AwesomeSliderStyles}
+          play={true}
+          interval={3000}
+          infinite={true}>
+          {products.map(product => (
+            <div className='slider-cell content' key={product.id}>
+              <Link to={`/product/${product.id}`}>
+                <div className='product-info'>
+                  <LazyLoadImage src={product.mainImage} alt={product.name} effect='blur' />
+                  <h4>{product.name}</h4>
+                </div>
+              </Link>
             </div>
-          </div>
-        ))}
-      </AutoplaySlider>
+          ))}
+        </AutoplaySlider>
+      )}
     </SliderStyles>
   );
 };
