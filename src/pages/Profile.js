@@ -7,6 +7,7 @@ export const ProfileStyles = styled.div`
   width: 500px;
   max-width: 95%;
   margin: 0 auto;
+  margin-top: calc(10vh + 50px);
   font-family: Montserrat, sans-serif;
   text-align: center;
   min-height: 90vh;

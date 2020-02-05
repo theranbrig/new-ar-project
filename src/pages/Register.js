@@ -5,64 +5,65 @@ import { useHistory } from 'react-router-dom';
 import { Helmet } from 'react-helmet';
 
 export const LoginStyles = styled.div`
-  width: 500px;
-  max-width: 95%;
-  margin: 0 auto;
-  min-height: calc(90vh - 50px);
-  .register-form {
-    border: 1px solid black;
-    padding: 30px 20px;
-    margin-top: 50px;
-    font-family: Montserrat, sans-serif;
-    h1 {
-      text-align: center;
-    }
-  }
-  input,
-  select {
-    flex: 2;
-    margin: 0 5px;
-    border: none;
-    border-radius: 0px !important;
-    border-bottom: 1px solid #c7c7c7;
-    background: white;
-    box-shadow: none;
-    height: 25px;
-    font-size: 1.1rem;
-    -webkit-appearance: none;
-    -webkit-border-radius: 0px;
-    margin-left: 10px;
-  }
-  label {
-    height: 25px;
-    line-height: 25px;
-    font-size: 1.1rem;
-  }
-  .form-input {
-    display: flex;
-    margin: 20px 0;
-    input,
-    select {
-      flex: 2;
-      margin: 0 5px;
-      border: none;
-      border-radius: 0px !important;
-      border-bottom: 1px solid #c7c7c7;
-      background: white;
-      box-shadow: none;
-      height: 25px;
-      font-size: 1.1rem;
-      -webkit-appearance: none;
-      -webkit-border-radius: 0px;
-      margin-left: 10px;
-    }
-    label {
-      height: 25px;
-      line-height: 25px;
-      font-size: 1.1rem;
-    }
-  }
-`;
+         width: 500px;
+         max-width: 95%;
+         margin: 0 auto;
+         min-height: calc(90vh - 50px);
+         margin-top: calc(10vh + 50px);
+         .register-form {
+           border: 1px solid black;
+           padding: 30px 20px;
+           margin-top: 50px;
+           font-family: Montserrat, sans-serif;
+           h1 {
+             text-align: center;
+           }
+         }
+         input,
+         select {
+           flex: 2;
+           margin: 0 5px;
+           border: none;
+           border-radius: 0px !important;
+           border-bottom: 1px solid #c7c7c7;
+           background: white;
+           box-shadow: none;
+           height: 25px;
+           font-size: 1.1rem;
+           -webkit-appearance: none;
+           -webkit-border-radius: 0px;
+           margin-left: 10px;
+         }
+         label {
+           height: 25px;
+           line-height: 25px;
+           font-size: 1.1rem;
+         }
+         .form-input {
+           display: flex;
+           margin: 20px 0;
+           input,
+           select {
+             flex: 2;
+             margin: 0 5px;
+             border: none;
+             border-radius: 0px !important;
+             border-bottom: 1px solid #c7c7c7;
+             background: white;
+             box-shadow: none;
+             height: 25px;
+             font-size: 1.1rem;
+             -webkit-appearance: none;
+             -webkit-border-radius: 0px;
+             margin-left: 10px;
+           }
+           label {
+             height: 25px;
+             line-height: 25px;
+             font-size: 1.1rem;
+           }
+         }
+       `;
 
 const BlackButton = styled.button`
   border: 2px solid black;

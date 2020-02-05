@@ -9,6 +9,7 @@ export const LoginStyles = styled.div`
   max-width: 95%;
   margin: 0 auto;
   min-height: calc(90vh - 50px);
+  margin-top: calc(10vh + 50px);
   .user-form {
     border: 1px solid black;
     padding: 30px 20px;

@@ -81,6 +81,10 @@ const StretchedNavStyles = styled.div`
   display: flex;
   flex-direction: row;
   justify-content: space-between;
+  position: fixed;
+  width: 100%;
+  top: 0;
+  z-index: 500;
   img {
     height: 10vh;
     @media (max-width: 576px) {
@@ -161,7 +165,7 @@ const NavigationDrawer = ({ children }) => {
   const node = React.useRef();
 
   return (
-    <div>
+    <>
       <StretchedNavStyles className='main-stretched-nav'>
         <div className='hidden'></div>
         <img src={yzedLogo} alt='yzed logo' />
@@ -192,6 +196,7 @@ const NavigationDrawer = ({ children }) => {
       <ShoppingBagModal
         openBag={openBag}
         shoppingBag={cart}
+        setOpenSearch={setOpenSearch}
         cartLoading={cartLoading}
         setOpenBag={setOpenBag}
       />
@@ -206,7 +211,7 @@ const NavigationDrawer = ({ children }) => {
         />
         <MenuLinks open={open} setOpen={setOpen} />
       </div>
-    </div>
+    </>
   );
 };
 

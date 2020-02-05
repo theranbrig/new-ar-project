@@ -21,6 +21,7 @@ const ProductContainer = styled.div`
   width: 500px;
   max-width: 95%;
   margin: 0 auto;
+  margin-top: calc(10vh + 50px);
   font-family: Montserrat, sans-serif;
   model-viewer {
     width: 95%;

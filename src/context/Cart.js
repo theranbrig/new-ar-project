@@ -25,19 +25,66 @@ const CartProvider = ({ children }) => {
       });
   };
 
+  const checkFirebaseItemExists = async (productId, selectedSize, quantity) => {
+    dbh
+      .collection('cartItems')
+      .where('userId', '==', userData.id)
+      .where('size', '==', selectedSize)
+      .get()
+      .then(async function(querySnapshot) {
+        console.log('QUERY', querySnapshot);
+        if (!querySnapshot.length) {
+          const item = await addToFirebaseCart(userData.id, productId, selectedSize, quantity);
+        } else {
+          querySnapshot.forEach(function(doc) {
+            console.log(doc.data());
+            const cartItem = dbh.collection('cartItems').doc(doc.ref.id);
+            console.log(cartItem.data());
+            const oldQuantity = cartItem.data().quantity;
+            cartItem.update({ quantity: oldQuantity + quantity });
+          });
+        }
+      });
+  };
+
   const addItemToCart = async (productId, selectedSize, quantity) => {
     setCartLoading(true);
     if (userData) {
-      const item = await addToFirebaseCart(userData.id, productId, selectedSize, quantity);
+      checkFirebaseItemExists(productId, selectedSize, quantity);
     } else {
       const cartItem = { productId, selectedSize, quantity };
       const cart = JSON.parse(localStorage.getItem('shoppingCart'));
       if (cart && cart.length) {
-        localStorage.setItem('shoppingCart', JSON.stringify([cartItem, ...cart]));
+        const cartCheckItem = cart.filter(
+          item =>
+            item.productId === cartItem.productId && item.selectedSize === cartItem.selectedSize
+        );
+        if (!cartCheckItem.length) {
+          localStorage.setItem('shoppingCart', JSON.stringify([cartItem, ...cart]));
+        } else {
+          cartCheckItem[0] = {
+            productId: cartCheckItem[0].productId,
+            quantity: cartCheckItem[0].quantity + quantity,
+            selectedSize: cartCheckItem[0].selectedSize,
+          };
+          let itemIndex;
+          const cartIndex = cart.forEach((item, index) => {
+            if (
+              item.productId === cartItem.productId &&
+              item.selectedSize === cartItem.selectedSize
+            ) {
+              return (itemIndex = index);
+            }
+          });
+          cart.splice(itemIndex, 1);
+          cart.push(cartCheckItem[0]);
+          localStorage.setItem('shoppingCart', JSON.stringify([...cart]));
+          getCartData(JSON.parse(localStorage.getItem('shoppingCart')));
+        }
       } else {
         localStorage.setItem('shoppingCart', JSON.stringify([cartItem]));
+        getCartData(JSON.parse(localStorage.getItem('shoppingCart')));
       }
-      getCartData(JSON.parse(localStorage.getItem('shoppingCart')));
     }
   };
 
@@ -81,6 +128,7 @@ const CartProvider = ({ children }) => {
       return accum;
     }, []);
     setCartLoading(false);
+    setCart(tempCart);
     return tempCart;
   };
 
@@ -126,7 +174,6 @@ const CartProvider = ({ children }) => {
         clearLocalCart,
         getCartData,
         count,
-        fetchCartData,
       }}>
       {children}
     </CartContext.Provider>

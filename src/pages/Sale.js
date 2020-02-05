@@ -12,6 +12,7 @@ export const ShopCategoryStyles = styled.div`
   min-height: calc(90vh - 30px);
   margin: 0 auto 100px;
   font-family: Montserrat, sans-serif;
+  margin-top: calc(10vh + 50px);
   .category-buttons {
     display: grid;
     grid-template-rows: 1fr 1fr 1fr;

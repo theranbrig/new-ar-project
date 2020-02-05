@@ -11,12 +11,24 @@ export const ModalStyles = styled.div`
   box-shadow: 0px 10px 0px 0px rgba(0, 0, 3, 0.28);
   transition: 0.5s;
   background: #000000ee;
-  position: absolute;
+  position: fixed;
+  top: 10vh;
   width: 100%;
   z-index: 501;
+
+  .modal-shadow {
+    height: ${({ openBag }) => (openBag ? 'calc(90vh - 270px)' : '5px')};
+    background: #23232394;
+    position: fixed;
+    background-attachment: fixed;
+    width: 100vw;
+    left: 0;
+    bottom: 0;
+  }
   .modal-content {
     width: 500px;
     max-width: 95%;
+    z-index: 505;
     margin: 0 auto;
     font-family: Montserrat, sans-serif;
     h3 {
@@ -80,10 +92,14 @@ const ShoppingBagModal = ({ openBag, shoppingBag, setValue, cartLoading, setOpen
                 PROCEED TO CHECKOUT
               </button>
             </div>
+            <div
+              className='modal-shadow'
+              onClick={() => {
+                setOpenBag(false);
+              }}></div>
           </>
         )}
       </div>
-      <div className='modal-shadow'></div>
     </ModalStyles>
   );
 };

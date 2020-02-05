@@ -16,6 +16,7 @@ export const ShopStyles = styled.div`
   font-weight: 400;
   min-height: calc(90vh - 30px);
   text-align: center;
+  margin-top: calc(10vh + 50px);
   h1 {
     margin-top: 30px;
   }
@@ -27,10 +28,10 @@ const Shop = () => {
       <h1>SHOP YZED</h1>
       <ProductsPageSearch />
       <Accordion title='Women'>
-        <ShopCategoryAccordionContent title="women" />
+        <ShopCategoryAccordionContent title='women' />
       </Accordion>
       <Accordion title='Men'>
-        <ShopCategoryAccordionContent title="men" />
+        <ShopCategoryAccordionContent title='men' />
       </Accordion>
       <Accordion title='Brands'>
         <BrandAccordionContent title='brands' />

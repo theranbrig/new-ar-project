@@ -13,6 +13,7 @@ export const CartStyles = styled.div`
   color: black !important;
   min-height: calc(90vh - 100px);
   font-family: Montserrat, sans-serif;
+  margin-top: calc(10vh + 50px);
   h1 {
     font-weight: 400;
     text-align: center;
@@ -55,12 +56,6 @@ const Checkout = () => {
 
   const history = useHistory();
 
-  useEffect(() => {
-    return () => {
-      effect;
-    };
-  }, [input]);
-
   if (cartLoading && !userData) {
     return (
       <CartStyles>
@@ -72,6 +67,7 @@ const Checkout = () => {
   return (
     <CartStyles>
       <BackButton />
+      {!cartItems.length && <h1>No Items in Bag...</h1>}
       <ShoppingBagItems items={cart} canEdit={true} cartLoading={cartLoading} mode='light' />
       <div className='cart-details'>
         <h2>Total: {`$${(cartTotal / 100).toFixed(2)}`}</h2>

@@ -12,7 +12,7 @@ const HomeStyles = styled.div`
   margin: 0 auto;
   text-align: center;
   font-family: Montserrat, sans-serif;
-  margin-top: 50px;
+  margin-top: calc(5vh + 100px);
   max-width: 500px;
   @media (max-width: 576px) {
     width: 100% !important ;

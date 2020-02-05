@@ -13,10 +13,20 @@ export const ModalStyles = styled.div`
   box-shadow: 0px 10px 0px 0px rgba(0, 0, 3, 0.28);
   transition: 0.5s;
   background: #000000ee;
-  position: absolute;
+  position: fixed;
+  top: 10vh;
   width: 100%;
   overflow-y: scroll;
   z-index: 501;
+  .modal-shadow {
+    height: ${({ openSearch }) => (openSearch ? 'calc(90vh - 500px)' : '5px')};
+    background: #23232394;
+    position: fixed;
+    background-attachment: fixed;
+    width: 100vw;
+    left: 0;
+    bottom: 0;
+  }
   .modal-content {
     width: 500px;
     max-width: 95%;
@@ -55,13 +65,6 @@ export const ModalStyles = styled.div`
       padding-left: 5px;
     }
   }
-  .modal-shadow {
-    height: 90vh;
-    background: green;
-    z-index: 501;
-    position: absolute;
-    top: 10vh;
-  }
 `;
 
 const SearchModal = ({ openSearch, setOpenSearch }) => {
@@ -83,6 +86,7 @@ const SearchModal = ({ openSearch, setOpenSearch }) => {
           </div>
           <DropdownSearch setOpenSearch={setOpenSearch} />
         </div>
+        <div className='modal-shadow' onCLick={() => setOpenSearch(false)}></div>
       </ModalStyles>
     </>
   );

@@ -6,6 +6,7 @@ import { Helmet } from 'react-helmet';
 
 export const SubscriptionStyles = styled.div`
   min-height: calc(90vh - 50px);
+  margin-top: calc(10vh + 50px);
 `;
 
 const Subscribe = () => {
