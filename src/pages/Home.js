@@ -121,8 +121,8 @@ const Home = () => {
         <title>YZED - HOME</title>
       </Helmet>
       <MediaViewer
-        glbFile='https://oneoone-resource.s3.ap-northeast-2.amazonaws.com/3d/GLTF_DOWNSIZED_NEWTEX_TRENCHCOAT_V5.gltf'
-        usdzFile='https://oneoone-resource.s3.ap-northeast-2.amazonaws.com/yzed/trench_resized_2.usdz'
+        glbFile='https://oneoone-resource.s3.ap-northeast-2.amazonaws.com/yzed/GLTF_TRENCH_COAT_RESIZED_ANDBAKED_4.gltf'
+        usdzFile='https://oneoone-resource.s3.ap-northeast-2.amazonaws.com/yzed/GLTF_TRENCH_COAT_RESIZED_ANDBAKED_4.usdz'
       />
       <div className='product-title-area'>
         <div className='main-product-title'>

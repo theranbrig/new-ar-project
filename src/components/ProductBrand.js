@@ -86,7 +86,7 @@ const ProductBrand = ({ brand }) => {
           <h4>
             <span>{brand.challenges}</span> CHALLENGES
           </h4>
-          <Link to='/brand/adidas'>
+          <Link to={`/brand/${brand.name}`}>
             BRAND PROFILE <i className='fa fa-chevron-right'></i>
           </Link>
         </div>

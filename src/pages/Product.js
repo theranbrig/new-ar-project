@@ -82,12 +82,13 @@ const ProductContainer = styled.div`
     justify-content: space-between;
     .title-name {
       width: 100%;
+      font-size: 1rem;
     }
     .title-price {
       text-align: right;
       margin-right: 2.5%;
       h2 {
-        font-size: 1.4rem;
+        font-size: 1.2rem;
       }
     }
   }
@@ -111,30 +112,9 @@ const ProductContainer = styled.div`
       font-size: 1.4rem;
     }
   }
-  .lds-dual-ring {
-    display: inline-block;
-    width: 80px;
-    height: 80px;
-    margin-top: 50px;
-    margin-left: calc(50% - 40px);
-  }
-  .lds-dual-ring:after {
-    content: ' ';
-    display: block;
-    width: 64px;
-    height: 64px;
-    margin: 8px;
-    border-radius: 50%;
-    border: 6px solid black;
-    border-color: black transparent black transparent;
-    animation: lds-dual-ring 1.2s linear infinite;
-  }
-  @keyframes lds-dual-ring {
-    0% {
-      transform: rotate(0deg);
-    }
-    100% {
-      transform: rotate(360deg);
+  .product-information {
+    li {
+      font-weight: 300;
     }
   }
 `;
@@ -247,9 +227,13 @@ const Product = () => {
       <AddToCart sizes={product.sizes} productId={product.id} setIsAdded={setIsAdded} />
       <div className='accordions'>
         <Accordion title='PRODUCT INFORMATION' id='information-accordion'>
-          <p>{product.productInformation}</p>
+          <ul className='product-information'>
+            {product.features.map(feature => (
+              <li>{feature}</li>
+            ))}
+          </ul>
         </Accordion>
-        <Accordion title={`SIZING TABLE`}>
+        <Accordion title={`SIZING TABLE`} last={true}>
           <LazyLoadImage
             src={
               'https://res.cloudinary.com/dq7uyauun/image/upload/v1579495625/size-guide-women-shoes.png'

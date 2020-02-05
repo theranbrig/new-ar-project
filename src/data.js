@@ -1,3 +1,4 @@
+import yzedLogo from '../src/assets/images/yzed-logo.png';
 export const products = [
   {
     id: '1',
@@ -143,9 +144,9 @@ export const products = [
     sizes: ['S', 'M', 'L'],
     imageUrl: 'https://oneoone-resource.s3.ap-northeast-2.amazonaws.com/yzed/trenchcoat_1.jpg',
     glbFile:
-      'https://oneoone-resource.s3.ap-northeast-2.amazonaws.com/3d/GLTF_DOWNSIZED_NEWTEX_TRENCHCOAT_V5.gltf',
+      'https://oneoone-resource.s3.ap-northeast-2.amazonaws.com/yzed/GLTF_TRENCH_COAT_RESIZED_ANDBAKED_4.gltf',
     usdzFile:
-      'https://oneoone-resource.s3.ap-northeast-2.amazonaws.com/yzed/DOWNSIZED_NEWTEX_TRENCHCOAT_V5.usdz',
+      'https://oneoone-resource.s3.ap-northeast-2.amazonaws.com/yzed/GLTF_TRENCH_COAT_RESIZED_ANDBAKED_4.usdz',
     price: 92350,
     pictures: [
       'https://oneoone-resource.s3.ap-northeast-2.amazonaws.com/yzed/trenchcoat_2.jpg',
@@ -317,9 +318,8 @@ export const users = [
 export const Brands = [
   {
     id: 1,
-    name: 'Adidas',
-    imageUrl:
-      'https://res.cloudinary.com/dq7uyauun/image/upload/c_scale,w_300/v1579661232/adidas_logo.jpg',
+    name: 'YZED',
+    imageUrl: yzedLogo,
     followers: 45664,
     products: 54,
     challenges: 4,
