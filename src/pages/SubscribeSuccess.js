@@ -2,13 +2,14 @@ import React from 'react';
 import Check from '../assets/icons/subscription-check.png';
 import styled from 'styled-components';
 import { Link } from 'react-router-dom';
+import CheckSVG from '../components/CheckSVG';
 
 const SuccessStyles = styled.div`
   text-align: center;
   margin-top: 100px;
   min-height: calc(90vh - 100px);
   margin-top: calc(10vh + 50px);
-  img {
+  svg {
     width: 200px;
     @media (max-width: 576px) {
       width: 50%;
@@ -38,7 +39,7 @@ const BottomWhiteButton = styled.div`
 const Success = () => {
   return (
     <SuccessStyles>
-      <img src={Check} alt='success checkmark' />
+      <CheckSVG />
       <h1>SUBSCRIPTION SUCCESSFUL</h1>
       <BottomWhiteButton>
         <Link to='/'>BACK TO HOME</Link>
