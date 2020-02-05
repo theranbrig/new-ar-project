@@ -8,7 +8,7 @@ import SearchModal from './SearchModal';
 import { FirebaseContext } from '../context/Firebase';
 
 const StyledBurger = styled.button`
-  position: absolute;
+  position: fixed;
   top: 3vh;
   left: 30px;
   display: flex;
