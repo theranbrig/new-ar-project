@@ -67,7 +67,7 @@ const Checkout = () => {
   return (
     <CartStyles>
       <BackButton />
-      {!cartItems.length && <h1>No Items in Bag...</h1>}
+      {!cart.length && <h1>No Items in Bag...</h1>}
       <ShoppingBagItems items={cart} canEdit={true} cartLoading={cartLoading} mode='light' />
       <div className='cart-details'>
         <h2>Total: {`$${(cartTotal / 100).toFixed(2)}`}</h2>
