@@ -7,11 +7,11 @@ import CartProvider from './context/Cart';
 function App() {
   return (
     <FirebaseProvider>
-      <ProductProvider>
-        <CartProvider>
+      <CartProvider>
+        <ProductProvider>
           <AppRouter />
-        </CartProvider>
-      </ProductProvider>
+        </ProductProvider>
+      </CartProvider>
     </FirebaseProvider>
   );
 }

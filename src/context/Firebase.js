@@ -3,6 +3,7 @@ import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import '@firebase/firestore';
 import 'firebase/auth';
+import { useCollection } from 'react-firebase-hooks/firestore';
 
 const dotenv = require('dotenv');
 
@@ -79,6 +80,7 @@ const FirebaseProvider = ({ children }) => {
             const { userName, firstName, lastName, role } = doc.data();
             userDetails = { id: user.uid, email: user.email, userName, firstName, lastName, role };
             if (!userData) {
+              let tempCart = [];
               setUserData(userDetails);
             }
           }

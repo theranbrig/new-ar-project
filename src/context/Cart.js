@@ -2,6 +2,7 @@ import React, { useState, useContext, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { FirebaseContext } from './Firebase';
 import { products } from '../data';
+import { useCollection } from 'react-firebase-hooks/firestore';
 
 export const CartContext = React.createContext();
 
@@ -16,15 +17,19 @@ const CartProvider = ({ children }) => {
     dbh
       .collection('cartItems')
       .doc()
-      .set({ userId, productId, size, quantity });
+      .set({ userId, productId, size, quantity })
+      .then(async () => {
+        const fireCart = await getFirebaseCart(userData);
+        const newCart = await getCartData(fireCart);
+        setCart(newCart);
+      });
   };
 
-  const addItemToCart = (productId, selectedSize, quantity) => {
+  const addItemToCart = async (productId, selectedSize, quantity) => {
     setCartLoading(true);
     if (userData) {
       setCart([]);
-      addToFirebaseCart(userData.id, productId, selectedSize, quantity);
-      getCartData(userData);
+      const item = await addToFirebaseCart(userData.id, productId, selectedSize, quantity);
     } else {
       const cartItem = { productId, selectedSize, quantity };
       const cart = JSON.parse(localStorage.getItem('shoppingCart'));
@@ -50,9 +55,10 @@ const CartProvider = ({ children }) => {
           .collection('cartItems')
           .doc(cartItemId)
           .delete()
-          .then(() => {
-            setCart([]);
-            getFirebaseCart(userData);
+          .then(async () => {
+            const fireCart = await getFirebaseCart(userData);
+            const newCart = await getCartData(fireCart);
+            setCart(newCart);
           })
           .catch(err => console.log(err));
       }
@@ -75,36 +81,55 @@ const CartProvider = ({ children }) => {
         });
       return accum;
     }, []);
-    setCart(tempCart);
-
     setCartLoading(false);
+    return tempCart;
   };
 
-  const getFirebaseCart = userData => {
+  const getFirebaseCart = async userData => {
     setCartLoading(true);
     let tempCart = [];
-    dbh
+    await dbh
       .collection('cartItems')
       .where('userId', '==', userData.id)
-      .onSnapshot(function(querySnapshot) {
+      .get()
+      .then(function(querySnapshot) {
         querySnapshot.forEach(function(doc) {
           tempCart.push({ id: doc.ref.id, ...doc.data() });
+          console.log(doc.data());
         });
-        getCartData(tempCart);
       });
     return tempCart;
+  };
+
+  const cartCheck = () => {
+    let cartItems = [];
+    const fetchData = async () => {
+      if (userData) {
+        cartItems = await getFirebaseCart(userData);
+      } else {
+        cartItems = (await JSON.parse(localStorage.getItem('shoppingCart'))) || [];
+      }
+      const newCart = await getCartData(cartItems);
+      setCart(newCart);
+    };
+    fetchData();
   };
 
   useEffect(() => {
     setCartLoading(true);
     let cartItems = [];
-    if (userData) {
-      cartItems = getFirebaseCart(userData);
-    } else {
-      cartItems = JSON.parse(localStorage.getItem('shoppingCart')) || [];
-    }
-    getCartData(cartItems);
-    console.log('EFFECT CART', cart);
+    setCart([]);
+    const fetchData = async () => {
+      if (userData) {
+        cartItems = await getFirebaseCart(userData);
+      } else {
+        cartItems = (await JSON.parse(localStorage.getItem('shoppingCart'))) || [];
+      }
+      const newCart = await getCartData(cartItems);
+      setCart(newCart);
+    };
+    fetchData();
+    setCartLoading(false);
   }, [userData, setCart]);
 
   return (
@@ -116,6 +141,7 @@ const CartProvider = ({ children }) => {
         removeItemFromCart,
         clearLocalCart,
         getCartData,
+        count,
       }}>
       {children}
     </CartContext.Provider>

@@ -5,6 +5,7 @@ import MenuLinks from './MenuLinks';
 import ShoppingBagModal from './ShoppingBagModal';
 import { CartContext } from '../context/Cart';
 import SearchModal from './SearchModal';
+import { FirebaseContext } from '../context/Firebase';
 
 const StyledBurger = styled.button`
   position: absolute;
@@ -126,15 +127,33 @@ const StretchedNavStyles = styled.div`
 
 const NavigationDrawer = ({ children }) => {
   const [open, setOpen] = useState(false);
+  const [count, setCount] = useState([]);
   const [openBag, setOpenBag] = useState(false);
   const [openSearch, setOpenSearch] = useState(false);
-  const { cart, cartLoading, getCartData } = useContext(CartContext);
+  const { cart, cartLoading } = useContext(CartContext);
+  const { userData, dbh } = useContext(FirebaseContext);
 
   useEffect(() => {
-    console.log(cart);
-    const prods = [...cart];
-    console.log(prods);
-  }, [cart]);
+    const fetchData = async () => {
+      if (userData) {
+        let tempCart = [];
+        await dbh
+          .collection('cartItems')
+          .where('userId', '==', userData.id)
+          .get()
+          .then(function(querySnapshot) {
+            querySnapshot.forEach(function(doc) {
+              tempCart.push({ id: doc.ref.id, ...doc.data() });
+              console.log(tempCart);
+            });
+          });
+        await setCount(tempCart);
+        return tempCart;
+      }
+    };
+    const items = fetchData();
+    console.log(count.length);
+  }, [cart, userData]);
 
   const node = React.useRef();
 
@@ -162,7 +181,7 @@ const NavigationDrawer = ({ children }) => {
             aria-label='Toggle Cart'>
             <i className='fa fa-shopping-bag' aria-hidden='true'></i>
             <i className='cart-count' aria-hidden='true'>
-              {cart.length}
+              {count.length}
             </i>
           </button>
         </div>
