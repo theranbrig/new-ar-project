@@ -1,6 +1,7 @@
 import React from 'react';
 import Check from '../assets/icons/subscription-check.png';
 import styled from 'styled-components';
+import CheckSVG from './CheckSVG';
 
 const SuccessStyles = styled.div`
   text-align: center;
@@ -12,7 +13,7 @@ const SuccessStyles = styled.div`
   width: 100%;
   background: #00000045;
   z-index: 502;
-  img {
+  svg {
     width: 200px;
     @media (max-width: 576px) {
       width: 50%;
@@ -51,7 +52,7 @@ const AddToCartSuccessModal = ({ setIsAdded }) => {
   return (
     <SuccessStyles onClick={() => setIsAdded(false)}>
       <div className='modal-content'>
-        <img src={Check} alt='success checkmark' />
+        <CheckSVG />
         <h1>ADDED TO SHOPPING BAG</h1>
         <BottomWhiteButton>CLOSE</BottomWhiteButton>
       </div>
