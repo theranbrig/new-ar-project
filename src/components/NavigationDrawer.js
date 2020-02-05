@@ -134,9 +134,9 @@ const NavigationDrawer = ({ children }) => {
   const { userData, dbh } = useContext(FirebaseContext);
 
   useEffect(() => {
-    const fetchData = async () => {
+    const fetchCartData = async () => {
+      let tempCart = [];
       if (userData) {
-        let tempCart = [];
         await dbh
           .collection('cartItems')
           .where('userId', '==', userData.id)
@@ -149,9 +149,13 @@ const NavigationDrawer = ({ children }) => {
           });
         await setCount(tempCart);
         return tempCart;
+      } else {
+        tempCart = (await JSON.parse(localStorage.getItem('shoppingCart'))) || [];
+        await setCount(tempCart);
+        return tempCart;
       }
     };
-    const items = fetchData();
+    const items = fetchCartData();
     console.log(count.length);
   }, [cart, userData]);
 
