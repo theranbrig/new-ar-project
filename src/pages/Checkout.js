@@ -49,17 +49,17 @@ const BlackButton = styled.button`
 
 const Checkout = () => {
   const [cartTotal, setCartTotal] = React.useState('');
-  const { cart, cartLoading, clearLocalCart } = useContext(CartContext);
+  const [cartItems, setCartItems] = React.useState([]);
+  const { cart, cartLoading, clearLocalCart, fetchCartData } = useContext(CartContext);
   const { userData } = useContext(FirebaseContext);
 
   const history = useHistory();
 
   useEffect(() => {
-    if (cart.length) {
-      const total = cart.reduce((accum, item) => item.price + accum, 0);
-      setCartTotal(total);
-    }
-  }, [cart]);
+    return () => {
+      effect;
+    };
+  }, [input]);
 
   if (cartLoading && !userData) {
     return (
@@ -72,8 +72,7 @@ const Checkout = () => {
   return (
     <CartStyles>
       <BackButton />
-      {!cart.length && <h1>No Items in Bag...</h1>}
-      <ShoppingBagItems canEdit={true} items={cart} cartLoading={cartLoading} mode='light' />
+      <ShoppingBagItems items={cart} canEdit={true} cartLoading={cartLoading} mode='light' />
       <div className='cart-details'>
         <h2>Total: {`$${(cartTotal / 100).toFixed(2)}`}</h2>
       </div>

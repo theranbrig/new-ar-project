@@ -82,13 +82,17 @@ const ProductContainer = styled.div`
     justify-content: space-between;
     .title-name {
       width: 100%;
-      font-size: 1rem;
+      @media (max-width: 480px) {
+        h1 {
+          font-size: 1.4rem;
+        }
+      }
     }
     .title-price {
       text-align: right;
       margin-right: 2.5%;
       h2 {
-        font-size: 1.2rem;
+        font-size: 1.1rem;
       }
     }
   }

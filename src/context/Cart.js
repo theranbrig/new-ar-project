@@ -28,7 +28,6 @@ const CartProvider = ({ children }) => {
   const addItemToCart = async (productId, selectedSize, quantity) => {
     setCartLoading(true);
     if (userData) {
-      setCart([]);
       const item = await addToFirebaseCart(userData.id, productId, selectedSize, quantity);
     } else {
       const cartItem = { productId, selectedSize, quantity };
@@ -101,24 +100,9 @@ const CartProvider = ({ children }) => {
     return tempCart;
   };
 
-  const cartCheck = () => {
-    let cartItems = [];
-    const fetchData = async () => {
-      if (userData) {
-        cartItems = await getFirebaseCart(userData);
-      } else {
-        cartItems = (await JSON.parse(localStorage.getItem('shoppingCart'))) || [];
-      }
-      const newCart = await getCartData(cartItems);
-      setCart(newCart);
-    };
-    fetchData();
-  };
-
   useEffect(() => {
     setCartLoading(true);
     let cartItems = [];
-    setCart([]);
     const fetchData = async () => {
       if (userData) {
         cartItems = await getFirebaseCart(userData);
@@ -142,6 +126,7 @@ const CartProvider = ({ children }) => {
         clearLocalCart,
         getCartData,
         count,
+        fetchCartData,
       }}>
       {children}
     </CartContext.Provider>

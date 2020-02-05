@@ -3,6 +3,7 @@ import styled from 'styled-components';
 import { useHistory } from 'react-router-dom';
 import DropdownSearch from './DropdownSearch';
 import BackButton from '../components/BackButton';
+import { BackButtonStyles } from './BackButton';
 
 export const ModalStyles = styled.div`
   height: ${({ openSearch }) => (openSearch ? '500px' : '0px')};
@@ -54,28 +55,36 @@ export const ModalStyles = styled.div`
       padding-left: 5px;
     }
   }
+  .modal-shadow {
+    height: 90vh;
+    background: green;
+    z-index: 501;
+    position: absolute;
+    top: 10vh;
+  }
 `;
 
 const SearchModal = ({ openSearch, setOpenSearch }) => {
   const history = useHistory();
 
   return (
-    <ModalStyles openSearch={openSearch}>
-      <div className='modal-content'>
-        <div className='modal-top'>
-          <h3>TOP RESULTS ON YZED</h3>
-          <button
-            onClick={() => {
-              setOpenSearch(false);
-              history.push('/checkout');
-            }}>
-            <i className='fa fa-close' aria-hidden='true'></i>
-          </button>
+    <>
+      <ModalStyles openSearch={openSearch}>
+        <div className='modal-content'>
+          <div className='modal-top'>
+            <h3>TOP RESULTS ON YZED</h3>
+            <button
+              onClick={() => {
+                setOpenSearch(false);
+                history.push('/checkout');
+              }}>
+              <i className='fa fa-close' aria-hidden='true'></i>
+            </button>
+          </div>
+          <DropdownSearch setOpenSearch={setOpenSearch} />
         </div>
-        <DropdownSearch setOpenSearch={setOpenSearch} />
-      </div>
-      <div className='modal-shadow'></div>
-    </ModalStyles>
+      </ModalStyles>
+    </>
   );
 };
 

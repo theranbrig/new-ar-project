@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import React, { useContext, useEffect } from 'react';
 import styled from 'styled-components';
 import { CartContext } from '../context/Cart';
 import { FirebaseContext } from '../context/Firebase';
@@ -73,9 +73,10 @@ export const ItemsStyles = styled.div`
 `;
 
 const ShoppingBagItems = ({ items, cartLoading, canEdit, mode }) => {
-  const { removeItemFromCart } = useContext(CartContext);
+  const [cartItems, setCartItems] = React.useState([]);
+  const { removeItemFromCart, getCartData, getFirebaseCart, cart } = useContext(CartContext);
 
-  const { userData } = useContext(FirebaseContext);
+  const { userData, dbh } = useContext(FirebaseContext);
 
   if (cartLoading)
     return (
@@ -90,6 +91,7 @@ const ShoppingBagItems = ({ items, cartLoading, canEdit, mode }) => {
         <h2>Nothing in Shopping Bag...</h2>
       ) : (
         items.map((item, index) => {
+          console.log(cartItems);
           let size = '';
           if (userData) {
             size = item.size;

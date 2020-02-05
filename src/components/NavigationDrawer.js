@@ -127,7 +127,7 @@ const StretchedNavStyles = styled.div`
 
 const NavigationDrawer = ({ children }) => {
   const [open, setOpen] = useState(false);
-  const [count, setCount] = useState([]);
+  const [stateCart, setStateCart] = useState([]);
   const [openBag, setOpenBag] = useState(false);
   const [openSearch, setOpenSearch] = useState(false);
   const { cart, cartLoading } = useContext(CartContext);
@@ -147,16 +147,15 @@ const NavigationDrawer = ({ children }) => {
               console.log(tempCart);
             });
           });
-        await setCount(tempCart);
+        await setStateCart(tempCart);
         return tempCart;
       } else {
         tempCart = (await JSON.parse(localStorage.getItem('shoppingCart'))) || [];
-        await setCount(tempCart);
+        await setStateCart(tempCart);
         return tempCart;
       }
     };
     const items = fetchCartData();
-    console.log(count.length);
   }, [cart, userData]);
 
   const node = React.useRef();
@@ -185,7 +184,7 @@ const NavigationDrawer = ({ children }) => {
             aria-label='Toggle Cart'>
             <i className='fa fa-shopping-bag' aria-hidden='true'></i>
             <i className='cart-count' aria-hidden='true'>
-              {count.length}
+              {stateCart.length}
             </i>
           </button>
         </div>
