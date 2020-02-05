@@ -86,7 +86,11 @@ const SearchModal = ({ openSearch, setOpenSearch }) => {
           </div>
           <DropdownSearch setOpenSearch={setOpenSearch} />
         </div>
-        <div className='modal-shadow' onCLick={() => setOpenSearch(false)}></div>
+        <div
+          className='modal-shadow'
+          onClick={() => {
+            setOpenSearch(false);
+          }}></div>
       </ModalStyles>
     </>
   );
