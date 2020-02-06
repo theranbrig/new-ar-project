@@ -51,6 +51,7 @@ const CartProvider = ({ children }) => {
       .then(async () => {
         const cartItems = await getFirebaseCart(userData);
         await getCartData(cartItems);
+        setCartLoading(false);
       })
       .catch(err => console.log(err));
   };

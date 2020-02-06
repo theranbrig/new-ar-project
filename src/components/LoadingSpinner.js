@@ -15,8 +15,7 @@ export const SpinnerStyles = styled.div`
     position: absolute;
     left: 8px;
     width: 16px;
-    color: ${({ color }) => (color ? color : 'black')};
-    background: black;
+    background: ${({ color }) => color};
     animation: lds-facebook 1.2s cubic-bezier(0, 0.5, 0.5, 1) infinite;
   }
   .lds-facebook div:nth-child(1) {
@@ -46,7 +45,7 @@ export const SpinnerStyles = styled.div`
 
 const LoadingSpinner = ({ color }) => {
   return (
-    <SpinnerStyles color>
+    <SpinnerStyles color={color}>
       <div className='lds-facebook'>
         <div></div>
         <div></div>
