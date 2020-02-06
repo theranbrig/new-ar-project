@@ -3,6 +3,7 @@ import styled from 'styled-components';
 import { FirebaseContext } from '../context/Firebase';
 import { useHistory } from 'react-router-dom';
 import { Helmet } from 'react-helmet';
+import LoadingSpinner from '../components/LoadingSpinner';
 
 export const LoginStyles = styled.div`
   width: 500px;
@@ -100,6 +101,7 @@ const BottomWhiteButton = styled.div`
 `;
 
 const Register = () => {
+  const [loading, setLoading] = useState('');
   const [email, setEmail] = useState('');
   const [firstName, setFirstName] = useState('');
   const [lastName, setLastName] = useState('');
@@ -183,12 +185,12 @@ const Register = () => {
           />
         </div>
         <BlackButton
-          default
           disabled={password !== confirmPassword}
           onClick={async () => {
+            setLoading(true);
             await registerUser(email, password, userName, firstName, lastName);
           }}>
-          Submit
+          {loading ? 'Submitting...' : 'Submit'}
         </BlackButton>
       </div>
       {firebaseError && (
@@ -196,6 +198,7 @@ const Register = () => {
           <h3>{firebaseError}</h3>
         </div>
       )}
+      {loading && <LoadingSpinner color='black' />}
       <BottomWhiteButton onClick={() => history.push('/login')}>
         Already A Member?
       </BottomWhiteButton>
