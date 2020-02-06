@@ -43,15 +43,14 @@ const CartProvider = ({ children }) => {
             const cartItem = dbh.collection('cartItems').doc(doc.id);
             cartItem.get().then(async doc => {
               const oldQuantity = doc.data().quantity;
+              console.log(oldQuantity + quantity);
               await cartItem.update({ quantity: oldQuantity + quantity });
+              const newCart = await getFirebaseCart(userData);
+              await getCartData(newCart);
+              setCartLoading(false);
             });
           });
         }
-      })
-      .then(async () => {
-        const cartItems = await getFirebaseCart(userData);
-        await getCartData(cartItems);
-        setCartLoading(false);
       })
       .catch(err => console.log(err));
   };

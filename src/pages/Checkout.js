@@ -83,7 +83,8 @@ const Checkout = () => {
             });
           return accum;
         }, []);
-        const total = cart.map(item => item.price);
+
+        const total = cart.reduce((accum, item) => accum + item.price * item.quantity, 0);
         setCartTotal(total);
         await setCartItems(cartDetails);
         setCheckoutLoading(false);
@@ -99,7 +100,7 @@ const Checkout = () => {
             });
           return accum;
         }, []);
-        const total = cart.map(item => item.price);
+        const total = cart.reduce((accum, item) => accum + item.price * item.quantity, 0);
         setCartTotal(total);
         await setCartItems(cartDetails);
         setCheckoutLoading(false);
