@@ -1,6 +1,7 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
 import { useHistory, Link } from 'react-router-dom';
 import styled from 'styled-components';
+import { FirebaseContext } from '../context/Firebase';
 
 const FormStyles = styled.div`
   margin: 0 auto;
@@ -40,6 +41,20 @@ const FormStyles = styled.div`
       font-size: 1.1rem;
     }
   }
+  h3 {
+    text-align: center;
+  }
+  .required {
+    h5 {
+      font-weight: 300;
+    }
+    span {
+      font-weight: 500;
+    }
+  }
+  span {
+    color: tomato;
+  }
 `;
 
 const BlackButton = styled.button`
@@ -55,6 +70,9 @@ const BlackButton = styled.button`
   color: white;
   min-width: 284px;
   margin-bottom: 10px;
+  :disabled {
+    color: #989898;
+  }
 `;
 
 const BottomWhiteButton = styled.div`
@@ -77,40 +95,44 @@ const BottomWhiteButton = styled.div`
 `;
 
 const SubscriptionForm = () => {
+  const [loading, setLoading] = useState(false);
+  const [formError, setFormError] = useState('');
   const [age, setAge] = useState('');
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [gender, setGender] = useState('');
 
+  const { dbh } = useContext(FirebaseContext);
+
   const history = useHistory();
 
-  const encode = data => {
-    return Object.keys(data)
-      .map(key => encodeURIComponent(key) + '=' + encodeURIComponent(data[key]))
-      .join('&');
+  const validateEmail = email => {
+    const regex = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+    return regex.test(email);
   };
 
-  const handleSubmit = e => {
-    fetch('/', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-      body: encode({ 'form-name': 'contact', age, gender, email, name }),
-    })
+  const subscribe = async () => {
+    setLoading(true);
+    await dbh
+      .collection('newsletterSubscriptions')
+      .doc()
+      .set({ age, name, email, gender })
       .then(() => {
+        setLoading(false);
         history.push('/success');
-      })
-      .catch(error => alert(error));
-    history.push('/success');
+      });
   };
 
   return (
     <>
       <FormStyles>
-        <form onSubmit={() => handleSubmit()}>
+        <div>
           <div className='box-area'>
             <h1>SUBSCRIBE TO OUR NEWSLETTER</h1>
             <div className='form-input'>
-              <label>Name: </label>
+              <label>
+                Name: <span>*</span>
+              </label>
               <input
                 type='text'
                 name='name'
@@ -120,7 +142,9 @@ const SubscriptionForm = () => {
               />
             </div>
             <div className='form-input'>
-              <label>Email:</label>
+              <label>
+                Email: <span>*</span>
+              </label>
               <input
                 type='email'
                 name='email'
@@ -142,9 +166,31 @@ const SubscriptionForm = () => {
                 <option value='other'>Other</option>
               </select>
             </div>
+            <div className='required'>
+              <h5>
+                <span>*</span> = Required Fields
+              </h5>
+            </div>
           </div>
-          <BlackButton type='submit'>SUBMIT</BlackButton>
-        </form>
+          <BlackButton
+            disabled={!email && !name}
+            onClick={() => {
+              if (!validateEmail(email)) {
+                setFormError('Ooops. You need to enter a proper email address');
+              } else {
+                if (name.length <= 2) {
+                  setFormError(
+                    'Ooops. Please make sure your name is at least three characters long.'
+                  );
+                } else {
+                  subscribe();
+                }
+              }
+            }}>
+            SUBMIT
+          </BlackButton>
+        </div>
+        {formError && <h3>{formError}</h3>}
       </FormStyles>
       <BottomWhiteButton>
         <Link to='/'>BACK TO HOME</Link>
