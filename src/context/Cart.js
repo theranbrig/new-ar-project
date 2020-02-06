@@ -14,6 +14,7 @@ const CartProvider = ({ children }) => {
   const { addToCart, userData, dbh } = useContext(FirebaseContext);
 
   const addToFirebaseCart = (userId, productId, size, quantity) => {
+    setCart([]);
     dbh
       .collection('cartItems')
       .doc()
@@ -21,11 +22,13 @@ const CartProvider = ({ children }) => {
       .then(async () => {
         const fireCart = await getFirebaseCart(userData);
         const newCart = await getCartData(fireCart);
+        console.log('NEW CART');
         setCart(newCart);
       });
   };
 
   const checkFirebaseItemExists = async (productId, selectedSize, quantity) => {
+    setCart([]);
     dbh
       .collection('cartItems')
       .where('userId', '==', userData.id)
@@ -33,24 +36,30 @@ const CartProvider = ({ children }) => {
       .get()
       .then(async function(querySnapshot) {
         console.log('QUERY', querySnapshot);
-        if (!querySnapshot.length) {
+        if (!querySnapshot.docs.length) {
           const item = await addToFirebaseCart(userData.id, productId, selectedSize, quantity);
         } else {
           querySnapshot.forEach(function(doc) {
-            console.log(doc.data());
-            const cartItem = dbh.collection('cartItems').doc(doc.ref.id);
-            console.log(cartItem.data());
-            const oldQuantity = cartItem.data().quantity;
-            cartItem.update({ quantity: oldQuantity + quantity });
+            const cartItem = dbh.collection('cartItems').doc(doc.id);
+            cartItem.get().then(async doc => {
+              const oldQuantity = doc.data().quantity;
+              await cartItem.update({ quantity: oldQuantity + quantity });
+            });
           });
         }
-      });
+      })
+      .then(async () => {
+        const cartItems = await getFirebaseCart(userData);
+        await getCartData(cartItems);
+      })
+      .catch(err => console.log(err));
   };
 
   const addItemToCart = async (productId, selectedSize, quantity) => {
+    setCart([]);
     setCartLoading(true);
     if (userData) {
-      checkFirebaseItemExists(productId, selectedSize, quantity);
+      await checkFirebaseItemExists(productId, selectedSize, quantity);
     } else {
       const cartItem = { productId, selectedSize, quantity };
       const cart = JSON.parse(localStorage.getItem('shoppingCart'));
@@ -97,6 +106,7 @@ const CartProvider = ({ children }) => {
         localStorage.setItem('shoppingCart', JSON.stringify([...cartData]));
         getCartData(JSON.parse(localStorage.getItem('shoppingCart')));
       } else {
+        setCartLoading(true);
         dbh
           .collection('cartItems')
           .doc(cartItemId)
@@ -105,6 +115,7 @@ const CartProvider = ({ children }) => {
             const fireCart = await getFirebaseCart(userData);
             const newCart = await getCartData(fireCart);
             setCart(newCart);
+            setCartLoading(false);
           })
           .catch(err => console.log(err));
       }
@@ -117,6 +128,7 @@ const CartProvider = ({ children }) => {
   };
 
   const getCartData = async arr => {
+    setCart([]);
     const tempCart = await arr.reduce((accum, item) => {
       const prod = dbh
         .collection('products')
@@ -149,7 +161,6 @@ const CartProvider = ({ children }) => {
   };
 
   useEffect(() => {
-    setCartLoading(true);
     let cartItems = [];
     const fetchData = async () => {
       if (userData) {
@@ -161,6 +172,7 @@ const CartProvider = ({ children }) => {
       setCart(newCart);
     };
     fetchData();
+    console.log(cart);
     setCartLoading(false);
   }, [userData, setCart]);
 

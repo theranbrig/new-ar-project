@@ -5,6 +5,7 @@ import styled from 'styled-components';
 import { useHistory } from 'react-router-dom';
 import { FirebaseContext } from '../context/Firebase';
 import BackButton from '../components/BackButton';
+import LoadingSpinner from '../components/LoadingSpinner';
 
 export const CartStyles = styled.div`
   width: 500px;
@@ -51,15 +52,61 @@ const BlackButton = styled.button`
 const Checkout = () => {
   const [cartTotal, setCartTotal] = React.useState('');
   const [cartItems, setCartItems] = React.useState([]);
-  const { cart, cartLoading, clearLocalCart, fetchCartData } = useContext(CartContext);
-  const { userData } = useContext(FirebaseContext);
+  const { cart, cartLoading, clearLocalCart } = useContext(CartContext);
+  const { userData, dbh } = useContext(FirebaseContext);
 
   const history = useHistory();
+
+  useEffect(() => {
+    const fetchCart = async () => {
+      let tempCart = [];
+      if (userData) {
+        await dbh
+          .collection('cartItems')
+          .where('userId', '==', userData.id)
+          .get()
+          .then(function(querySnapshot) {
+            querySnapshot.forEach(function(doc) {
+              tempCart.push({ id: doc.ref.id, ...doc.data() });
+              console.log(doc.data());
+            });
+          });
+        const cartDetails = await tempCart.reduce((accum, item) => {
+          const prod = dbh
+            .collection('products')
+            .doc(item.productId)
+            .get()
+            .then(doc => {
+              accum.push({ ...item, ...doc.data() });
+            });
+          return accum;
+        }, []);
+        console.log('DEETS', cartDetails);
+        await setCartItems(cartDetails);
+      } else {
+        tempCart = (await JSON.parse(localStorage.getItem('shoppingCart'))) || [];
+        const cartDetails = await tempCart.reduce((accum, item) => {
+          const prod = dbh
+            .collection('products')
+            .doc(item.productId)
+            .get()
+            .then(doc => {
+              accum.push({ ...item, ...doc.data() });
+            });
+          return accum;
+        }, []);
+        console.log('DEETS', cartDetails);
+        await setCartItems([...cartDetails]);
+      }
+    };
+    fetchCart();
+    console.log('ITEMS', cartItems);
+  }, [userData, cart]);
 
   if (cartLoading && !userData) {
     return (
       <CartStyles>
-        <h1>Loading...</h1>;
+        <LoadingSpinner />
       </CartStyles>
     );
   }

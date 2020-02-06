@@ -2,6 +2,7 @@ import React, { useContext, useEffect } from 'react';
 import styled from 'styled-components';
 import { CartContext } from '../context/Cart';
 import { FirebaseContext } from '../context/Firebase';
+import { Link } from 'react-router-dom';
 
 export const ItemsStyles = styled.div`
   color: white;
@@ -73,7 +74,6 @@ export const ItemsStyles = styled.div`
 `;
 
 const ShoppingBagItems = ({ items, cartLoading, canEdit, mode }) => {
-  const [cartItems, setCartItems] = React.useState([]);
   const { removeItemFromCart, getCartData, getFirebaseCart, cart } = useContext(CartContext);
 
   const { userData, dbh } = useContext(FirebaseContext);
@@ -91,7 +91,6 @@ const ShoppingBagItems = ({ items, cartLoading, canEdit, mode }) => {
         <h2>Nothing in Shopping Bag...</h2>
       ) : (
         items.map((item, index) => {
-          console.log(cartItems);
           let size = '';
           if (userData) {
             size = item.size;
@@ -102,13 +101,15 @@ const ShoppingBagItems = ({ items, cartLoading, canEdit, mode }) => {
             <div className='bag-item' key={index}>
               <div className='left-content'>
                 <h3>{index + 1}</h3>
-                <img src={item.mainImage} alt={item.name} />
+                <Link to={`/product/${item.productId}`}>
+                  <img src={item.mainImage} alt={item.name} />
+                </Link>
               </div>
               <div className='item-info'>
                 <div>
                   <h2>{item.brand.toUpperCase()}</h2>
                   <h3>
-                    {item.name.toUpperCase()} ({size}) - QTY({item.quantity})
+                    {item.name.toUpperCase()} ({size}) <br /> QTY({item.quantity})
                   </h3>
                 </div>
                 <h4>{`$${(item.price / 100).toFixed(2)}`}</h4>

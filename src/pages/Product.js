@@ -172,7 +172,7 @@ const Product = () => {
   if (!product || loading)
     return (
       <ProductContainer>
-        <LoadingSpinner />
+        <LoadingSpinner color='black' />
       </ProductContainer>
     );
   return (
@@ -233,8 +233,8 @@ const Product = () => {
       <div className='accordions'>
         <Accordion title='PRODUCT INFORMATION' id='information-accordion'>
           <ul className='product-information'>
-            {product.features.map(feature => (
-              <li>{feature}</li>
+            {product.features.map((feature, index) => (
+              <li key={index}>{feature}</li>
             ))}
           </ul>
         </Accordion>

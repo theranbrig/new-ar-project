@@ -149,7 +149,6 @@ const NavigationDrawer = ({ children }) => {
           .then(function(querySnapshot) {
             querySnapshot.forEach(function(doc) {
               tempCart.push({ id: doc.ref.id, ...doc.data() });
-              console.log(tempCart);
             });
           });
         await setStateCart(tempCart);

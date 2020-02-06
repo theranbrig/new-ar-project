@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import styled from 'styled-components';
 import ShoppingBagItems from './ShoppingBagItems';
 import { useHistory } from 'react-router-dom';
+import LoadingSpinner from './LoadingSpinner';
 
 export const ModalStyles = styled.div`
   height: ${({ openBag }) => (openBag ? '270px' : '0px')};
@@ -72,7 +73,7 @@ const ShoppingBagModal = ({ openBag, shoppingBag, setValue, cartLoading, setOpen
     <ModalStyles openBag={openBag}>
       <div className='modal-content'>
         {cartLoading ? (
-          <h3>Cart Loading...</h3>
+          <LoadingSpinner color={'white'} />
         ) : (
           <>
             <h3>My Shopping Bag ({shoppingBag.length})</h3>

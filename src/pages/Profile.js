@@ -86,6 +86,10 @@ const Profile = () => {
     );
   return (
     <ProfileStyles>
+      <h1>
+        {userData.firstName} {userData.lastName}
+      </h1>
+      <h1>{userData.userName}</h1>
       <h1>{userData.email}</h1>
       <BlackButton>
         <a href='/checkout'>VIEW MY CART</a>
