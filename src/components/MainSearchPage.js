@@ -1,6 +1,5 @@
 import React, { useEffect, useState, useContext } from 'react';
 import Downshift from 'downshift';
-import { products } from '../data';
 import { useHistory, Link, useParams } from 'react-router-dom';
 import styled from 'styled-components';
 import { FirebaseContext } from '../context/Firebase';

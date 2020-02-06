@@ -1,4 +1,4 @@
-import React, { useContext, useEffect } from 'react';
+import React, { useContext } from 'react';
 import styled from 'styled-components';
 import { CartContext } from '../context/Cart';
 import { FirebaseContext } from '../context/Firebase';
@@ -74,7 +74,7 @@ export const ItemsStyles = styled.div`
 `;
 
 const ShoppingBagItems = ({ items, cartLoading, canEdit, mode }) => {
-  const { removeItemFromCart, getCartData, getFirebaseCart, cart } = useContext(CartContext);
+  const { removeItemFromCart } = useContext(CartContext);
 
   const { userData, dbh } = useContext(FirebaseContext);
 

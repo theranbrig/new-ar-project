@@ -1,9 +1,9 @@
 import React, { useState, useEffect, useContext } from 'react';
 import Downshift from 'downshift';
-import { products } from '../data';
 import { useHistory } from 'react-router-dom';
 import styled from 'styled-components';
 import { FirebaseContext } from '../context/Firebase';
+import LoadingSpinner from './LoadingSpinner';
 
 export const SearchStyles = styled.div`
   font-family: Montserrat, sans-serif;
@@ -73,14 +73,16 @@ const ProductPageSearch = ({ setOpenSearch, children }) => {
             fSProducts.push({ id: doc.ref.id, ...doc.data() });
           });
           setProducts(fSProducts);
+          setLoading(false);
         })
         .catch(err => {
           console.log(err);
         });
     };
     getData();
-    setLoading(false);
   }, []);
+
+  if (loading) return <LoadingSpinner color='white' />;
 
   return (
     <Downshift

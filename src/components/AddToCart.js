@@ -1,6 +1,5 @@
-import React, { useState, useContext, useEffect } from 'react';
+import React, { useState, useContext } from 'react';
 import styled from 'styled-components';
-import { FirebaseContext } from '../context/Firebase';
 import { CartContext } from '../context/Cart';
 
 export const AddToCartStyles = styled.div`
@@ -63,12 +62,7 @@ const AddToCart = ({ sizes, productId, setIsAdded }) => {
   const [selectedSize, setSelectedSize] = useState('');
   const [quantity, setQuantity] = useState(1);
 
-  const { userData } = useContext(FirebaseContext);
   const { addItemToCart } = useContext(CartContext);
-
-  useEffect(() => {
-    console.log('user', userData);
-  }, [userData]);
 
   return (
     <AddToCartStyles>

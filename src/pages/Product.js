@@ -1,6 +1,5 @@
 import React, { useEffect, useState, useContext } from 'react';
 import { useParams, useHistory } from 'react-router-dom';
-import { products } from '../data';
 import styled from 'styled-components';
 import MediaViewer from '../components/ModelViewer';
 import { LazyLoadImage } from 'react-lazy-load-image-component';
@@ -8,11 +7,9 @@ import ThreeDSVG from '../components/ThreeDSVG';
 import 'react-lazy-load-image-component/src/effects/blur.css';
 import { Helmet } from 'react-helmet';
 import AddToCart from '../components/AddToCart';
-import Reviews from '../components/Reviews';
 import Accordion from '../components/Accordion';
 import ProductBrand from '../components/ProductBrand';
 import AddToCartSuccessModal from '../components/AddToCartSuccessModal';
-import { ProductContext } from '../context/Product';
 import { FirebaseContext } from '../context/Firebase';
 import LoadingSpinner from '../components/LoadingSpinner';
 
@@ -152,8 +149,9 @@ const Product = () => {
   const { dbh } = useContext(FirebaseContext);
 
   useEffect(() => {
+    setLoading(true);
     const getData = async () => {
-      const fsProduct = await dbh
+      await dbh
         .collection('products')
         .doc(id)
         .get()
@@ -161,13 +159,14 @@ const Product = () => {
           const id = doc.id;
           const details = doc.data();
           setProduct({ id, ...details });
+          setLoading(false);
         })
         .catch(err => {
           console.log(err);
         });
     };
     getData();
-  }, []);
+  }, [dbh, id]);
 
   if (!product || loading)
     return (

@@ -1,12 +1,9 @@
 import React, { useState, useContext, useEffect } from 'react';
-import { products } from '../data';
 import styled from 'styled-components';
 import { LazyLoadImage } from 'react-lazy-load-image-component';
 import 'react-lazy-load-image-component/src/effects/blur.css';
 import { Link } from 'react-router-dom';
-import { ProductContext } from '../context/Product';
 import { FirebaseContext } from '../context/Firebase';
-import { useCollectionDataOnce } from 'react-firebase-hooks/firestore';
 
 export const ProductThumbsStyles = styled.div`
   display: grid;
@@ -39,7 +36,6 @@ export const ProductThumbsStyles = styled.div`
 const ProductThumbs = ({ open }) => {
   const [products, setProducts] = useState([]);
 
-  const { getProducts, firebaseProducts } = useContext(ProductContext);
   const { dbh } = useContext(FirebaseContext);
 
   useEffect(() => {
@@ -59,7 +55,7 @@ const ProductThumbs = ({ open }) => {
         });
     };
     getData();
-  }, []);
+  }, [dbh]);
 
   return (
     <ProductThumbsStyles className='product-thumbs'>

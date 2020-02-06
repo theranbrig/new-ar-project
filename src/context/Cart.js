@@ -1,17 +1,14 @@
 import React, { useState, useContext, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { FirebaseContext } from './Firebase';
-import { products } from '../data';
-import { useCollection } from 'react-firebase-hooks/firestore';
 
 export const CartContext = React.createContext();
 
 const CartProvider = ({ children }) => {
   const [cart, setCart] = useState([]);
-  const [count, setCount] = useState(0);
   const [cartLoading, setCartLoading] = useState(false);
 
-  const { addToCart, userData, dbh } = useContext(FirebaseContext);
+  const { userData, dbh } = useContext(FirebaseContext);
 
   const addToFirebaseCart = (userId, productId, size, quantity) => {
     setCart([]);
@@ -22,7 +19,6 @@ const CartProvider = ({ children }) => {
       .then(async () => {
         const fireCart = await getFirebaseCart(userData);
         const newCart = await getCartData(fireCart);
-        console.log('NEW CART');
         setCart(newCart);
       });
   };
@@ -35,15 +31,13 @@ const CartProvider = ({ children }) => {
       .where('size', '==', selectedSize)
       .get()
       .then(async function(querySnapshot) {
-        console.log('QUERY', querySnapshot);
         if (!querySnapshot.docs.length) {
-          const item = await addToFirebaseCart(userData.id, productId, selectedSize, quantity);
+          await addToFirebaseCart(userData.id, productId, selectedSize, quantity);
         } else {
           querySnapshot.forEach(function(doc) {
             const cartItem = dbh.collection('cartItems').doc(doc.id);
             cartItem.get().then(async doc => {
               const oldQuantity = doc.data().quantity;
-              console.log(oldQuantity + quantity);
               await cartItem.update({ quantity: oldQuantity + quantity });
               const newCart = await getFirebaseCart(userData);
               await getCartData(newCart);
@@ -77,7 +71,7 @@ const CartProvider = ({ children }) => {
             selectedSize: cartCheckItem[0].selectedSize,
           };
           let itemIndex;
-          const cartIndex = cart.forEach((item, index) => {
+          cart.forEach((item, index) => {
             if (
               item.productId === cartItem.productId &&
               item.selectedSize === cartItem.selectedSize
@@ -130,7 +124,7 @@ const CartProvider = ({ children }) => {
   const getCartData = async arr => {
     setCart([]);
     const tempCart = await arr.reduce((accum, item) => {
-      const prod = dbh
+      dbh
         .collection('products')
         .doc(item.productId)
         .get()
@@ -154,7 +148,6 @@ const CartProvider = ({ children }) => {
       .then(function(querySnapshot) {
         querySnapshot.forEach(function(doc) {
           tempCart.push({ id: doc.ref.id, ...doc.data() });
-          console.log(doc.data());
         });
       });
     return tempCart;
@@ -172,7 +165,6 @@ const CartProvider = ({ children }) => {
       setCart(newCart);
     };
     fetchData();
-    console.log(cart);
     setCartLoading(false);
   }, [userData, setCart]);
 
@@ -185,7 +177,6 @@ const CartProvider = ({ children }) => {
         removeItemFromCart,
         clearLocalCart,
         getCartData,
-        count,
       }}>
       {children}
     </CartContext.Provider>

@@ -3,7 +3,6 @@ import styled from 'styled-components';
 import { LazyLoadImage } from 'react-lazy-load-image-component';
 import 'react-lazy-load-image-component/src/effects/blur.css';
 import { Link } from 'react-router-dom';
-import { ProductContext } from '../context/Product';
 import { FirebaseContext } from '../context/Firebase';
 import LoadingSpinner from './LoadingSpinner';
 
@@ -59,7 +58,7 @@ const ShopThumbs = ({ open }) => {
     };
     getData();
     setLoading(false);
-  }, []);
+  }, [dbh]);
 
   if (loading) return <LoadingSpinner />;
 

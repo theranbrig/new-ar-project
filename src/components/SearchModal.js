@@ -2,8 +2,6 @@ import React from 'react';
 import styled from 'styled-components';
 import { useHistory } from 'react-router-dom';
 import DropdownSearch from './DropdownSearch';
-import BackButton from '../components/BackButton';
-import { BackButtonStyles } from './BackButton';
 
 export const ModalStyles = styled.div`
   height: ${({ openSearch }) => (openSearch ? '500px' : '0px')};

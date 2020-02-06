@@ -57,7 +57,6 @@ const SliderStyles = styled.div`
 
 const ShopCategoryCarousel = () => {
   const [products, setProducts] = useState([]);
-  const { getProducts, firebaseProducts } = useContext(FirebaseContext);
 
   const { dbh } = useContext(FirebaseContext);
 

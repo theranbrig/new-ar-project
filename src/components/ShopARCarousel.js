@@ -54,7 +54,6 @@ const SliderStyles = styled.div`
 const ShopPageProductCarousel = () => {
   const [currentARModel, setCurrentARModel] = useState(null);
   const [products, setProducts] = useState([]);
-  const { getProducts, firebaseProducts } = useContext(FirebaseContext);
 
   const { dbh } = useContext(FirebaseContext);
 

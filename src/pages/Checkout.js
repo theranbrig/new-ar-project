@@ -74,7 +74,7 @@ const Checkout = () => {
             });
           });
         const cartDetails = await tempCart.reduce((accum, item) => {
-          const prod = dbh
+          dbh
             .collection('products')
             .doc(item.productId)
             .get()
@@ -91,7 +91,7 @@ const Checkout = () => {
       } else {
         tempCart = (await JSON.parse(localStorage.getItem('shoppingCart'))) || [];
         const cartDetails = await tempCart.reduce((accum, item) => {
-          const prod = dbh
+          dbh
             .collection('products')
             .doc(item.productId)
             .get()

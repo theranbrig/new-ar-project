@@ -1,5 +1,4 @@
-import * as firebase from 'firebase/app';
-import React, { useState, useContext } from 'react';
+import React, { useContext } from 'react';
 import PropTypes from 'prop-types';
 import '@firebase/firestore';
 import 'firebase/auth';
@@ -8,10 +7,7 @@ import { FirebaseContext } from './Firebase';
 export const ProductContext = React.createContext();
 
 const ProductProvider = ({ children }) => {
-  const [firebaseProducts, setFirebaseProducts] = useState([]);
-  const [firebaseProduct, setFirebaseProduct] = useState(null);
-
-  const { firebaseError, setFirebaseError, dbh } = useContext(FirebaseContext);
+  const { setFirebaseError, dbh } = useContext(FirebaseContext);
 
   // FIREBASE PRODUCT MUTATIONS
 
@@ -42,7 +38,7 @@ const ProductProvider = ({ children }) => {
         pictures,
         productInformation,
       })
-      .catch(err => console.log(err));
+      .catch(err => setFirebaseError(err));
   };
 
   return (

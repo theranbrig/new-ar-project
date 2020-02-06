@@ -3,7 +3,6 @@ import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import '@firebase/firestore';
 import 'firebase/auth';
-import { useCollection } from 'react-firebase-hooks/firestore';
 
 const dotenv = require('dotenv');
 
@@ -31,8 +30,6 @@ export const dbh = firebase.firestore();
 const FirebaseProvider = ({ children }) => {
   const [firebaseError, setFirebaseError] = useState(null);
   const [userData, setUserData] = useState(null);
-  const [firebaseProducts, setFirebaseProducts] = useState([]);
-  const [firebaseProduct, setFirebaseProduct] = useState(null);
 
   const registerUser = (email, password, userName, firstName, lastName) => {
     firebase

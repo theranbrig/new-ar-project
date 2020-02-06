@@ -159,8 +159,8 @@ const NavigationDrawer = ({ children }) => {
         return tempCart;
       }
     };
-    const items = fetchCartData();
-  }, [cart, userData]);
+    fetchCartData();
+  }, [cart, userData, dbh]);
 
   const node = React.useRef();
 

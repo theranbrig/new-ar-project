@@ -1,5 +1,4 @@
 import React from 'react';
-import Check from '../assets/icons/subscription-check.png';
 import styled from 'styled-components';
 import { Link } from 'react-router-dom';
 import CheckSVG from '../components/CheckSVG';
