@@ -9357,10 +9357,10 @@ react-app-polyfill@^1.0.5:
     regenerator-runtime "^0.13.3"
     whatwg-fetch "^3.0.0"
 
-react-awesome-slider@^3.1.2:
-  version "3.1.2"
-  resolved "https://registry.yarnpkg.com/react-awesome-slider/-/react-awesome-slider-3.1.2.tgz#882e3eb511be9f9e18ba17113654eedbdc4933d4"
-  integrity sha512-C2ieMNJFJQVLAjhVqzTPH+BAks7Sg8IaCdTcyVLdXEq8PkclU8mzd5d4dVGRZOktAWxSMWowtxtlcrL2NQgObw==
+react-awesome-slider@^4.0.2:
+  version "4.0.2"
+  resolved "https://registry.yarnpkg.com/react-awesome-slider/-/react-awesome-slider-4.0.2.tgz#df8ec4146de5f78248024c559fedb8e1e70b9057"
+  integrity sha512-+ogIg8hbmq1DaA7mBfCfuWQgyuruhBQXp6IVIIPL1E4S3P3dbk7VW37KgWiv0deO9/ltilHdOmk8H3EEF/9xJg==
   dependencies:
     web-animation-club "^0.6.0"
 

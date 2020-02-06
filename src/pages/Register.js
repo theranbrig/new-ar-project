@@ -101,12 +101,11 @@ const BottomWhiteButton = styled.div`
 
 const Register = () => {
   const [email, setEmail] = useState('');
+  const [firstName, setFirstName] = useState('');
+  const [lastName, setLastName] = useState('');
+  const [userName, setUserName] = useState('');
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
-
-  const userName = 'userPerson';
-  const firstName = 'Bill';
-  const lastName = 'Brasky';
 
   const history = useHistory();
 
@@ -136,6 +135,36 @@ const Register = () => {
           />
         </div>
         <div className='form-input'>
+          <label htmlFor='userName'>Username</label>
+          <input
+            name='userName'
+            type='text'
+            value={userName}
+            required
+            onChange={e => setUserName(e.target.value)}
+          />
+        </div>
+        <div className='form-input'>
+          <label htmlFor='firstName'>First Name</label>
+          <input
+            name='firstName'
+            type='text'
+            value={firstName}
+            required
+            onChange={e => setFirstName(e.target.value)}
+          />
+        </div>
+        <div className='form-input'>
+          <label htmlFor='lastName'>Last Name</label>
+          <input
+            name='lastName'
+            type='text'
+            value={lastName}
+            required
+            onChange={e => setLastName(e.target.value)}
+          />
+        </div>
+        <div className='form-input'>
           <label htmlFor='password'>Password</label>
           <input
             name='password'
@@ -145,7 +174,7 @@ const Register = () => {
           />
         </div>
         <div className='form-input'>
-          <label htmlFor='confirmPassword'>Password</label>
+          <label htmlFor='confirmPassword'>Confirm Password</label>
           <input
             name='confirmPassword'
             type='password'
@@ -154,6 +183,7 @@ const Register = () => {
           />
         </div>
         <BlackButton
+          default
           disabled={password !== confirmPassword}
           onClick={async () => {
             await registerUser(email, password, userName, firstName, lastName);
