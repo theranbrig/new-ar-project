@@ -90,7 +90,8 @@ const ShopCategoryCarousel = () => {
           cssModule={AwesomeSliderStyles}
           play={true}
           interval={3000}
-          infinite={true}>
+          infinite={true}
+          bullets={false}>
           {products.map(product => (
             <div className='slider-cell content' key={product.id}>
               <Link to={`/product/${product.id}`}>
