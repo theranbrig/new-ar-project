@@ -64,6 +64,8 @@ const CartProvider = ({ children }) => {
         );
         if (!cartCheckItem.length) {
           localStorage.setItem('shoppingCart', JSON.stringify([cartItem, ...cart]));
+          getCartData(JSON.parse(localStorage.getItem('shoppingCart')));
+          setCartLoading(false);
         } else {
           cartCheckItem[0] = {
             productId: cartCheckItem[0].productId,
@@ -83,22 +85,29 @@ const CartProvider = ({ children }) => {
           cart.push(cartCheckItem[0]);
           localStorage.setItem('shoppingCart', JSON.stringify([...cart]));
           getCartData(JSON.parse(localStorage.getItem('shoppingCart')));
+          setCartLoading(false);
         }
       } else {
-        localStorage.setItem('shoppingCart', JSON.stringify([cartItem]));
+        localStorage.setItem('shoppingCart', JSON.stringify([cartItem, ...cart]));
         getCartData(JSON.parse(localStorage.getItem('shoppingCart')));
+        setCartLoading(false);
       }
     }
   };
 
-  const removeItemFromCart = (index, cartItemId) => {
+  const removeItemFromCart = async (index, cartItemId) => {
     if (window.confirm('Delete the item from your cart?')) {
       if (!userData) {
         setCartLoading(true);
-        const cartData = JSON.parse(localStorage.getItem('shoppingCart'));
-        cartData.splice(index, 1);
-        localStorage.setItem('shoppingCart', JSON.stringify([...cartData]));
-        getCartData(JSON.parse(localStorage.getItem('shoppingCart')));
+        setTimeout(async () => {
+          const cartData = await JSON.parse(localStorage.getItem('shoppingCart'));
+          await cartData.splice(index, 1);
+          await localStorage.setItem('shoppingCart', JSON.stringify([...cartData]));
+          const newCart = await getCartData(JSON.parse(localStorage.getItem('shoppingCart')));
+          console.log('NEW CART', newCart);
+          setCart(newCart);
+          setCartLoading(false);
+        }, 1500);
       } else {
         setCartLoading(true);
         dbh
@@ -133,8 +142,8 @@ const CartProvider = ({ children }) => {
         });
       return accum;
     }, []);
-    setCartLoading(false);
     setCart(tempCart);
+    setCartLoading(false);
     return tempCart;
   };
 

@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import styled from 'styled-components';
 import { CartContext } from '../context/Cart';
 import { FirebaseContext } from '../context/Firebase';
@@ -74,9 +74,13 @@ export const ItemsStyles = styled.div`
 `;
 
 const ShoppingBagItems = ({ items, cartLoading, canEdit, mode }) => {
-  const { removeItemFromCart } = useContext(CartContext);
+  const { cart, removeItemFromCart } = useContext(CartContext);
 
   const { userData, dbh } = useContext(FirebaseContext);
+
+  useEffect(() => {
+    console.log(items);
+  }, [items]);
 
   if (cartLoading)
     return (
@@ -87,10 +91,10 @@ const ShoppingBagItems = ({ items, cartLoading, canEdit, mode }) => {
 
   return (
     <ItemsStyles mode={mode}>
-      {!items.length ? (
+      {!cart.length ? (
         <h2>Nothing in Shopping Bag...</h2>
       ) : (
-        items.map((item, index) => {
+        cart.map((item, index) => {
           let size = '';
           if (userData) {
             size = item.size;

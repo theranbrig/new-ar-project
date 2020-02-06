@@ -19,7 +19,7 @@ import CreateProduct from '../pages/CreateProduct';
 
 export default function App() {
   return (
-    <Router>
+    <Router onUpdate={() => window.scrollTo(-50, 0)}>
       <div style={{ width: '100%' }}>
         <NavigationDrawer />
         <Switch>

@@ -1,8 +1,9 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import styled from 'styled-components';
 import ShoppingBagItems from './ShoppingBagItems';
 import { useHistory } from 'react-router-dom';
 import LoadingSpinner from './LoadingSpinner';
+import { FirebaseContext } from '../context/Firebase';
 
 export const ModalStyles = styled.div`
   height: ${({ openBag }) => (openBag ? '270px' : '0px')};
@@ -67,7 +68,10 @@ export const ModalStyles = styled.div`
 const ShoppingBagModal = ({ openBag, shoppingBag, setValue, cartLoading, setOpenBag }) => {
   const [canEdit, setCanEdit] = useState(false);
 
+  const { cart } = useContext(FirebaseContext);
+
   const history = useHistory();
+  useEffect(() => {}, [shoppingBag, cart]);
 
   return (
     <ModalStyles openBag={openBag}>
