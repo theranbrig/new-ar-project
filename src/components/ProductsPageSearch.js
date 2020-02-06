@@ -45,6 +45,8 @@ export const SearchStyles = styled.div`
     margin: 0 10%;
     border: none;
     border-bottom: 1px solid black;
+    -webkit-border-radius:0px;
+    border-radius: 0px;
     height: 30px;
     line-height: 30px;
     font-size: 20px;

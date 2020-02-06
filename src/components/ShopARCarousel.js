@@ -8,6 +8,7 @@ import MediaViewer from './ModelViewer';
 import AwesomeSliderStyles from 'react-awesome-slider/src/styled/cube-animation';
 import withAutoplay from 'react-awesome-slider/dist/autoplay';
 import { FirebaseContext } from '../context/Firebase';
+import LoadingSpinner from '../components/LoadingSpinner';
 
 const AutoplaySlider = withAutoplay(AwesomeSlider);
 
@@ -77,7 +78,7 @@ const ShopPageProductCarousel = () => {
     getData();
   }, []);
 
-  if (!products.length) return <h1>Hello</h1>;
+  if (!products.length) return <LoadingSpinner color='black' />;
 
   return (
     <SliderStyles>

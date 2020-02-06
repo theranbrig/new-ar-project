@@ -41,7 +41,6 @@ export const SearchStyles = styled.div`
     background: transparent;
     color: white !important;
     width: 80%;
-
     margin: 0 10%;
     border: none;
     border-bottom: 1px solid white;
