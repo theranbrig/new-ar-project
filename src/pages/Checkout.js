@@ -1,4 +1,4 @@
-import React, { useContext, useEffect } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { CartContext } from '../context/Cart';
 import ShoppingBagItems from '../components/ShoppingBagItems';
 import styled from 'styled-components';
@@ -50,8 +50,9 @@ const BlackButton = styled.button`
 `;
 
 const Checkout = () => {
-  const [cartTotal, setCartTotal] = React.useState('');
-  const [cartItems, setCartItems] = React.useState([]);
+  const [checkoutLoading, setCheckoutLoading] = useState(false);
+  const [cartTotal, setCartTotal] = useState('');
+  const [cartItems, setCartItems] = useState([]);
   const { cart, cartLoading, clearLocalCart } = useContext(CartContext);
   const { userData, dbh } = useContext(FirebaseContext);
 
@@ -59,6 +60,7 @@ const Checkout = () => {
 
   useEffect(() => {
     const fetchCart = async () => {
+      setCheckoutLoading(true);
       let tempCart = [];
       if (userData) {
         await dbh
@@ -81,8 +83,10 @@ const Checkout = () => {
             });
           return accum;
         }, []);
-        console.log('DEETS', cartDetails);
+        const total = cart.map(item => item.price);
+        setCartTotal(total);
         await setCartItems(cartDetails);
+        setCheckoutLoading(false);
       } else {
         tempCart = (await JSON.parse(localStorage.getItem('shoppingCart'))) || [];
         const cartDetails = await tempCart.reduce((accum, item) => {
@@ -95,18 +99,20 @@ const Checkout = () => {
             });
           return accum;
         }, []);
-        console.log('DEETS', cartDetails);
-        await setCartItems([...cartDetails]);
+        const total = cart.map(item => item.price);
+        setCartTotal(total);
+        await setCartItems(cartDetails);
+        setCheckoutLoading(false);
       }
     };
     fetchCart();
     console.log('ITEMS', cartItems);
   }, [userData, cart]);
 
-  if (cartLoading && !userData) {
+  if ((cartLoading && !userData) || checkoutLoading) {
     return (
       <CartStyles>
-        <LoadingSpinner />
+        <LoadingSpinner color='black' />
       </CartStyles>
     );
   }
