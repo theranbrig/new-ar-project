@@ -6,6 +6,7 @@ import ShoppingBagModal from './ShoppingBagModal';
 import { CartContext } from '../context/Cart';
 import SearchModal from './SearchModal';
 import { FirebaseContext } from '../context/Firebase';
+import { Link } from 'react-router-dom';
 
 const StyledBurger = styled.button`
   position: fixed;
@@ -168,7 +169,9 @@ const NavigationDrawer = ({ children }) => {
     <>
       <StretchedNavStyles className='main-stretched-nav'>
         <div className='hidden'></div>
-        <img src={yzedLogo} alt='yzed logo' />
+        <Link to='/'>
+          <img src={yzedLogo} alt='yzed logo' />
+        </Link>
         <div className='right-icons'>
           <button
             onClick={() => {
