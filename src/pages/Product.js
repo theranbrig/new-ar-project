@@ -228,7 +228,7 @@ const Product = () => {
       <WhiteButton onClick={() => document.querySelector('model-viewer').activateAR()}>
         VIEW IN AR
       </WhiteButton>
-      <AddToCart sizes={product.sizes} productId={product.id} setIsAdded={setIsAdded} />
+      <AddToCart sizes={product.sizes} product={product} setIsAdded={setIsAdded} />
       <div className='accordions'>
         <Accordion title='PRODUCT INFORMATION' id='information-accordion'>
           <ul className='product-information'>

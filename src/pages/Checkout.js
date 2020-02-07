@@ -58,58 +58,6 @@ const Checkout = () => {
 
   const history = useHistory();
 
-  useEffect(() => {
-    const fetchCart = async () => {
-      setCheckoutLoading(true);
-      let tempCart = [];
-      if (userData) {
-        await dbh
-          .collection('cartItems')
-          .where('userId', '==', userData.id)
-          .get()
-          .then(function(querySnapshot) {
-            querySnapshot.forEach(function(doc) {
-              tempCart.push({ id: doc.ref.id, ...doc.data() });
-              console.log(doc.data());
-            });
-          });
-        const cartDetails = await tempCart.reduce((accum, item) => {
-          dbh
-            .collection('products')
-            .doc(item.productId)
-            .get()
-            .then(doc => {
-              accum.push({ ...item, ...doc.data() });
-            });
-          return accum;
-        }, []);
-
-        const total = cart.reduce((accum, item) => accum + item.price * item.quantity, 0);
-        setCartTotal(total);
-        await setCartItems(cartDetails);
-        setCheckoutLoading(false);
-      } else {
-        tempCart = (await JSON.parse(localStorage.getItem('shoppingCart'))) || [];
-        const cartDetails = await tempCart.reduce((accum, item) => {
-          dbh
-            .collection('products')
-            .doc(item.productId)
-            .get()
-            .then(doc => {
-              accum.push({ ...item, ...doc.data() });
-            });
-          return accum;
-        }, []);
-        const total = cart.reduce((accum, item) => accum + item.price * item.quantity, 0);
-        setCartTotal(total);
-        await setCartItems(cartDetails);
-        setCheckoutLoading(false);
-      }
-    };
-    fetchCart();
-    console.log('ITEMS', cartItems);
-  }, [userData, cart]);
-
   if ((cartLoading && !userData) || checkoutLoading) {
     return (
       <CartStyles>
@@ -122,7 +70,7 @@ const Checkout = () => {
     <CartStyles>
       <BackButton />
       {!cart.length && <h1>No Items in Bag...</h1>}
-      <ShoppingBagItems items={cart} canEdit={true} cartLoading={cartLoading} mode='light' />
+      <ShoppingBagItems canEdit={true} cartLoading={cartLoading} mode='light' />
       <div className='cart-details'>
         <h2>Total: {`$${(cartTotal / 100).toFixed(2)}`}</h2>
       </div>

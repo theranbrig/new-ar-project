@@ -11,7 +11,6 @@ const CartProvider = ({ children }) => {
   const { userData, dbh } = useContext(FirebaseContext);
 
   const addToFirebaseCart = (userId, productId, size, quantity) => {
-    setCart([]);
     dbh
       .collection('cartItems')
       .doc()
@@ -29,6 +28,7 @@ const CartProvider = ({ children }) => {
       .collection('cartItems')
       .where('userId', '==', userData.id)
       .where('size', '==', selectedSize)
+      .where('productId', '==', productId)
       .get()
       .then(async function(querySnapshot) {
         if (!querySnapshot.docs.length) {
@@ -49,46 +49,45 @@ const CartProvider = ({ children }) => {
       .catch(err => console.log(err));
   };
 
-  const addItemToCart = async (productId, selectedSize, quantity) => {
+  const addItemToCart = async (product, selectedSize, quantity) => {
     setCartLoading(true);
     if (userData) {
-      await checkFirebaseItemExists(productId, selectedSize, quantity);
+      await checkFirebaseItemExists(product.id, selectedSize, quantity);
     } else {
-      const cartItem = { productId, selectedSize, quantity };
+      const cartItem = { ...product, selectedSize, quantity };
+      console.log(cartItem);
       const cart = JSON.parse(localStorage.getItem('shoppingCart'));
+      console.log(cart);
       if (cart && cart.length) {
         const cartCheckItem = cart.filter(
-          item =>
-            item.productId === cartItem.productId && item.selectedSize === cartItem.selectedSize
+          item => item.id === cartItem.id && item.selectedSize === cartItem.selectedSize
         );
         if (!cartCheckItem.length) {
           localStorage.setItem('shoppingCart', JSON.stringify([cartItem, ...cart]));
-          getCartData(JSON.parse(localStorage.getItem('shoppingCart')));
+          setCart(JSON.parse(localStorage.getItem('shoppingCart')));
           setCartLoading(false);
         } else {
           cartCheckItem[0] = {
-            productId: cartCheckItem[0].productId,
+            ...product,
             quantity: cartCheckItem[0].quantity + quantity,
             selectedSize: cartCheckItem[0].selectedSize,
           };
           let itemIndex;
           cart.forEach((item, index) => {
-            if (
-              item.productId === cartItem.productId &&
-              item.selectedSize === cartItem.selectedSize
-            ) {
+            if (item.id === cartItem.id && item.selectedSize === cartItem.selectedSize) {
               return (itemIndex = index);
             }
           });
           cart.splice(itemIndex, 1);
           cart.push(cartCheckItem[0]);
           localStorage.setItem('shoppingCart', JSON.stringify([...cart]));
-          getCartData(JSON.parse(localStorage.getItem('shoppingCart')));
+          setCart(JSON.parse(localStorage.getItem('shoppingCart')));
           setCartLoading(false);
         }
       } else {
-        localStorage.setItem('shoppingCart', JSON.stringify([cartItem, ...cart]));
-        getCartData(JSON.parse(localStorage.getItem('shoppingCart')));
+        localStorage.setItem('shoppingCart', JSON.stringify([cartItem]));
+        setCart(JSON.parse(localStorage.getItem('shoppingCart')));
+        console.log(cart);
         setCartLoading(false);
       }
     }
@@ -101,9 +100,7 @@ const CartProvider = ({ children }) => {
         const cartData = await JSON.parse(localStorage.getItem('shoppingCart'));
         await cartData.splice(index, 1);
         await localStorage.setItem('shoppingCart', JSON.stringify([...cartData]));
-        const newCart = await getCartData(JSON.parse(localStorage.getItem('shoppingCart')));
-        console.log('NEW CART', newCart);
-        setCart(newCart);
+        setCart(JSON.parse(localStorage.getItem('shoppingCart')));
         setCartLoading(false);
       } else {
         setCartLoading(true);
@@ -164,14 +161,16 @@ const CartProvider = ({ children }) => {
     const fetchData = async () => {
       if (userData) {
         cartItems = await getFirebaseCart(userData);
+        const newCart = await getCartData(cartItems);
+        setCart(newCart);
+        setCartLoading(false);
       } else {
         cartItems = (await JSON.parse(localStorage.getItem('shoppingCart'))) || [];
+        setCart(cartItems);
+        setCartLoading(false);
       }
-      const newCart = await getCartData(cartItems);
-      setCart(newCart);
     };
     fetchData();
-    setCartLoading(false);
   }, [userData, setCart]);
 
   return (

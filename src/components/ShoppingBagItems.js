@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from 'react';
+import React, { useContext } from 'react';
 import styled from 'styled-components';
 import { CartContext } from '../context/Cart';
 import { FirebaseContext } from '../context/Firebase';
@@ -73,14 +73,10 @@ export const ItemsStyles = styled.div`
   }
 `;
 
-const ShoppingBagItems = ({ items, cartLoading, canEdit, mode, setOpenBag }) => {
+const ShoppingBagItems = ({ cartLoading, canEdit, mode, setOpenBag }) => {
   const { cart, removeItemFromCart } = useContext(CartContext);
 
-  const { userData, dbh } = useContext(FirebaseContext);
-
-  useEffect(() => {
-    console.log(items);
-  }, [items]);
+  const { userData } = useContext(FirebaseContext);
 
   if (cartLoading)
     return (
@@ -91,9 +87,7 @@ const ShoppingBagItems = ({ items, cartLoading, canEdit, mode, setOpenBag }) => 
 
   return (
     <ItemsStyles mode={mode}>
-      {!cart.length ? (
-        <h2>Nothing in Shopping Bag...</h2>
-      ) : (
+      {cart.length &&
         cart.map((item, index) => {
           let size = '';
           if (userData) {
@@ -120,9 +114,7 @@ const ShoppingBagItems = ({ items, cartLoading, canEdit, mode, setOpenBag }) => 
                 {canEdit && (
                   <button
                     onClick={() => {
-                      console.log(item.selectedSize);
                       removeItemFromCart(index, item.id, size);
-                      setOpenBag(false);
                     }}
                     className='delete-item-button'
                     aria-label='delete-item'>
@@ -132,8 +124,7 @@ const ShoppingBagItems = ({ items, cartLoading, canEdit, mode, setOpenBag }) => 
               </div>
             </div>
           );
-        })
-      )}
+        })}
     </ItemsStyles>
   );
 };

@@ -58,7 +58,7 @@ const BlackButton = styled.button`
   }
 `;
 
-const AddToCart = ({ sizes, productId, setIsAdded }) => {
+const AddToCart = ({ sizes, product, setIsAdded }) => {
   const [selectedSize, setSelectedSize] = useState('');
   const [quantity, setQuantity] = useState(1);
 
@@ -83,7 +83,7 @@ const AddToCart = ({ sizes, productId, setIsAdded }) => {
       <BlackButton
         disabled={!selectedSize}
         onClick={() => {
-          addItemToCart(productId, selectedSize, quantity);
+          addItemToCart(product, selectedSize, quantity);
           setIsAdded(true);
         }}>
         Add To Cart
