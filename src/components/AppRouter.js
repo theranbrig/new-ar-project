@@ -18,6 +18,7 @@ import Sale from '../pages/Sale';
 import CreateProduct from '../pages/CreateProduct';
 
 export default function App() {
+  
   return (
     <Router onUpdate={() => window.scrollTo(-50, 0)}>
       <div style={{ width: '100%' }}>

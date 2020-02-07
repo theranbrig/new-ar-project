@@ -74,9 +74,7 @@ const Profile = () => {
 
   const history = useHistory();
 
-  useEffect(() => {
-    console.log(userData);
-  }, [userData]);
+
 
   if (!userData)
     return (

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import styled from 'styled-components';
 import ProductsPageSearch from '../components/ProductsPageSearch';
 import ShopPageProductCarousel from '../components/ShopARCarousel';
@@ -23,6 +23,10 @@ export const ShopStyles = styled.div`
 `;
 
 const Shop = () => {
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
+
   return (
     <ShopStyles>
       <h1>SHOP YZED</h1>

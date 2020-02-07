@@ -18,7 +18,7 @@ const ProductContainer = styled.div`
   width: 500px;
   max-width: 95%;
   margin: 0 auto;
-  margin-top: calc(10vh + 50px);
+  margin-top: calc(10vh + 25px);
   font-family: Montserrat, sans-serif;
   model-viewer {
     width: 95%;
@@ -96,6 +96,13 @@ const ProductContainer = styled.div`
   }
   .accordions {
     margin: 30px 0 0;
+    ul {
+      list-style-type: none;
+      padding: 0px;
+      li {
+        margin: 10px 20px;
+      }
+    }
   }
   .accordions img {
     width: 95%;
@@ -166,6 +173,7 @@ const Product = () => {
         });
     };
     getData();
+    window.scrollTo(0, 0);
   }, [dbh, id]);
 
   if (!product || loading)
