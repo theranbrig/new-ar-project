@@ -39,7 +39,13 @@ const FirebaseProvider = ({ children }) => {
         dbh
           .collection('users')
           .doc(firebase.auth().currentUser.uid)
-          .set({ userName, firstName, lastName, role: 'ADMIN' });
+          .set({ userName, firstName, lastName, role: 'ADMIN' })
+          .then(() => {
+            dbh
+              .collection('newsletterSubscriptions')
+              .doc()
+              .set({ age: null, name: `${firstName} ${lastName}`, email, gender: '' });
+          });
       })
       .catch(function(error) {
         setFirebaseError(error.message);
