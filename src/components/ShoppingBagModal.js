@@ -81,7 +81,12 @@ const ShoppingBagModal = ({ openBag, shoppingBag, setValue, cartLoading, setOpen
         ) : (
           <>
             <h3>My Shopping Bag ({shoppingBag.length})</h3>
-            <ShoppingBagItems items={shoppingBag} cartLoading={cartLoading} canEdit={canEdit} />
+            <ShoppingBagItems
+              items={shoppingBag}
+              cartLoading={cartLoading}
+              canEdit={canEdit}
+              setOpenBag={setOpenBag}
+            />
             <div className='modal-buttons'>
               <button
                 onClick={() => setCanEdit(!canEdit)}

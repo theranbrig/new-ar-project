@@ -73,7 +73,7 @@ export const ItemsStyles = styled.div`
   }
 `;
 
-const ShoppingBagItems = ({ items, cartLoading, canEdit, mode }) => {
+const ShoppingBagItems = ({ items, cartLoading, canEdit, mode, setOpenBag }) => {
   const { cart, removeItemFromCart } = useContext(CartContext);
 
   const { userData, dbh } = useContext(FirebaseContext);
@@ -122,6 +122,7 @@ const ShoppingBagItems = ({ items, cartLoading, canEdit, mode }) => {
                     onClick={() => {
                       console.log(item.selectedSize);
                       removeItemFromCart(index, item.id, size);
+                      setOpenBag(false);
                     }}
                     className='delete-item-button'
                     aria-label='delete-item'>

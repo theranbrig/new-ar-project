@@ -50,7 +50,6 @@ const CartProvider = ({ children }) => {
   };
 
   const addItemToCart = async (productId, selectedSize, quantity) => {
-    setCart([]);
     setCartLoading(true);
     if (userData) {
       await checkFirebaseItemExists(productId, selectedSize, quantity);
@@ -99,15 +98,13 @@ const CartProvider = ({ children }) => {
     if (window.confirm('Delete the item from your cart?')) {
       if (!userData) {
         setCartLoading(true);
-        setTimeout(async () => {
-          const cartData = await JSON.parse(localStorage.getItem('shoppingCart'));
-          await cartData.splice(index, 1);
-          await localStorage.setItem('shoppingCart', JSON.stringify([...cartData]));
-          const newCart = await getCartData(JSON.parse(localStorage.getItem('shoppingCart')));
-          console.log('NEW CART', newCart);
-          setCart(newCart);
-          setCartLoading(false);
-        }, 1500);
+        const cartData = await JSON.parse(localStorage.getItem('shoppingCart'));
+        await cartData.splice(index, 1);
+        await localStorage.setItem('shoppingCart', JSON.stringify([...cartData]));
+        const newCart = await getCartData(JSON.parse(localStorage.getItem('shoppingCart')));
+        console.log('NEW CART', newCart);
+        setCart(newCart);
+        setCartLoading(false);
       } else {
         setCartLoading(true);
         dbh
