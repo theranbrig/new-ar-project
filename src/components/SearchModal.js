@@ -77,7 +77,6 @@ const SearchModal = ({ openSearch, setOpenSearch }) => {
             <button
               onClick={() => {
                 setOpenSearch(false);
-                history.push('/checkout');
               }}>
               <i className='fa fa-close' aria-hidden='true'></i>
             </button>

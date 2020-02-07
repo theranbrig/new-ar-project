@@ -135,7 +135,7 @@ const NavigationDrawer = ({ children }) => {
   const [stateCart, setStateCart] = useState([]);
   const [openBag, setOpenBag] = useState(false);
   const [openSearch, setOpenSearch] = useState(false);
-  const { cart, cartLoading } = useContext(CartContext);
+  const { cart, cartLoading, clearLocalCart } = useContext(CartContext);
   const { userData, dbh } = useContext(FirebaseContext);
 
   useEffect(() => {
@@ -160,7 +160,7 @@ const NavigationDrawer = ({ children }) => {
       }
     };
     fetchCartData();
-  }, [cart, userData, dbh]);
+  }, [cart, userData, dbh, clearLocalCart]);
 
   const node = React.useRef();
 
@@ -190,7 +190,7 @@ const NavigationDrawer = ({ children }) => {
             aria-label='Toggle Cart'>
             <i className='fa fa-shopping-bag' aria-hidden='true'></i>
             <i className='cart-count' aria-hidden='true'>
-              {stateCart.length}
+              {cart.length}
             </i>
           </button>
         </div>

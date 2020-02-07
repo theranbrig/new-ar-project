@@ -87,7 +87,7 @@ const ShoppingBagItems = ({ cartLoading, canEdit, mode, setOpenBag }) => {
 
   return (
     <ItemsStyles mode={mode}>
-      {cart.length &&
+      {cart.length ? (
         cart.map((item, index) => {
           let size = '';
           if (userData) {
@@ -99,7 +99,7 @@ const ShoppingBagItems = ({ cartLoading, canEdit, mode, setOpenBag }) => {
             <div className='bag-item' key={index}>
               <div className='left-content'>
                 <h3>{index + 1}</h3>
-                <Link to={`/product/${item.productId}`}>
+                <Link to={`/product/${item.id}`}>
                   <img src={item.mainImage} alt={item.name} />
                 </Link>
               </div>
@@ -114,7 +114,7 @@ const ShoppingBagItems = ({ cartLoading, canEdit, mode, setOpenBag }) => {
                 {canEdit && (
                   <button
                     onClick={() => {
-                      removeItemFromCart(index, item.id, size);
+                      removeItemFromCart(index, item.cartItemId, size);
                     }}
                     className='delete-item-button'
                     aria-label='delete-item'>
@@ -124,7 +124,10 @@ const ShoppingBagItems = ({ cartLoading, canEdit, mode, setOpenBag }) => {
               </div>
             </div>
           );
-        })}
+        })
+      ) : (
+        <h2>Nothing in Cart...</h2>
+      )}
     </ItemsStyles>
   );
 };

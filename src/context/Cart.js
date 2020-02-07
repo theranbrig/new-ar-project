@@ -10,49 +10,54 @@ const CartProvider = ({ children }) => {
 
   const { userData, dbh } = useContext(FirebaseContext);
 
-  const addToFirebaseCart = (userId, productId, size, quantity) => {
+  const addToFirebaseCart = (userId, product, size, quantity) => {
+    console.log(product);
     dbh
       .collection('cartItems')
       .doc()
-      .set({ userId, productId, size, quantity })
+      .set({ userId, ...product, size, quantity })
       .then(async () => {
-        const fireCart = await getFirebaseCart(userData);
-        const newCart = await getCartData(fireCart);
+        const newCart = await getFirebaseCart(userData);
         setCart(newCart);
+        setCartLoading(false);
       });
   };
 
-  const checkFirebaseItemExists = async (productId, selectedSize, quantity) => {
-    setCart([]);
+  const checkFirebaseItemExists = async (product, selectedSize, quantity) => {
+    console.log(product);
     dbh
       .collection('cartItems')
       .where('userId', '==', userData.id)
       .where('size', '==', selectedSize)
-      .where('productId', '==', productId)
+      .where('product.id', '==', product.id)
       .get()
       .then(async function(querySnapshot) {
+        console.log(querySnapshot);
         if (!querySnapshot.docs.length) {
-          await addToFirebaseCart(userData.id, productId, selectedSize, quantity);
+          await addToFirebaseCart(userData.id, product, selectedSize, quantity);
         } else {
           querySnapshot.forEach(function(doc) {
             const cartItem = dbh.collection('cartItems').doc(doc.id);
             cartItem.get().then(async doc => {
               const oldQuantity = doc.data().quantity;
               await cartItem.update({ quantity: oldQuantity + quantity });
-              const newCart = await getFirebaseCart(userData);
-              await getCartData(newCart);
+              const newCart = getFirebaseCart(userData);
+              setCart(newCart);
               setCartLoading(false);
             });
           });
+          setCartLoading(false);
         }
       })
       .catch(err => console.log(err));
+    setCartLoading(false);
   };
 
   const addItemToCart = async (product, selectedSize, quantity) => {
     setCartLoading(true);
     if (userData) {
-      await checkFirebaseItemExists(product.id, selectedSize, quantity);
+      await checkFirebaseItemExists(product, selectedSize, quantity);
+      setCartLoading(false);
     } else {
       const cartItem = { ...product, selectedSize, quantity };
       console.log(cartItem);
@@ -87,7 +92,6 @@ const CartProvider = ({ children }) => {
       } else {
         localStorage.setItem('shoppingCart', JSON.stringify([cartItem]));
         setCart(JSON.parse(localStorage.getItem('shoppingCart')));
-        console.log(cart);
         setCartLoading(false);
       }
     }
@@ -109,8 +113,7 @@ const CartProvider = ({ children }) => {
           .doc(cartItemId)
           .delete()
           .then(async () => {
-            const fireCart = await getFirebaseCart(userData);
-            const newCart = await getCartData(fireCart);
+            const newCart = await getFirebaseCart(userData);
             setCart(newCart);
             setCartLoading(false);
           })
@@ -124,23 +127,6 @@ const CartProvider = ({ children }) => {
     setCart([]);
   };
 
-  const getCartData = async arr => {
-    setCart([]);
-    const tempCart = await arr.reduce((accum, item) => {
-      dbh
-        .collection('products')
-        .doc(item.productId)
-        .get()
-        .then(doc => {
-          accum.push({ ...item, ...doc.data() });
-        });
-      return accum;
-    }, []);
-    setCart(tempCart);
-    setCartLoading(false);
-    return tempCart;
-  };
-
   const getFirebaseCart = async userData => {
     setCartLoading(true);
     let tempCart = [];
@@ -148,21 +134,24 @@ const CartProvider = ({ children }) => {
       .collection('cartItems')
       .where('userId', '==', userData.id)
       .get()
-      .then(function(querySnapshot) {
-        querySnapshot.forEach(function(doc) {
-          tempCart.push({ id: doc.ref.id, ...doc.data() });
+      .then(async querySnapshot => {
+        console.log('QUERY', querySnapshot);
+        await querySnapshot.forEach(function(doc) {
+          tempCart.push({ cartItemId: doc.ref.id, ...doc.data() });
         });
       });
+    console.log('CART', tempCart);
+    setCart(tempCart);
     return tempCart;
   };
 
   useEffect(() => {
+    setCartLoading(true);
     let cartItems = [];
     const fetchData = async () => {
       if (userData) {
         cartItems = await getFirebaseCart(userData);
-        const newCart = await getCartData(cartItems);
-        setCart(newCart);
+        setCart(cartItems);
         setCartLoading(false);
       } else {
         cartItems = (await JSON.parse(localStorage.getItem('shoppingCart'))) || [];
@@ -181,7 +170,6 @@ const CartProvider = ({ children }) => {
         cartLoading,
         removeItemFromCart,
         clearLocalCart,
-        getCartData,
       }}>
       {children}
     </CartContext.Provider>

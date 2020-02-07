@@ -58,6 +58,13 @@ const Checkout = () => {
 
   const history = useHistory();
 
+  useEffect(() => {
+    const total = cart.reduce((accum, item) => {
+      return accum + item.price;
+    }, 0);
+    setCartTotal(total);
+  }, [cart, userData]);
+
   if ((cartLoading && !userData) || checkoutLoading) {
     return (
       <CartStyles>
@@ -77,7 +84,9 @@ const Checkout = () => {
       <BlackButton
         disabled={!cart.length}
         onClick={() => {
-          clearLocalCart();
+          if (!userData) {
+            clearLocalCart();
+          }
           history.push('/order_success');
         }}>
         Checkout
