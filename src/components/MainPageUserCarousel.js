@@ -67,7 +67,7 @@ const SliderStyles = styled.div`
 const MainPageCarousel = () => {
   return (
     <SliderStyles>
-      <AwesomeSlider>
+      <AwesomeSlider bullets={false}>
         {users.map(user => (
           <div className='slider-cell content' key={user.handle}>
             <h3 className='name'>{user.name}</h3>
@@ -101,4 +101,3 @@ const MainPageCarousel = () => {
 };
 
 export default MainPageCarousel;
-

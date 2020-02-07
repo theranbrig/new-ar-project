@@ -114,6 +114,7 @@ const StretchedNavStyles = styled.div`
       @media (max-width: 480px) {
         font-size: 0.6rem;
         padding: 3px;
+        left: 7px;
       }
     }
     @media (max-width: 480px) {

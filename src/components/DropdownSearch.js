@@ -109,7 +109,8 @@ const ModalSearch = ({ setOpenSearch }) => {
         setOpenSearch(false);
         history.push(`/product/${selection.id}`);
       }}
-      itemToString={item => (item ? item.value : '')}>
+      itemToString={item => (item ? item.value : '')}
+      isOpen={false}>
       {({
         getInputProps,
         getItemProps,
@@ -117,10 +118,12 @@ const ModalSearch = ({ setOpenSearch }) => {
         getMenuProps,
         isOpen,
         inputValue,
+        setInputValue,
         highlightedIndex,
         selectedItem,
         getRootProps,
         itemCount,
+        clearSelection,
       }) => (
         <SearchStyles>
           {loading && <LoadingSpinner color='white' />}
@@ -144,6 +147,7 @@ const ModalSearch = ({ setOpenSearch }) => {
                   .slice(0, 3)
                   .map((item, index) => (
                     <li
+                      onClick={() => setInputValue('')}
                       {...getItemProps({
                         key: item.name,
                         index,
