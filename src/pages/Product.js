@@ -185,7 +185,7 @@ const Product = () => {
   return (
     <ProductContainer>
       <Helmet>
-        <title>YZED - {product.name}</title>
+        <title>YZED - {product.name.toUpperCase()}</title>
       </Helmet>
       {isAdded && <AddToCartSuccessModal setIsAdded={setIsAdded} />}
       <div className='back-button'>

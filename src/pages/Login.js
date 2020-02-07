@@ -117,7 +117,7 @@ const Login = () => {
   return (
     <LoginStyles>
       <Helmet>
-        <title>YZED - Login</title>
+        <title>YZED - LOGIN</title>
       </Helmet>
       <div className='user-form'>
         <h1>Sign In Today</h1>

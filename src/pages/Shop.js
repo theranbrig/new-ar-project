@@ -7,6 +7,7 @@ import ShopCategoryAccordionContent from '../components/ShopCategoryAccordionCon
 import ShopThumbs from '../components/ShopThumbs';
 import BrandAccordionContent from '../components/BrandAccordionContent';
 import SaleAccordionContent from '../components/SaleAccordionContent';
+import { Helmet } from 'react-helmet';
 
 export const ShopStyles = styled.div`
   width: 500px;
@@ -29,6 +30,9 @@ const Shop = () => {
 
   return (
     <ShopStyles>
+      <Helmet>
+        <title>YZED - SHOP</title>
+      </Helmet>
       <h1>SHOP YZED</h1>
       <ProductsPageSearch />
       <Accordion title='Women'>

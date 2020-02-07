@@ -4,6 +4,7 @@ import ProductsPageSearch from '../components/ProductsPageSearch';
 import ShopThumbs from '../components/ShopThumbs';
 import styled from 'styled-components';
 import BackButton from '../components/BackButton';
+import { Helmet } from 'react-helmet';
 
 export const ShopCategoryStyles = styled.div`
   width: 500px;
@@ -56,6 +57,9 @@ const Brand = () => {
   }
   return (
     <ShopCategoryStyles>
+      <Helmet>
+        <title>YZED - {brandName.toUpperCase()}</title>
+      </Helmet>
       <BackButton />
       <h1>{`${formatedName.toUpperCase()}`}</h1>
       <div className='category-buttons'>

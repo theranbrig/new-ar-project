@@ -2,6 +2,7 @@ import React, { useContext, useEffect } from 'react';
 import { FirebaseContext } from '../context/Firebase';
 import styled from 'styled-components';
 import { useHistory } from 'react-router-dom';
+import { Helmet } from 'react-helmet';
 
 export const ProfileStyles = styled.div`
   width: 500px;
@@ -74,8 +75,6 @@ const Profile = () => {
 
   const history = useHistory();
 
-
-
   if (!userData)
     return (
       <ProfileStyles>
@@ -84,6 +83,9 @@ const Profile = () => {
     );
   return (
     <ProfileStyles>
+      <Helmet>
+        <title>YZED - {userData.userName.toUpperCase()}</title>
+      </Helmet>
       <h1>
         {userData.firstName} {userData.lastName}
       </h1>

@@ -133,7 +133,7 @@ const Login = () => {
   return (
     <LoginStyles>
       <Helmet>
-        <title>YZED - Create Product</title>
+        <title>YZED - CREATE</title>
       </Helmet>
       <div className='user-form'>
         <h1>Create Product</h1>

@@ -140,27 +140,25 @@ const NavigationDrawer = ({ children }) => {
   const { userData, dbh } = useContext(FirebaseContext);
 
   useEffect(() => {
-    const fetchCartData = async () => {
-      let tempCart = [];
-      if (userData) {
-        await dbh
-          .collection('cartItems')
-          .where('userId', '==', userData.id)
-          .get()
-          .then(function(querySnapshot) {
-            querySnapshot.forEach(function(doc) {
-              tempCart.push({ id: doc.ref.id, ...doc.data() });
-            });
-          });
-        await setStateCart(tempCart);
-        return tempCart;
-      } else {
-        tempCart = (await JSON.parse(localStorage.getItem('shoppingCart'))) || [];
-        await setStateCart(tempCart);
-        return tempCart;
-      }
-    };
-    fetchCartData();
+    // const fetchCartData = async () => {
+    //   let tempCart = [];
+    //   if (userData) {
+    //     await dbh
+    //       .collection('cartItems')
+    //       .where('userId', '==', userData.id)
+    //       .get()
+    //       .then(function(querySnapshot) {
+    //         querySnapshot.forEach(function(doc) {
+    //           tempCart.push({ id: doc.ref.id, ...doc.data() });
+    //         });
+    //       });
+    //     return tempCart;
+    //   } else {
+    //     tempCart = (await JSON.parse(localStorage.getItem('shoppingCart'))) || [];
+    //     return tempCart;
+    //   }
+    // };
+    // fetchCartData();
   }, [cart, userData, dbh, clearLocalCart]);
 
   const node = React.useRef();

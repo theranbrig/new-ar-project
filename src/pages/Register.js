@@ -122,7 +122,7 @@ const Register = () => {
   return (
     <LoginStyles>
       <Helmet>
-        <title>YZED - Login</title>
+        <title>YZED - REGISTER</title>
       </Helmet>
       <div className='register-form'>
         <h1>Register Today</h1>

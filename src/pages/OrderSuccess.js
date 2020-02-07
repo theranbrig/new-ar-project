@@ -2,6 +2,7 @@ import React from 'react';
 import styled from 'styled-components';
 import { Link } from 'react-router-dom';
 import CheckSVG from '../components/CheckSVG';
+import { Helmet } from 'react-helmet';
 
 const SuccessStyles = styled.div`
   text-align: center;
@@ -38,6 +39,9 @@ const BottomWhiteButton = styled.div`
 const OrderSuccess = () => {
   return (
     <SuccessStyles>
+      <Helmet>
+        <title>YZED - ORDER SUCCESS</title>
+      </Helmet>
       <CheckSVG />
       <h1>ORDER SUCCESSFUL</h1>
       <BottomWhiteButton>

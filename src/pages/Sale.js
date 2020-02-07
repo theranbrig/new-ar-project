@@ -4,6 +4,7 @@ import ProductsPageSearch from '../components/ProductsPageSearch';
 import ShopThumbs from '../components/ShopThumbs';
 import styled from 'styled-components';
 import BackButton from '../components/BackButton';
+import { Helmet } from 'react-helmet';
 
 export const ShopCategoryStyles = styled.div`
   width: 500px;
@@ -45,6 +46,9 @@ const Sale = () => {
 
   return (
     <ShopCategoryStyles>
+      <Helmet>
+        <title>{`YZED - SALE ${value}% OFF`}</title>
+      </Helmet>
       <BackButton />
       <h1>{`${value}% OFF SALE ITEMS`}</h1>
       <div className='category-buttons'>

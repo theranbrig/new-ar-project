@@ -6,6 +6,7 @@ import { useHistory } from 'react-router-dom';
 import { FirebaseContext } from '../context/Firebase';
 import BackButton from '../components/BackButton';
 import LoadingSpinner from '../components/LoadingSpinner';
+import { Helmet } from 'react-helmet';
 
 export const CartStyles = styled.div`
   width: 500px;
@@ -75,6 +76,9 @@ const Checkout = () => {
 
   return (
     <CartStyles>
+      <Helmet>
+        <title>YZED - MY BAG ({`${cart.length}`})</title>
+      </Helmet>
       <BackButton />
       {!cart.length && <h1>No Items in Bag...</h1>}
       <ShoppingBagItems canEdit={true} cartLoading={cartLoading} mode='light' />
