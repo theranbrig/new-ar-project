@@ -93,7 +93,7 @@ const ShoppingBagItems = ({ cartLoading, canEdit, mode, setOpenBag }) => {
             <div className='bag-item' key={index}>
               <div className='left-content'>
                 <h3>{index + 1}</h3>
-                <Link to={`/product/${item.id}`}>
+                <Link to={`/product/${item.productId}`}>
                   <img src={item.mainImage} alt={item.name} />
                 </Link>
               </div>
