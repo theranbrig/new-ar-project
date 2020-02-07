@@ -63,7 +63,7 @@ export const StyledMenu = styled.nav`
     display: inline;
     padding: 5px;
     img {
-      height: 35px;
+      height: 35px;/////???¿¿¿¿¿¿¿¿¿
     }
   }
 `;
@@ -82,9 +82,11 @@ const MenuLinks = ({ open, setOpen }) => {
       <NavLink to='/checkout' onClick={() => setOpen(false)} activeClassName='active-link'>
         My Bag
       </NavLink>
-      <NavLink to='/subscribe' onClick={() => setOpen(false)} activeClassName='active-link'>
-        Subscribe
-      </NavLink>
+      {!userData && (
+        <NavLink to='/subscribe' onClick={() => setOpen(false)} activeClassName='active-link'>
+          Subscribe
+        </NavLink>
+      )}
       {!userData ? (
         <NavLink to='/login' onClick={() => setOpen(false)} activeClassName='active-link'>
           Login

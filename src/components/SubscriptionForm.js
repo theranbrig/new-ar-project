@@ -111,16 +111,25 @@ const SubscriptionForm = () => {
     return regex.test(email);
   };
 
-  const subscribe = async () => {
+  const subscribe = () => {
     setLoading(true);
-    await dbh
-      .collection('newsletterSubscriptions')
-      .doc()
-      .set({ age, name, email, gender })
-      .then(() => {
-        setLoading(false);
-        history.push('/success');
-      });
+    const emailCheck = dbh.collection('newsletterSubscriptions').where('email', '==', email);
+    emailCheck.get().then(async querySnapshot => {
+      if (querySnapshot.docs.length) {
+        setFormError(
+          "You've already registered for our newsletter.  Keep an eye on your inbox for more information coming soon."
+        );
+      } else {
+        await dbh
+          .collection('newsletterSubscriptions')
+          .doc()
+          .set({ age, name, email, gender })
+          .then(() => {
+            setLoading(false);
+            history.push('/success');
+          });
+      }
+    });
   };
 
   return (
