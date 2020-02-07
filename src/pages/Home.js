@@ -139,7 +139,7 @@ const Home = () => {
           </WhiteButton>
         </div>
         <div className='discover-box'>
-          <h3>Discover yzed.</h3>
+          <h3>Discover YZED.</h3>
           <img src={ArrowIcon} alt='down-arrow' />
         </div>
         <h2>RECOMMENDED FOR YOU</h2>

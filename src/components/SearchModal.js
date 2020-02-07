@@ -1,6 +1,6 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import styled from 'styled-components';
-import { useHistory } from 'react-router-dom';
+import { useHistory, useParams } from 'react-router-dom';
 import DropdownSearch from './DropdownSearch';
 
 export const ModalStyles = styled.div`
@@ -68,6 +68,8 @@ export const ModalStyles = styled.div`
 const SearchModal = ({ openSearch, setOpenSearch }) => {
   const history = useHistory();
 
+  useEffect(() => {}, [openSearch]);
+
   return (
     <>
       <ModalStyles openSearch={openSearch}>
@@ -81,7 +83,7 @@ const SearchModal = ({ openSearch, setOpenSearch }) => {
               <i className='fa fa-close' aria-hidden='true'></i>
             </button>
           </div>
-          <DropdownSearch setOpenSearch={setOpenSearch} />
+          <DropdownSearch setOpenSearch={setOpenSearch} openSearch={openSearch} />
         </div>
         <div
           className='modal-shadow'
