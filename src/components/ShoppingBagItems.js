@@ -89,12 +89,6 @@ const ShoppingBagItems = ({ cartLoading, canEdit, mode, setOpenBag }) => {
     <ItemsStyles mode={mode}>
       {cart.length ? (
         cart.map((item, index) => {
-          let size = '';
-          if (userData) {
-            size = item.size;
-          } else {
-            size = item.selectedSize;
-          }
           return (
             <div className='bag-item' key={index}>
               <div className='left-content'>
@@ -107,14 +101,14 @@ const ShoppingBagItems = ({ cartLoading, canEdit, mode, setOpenBag }) => {
                 <div>
                   <h2>{item.brand.toUpperCase()}</h2>
                   <h3>
-                    {item.name.toUpperCase()} ({size}) <br /> QTY({item.quantity})
+                    {item.name.toUpperCase()} ({item.selectedSize}) <br /> QTY({item.quantity})
                   </h3>
                 </div>
                 <h4>{`$${(item.price / 100).toFixed(2)}`}</h4>
                 {canEdit && (
                   <button
                     onClick={() => {
-                      removeItemFromCart(index, item.cartItemId, size);
+                      removeItemFromCart(index, item.cartItemId, item.selectedSize);
                     }}
                     className='delete-item-button'
                     aria-label='delete-item'>

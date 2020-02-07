@@ -15,7 +15,17 @@ const CartProvider = ({ children }) => {
     dbh
       .collection('cartItems')
       .doc()
-      .set({ userId, ...product, size, quantity })
+      .set({
+        userId,
+        selectedSize: size,
+        quantity,
+        name: product.name,
+        productId: product.id,
+        mainImage: product.mainImage,
+        color: product.color,
+        brand: product.brand,
+        price: product.price,
+      })
       .then(async () => {
         const newCart = await getFirebaseCart(userData);
         setCart(newCart);
@@ -28,8 +38,8 @@ const CartProvider = ({ children }) => {
     dbh
       .collection('cartItems')
       .where('userId', '==', userData.id)
-      .where('size', '==', selectedSize)
-      .where('product.id', '==', product.id)
+      .where('selectedSize', '==', selectedSize)
+      .where('productId', '==', product.id)
       .get()
       .then(async function(querySnapshot) {
         console.log(querySnapshot);
