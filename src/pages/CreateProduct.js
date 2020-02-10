@@ -3,6 +3,7 @@ import styled from 'styled-components';
 import { FirebaseContext } from '../context/Firebase';
 import { useHistory } from 'react-router-dom';
 import { Helmet } from 'react-helmet';
+import { ProductContext } from '../context/Product';
 
 export const LoginStyles = styled.div`
   width: 500px;
@@ -113,10 +114,12 @@ const Login = () => {
   const [picture3, setPicture3] = useState('');
   const [pictures, setPictures] = useState([]);
   const [sizes, setSizes] = useState(['S', 'M', 'L']);
+  const [keywords, setKeywords] = useState([]);
 
   const history = useHistory();
 
-  const { createProduct, firebaseError, userData, dbh, getProducts } = useContext(FirebaseContext);
+  const { firebaseError, userData, dbh, getProducts } = useContext(FirebaseContext);
+  const { createProduct } = useContext(ProductContext);
 
   useEffect(() => {
     console.log(userData);
@@ -149,7 +152,14 @@ const Login = () => {
         </div>
         <div className='form-input'>
           <label htmlFor='brand'>Brand</label>
-          <input name='brand' type='brand' required onChange={e => setBrand(e.target.value)} />
+          <input
+            name='brand'
+            type='brand'
+            required
+            onChange={e => {
+              setBrand(e.target.value);
+            }}
+          />
         </div>
         <div className='form-input'>
           <label htmlFor='color'>Color</label>

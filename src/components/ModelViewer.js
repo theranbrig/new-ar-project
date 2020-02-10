@@ -6,11 +6,9 @@ const ModelViewer = ({ glbFile, usdzFile, imageUrl }) => {
       <model-viewer
         id='main-viewer'
         src={glbFile}
-        alt='A 3D model of an astronaut'
+        alt='YZED 3D MODEL'
         auto-rotate
         ar
-        // shadow-intensity='1'
-        // exposure='0.1'
         camera-controls
         ios-src={usdzFile}
         preload

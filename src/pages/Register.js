@@ -189,6 +189,7 @@ const Register = () => {
           onClick={async () => {
             setLoading(true);
             await registerUser(email, password, userName, firstName, lastName);
+            setLoading(false)
           }}>
           {loading ? 'Submitting...' : 'Submit'}
         </BlackButton>

@@ -3,6 +3,7 @@ import styled from 'styled-components';
 import { useHistory, useParams } from 'react-router-dom';
 import DropdownSearch from './DropdownSearch';
 import { debounce } from 'debounce';
+import FirebaseSearch from './FirebaseSearch';
 
 export const ModalStyles = styled.div`
   height: ${({ openSearch }) => (openSearch ? '500px' : '0px')};
@@ -67,13 +68,7 @@ export const ModalStyles = styled.div`
 `;
 
 const SearchModal = ({ openSearch, setOpenSearch }) => {
-  const [searchQuery, setSearchQuery] = useState('');
-
   const history = useHistory();
-
-  const productSearch = () => {
-    dbh.collection.products.get;
-  };
 
   useEffect(() => {}, [openSearch]);
 
@@ -90,7 +85,8 @@ const SearchModal = ({ openSearch, setOpenSearch }) => {
               <i className='fa fa-close' aria-hidden='true'></i>
             </button>
           </div>
-          <DropdownSearch setOpenSearch={setOpenSearch} openSearch={openSearch} />
+          {/* <DropdownSearch setOpenSearch={setOpenSearch} openSearch={openSearch} /> */}
+          <FirebaseSearch />
         </div>
         <div
           className='modal-shadow'

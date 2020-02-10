@@ -11,7 +11,24 @@ const ProductProvider = ({ children }) => {
 
   // FIREBASE PRODUCT MUTATIONS
 
-  const createProduct = (
+  const createKeywords = name => {
+    const arrName = [];
+    let curName = '';
+    name.split('').forEach(letter => {
+      curName += letter;
+      arrName.push(curName);
+    });
+    return arrName;
+  };
+
+  const generateKeywords = (brandName, productName) => {
+    const brandKeywords = createKeywords(brandName);
+    const productKeywords = createKeywords(productName);
+    const combinedKeywords = createKeywords(`${brandName} ${productName}`);
+    return [...new Set([...brandKeywords, ...productKeywords, ...combinedKeywords])];
+  };
+
+  const createProduct = async (
     name,
     brand,
     mainImage,
@@ -23,6 +40,7 @@ const ProductProvider = ({ children }) => {
     pictures,
     productInformation
   ) => {
+    const keywords = await generateKeywords(brand, name);
     dbh
       .collection('products')
       .doc()
@@ -37,10 +55,10 @@ const ProductProvider = ({ children }) => {
         usdzFile,
         pictures,
         productInformation,
+        keywords,
       })
       .catch(err => setFirebaseError(err));
   };
-
 
   return (
     <ProductContext.Provider

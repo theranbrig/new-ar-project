@@ -10,14 +10,14 @@ dotenv.config();
 
 // Initialize Firebase
 const firebaseConfig = {
-  apiKey: process.env.REACT_APP_API_KEY,
-  authDomain: process.env.REACT_APP_authDomain,
-  databaseURL: process.env.REACT_APP_databaseURL,
-  projectId: 'yzed-a8bd1',
-  storageBucket: process.env.REACT_APP_storageBucket,
-  messagingSenderId: process.env.REACT_APP_messagingSenderId,
-  appId: process.env.REACT_APP_appId,
-  measurementId: process.env.REACT_APP_Id,
+  apiKey: 'AIzaSyAYiNWn_X3jRoUx7ZHQMKbrRiqZ4VdVGZ0',
+  authDomain: 'yzed-88819.firebaseapp.com',
+  databaseURL: 'https://yzed-88819.firebaseio.com',
+  projectId: 'yzed-88819',
+  storageBucket: 'yzed-88819.appspot.com',
+  messagingSenderId: '132184777145',
+  appId: '1:132184777145:web:b78abdf732a15aea711668',
+  measurementId: 'G-E3SK8D4LDM',
 };
 
 // Initialize Firebase
