@@ -41,6 +41,7 @@ const ProductProvider = ({ children }) => {
       .catch(err => setFirebaseError(err));
   };
 
+
   return (
     <ProductContext.Provider
       value={{
