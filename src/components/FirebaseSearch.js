@@ -1,59 +1,36 @@
 import React, { useState, useEffect, useContext } from 'react';
 import { debounce } from 'debounce';
 import { FirebaseContext } from '../context/Firebase';
-import { Link } from 'react-router-dom';
+import { Link, useHistory } from 'react-router-dom';
 import { formatProductName } from '../utilities/formatting';
 
-const FirebaseSearch = () => {
+const FirebaseSearch = ({ setOpenSearch }) => {
+  const history = useHistory();
   const [searchQuery, setSearchQuery] = useState('');
   const [products, setProducts] = useState([]);
 
   const { dbh } = useContext(FirebaseContext);
 
-  const searchForProduct = query => {
+  const searchForProduct = debounce(query => {
     let tempItems = [];
-    const queryDB = async () => {
-      await dbh
-        .collection('products')
-        .orderBy('name')
-        .startAt(query)
-        .endAt(query + '\uf8ff')
-        .get()
-        .then(querySnapshot => {
-          querySnapshot.docs.forEach(doc => {
-            const { name, price, mainImage, brand } = doc.data();
-            tempItems.push({
-              id: doc.id,
-              name: formatProductName(name),
-              price,
-              mainImage,
-              brand: brand.toUpperCase(),
-            });
+    dbh
+      .collection('products')
+      .where('keywords', 'array-contains', query.toLowerCase())
+      .get()
+      .then(querySnapshot => {
+        querySnapshot.docs.forEach(doc => {
+          const { name, price, mainImage, brand } = doc.data();
+          tempItems.push({
+            id: doc.id,
+            name: formatProductName(name),
+            price,
+            mainImage,
+            brand: brand.toUpperCase(),
           });
-          setProducts(tempItems);
         });
-      await dbh
-        .collection('products')
-        .orderBy('brand')
-        .startAt(query)
-        .endAt(query + '\uf8ff')
-        .get()
-        .then(querySnapshot => {
-          querySnapshot.docs.forEach(doc => {
-            const { name, price, mainImage, brand } = doc.data();
-            tempItems.push({
-              id: doc.id,
-              name: formatProductName(name),
-              price,
-              mainImage,
-              brand: brand.toUpperCase(),
-            });
-          });
-          setProducts(tempItems);
-        });
-    };
-    debounce(queryDB(), 500);
-  };
+        setProducts(tempItems);
+      });
+  }, 250);
 
   return (
     <div>
@@ -70,11 +47,24 @@ const FirebaseSearch = () => {
         type='text'
       />
       <ul>
-        {products.slice(0, 5).map(product => (
-          <div key={product.id}>
-            <Link to={`/product/${product.id}`}>{product.name}</Link>
-          </div>
-        ))}
+        {products.slice(0, 5).map(product => {
+          const searchTerm = searchQuery;
+          return (
+            <div key={product.id}>
+              <button
+                name={product.name}
+                id={product.id}
+                onClick={() => {
+                  setOpenSearch(false);
+                  setSearchQuery('');
+                  setProducts([]);
+                  history.push(`/product/${product.id}`);
+                }}>
+                {product.name}
+              </button>
+            </div>
+          );
+        })}
       </ul>
     </div>
   );

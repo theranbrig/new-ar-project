@@ -86,7 +86,7 @@ const SearchModal = ({ openSearch, setOpenSearch }) => {
             </button>
           </div>
           {/* <DropdownSearch setOpenSearch={setOpenSearch} openSearch={openSearch} /> */}
-          <FirebaseSearch />
+          <FirebaseSearch setOpenSearch={setOpenSearch} openSearch={openSearch} />
         </div>
         <div
           className='modal-shadow'
