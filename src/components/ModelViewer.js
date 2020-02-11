@@ -33,7 +33,7 @@ const ModelViewer = ({ glbFile, usdzFile, imageUrl, productId, displayLink }) =>
         poster={imageUrl}
         quick-look-browsers='safari chrome'
         background-color='#f9f9f9'>
-        {displayLink && (
+        {/* {displayLink && (
           <button
             onClick={() =>
               setStateGLB(
@@ -42,7 +42,7 @@ const ModelViewer = ({ glbFile, usdzFile, imageUrl, productId, displayLink }) =>
             }>
             Change
           </button>
-        )}
+        )} */}
       </model-viewer>
     </ModelStyles>
   );
