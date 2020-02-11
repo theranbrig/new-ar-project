@@ -83,7 +83,12 @@ const ShopPageProductCarousel = () => {
   return (
     <SliderStyles>
       {currentARModel ? (
-        <MediaViewer glbFile={currentARModel.glbFile} usdzFile={currentARModel.usdzFile} />
+        <MediaViewer
+          glbFile={currentARModel.glbFile}
+          usdzFile={currentARModel.usdzFile}
+          displayLink={true}
+          productId={currentARModel.id}
+        />
       ) : (
         <h1>Click items below to view more AR content</h1>
       )}

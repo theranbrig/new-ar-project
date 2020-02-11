@@ -139,28 +139,6 @@ const NavigationDrawer = ({ children }) => {
   const { cart, cartLoading, clearLocalCart } = useContext(CartContext);
   const { userData, dbh } = useContext(FirebaseContext);
 
-  // useEffect(() => {
-  //   // const fetchCartData = async () => {
-  //   //   let tempCart = [];
-  //   //   if (userData) {
-  //   //     await dbh
-  //   //       .collection('cartItems')
-  //   //       .where('userId', '==', userData.id)
-  //   //       .get()
-  //   //       .then(function(querySnapshot) {
-  //   //         querySnapshot.forEach(function(doc) {
-  //   //           tempCart.push({ id: doc.ref.id, ...doc.data() });
-  //   //         });
-  //   //       });
-  //   //     return tempCart;
-  //   //   } else {
-  //   //     tempCart = (await JSON.parse(localStorage.getItem('shoppingCart'))) || [];
-  //   //     return tempCart;
-  //   //   }
-  //   // };
-  //   // fetchCartData();
-  // }, [cart, userData, dbh, clearLocalCart]);
-
   const node = React.useRef();
 
   return (

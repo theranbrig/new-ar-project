@@ -208,6 +208,8 @@ const Product = () => {
             glbFile={product.glbFile}
             usdzFile={product.usdzFile}
             poster={product.imageUrl}
+            displayLink={false}
+            productId={product.id}
           />
         ) : (
           <LazyLoadImage src={mainDisplay} />

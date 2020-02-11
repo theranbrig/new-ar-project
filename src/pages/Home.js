@@ -122,9 +122,14 @@ const Home = () => {
       </Helmet>
       <MediaViewer
         glbFile='https://oneoone-resource.s3.ap-northeast-2.amazonaws.com/yzed/GLTF_TRENCH_COAT_RESIZED_ANDBAKED_4.gltf'
-        usdzFile='https://oneoone-resource.s3.ap-northeast-2.amazonaws.com/yzed/GLTF_TRENCH_COAT_RESIZED_ANDBAKED_4.usdz'
+        usdzFile='https://oneoone-resource.s3.ap-northeast-2.amazonaws.com/yzed/GLTF_TRENCH_COAT_RESIZED_ANDBAKED_4.usdz#applePayButtonType=plain'
+        displayLink={true}
+        productId='5NlpClokHFwJG6Pl7IYz'
       />
       <div className='product-title-area'>
+        <a href='https://oneoone-resource.s3.ap-northeast-2.amazonaws.com/yzed/GLTF_TRENCH_COAT_RESIZED_ANDBAKED_4.usdz#applePayButtonType=plain'>
+          Image
+        </a>
         <div className='main-product-title'>
           <h3>LE SERRE</h3>
           <h2>FUTURE PANTHER</h2>
