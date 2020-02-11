@@ -67,7 +67,7 @@ const FirebaseSearch = ({ setOpenSearch }) => {
         });
         setProducts(tempItems);
       });
-  }, 0);
+  }, 150);
 
   return (
     <SearchStyles>
