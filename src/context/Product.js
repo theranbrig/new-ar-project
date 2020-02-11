@@ -18,16 +18,35 @@ const ProductProvider = ({ children }) => {
       curName += letter;
       arrName.push(curName.toLowerCase());
     });
+    console.log(arrName);
     return arrName;
   };
 
+  const keywordsFromPhrase = phrase => {
+    const wordsArray = phrase.split(' ');
+    let arrKeys = [];
+    wordsArray.map(word => (arrKeys = [...createKeywords(word), ...arrKeys]));
+    console.log(arrKeys);
+    return arrKeys;
+  };
+
   const generateKeywords = (brandName, productName) => {
-    const brandKeywords = createKeywords(brandName.toLowerCase());
-    const productKeywords = createKeywords(productName.toLowerCase());
-    const combinedKeywords = createKeywords(
-      `${brandName.toLowerCase()} ${productName.toLowerCase()}`
-    );
-    return [...new Set([...brandKeywords, ...productKeywords, ...combinedKeywords])];
+    const brand = brandName.toLowerCase();
+    const product = productName.toLowerCase();
+    const brandSplitKeywords = keywordsFromPhrase(brand);
+    const productSplitKeywords = keywordsFromPhrase(product);
+    const brandKeywords = createKeywords(brand);
+    const productKeywords = createKeywords(product);
+    const combinedKeywords = createKeywords(`${brand} ${product}`);
+    return [
+      ...new Set([
+        ...brandKeywords,
+        ...productKeywords,
+        ...combinedKeywords,
+        ...brandSplitKeywords,
+        ...productSplitKeywords,
+      ]),
+    ];
   };
 
   const createProduct = async (

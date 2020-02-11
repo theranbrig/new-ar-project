@@ -6,7 +6,7 @@ import { debounce } from 'debounce';
 import FirebaseSearch from './FirebaseSearch';
 
 export const ModalStyles = styled.div`
-  height: ${({ openSearch }) => (openSearch ? '500px' : '0px')};
+  height: ${({ openSearch }) => (openSearch ? '410px' : '0px')};
   transform: ${({ openSearch }) => (openSearch ? 'scaleY(100%)' : 'scaleY(0)')};
   -webkit-box-shadow: 0px 10px 0px 0px rgba(0, 0, 3, 0.28);
   -moz-box-shadow: 0px 10px 0px 0px rgba(0, 0, 3, 0.28);
@@ -19,7 +19,7 @@ export const ModalStyles = styled.div`
   overflow-y: scroll;
   z-index: 501;
   .modal-shadow {
-    height: ${({ openSearch }) => (openSearch ? 'calc(90vh - 500px)' : '5px')};
+    height: ${({ openSearch }) => (openSearch ? 'calc(90vh - 410px)' : '5px')};
     background: #23232394;
     position: fixed;
     background-attachment: fixed;

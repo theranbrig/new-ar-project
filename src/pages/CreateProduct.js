@@ -241,7 +241,7 @@ const Login = () => {
               [picture1, picture2, picture3],
               productInformation
             );
-            history.push('/shop');
+            // history.push('/shop');
           }}>
           Submit
         </BlackButton>

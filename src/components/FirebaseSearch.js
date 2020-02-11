@@ -19,6 +19,7 @@ export const SearchStyles = styled.div`
     line-height: 30px;
     font-size: 1.2rem;
     font-family: Montserrat, sans-serif;
+    padding: 3px;
   }
   button {
     background: transparent;
