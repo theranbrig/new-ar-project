@@ -9,7 +9,7 @@ export const StyledMenu = styled.nav`
   display: flex;
   flex-direction: column;
   justify-content: center;
-  background: #000;
+  background: ${props => props.theme.white};
   transform: ${({ open }) => (open ? 'translateX(0)' : 'translateX(-100%)')};
   height: 100vh;
   text-align: left;
@@ -19,6 +19,7 @@ export const StyledMenu = styled.nav`
   left: 0;
   z-index: 520;
   transition: transform 0.3s ease-in-out;
+  box-shadow: 2px 2px 12px #c7c7c7;
   @media (max-width: 576px) {
     width: 100%;
     padding: 0;
@@ -30,9 +31,9 @@ export const StyledMenu = styled.nav`
     padding: 2rem 0;
     font-weight: bold;
     letter-spacing: 0.5rem;
-    color: #000;
+    color: white;
     -webkit-text-stroke-width: 2px;
-    -webkit-text-stroke-color: white;
+    -webkit-text-stroke-color: black;
     text-decoration: none;
     transition: color 0.3s linear;
     font-family: Montserrat, sans-serif;
@@ -41,17 +42,17 @@ export const StyledMenu = styled.nav`
       text-align: center;
     }
     &:hover {
-      color: #fff;
+      color: black;
     }
     span {
       font-size: 0.8rem;
-      color: white;
+      color: black;
       font-weight: 300;
       -webkit-text-stroke-width: 0px;
     }
   }
   a.active-link {
-    color: #fff;
+    color: black;
   }
   .social-icons {
     padding: 2rem 0;
@@ -62,8 +63,9 @@ export const StyledMenu = styled.nav`
   .social-icons a {
     display: inline;
     padding: 5px;
+    color: black;
     img {
-      height: 35px;/////???¿¿¿¿¿¿¿¿¿
+      height: 35px;
     }
   }
 `;

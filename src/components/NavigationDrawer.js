@@ -29,11 +29,10 @@ const StyledBurger = styled.button`
     top: 20px;
     left: 20px;
   }
-
   div {
     width: 2rem;
     height: 0.25rem;
-    background: ${({ open }) => (open ? '#989898' : '#fff')};
+    background: black;
     border-radius: 10px;
     transition: all 0.3s linear;
     position: relative;
@@ -41,19 +40,17 @@ const StyledBurger = styled.button`
     :first-child {
       transform: ${({ open }) => (open ? 'rotate(45deg)' : 'rotate(0)')};
     }
-
     :nth-child(2) {
       opacity: ${({ open }) => (open ? '0' : '1')};
       transform: ${({ open }) => (open ? 'translateX(20px)' : 'translateX(0)')};
     }
-
     :nth-child(3) {
       transform: ${({ open }) => (open ? 'rotate(-45deg)' : 'rotate(0)')};
     }
   }
 `;
 
-const Burger = ({ open, setOpen, setOpenBag, setOpenSearch }) => {
+const Burger = ({ open, setOpen, setOpenBag, setOpenSearch, theme }) => {
   return (
     <StyledBurger
       open={open}
@@ -71,8 +68,8 @@ const Burger = ({ open, setOpen, setOpenBag, setOpenSearch }) => {
 };
 
 const StretchedNavStyles = styled.div`
-  background-color: black;
-  color: white;
+  background-color: ${props => props.theme.white};
+  color: ${props => props.theme.black};
   text-align: center;
   height: 10vh;
   display: grid;
@@ -93,7 +90,7 @@ const StretchedNavStyles = styled.div`
     }
   }
   button {
-    color: white;
+    color: ${props => props.theme.black};
     font-size: 2rem;
     width: 30px;
     margin-right: 20px;
