@@ -22,9 +22,11 @@ const ProductProvider = ({ children }) => {
   };
 
   const generateKeywords = (brandName, productName) => {
-    const brandKeywords = createKeywords(brandName);
-    const productKeywords = createKeywords(productName);
-    const combinedKeywords = createKeywords(`${brandName} ${productName}`);
+    const brandKeywords = createKeywords(brandName.toLowerCase());
+    const productKeywords = createKeywords(productName.toLowerCase());
+    const combinedKeywords = createKeywords(
+      `${brandName.toLowerCase()} ${productName.toLowerCase()}`
+    );
     return [...new Set([...brandKeywords, ...productKeywords, ...combinedKeywords])];
   };
 
