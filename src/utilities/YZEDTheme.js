@@ -6,6 +6,7 @@ const theme = {
     white: '#FFFDF9',
     black: '#272727',
     grey: '#7c7c7c',
+    lightGrey: '#eaeaea',
   },
   fonts: { main: "'Work Sans', sans-serif;" },
   fontSizes: {

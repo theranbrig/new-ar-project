@@ -34,12 +34,12 @@ export const StyledMenu = styled.nav`
     font-weight: bold;
     letter-spacing: 0.5rem;
     color: white;
-    -webkit-text-stroke-width: 2px;
+    -webkit-text-stroke-width: 1px;
     -webkit-text-stroke-color: ${props => props.theme.colors.black};
     text-decoration: none;
     transition: color 0.3s linear;
     @media (max-width: 576px) {
-      font-size: 1.5rem;
+      font-size: 2rem;
       text-align: center;
     }
     &:hover {

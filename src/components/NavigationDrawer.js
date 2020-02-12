@@ -93,6 +93,9 @@ const StretchedNavStyles = styled.div`
     }
     a {
       margin-right: 10px;
+      @media (max-width: 480px) {
+        margin-right: 0px;
+      }
     }
   }
   button {
