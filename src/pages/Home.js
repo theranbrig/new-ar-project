@@ -104,6 +104,7 @@ const HomeStyles = styled.div`
     background: url('https://oneoone-resource.s3.ap-northeast-2.amazonaws.com/yzed/bg_home_1.jpg');
     background-size: cover;
     padding: 20px;
+    color: ${props => props.theme.colors.black};
     h3 {
       margin-top: 30px;
       font-size: 1.8rem;
@@ -173,6 +174,7 @@ const BlackButton = styled.div`
   background: ${props => props.theme.colors.black};
   font-size: 1.2rem;
   padding: 0px 40px;
+  font-weight: 600;
   font-family: ${props => props.theme.fonts.main};
   margin: 0 auto 30px;
   a {
