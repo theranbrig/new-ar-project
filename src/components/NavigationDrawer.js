@@ -7,6 +7,11 @@ import { CartContext } from '../context/Cart';
 import SearchModal from './SearchModal';
 import { FirebaseContext } from '../context/Firebase';
 import { Link } from 'react-router-dom';
+import ShopBagSVG from '../assets/icons/icon_shoppingbag';
+import SearchSVG from '../assets/icons/icon_search';
+import FullShopBagSVG from '../assets/icons/icon_shoppingbag_full';
+import UserSVG from '../assets/icons/icon_user';
+import LogoSVG from '../assets/icons/yzed_logo';
 
 const StyledBurger = styled.button`
   position: fixed;
@@ -26,14 +31,13 @@ const StyledBurger = styled.button`
     outline: none;
   }
   @media (max-width: 576px) {
-    top: 20px;
+    top: 24px;
     left: 20px;
   }
   div {
     width: 2rem;
-    height: 0.25rem;
-    background: black;
-    border-radius: 10px;
+    height: 2px;
+    background: ${props => props.theme.colors.black};
     transition: all 0.3s linear;
     position: relative;
     transform-origin: 1px;
@@ -50,7 +54,7 @@ const StyledBurger = styled.button`
   }
 `;
 
-const Burger = ({ open, setOpen, setOpenBag, setOpenSearch, theme }) => {
+const Burger = ({ open, setOpen, setOpenBag, setOpenSearch }) => {
   return (
     <StyledBurger
       open={open}
@@ -68,8 +72,8 @@ const Burger = ({ open, setOpen, setOpenBag, setOpenSearch, theme }) => {
 };
 
 const StretchedNavStyles = styled.div`
-  background-color: ${props => props.theme.white};
-  color: ${props => props.theme.black};
+  background-color: ${props => props.theme.colors.white};
+  color: ${props => props.theme.colors.black};
   text-align: center;
   height: 10vh;
   display: grid;
@@ -83,47 +87,42 @@ const StretchedNavStyles = styled.div`
   width: 100%;
   top: 0;
   z-index: 500;
-  img {
-    height: 10vh;
-    @media (max-width: 576px) {
-      height: 4vh;
+  .right-icons {
+    svg {
+      height: 2.2rem;
+    }
+    a {
+      margin-right: 10px;
     }
   }
   button {
-    color: ${props => props.theme.black};
-    font-size: 2rem;
     width: 30px;
     margin-right: 20px;
     background: none;
     border: none;
     position: relative;
-    .cart-count {
-      position: absolute;
-      bottom: -5px;
-      left: -5px;
-      font-size: 14px;
-      height: 20px;
-      width: 20px;
-      line-height: 20px;
-      border-radius: 50%;
-      background: linear-gradient(to top, #2a43a3 80%, #324fb3 20%);
-      padding: 5px;
-      @media (max-width: 480px) {
-        font-size: 0.6rem;
-        padding: 3px;
-        left: 7px;
-      }
-    }
+    height: 2.5rem;
     @media (max-width: 480px) {
       font-size: 1.6rem;
       margin: 0px 10px 0;
     }
   }
-  .hidden {
-    visibility: hidden;
-    width: 130px;
+  .left-icons {
+    button {
+      height: 2.5rem;
+      margin-left: 4.2rem;
+      @media (max-width: 480px) {
+        margin-left: 3.8rem;
+      }
+      svg {
+        height: 2.2rem;
+      }
+    }
+  }
+  .logo-link svg {
+    height: 4vh;
     @media (max-width: 480px) {
-      width: 60px;
+      height: 2.5vh;
     }
   }
 `;
@@ -141,31 +140,34 @@ const NavigationDrawer = ({ children }) => {
   return (
     <>
       <StretchedNavStyles className='main-stretched-nav'>
-        <div className='hidden'></div>
-        <Link to='/'>
-          <img src={yzedLogo} alt='yzed logo' />
-        </Link>
-        <div className='right-icons'>
+        <div className='left-icons'>
           <button
             onClick={() => {
               setOpen(false);
               setOpenBag(false);
               setOpenSearch(!openSearch);
             }}
-            aria-label='Search'>
-            <i className='fa fa-search' aria-hidden='true'></i>
+            aria-label='Open Search'>
+            <SearchSVG />
           </button>
+        </div>
+        <Link to='/' className='logo-link'>
+          <LogoSVG />
+        </Link>
+        <div className='right-icons'>
+          <Link to={userData ? '/profile' : '/login'}>
+            <UserSVG />
+          </Link>
+
           <button
             onClick={() => {
               setOpenBag(!openBag);
               setOpen(false);
               setOpenSearch(false);
             }}
-            aria-label='Toggle Cart'>
-            <i className='fa fa-shopping-bag' aria-hidden='true'></i>
-            <i className='cart-count' aria-hidden='true'>
-              {cart.length}
-            </i>
+            aria-label='Toggle Cart'
+            id='cart-button'>
+            {cart.length ? <FullShopBagSVG /> : <ShopBagSVG />}
           </button>
         </div>
       </StretchedNavStyles>

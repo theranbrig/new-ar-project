@@ -7,7 +7,7 @@ const theme = {
     black: '#272727',
     grey: '#7c7c7c',
   },
-  fonts: ['sans-serif', 'Roboto'],
+  fonts: { main: "'Work Sans', sans-serif;" },
   fontSizes: {
     small: '1em',
     medium: '2em',

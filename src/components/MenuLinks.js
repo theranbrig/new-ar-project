@@ -4,12 +4,13 @@ import { NavLink } from 'react-router-dom';
 import FBLogo from '../assets/icons/facebook-5-64.png';
 import InstaLogo from '../assets/icons/instagram-5-64.png';
 import { FirebaseContext } from '../context/Firebase';
+import InstaSVG from '../assets/icons/icon_instagram';
 
 export const StyledMenu = styled.nav`
   display: flex;
   flex-direction: column;
   justify-content: center;
-  background: ${props => props.theme.white};
+  background: ${props => props.theme.colors.white};
   transform: ${({ open }) => (open ? 'translateX(0)' : 'translateX(-100%)')};
   height: 100vh;
   text-align: left;
@@ -19,7 +20,8 @@ export const StyledMenu = styled.nav`
   left: 0;
   z-index: 520;
   transition: transform 0.3s ease-in-out;
-  box-shadow: 2px 2px 12px #c7c7c7;
+  font-family: ${props => props.theme.fonts.main};
+  /* box-shadow: ${({ open }) => (open ? '-2px 2px 16px gray' : 'none')}; */
   @media (max-width: 576px) {
     width: 100%;
     padding: 0;
@@ -33,26 +35,25 @@ export const StyledMenu = styled.nav`
     letter-spacing: 0.5rem;
     color: white;
     -webkit-text-stroke-width: 2px;
-    -webkit-text-stroke-color: black;
+    -webkit-text-stroke-color: ${props => props.theme.colors.black};
     text-decoration: none;
     transition: color 0.3s linear;
-    font-family: Montserrat, sans-serif;
     @media (max-width: 576px) {
       font-size: 1.5rem;
       text-align: center;
     }
     &:hover {
-      color: black;
+      color: ${props => props.theme.colors.black};
     }
     span {
       font-size: 0.8rem;
-      color: black;
+      color: ${props => props.theme.colors.black};
       font-weight: 300;
       -webkit-text-stroke-width: 0px;
     }
   }
   a.active-link {
-    color: black;
+    color: ${props => props.theme.colors.black};
   }
   .social-icons {
     padding: 2rem 0;
@@ -63,7 +64,7 @@ export const StyledMenu = styled.nav`
   .social-icons a {
     display: inline;
     padding: 5px;
-    color: black;
+    color: ${props => props.theme.colors.black};
     img {
       height: 35px;
     }
@@ -75,38 +76,38 @@ const MenuLinks = ({ open, setOpen }) => {
 
   return (
     <StyledMenu open={open}>
-      <NavLink to='/' onClick={() => setOpen(false)} exact activeClassName='active-link'>
+      <NavLink to='/' exact activeClassName='active-link' onClick={() => setOpen(false)}>
         Home
       </NavLink>
-      <NavLink to='/shop' onClick={() => setOpen(false)} activeClassName='active-link'>
+      <NavLink to='/shop' activeClassName='active-link' onClick={() => setOpen(false)}>
         Shop
       </NavLink>
-      <NavLink to='/checkout' onClick={() => setOpen(false)} activeClassName='active-link'>
+      <NavLink to='/checkout' activeClassName='active-link' onClick={() => setOpen(false)}>
         My Bag
       </NavLink>
       {!userData && (
-        <NavLink to='/subscribe' onClick={() => setOpen(false)} activeClassName='active-link'>
+        <NavLink to='/subscribe' activeClassName='active-link' onClick={() => setOpen(false)}>
           Subscribe
         </NavLink>
       )}
       {!userData ? (
-        <NavLink to='/login' onClick={() => setOpen(false)} activeClassName='active-link'>
+        <NavLink to='/login' activeClassName='active-link' onClick={() => setOpen(false)}>
           Login
         </NavLink>
       ) : (
-        <NavLink to='/profile' onClick={() => setOpen(false)} activeClassName='active-link'>
+        <NavLink to='/profile' activeClassName='active-link' onClick={() => setOpen(false)}>
           Profile
           <br />
           <span>{userData.userName}</span>
         </NavLink>
       )}
-      <div className='social-icons'>
+      {/* <div className='social-icons'>
         <a
           href='https://facebook.com'
           target='_blank'
           rel='noopener noreferrer'
           onClick={() => setOpen(false)}>
-          <img src={FBLogo} alt='facebook' />
+          <InstaSVG />
         </a>
         <a
           href='https://instagram.com'
@@ -115,7 +116,7 @@ const MenuLinks = ({ open, setOpen }) => {
           onClick={() => setOpen(false)}>
           <img src={InstaLogo} alt='instagram' />
         </a>
-      </div>
+      </div> */}
     </StyledMenu>
   );
 };

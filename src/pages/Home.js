@@ -11,9 +11,11 @@ import { Helmet } from 'react-helmet';
 const HomeStyles = styled.div`
   margin: 0 auto;
   text-align: center;
-  font-family: Montserrat, sans-serif;
+  font-family: ${props => props.theme.fonts.main};
+  color: ${props => props.theme.black};
   margin-top: calc(5vh + 100px);
   max-width: 500px;
+  background: ${props => props.theme.white};
   @media (max-width: 576px) {
     width: 100% !important ;
   }import MediaViewer from '../components/MediaViewer';
@@ -48,10 +50,10 @@ const HomeStyles = styled.div`
     font-weight: 400;
     margin-bottom: 50px;
     margin-top: 10px;
-    color: #989898;
+    color: ${props => props.theme.colors.gray};
   }
   .discover-box {
-    color: #989898;
+    color: ${props => props.theme.colors.gray};
     h3 {
       margin: 50px 0 0;
       letter-spacing: 0.1rem;
@@ -65,7 +67,7 @@ const HomeStyles = styled.div`
 
 const WhiteButton = styled.div`
   width: 200px;
-  border: 2px solid black;
+  border: 2px solid ${props => props.theme.colors.black};
   border-radius: 0px;
   height: 50px;
   line-height: 50px;
@@ -73,7 +75,7 @@ const WhiteButton = styled.div`
   margin: 0 auto;
   font-size: 1.2rem;
   padding: 0px 40px;
-  font-family: Montserrat, sans-serif;
+  font-family: ${props => props.theme.fonts.title};
   a {
     color: black;
     text-decoration: none;
@@ -81,15 +83,15 @@ const WhiteButton = styled.div`
 `;
 
 const BlackButton = styled.button`
-  border: 2px solid black;
+  border: 2px solid ${props => props.theme.colors.black};
   border-radius: 0px;
   height: 52px;
   display: block;
   margin: 0 auto;
   font-size: 1.2rem;
   padding: 5px 80px;
-  font-family: Montserrat, sans-serif;
-  background: black;
+  font-family: ${props => props.theme.fonts.title};
+  background: ${props => props.theme.colors.black};
   color: white;
   min-width: 284px;
   margin-bottom: 10px;
@@ -97,19 +99,19 @@ const BlackButton = styled.button`
 
 const BottomBlackButton = styled.div`
   width: 200px;
-  border: 2px solid black;
+  border: 2px solid ${props => props.theme.colors.black};
   border-radius: 0px;
   height: 50px;
   line-height: 50px;
   display: block;
   margin: 0 auto;
-  background: black;
+  background: ${props => props.theme.colors.black};
   font-size: 1.2rem;
   padding: 0px 40px;
-  font-family: Montserrat, sans-serif;
+  font-family: ${props => props.theme.fonts.title};
   margin: 100px auto 50px;
   a {
-    color: white;
+    color: ${props => props.theme.colors.white};
     text-decoration: none;
   }
 `;

@@ -1,6 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
-import CheckSVG from './CheckSVG';
+import CheckSVG from '../assets/icons/icon_success_check';
 
 const SuccessStyles = styled.div`
   text-align: center;

@@ -1,10 +1,10 @@
 import React, { useContext, useEffect } from 'react';
 import styled from 'styled-components';
 import { Link } from 'react-router-dom';
-import CheckSVG from '../components/CheckSVG';
 import { FirebaseContext } from '../context/Firebase';
 import { useHistory } from 'react-router-dom';
 import { Helmet } from 'react-helmet';
+import CheckSVG from '../assets/icons/icon_success_check';
 
 const SuccessStyles = styled.div`
   text-align: center;

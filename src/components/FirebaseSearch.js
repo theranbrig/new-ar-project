@@ -11,31 +11,33 @@ export const SearchStyles = styled.div`
   input {
     border: none;
     background: transparent;
-    border-bottom: 1px solid white;
+    border-bottom: 1px solid ${props => props.theme.colors.white};
     color: white;
     width: 80%;
-    margin: 0 10% 30px;
+    margin: 0 10% 20px;
     height: 30px;
     line-height: 30px;
     font-size: 1.2rem;
     font-family: Montserrat, sans-serif;
     padding: 3px;
   }
-  button {
+  a {
     background: transparent;
-    color: white;
+    color: ${props => props.theme.colors.white};
     width: 100%;
     font-family: Montserrat, sans-serif;
-    font-size: 1.2rem;
+    font-size: 1.4rem;
     border: none;
-    margin: 10px 0;
+    padding: 10px 0;
     text-align: left;
     font-weight: 300;
     letter-spacing: 0.05rem;
+    text-decoration: none;
+    display: block;
     .highlighted-text {
       background: transparent;
       font-weight: 600;
-      color: white;
+      color: ${props => props.theme.colors.white};
     }
   }
 `;
@@ -86,24 +88,23 @@ const FirebaseSearch = ({ setOpenSearch }) => {
       />
       {products.map(product => {
         return (
-          <div key={product.id}>
-            <button
-              name={product.name}
-              id={product.id}
-              onClick={() => {
-                setOpenSearch(false);
-                setSearchQuery('');
-                setProducts([]);
-                history.push(`/product/${product.id}`);
-              }}>
-              <Highlighter
-                highlightClassName='highlighted-text'
-                searchWords={[searchQuery]}
-                autoEscape={true}
-                textToHighlight={`${product.brand} ${product.name}`}
-              />
-            </button>
-          </div>
+          <Link
+            key={product.id}
+            name={product.name}
+            id={product.id}
+            onClick={() => {
+              setOpenSearch(false);
+              setSearchQuery('');
+              setProducts([]);
+              history.push(`/product/${product.id}`);
+            }}>
+            <Highlighter
+              highlightClassName='highlighted-text'
+              searchWords={[searchQuery]}
+              autoEscape={true}
+              textToHighlight={`${product.brand} ${product.name}`}
+            />
+          </Link>
         );
       })}
     </SearchStyles>

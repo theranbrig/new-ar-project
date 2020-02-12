@@ -3,7 +3,6 @@ import { useParams, useHistory } from 'react-router-dom';
 import styled from 'styled-components';
 import MediaViewer from '../components/ModelViewer';
 import { LazyLoadImage } from 'react-lazy-load-image-component';
-import ThreeDSVG from '../components/ThreeDSVG';
 import 'react-lazy-load-image-component/src/effects/blur.css';
 import { Helmet } from 'react-helmet';
 import AddToCart from '../components/AddToCart';
@@ -12,6 +11,7 @@ import ProductBrand from '../components/ProductBrand';
 import AddToCartSuccessModal from '../components/AddToCartSuccessModal';
 import { FirebaseContext } from '../context/Firebase';
 import LoadingSpinner from '../components/LoadingSpinner';
+import ThreeDSVG from '../assets/icons/icon_ar_toggle';
 
 const ProductContainer = styled.div`
   min-height: 100vh;
@@ -20,6 +20,7 @@ const ProductContainer = styled.div`
   margin: 0 auto;
   margin-top: calc(10vh + 25px);
   font-family: Montserrat, sans-serif;
+  background: ${props => props.theme.colors.white};
   model-viewer {
     width: 95%;
     height: 300px;

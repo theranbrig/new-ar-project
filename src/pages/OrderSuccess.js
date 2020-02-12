@@ -1,8 +1,8 @@
 import React from 'react';
 import styled from 'styled-components';
 import { Link } from 'react-router-dom';
-import CheckSVG from '../components/CheckSVG';
 import { Helmet } from 'react-helmet';
+import CheckSVG from '../assets/icons/icon_success_check';
 
 const SuccessStyles = styled.div`
   text-align: center;
