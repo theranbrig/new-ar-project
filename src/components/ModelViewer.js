@@ -32,8 +32,18 @@ const ModelViewer = ({ glbFile, usdzFile, imageUrl, productId, displayLink }) =>
         preload
         poster={imageUrl}
         quick-look-browsers='safari chrome'
-        background-color='#f9f9f9'
-        animation-name='updown'></model-viewer>
+        background-color='#f9f9f9'>
+        {/* {displayLink && (
+          <button
+            onClick={() =>
+              setStateGLB(
+                'https://oneoone-resource.s3.ap-northeast-2.amazonaws.com/yzed/GLTF_FEB6_JUMPERJACKET_V3.gltf'
+              )
+            }>
+            Change
+          </button>
+        )} */}
+      </model-viewer>
     </ModelStyles>
   );
 };

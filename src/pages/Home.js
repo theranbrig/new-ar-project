@@ -205,7 +205,6 @@ const Home = () => {
   const [mainProduct, setMainProduct] = useState(null);
   const [loading, setLoading] = useState(false);
   const [displayDate, setDisplayDate] = useState('');
-
   const { dbh } = useContext(FirebaseContext);
 
   useEffect(() => {

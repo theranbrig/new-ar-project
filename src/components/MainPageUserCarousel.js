@@ -5,6 +5,9 @@ import { users } from '../data';
 import styled from 'styled-components';
 import { LazyLoadImage } from 'react-lazy-load-image-component';
 import 'react-lazy-load-image-component/src/effects/blur.css';
+import ImpressionSVG from '../assets/icons/icon_impressions';
+import FollowerSVG from '../assets/icons/icon_followers';
+import InstaSVG from '../assets/icons/icon_instagram';
 
 const responsive = {
   superLargeDesktop: {
@@ -27,6 +30,8 @@ const responsive = {
 };
 
 const SliderStyles = styled.div`
+  font-family: ${props => props.theme.fonts.main};
+  font-weight: 300;
   .carousel-section {
     margin: 30px 0;
   }
@@ -36,35 +41,91 @@ const SliderStyles = styled.div`
     }
   }
   .break-1 {
-    background: white;
+    background: ${props => props.theme.colors.white};
     height: 200px;
     width: 20px;
     position: absolute;
-    top: 400px;
+    top: 600px;
     z-index: 10;
     left: 30%;
   }
   .break-2 {
-    background: white;
+    background: ${props => props.theme.colors.white};
     height: 200px;
     width: 20px;
     position: absolute;
-    top: 400px;
+    top: 600px;
     z-index: 10;
     right: 30%;
+  }
+  .selected-user {
+    border-bottom-left-radius: 25px;
+    border-bottom-right-radius: 25px;
+    box-shadow: 0px 0px 6px #c7c7c7;
+    width: 300px;
+    margin: 0 auto;
+    svg {
+      width: 70%;
+      margin: 15%;
+    }
+    .user-information {
+      padding: 0 40px 20px;
+    }
+    .user-data {
+      margin-top: 5px;
+      display: grid;
+      grid-template-columns: 1fr 4fr;
+      align-items: center;
+      text-align: left;
+      grid-gap: 10px;
+      h4,
+      h5 {
+        font-family: ${props => props.theme.fonts.main};
+        margin: 3px auto;
+      }
+      h4 {
+        font-size: 1.2rem;
+      }
+      h5 {
+        font-size: 1.1rem;
+        font-weight: 300;
+      }
+    }
   }
 `;
 
 const MainPageCarousel = () => {
-  const [user, setUser] = useState(users[0]);
-  const [currentIndex, setCurrentIndex] = useState(0);
+  const [currentIndex, setCurrentIndex] = useState(1);
+  const [user, setUser] = useState(users[currentIndex]);
+  console.log(user);
   return (
     <SliderStyles>
-      <img
-        src='https://res.cloudinary.com/dq7uyauun/image/upload/w_1000,ar_1:1,c_fill,g_auto,e_art:hokusai/v1579148073/influencer1.jpg'
-        alt='influencer'
-        height='300px'
-      />
+      <div className='selected-user'>
+        <LazyLoadImage src={user.profile_image_url} alt={user.name} effect='blur' height='300px' />
+        <div className='user-information'>
+          <div className='user-data'>
+            <InstaSVG />
+            <div className='user-data-content'>
+              <h4>{user.handle}</h4>
+              <h5>{user.name}</h5>
+            </div>
+          </div>
+          <div className='user-data'>
+            <FollowerSVG />
+            <div className='user-data-content'>
+              <h4>{user.followers}</h4>
+              <h5>New Followers</h5>
+            </div>
+          </div>
+          <div className='user-data'>
+            <ImpressionSVG />
+            <div className='user-data-content'>
+              <h4>{user.impressions}</h4>
+              <h5>New Impressions</h5>
+            </div>
+          </div>
+        </div>
+      </div>
       <div className='carousel-section'>
         <div className='break-1'></div>
         <div className='break-2'></div>
@@ -72,16 +133,29 @@ const MainPageCarousel = () => {
           responsive={responsive}
           infinite={true}
           removeArrowOnDeviceType={['tablet', 'mobile']}
-          afterChange={(previousSlide, { currentSlide, onMove }) => {
+          afterChange={async (previousSlide, { currentSlide, onMove }) => {
             if (currentSlide > previousSlide) {
-              setCurrentIndex(currentIndex + 1);
+              console.log('CURR', currentSlide);
+              console.log('PREV', previousSlide);
+              if (currentIndex >= users.length - 1) {
+                setCurrentIndex(0);
+                setUser(users[0]);
+              } else {
+                setCurrentIndex(currentIndex + 1);
+                setUser(users[currentIndex + 1]);
+              }
             } else {
-              setCurrentIndex(currentIndex - 1);
+              if (currentIndex === 0) {
+                setCurrentIndex(users.length - 1);
+                setUser(users[users.length - 1]);
+              } else {
+                setCurrentIndex(currentIndex - 1);
+                setUser(users[currentIndex - 1]);
+              }
             }
-            console.log(users[currentIndex]);
           }}>
           {users.map(user => (
-            <div className='slider-cell-content' key={user.handle} onClick={() => {}}>
+            <div className='slider-cell-content' key={user.handle}>
               <LazyLoadImage src={user.profile_image_url} alt={user.name} effect='blur' />
             </div>
           ))}

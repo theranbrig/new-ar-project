@@ -6,12 +6,9 @@ const FollowerSVG = ({ setMainDisplay }) => {
       version='1.1'
       id='Laag_1'
       xmlns='http://www.w3.org/2000/svg'
-      xmlns:xlink='http://www.w3.org/1999/xlink'
       x='0px'
       y='0px'
-      viewBox='0 0 49.31 59.81'
-      style='enable-background:new 0 0 49.31 59.81;'
-      xml:space='preserve'>
+      viewBox='0 0 49.31 59.81'>
       <path
         d='M43.92,37.36c-1.83-1.91-5.13-3.05-10.09-3.47l0.1-2.39c0.58-0.56,1.12-1.17,1.62-1.81c0.06-0.08,0.12-0.17,0.16-0.26
 			c1.06-2.21,1.7-4.57,1.89-7.02c0.92-0.82,1.5-1.96,1.6-3.12c0.26-1.57-0.04-3.05-0.81-3.99c1.36-3.91-1.06-8.92-5.67-11.71

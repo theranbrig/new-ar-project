@@ -6,12 +6,9 @@ const ImpressionSVG = ({ setMainDisplay }) => {
       version='1.1'
       id='Laag_1'
       xmlns='http://www.w3.org/2000/svg'
-      xmlns:xlink='http://www.w3.org/1999/xlink'
       x='0px'
       y='0px'
-      viewBox='0 0 59.81 38.18'
-      style='enable-background:new 0 0 59.81 38.18;'
-      xml:space='preserve'>
+      viewBox='0 0 59.81 38.18'>
       <g>
         <path
           d='M29.9,0C13.42,0,0,8.56,0,19.09c0,10.53,13.42,19.09,29.9,19.09c16.49,0,29.9-8.56,29.9-19.09C59.81,8.56,46.39,0,29.9,0z

@@ -306,7 +306,7 @@ export const users = [
   },
   {
     name: 'Newman',
-    handle: '@postwoman_newsie_girl',
+    handle: '@postwoman',
     likes: 7544,
     followers: 63,
     impressions: 4564,
