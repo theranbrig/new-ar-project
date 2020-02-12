@@ -1,101 +1,92 @@
-import React from 'react';
-import AwesomeSlider from 'react-awesome-slider';
-import 'react-awesome-slider/dist/styles.css';
+import React, { useState } from 'react';
+import Carousel from 'react-multi-carousel';
+import 'react-multi-carousel/lib/styles.css';
 import { users } from '../data';
 import styled from 'styled-components';
 import { LazyLoadImage } from 'react-lazy-load-image-component';
 import 'react-lazy-load-image-component/src/effects/blur.css';
 
-const SliderStyles = styled.div`
-  .awssld__wrapper {
-    height: 520px;
-    margin-top: 40px;
-    border: 1px solid black;
-    max-width: 90%;
-    margin-left: 5%;
-  }
-  .awssld__content {
-    background-color: white !important;
-  }
-  .slider-cell {
-    height: 100%;
+const responsive = {
+  superLargeDesktop: {
+    // the naming can be any, depends on you.
+    breakpoint: { max: 4000, min: 3000 },
+    items: 3,
+  },
+  desktop: {
+    breakpoint: { max: 3000, min: 1024 },
+    items: 3,
+  },
+  tablet: {
+    breakpoint: { max: 1024, min: 464 },
+    items: 3,
+  },
+  mobile: {
+    breakpoint: { max: 464, min: 0 },
+    items: 3,
+  },
+};
 
-    .user-photo img {
-      height: 300px;
-      margin: 0 auto;
+const SliderStyles = styled.div`
+  .carousel-section {
+    margin: 30px 0;
+  }
+  .slider-cell-content {
+    img {
+      width: 100%;
     }
-    .user-photo {
-      position: relative;
-      text-align: center;
-      width: 300px;
-      margin: 0 auto;
-    }
-    .user-likes {
-      position: absolute;
-      top: 8px;
-      left: 8px;
-      background: white;
-      padding: 5px 10px;
-      p {
-        display: inline;
-      }
-    }
-    .name {
-      margin: 10px 0 0;
-    }
-    .handle {
-      font-weight: 300;
-      margin-bottom: 10px;
-      margin-top: 10px;
-    }
-    .impressions,
-    .followers {
-      display: grid;
-      grid-template-columns: 1fr 4fr;
-      justify-content: center;
-      align-items: center;
-      margin: 0 30px;
-      h4 {
-        margin: 5px auto;
-        font-size: 1.1rem;
-        text-align: left;
-      }
-    }
+  }
+  .break-1 {
+    background: white;
+    height: 200px;
+    width: 20px;
+    position: absolute;
+    top: 400px;
+    z-index: 10;
+    left: 30%;
+  }
+  .break-2 {
+    background: white;
+    height: 200px;
+    width: 20px;
+    position: absolute;
+    top: 400px;
+    z-index: 10;
+    right: 30%;
   }
 `;
 
 const MainPageCarousel = () => {
+  const [user, setUser] = useState(users[0]);
+  const [currentIndex, setCurrentIndex] = useState(0);
   return (
     <SliderStyles>
-      <AwesomeSlider bullets={false}>
-        {users.map(user => (
-          <div className='slider-cell content' key={user.handle}>
-            <h3 className='name'>{user.name}</h3>
-            <h3 className='handle'>{user.handle}</h3>
-            <div className='user-photo'>
-              <div className='user-likes'>
-                <i className='fa fa-heart' aria-hidden='true'></i>
-                <p> {user.likes}</p>
-              </div>
+      <img
+        src='https://res.cloudinary.com/dq7uyauun/image/upload/w_1000,ar_1:1,c_fill,g_auto,e_art:hokusai/v1579148073/influencer1.jpg'
+        alt='influencer'
+        height='300px'
+      />
+      <div className='carousel-section'>
+        <div className='break-1'></div>
+        <div className='break-2'></div>
+        <Carousel
+          responsive={responsive}
+          infinite={true}
+          removeArrowOnDeviceType={['tablet', 'mobile']}
+          afterChange={(previousSlide, { currentSlide, onMove }) => {
+            if (currentSlide > previousSlide) {
+              setCurrentIndex(currentIndex + 1);
+            } else {
+              setCurrentIndex(currentIndex - 1);
+            }
+            console.log(users[currentIndex]);
+          }}>
+          {users.map(user => (
+            <div className='slider-cell-content' key={user.handle} onClick={() => {}}>
               <LazyLoadImage src={user.profile_image_url} alt={user.name} effect='blur' />
-              <div className='followers'>
-                <i className='fa fa-user'></i>
-                <div className='stats'>
-                  <h4>{user.followers}</h4>
-                  <h4>New Followers</h4>
-                </div>
-              </div>
-              <div className='impressions'>
-                <i className='fa fa-eye'></i>
-                <div className='stats'>
-                  <h4>{user.impressions}</h4>
-                  <h4>New Impressions</h4>
-                </div>
-              </div>
             </div>
-          </div>
-        ))}
-      </AwesomeSlider>
+          ))}
+        </Carousel>
+      </div>
     </SliderStyles>
   );
 };

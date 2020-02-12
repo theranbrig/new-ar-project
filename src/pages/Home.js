@@ -99,22 +99,40 @@ const HomeStyles = styled.div`
       width: 104px;
     }
   }
-  .join-section {
-    font-family: ${props => props.theme.fonts.main};
-    background: url('https://oneoone-resource.s3.ap-northeast-2.amazonaws.com/yzed/bg_home_1.jpg');
-    background-size: cover;
-    padding: 20px;
-    color: ${props => props.theme.colors.black};
-    h3 {
-      margin-top: 30px;
-      font-size: 1.8rem;
-      font-weight: 300;
-      strong {
-        font-weight: 700;
+  .connected-content {
+    .join-section {
+      font-family: ${props => props.theme.fonts.main};
+      background: url('https://oneoone-resource.s3.ap-northeast-2.amazonaws.com/yzed/bg_home_1.jpg');
+      background-size: cover;
+      padding: 20px 20px 100px;
+      color: ${props => props.theme.colors.black};
+      h3 {
+        margin-top: 30px;
+        font-size: 1.8rem;
+        font-weight: 300;
+        strong {
+          font-weight: 700;
+        }
+      }
+      p {
+        font-size: 1.3rem;
       }
     }
-    p {
-      font-size: 1.3rem;
+    .timeline {
+      position: relative;
+      margin-top: -70px;
+      width: 100%;
+      border-top-right-radius: 50px;
+      border-top-left-radius: 50px;
+      background-color: ${props => props.theme.colors.white};
+      h3 {
+        padding-top: 30px;
+        font-size: 1.8rem;
+        font-weight: 300;
+        strong {
+          font-weight: 700;
+        }
+      }
     }
   }
   .down-arrow {
@@ -153,7 +171,7 @@ const RoundARButton = styled.button`
   line-height: 75px;
   display: block;
   margin: 30px auto;
-  font-size: 1.5rem;
+  font-size: 1.2rem;
   font-weight: 700;
   border-radius: 50%;
   font-family: ${props => props.theme.fonts.main};
@@ -243,25 +261,30 @@ const Home = () => {
         </RoundARButton>
         <Link>View Product</Link>
       </section>
-      <div className='discover-box'>
+      <section className='discover-box'>
         <h3>Discover YZED.</h3>
         <div className='down-arrow' />
-      </div>
-      <section className='join-section'>
-        <h3>
-          <strong>YZED</strong> Show it first
-        </h3>
-        <p>
-          YZED is a platform for creative consumers to engage with their favourite brands through
-          cutting edge technology.
-        </p>
-        <BlackButton>
-          <Link to='/subscribe'>BECOME A YZER</Link>
-        </BlackButton>
       </section>
-      <h2>RECOMMENDED FOR YOU</h2>
-      <ProductThumbs />
-      <MainPageCarousel />
+      <div className='connected-content'>
+        <section className='join-section'>
+          <h3>
+            <strong>YZED</strong> Show it first
+          </h3>
+          <p>
+            YZED is a platform for creative consumers to engage with their favourite brands through
+            cutting edge technology.
+          </p>
+          <BlackButton>
+            <Link to='/subscribe'>BECOME A YZER</Link>
+          </BlackButton>
+        </section>
+        <section className='timeline'>
+          <h3>
+            <strong>Today's</strong> timeline
+          </h3>
+          <MainPageCarousel />
+        </section>
+      </div>
       <BlackButton>
         <Link to='/subscribe'>BECOME A YZER</Link>
       </BlackButton>
