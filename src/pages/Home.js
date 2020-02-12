@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState, useContext } from 'react';
 import styled from 'styled-components';
 import ProductThumbs from '../components/ProductThumbs';
 import '@google/model-viewer';
@@ -7,6 +7,8 @@ import MainPageCarousel from '../components/MainPageUserCarousel';
 import { Link } from 'react-router-dom';
 import MediaViewer from '../components/ModelViewer';
 import { Helmet } from 'react-helmet';
+import { FirebaseContext } from '../context/Firebase';
+import LoadingSpinner from '../components/LoadingSpinner';
 
 const HomeStyles = styled.div`
   margin: 0 auto;
@@ -18,7 +20,7 @@ const HomeStyles = styled.div`
   background: ${props => props.theme.white};
   @media (max-width: 576px) {
     width: 100% !important ;
-  }import MediaViewer from '../components/MediaViewer';
+  }
 
   model-viewer {
     width: 450px;
@@ -75,7 +77,7 @@ const WhiteButton = styled.div`
   margin: 0 auto;
   font-size: 1.2rem;
   padding: 0px 40px;
-  font-family: ${props => props.theme.fonts.title};
+  font-family: ${props => props.theme.fonts.main};
   a {
     color: black;
     text-decoration: none;
@@ -90,7 +92,7 @@ const BlackButton = styled.button`
   margin: 0 auto;
   font-size: 1.2rem;
   padding: 5px 80px;
-  font-family: ${props => props.theme.fonts.title};
+  font-family: ${props => props.theme.fonts.main};
   background: ${props => props.theme.colors.black};
   color: white;
   min-width: 284px;
@@ -108,7 +110,7 @@ const BottomBlackButton = styled.div`
   background: ${props => props.theme.colors.black};
   font-size: 1.2rem;
   padding: 0px 40px;
-  font-family: ${props => props.theme.fonts.title};
+  font-family: ${props => props.theme.fonts.main};
   margin: 100px auto 50px;
   a {
     color: ${props => props.theme.colors.white};
@@ -117,11 +119,46 @@ const BottomBlackButton = styled.div`
 `;
 
 const Home = () => {
+  const [mainProduct, setMainProduct] = useState(null);
+  const [loading, setLoading] = useState(false);
+  const [displayDate, setDisplayDate] = useState('');
+
+  const { dbh } = useContext(FirebaseContext);
+
+  useEffect(() => {
+    const fetchData = () => {
+      setLoading(true);
+      dbh
+        .collection('products')
+        .doc('5NlpClokHFwJG6Pl7IYz')
+        .get()
+        .then(doc => {
+          setMainProduct({ id: doc.id, ...doc.data() });
+          setLoading(false);
+        });
+    };
+    fetchData();
+  }, []);
+
+  if (loading)
+    return (
+      <HomeStyles>
+        <LoadingSpinner color='#272727' />
+      </HomeStyles>
+    );
+
   return (
     <HomeStyles>
       <Helmet>
         <title>YZED - HOME</title>
       </Helmet>
+      {mainProduct && (
+        <div className='main-product-title'>
+          <h3>
+            <strong>{mainProduct.brand}</strong> {mainProduct.name}
+          </h3>
+        </div>
+      )}
       <MediaViewer
         glbFile='https://oneoone-resource.s3.ap-northeast-2.amazonaws.com/yzed/GLTF_TRENCH_COAT_RESIZED_ANDBAKED_4.gltf'
         usdzFile='https://oneoone-resource.s3.ap-northeast-2.amazonaws.com/yzed/GLTF_TRENCH_COAT_RESIZED_ANDBAKED_4.usdz#applePayButtonType=plain'
@@ -129,11 +166,6 @@ const Home = () => {
         productId='5NlpClokHFwJG6Pl7IYz'
       />
       <div className='product-title-area'>
-        <div className='main-product-title'>
-          <h3>LE SERRE</h3>
-          <h2>FUTURE PANTHER</h2>
-          <h4>Featured Today</h4>
-        </div>
         <div className='top-buttons'>
           <BlackButton onClick={() => document.querySelector('model-viewer').activateAR()}>
             VIEW IN AR

@@ -10,7 +10,7 @@ export const ProductThumbsStyles = styled.div`
   grid-template-columns: 1fr 1fr;
   grid-gap: 30px;
   margin: 0 auto;
-  font-family: Montserrat, sans-serif;
+  font-family: ${props => props.theme.fonts.main};
   text-align: left;
   margin-top: 50px;
   img {
@@ -19,7 +19,7 @@ export const ProductThumbsStyles = styled.div`
   }
   h3,
   h4 {
-    font-family: Montserrat, sans-serif;
+    font-family: ${props => props.theme.fonts.main};
     margin: 0 auto;
     margin-left: 10%;
   }
