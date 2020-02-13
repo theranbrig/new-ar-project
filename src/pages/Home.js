@@ -104,7 +104,7 @@ const HomeStyles = styled.div`
       font-family: ${props => props.theme.fonts.main};
       background: url('https://oneoone-resource.s3.ap-northeast-2.amazonaws.com/yzed/bg_home_1.jpg');
       background-size: cover;
-      padding: 20px 20px 100px;
+      padding: 20px 30px 100px;
       color: ${props => props.theme.colors.black};
       h3 {
         margin-top: 30px;
@@ -115,16 +115,20 @@ const HomeStyles = styled.div`
         }
       }
       p {
-        font-size: 1.3rem;
+        font-size: 1.5rem;
       }
     }
     .timeline {
       position: relative;
       margin-top: -70px;
+      margin-bottom: -70px;
       width: 100%;
-      border-top-right-radius: 50px;
-      border-top-left-radius: 50px;
+      border-radius: 50px;
+      padding-bottom: 20px;
+
       background-color: ${props => props.theme.colors.white};
+      box-shadow: 0 -6px 6px -6px ${props => props.theme.colors.grey};
+      box-shadow: 0 6px 6px -6px ${props => props.theme.colors.grey};
       h3 {
         padding-top: 30px;
         font-size: 1.8rem;
@@ -143,6 +147,26 @@ const HomeStyles = styled.div`
     border-right: 2px solid ${props => props.theme.colors.grey};
     margin: 0 auto;
     margin-bottom: 20px;
+  }
+  footer {
+    .footer-content {
+      font-family: ${props => props.theme.fonts.main};
+      background: url('https://oneoone-resource.s3.ap-northeast-2.amazonaws.com/yzed/bg_home_2.jpg');
+      background-size: cover;
+      padding: 20px 30px 20px;
+      color: ${props => props.theme.colors.black};
+      h3 {
+        margin-top: 80px;
+        font-size: 1.8rem;
+        font-weight: 300;
+        strong {
+          font-weight: 700;
+        }
+      }
+      p {
+        font-size: 1.5rem;
+      }
+    }
   }
 `;
 
@@ -258,7 +282,7 @@ const Home = () => {
         <RoundARButton onClick={() => document.querySelector('model-viewer').activateAR()}>
           AR
         </RoundARButton>
-        <Link>View Product</Link>
+        <Link to={mainProduct ? `/product/${mainProduct.id}` : '/shop'}>View Product</Link>
       </section>
       <section className='discover-box'>
         <h3>Discover YZED.</h3>
@@ -285,9 +309,17 @@ const Home = () => {
         </div>
       </section>
       <footer>
-        <BlackButton>
-          <Link to='/shop'>EXPLORE AR</Link>
-        </BlackButton>
+        <div className='footer-content'>
+          <h3>
+            <strong>Explore</strong> AR
+          </h3>
+          <p>
+            Select Objects and place them anywhere in real life with the power of augmented reality.
+          </p>
+          <BlackButton>
+            <Link to='/shop'>EXPLORE AR</Link>
+          </BlackButton>
+        </div>
       </footer>
     </HomeStyles>
   );
