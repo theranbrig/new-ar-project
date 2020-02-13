@@ -125,10 +125,9 @@ const HomeStyles = styled.div`
       width: 100%;
       border-radius: 50px;
       padding-bottom: 20px;
-
       background-color: ${props => props.theme.colors.white};
-      box-shadow: 0 -6px 6px -6px ${props => props.theme.colors.grey};
-      box-shadow: 0 6px 6px -6px ${props => props.theme.colors.grey};
+      box-shadow: 0 -6px 6px -6px ${props => props.theme.colors.grey},
+        0 6px 6px -6px ${props => props.theme.colors.grey};
       h3 {
         padding-top: 30px;
         font-size: 1.8rem;
