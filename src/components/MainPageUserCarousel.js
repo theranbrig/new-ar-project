@@ -1,4 +1,8 @@
-import React, { useState } from 'react';
+import React, { useState, useRef } from 'react';
+import {
+  getOriginalCounterPart,
+  getOriginalIndexLookupTableByClones,
+} from 'react-multi-carousel/lib/utils';
 import Carousel from 'react-multi-carousel';
 import 'react-multi-carousel/lib/styles.css';
 import { users } from '../data';
@@ -95,8 +99,11 @@ const SliderStyles = styled.div`
 `;
 
 const MainPageCarousel = () => {
+  const carouselRef = useRef();
   const [currentIndex, setCurrentIndex] = useState(1);
   const [user, setUser] = useState(users[currentIndex]);
+  const [carousel, setCarousel] = useState(null);
+
   console.log(user);
   return (
     <SliderStyles>
@@ -130,28 +137,20 @@ const MainPageCarousel = () => {
         <div className='break-1'></div>
         <div className='break-2'></div>
         <Carousel
+          ref={carouselRef}
           responsive={responsive}
           infinite={true}
           removeArrowOnDeviceType={['tablet', 'mobile']}
           afterChange={async (previousSlide, { currentSlide, onMove }) => {
-            if (currentSlide > previousSlide) {
-              console.log('CURR', currentSlide);
-              console.log('PREV', previousSlide);
-              if (currentIndex >= users.length - 1) {
-                setCurrentIndex(0);
-                setUser(users[0]);
-              } else {
-                setCurrentIndex(currentIndex + 1);
-                setUser(users[currentIndex + 1]);
-              }
+            console.log(carouselRef.current.props.children);
+            const { slidesToShow } = carouselRef.current.state;
+            console.log(currentSlide, slidesToShow);
+            if (currentSlide >= 5 && currentSlide <= 10) {
+              setUser(users[currentSlide - 5]);
+            } else if (currentSlide < 5) {
+              setUser(users[currentSlide + 1]);
             } else {
-              if (currentIndex === 0) {
-                setCurrentIndex(users.length - 1);
-                setUser(users[users.length - 1]);
-              } else {
-                setCurrentIndex(currentIndex - 1);
-                setUser(users[currentIndex - 1]);
-              }
+              setUser(users[currentSlide - 11]);
             }
           }}>
           {users.map(user => (

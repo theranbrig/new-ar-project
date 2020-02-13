@@ -87,6 +87,7 @@ const StretchedNavStyles = styled.div`
   width: 100%;
   top: 0;
   z-index: 500;
+  box-shadow: 0px 0px 6px #c7c7c7;
   .right-icons {
     svg {
       height: 2.2rem;

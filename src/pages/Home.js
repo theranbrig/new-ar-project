@@ -264,8 +264,8 @@ const Home = () => {
         <h3>Discover YZED.</h3>
         <div className='down-arrow' />
       </section>
-      <div className='connected-content'>
-        <section className='join-section'>
+      <section className='connected-content'>
+        <div className='join-section'>
           <h3>
             <strong>YZED</strong> Show it first
           </h3>
@@ -276,17 +276,19 @@ const Home = () => {
           <BlackButton>
             <Link to='/subscribe'>BECOME A YZER</Link>
           </BlackButton>
-        </section>
-        <section className='timeline'>
+        </div>
+        <div className='timeline'>
           <h3>
             <strong>Today's</strong> timeline
           </h3>
           <MainPageCarousel />
-        </section>
-      </div>
-      <BlackButton>
-        <Link to='/subscribe'>BECOME A YZER</Link>
-      </BlackButton>
+        </div>
+      </section>
+      <footer>
+        <BlackButton>
+          <Link to='/shop'>EXPLORE AR</Link>
+        </BlackButton>
+      </footer>
     </HomeStyles>
   );
 };

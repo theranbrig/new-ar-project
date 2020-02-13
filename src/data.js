@@ -313,6 +313,24 @@ export const users = [
     profile_image_url:
       'https://res.cloudinary.com/dq7uyauun/image/upload/w_1000,ar_1:1,c_fill,g_auto,e_art:hokusai/v1579148072/influencer4.jpg',
   },
+  {
+    name: 'Susan Ross',
+    handle: '@no_envelopes',
+    likes: 956,
+    followers: 234,
+    impressions: 3453,
+    profile_image_url:
+      'https://res.cloudinary.com/dq7uyauun/image/upload/w_1000,ar_1:1,c_fill,g_auto,e_art:hokusai/v1581556795/influencer6.jpg',
+  },
+  {
+    name: 'Elaine Benes ',
+    handle: '@peterman_pres',
+    likes: 654,
+    followers: 764,
+    impressions: 6435,
+    profile_image_url:
+      'https://res.cloudinary.com/dq7uyauun/image/upload/w_1000,ar_1:1,c_fill,g_auto,e_art:hokusai/v1579148072/influencer5.jpg',
+  },
 ];
 
 export const Brands = [
