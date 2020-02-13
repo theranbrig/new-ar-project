@@ -59,7 +59,7 @@ const ProductProvider = ({ children }) => {
     glbFile,
     usdzFile,
     pictures,
-    productInformation
+    features
   ) => {
     const keywords = await generateKeywords(brand, name);
     dbh
@@ -75,7 +75,7 @@ const ProductProvider = ({ children }) => {
         glbFile,
         usdzFile,
         pictures,
-        productInformation,
+        features,
         keywords,
       })
       .catch(err => setFirebaseError(err));

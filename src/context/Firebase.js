@@ -2,6 +2,7 @@ import * as firebase from 'firebase/app';
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import '@firebase/firestore';
+import '@firebase/storage';
 import 'firebase/auth';
 
 const dotenv = require('dotenv');
@@ -26,6 +27,8 @@ firebase.initializeApp(firebaseConfig);
 export const FirebaseContext = React.createContext();
 
 export const dbh = firebase.firestore();
+
+export const storage = firebase.storage();
 
 const FirebaseProvider = ({ children }) => {
   const [firebaseError, setFirebaseError] = useState(null);
@@ -107,6 +110,7 @@ const FirebaseProvider = ({ children }) => {
         dbh,
         logoutUser,
         firebase,
+        storage,
       }}>
       {children}
     </FirebaseContext.Provider>

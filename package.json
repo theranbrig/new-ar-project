@@ -10,6 +10,9 @@
     "debounce": "^1.2.0",
     "dotenv": "^8.2.0",
     "downshift": "^5.0.0-alpha.0",
+    "filepond": "^4.11.0",
+    "filepond-plugin-image-exif-orientation": "^1.0.6",
+    "filepond-plugin-image-preview": "^4.6.1",
     "firebase": "^7.7.0",
     "firesql": "^2.0.2",
     "lodash.debounce": "^4.0.8",
@@ -19,6 +22,8 @@
     "react-accessible-accordion": "^3.0.1",
     "react-awesome-slider": "^4.0.2",
     "react-dom": "^16.12.0",
+    "react-dropzone-s3-uploader": "^1.1.0",
+    "react-filepond": "^7.0.1",
     "react-firebase-hooks": "^2.1.1",
     "react-helmet": "^5.2.1",
     "react-highlight-words": "^0.16.0",
@@ -27,6 +32,7 @@
     "react-multi-carousel": "^2.5.0",
     "react-router-dom": "^5.1.2",
     "react-scripts": "3.3.0",
+    "shortid": "^2.2.15",
     "styled-components": "^5.0.0"
   },
   "scripts": {

@@ -4,6 +4,11 @@ import { FirebaseContext } from '../context/Firebase';
 import { useHistory } from 'react-router-dom';
 import { Helmet } from 'react-helmet';
 import { ProductContext } from '../context/Product';
+import shortid from 'shortid';
+import { FilePond, registerPlugin } from 'react-filepond';
+import FilePondPluginImageExifOrientation from 'filepond-plugin-image-exif-orientation';
+import FilePondPluginImagePreview from 'filepond-plugin-image-preview';
+import LoadingSpinner from '../components/LoadingSpinner';
 
 export const LoginStyles = styled.div`
   width: 500px;
@@ -64,6 +69,16 @@ export const LoginStyles = styled.div`
       font-size: 1.1rem;
     }
   }
+  .loading {
+    position: fixed;
+    display: grid;
+    background: #2323234f;
+    height: 100vh;
+    width: 100vw;
+    top: 0;
+    left: 0;
+    padding-top: 20vh;
+  }
 `;
 
 const BlackButton = styled.button`
@@ -100,13 +115,14 @@ const BottomWhiteButton = styled.div`
   }
 `;
 
-const Login = () => {
+const CreateProduct = () => {
   const [name, setName] = useState('');
   const [brand, setBrand] = useState('');
   const [color, setColor] = useState('');
   const [price, setPrice] = useState(null);
-  const [productInformation, setProductInformation] = useState('');
-  const [mainImage, setMainImage] = useState('');
+  const [feature, setFeature] = useState(null);
+  const [allFeatures, setAllFeatures] = useState([]);
+  const [mainImage, setMainImage] = useState();
   const [glbFile, setGlbFile] = useState('');
   const [usdzFile, setUsdzFile] = useState('');
   const [picture1, setPicture1] = useState('');
@@ -115,15 +131,67 @@ const Login = () => {
   const [pictures, setPictures] = useState([]);
   const [sizes, setSizes] = useState(['S', 'M', 'L']);
   const [keywords, setKeywords] = useState([]);
+  const [imageUploading, setImageUploading] = useState(false);
+  const [error, setError] = useState('');
 
   const history = useHistory();
 
-  const { firebaseError, userData, dbh, getProducts } = useContext(FirebaseContext);
+  const { firebaseError, userData, dbh, getProducts, storage, firebase } = useContext(
+    FirebaseContext
+  );
+
+  const storageRef = storage.ref();
+
   const { createProduct } = useContext(ProductContext);
 
-  useEffect(() => {
-    console.log(userData);
-  }, [userData, history]);
+  const uploadFile = (e, setStateFunction) => {
+    setImageUploading(true);
+    console.log('file upload event', e);
+
+    const file = e.target.files[0];
+
+    const uploadTask = storageRef.child(`images/${file.name}`).put(file);
+
+    // Listen for state changes, errors, and completion of the upload.
+    uploadTask.on(
+      firebase.storage.TaskEvent.STATE_CHANGED, // or 'state_changed'
+      function(snapshot) {
+        // Get task progress, including the number of bytes uploaded and the total number of bytes to be uploaded
+        var progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+        console.log('Upload is ' + progress + '% done');
+        switch (snapshot.state) {
+          case firebase.storage.TaskState.PAUSED: // or 'paused'
+            console.log('Upload is paused');
+            break;
+          case firebase.storage.TaskState.RUNNING: // or 'running'
+            console.log('Upload is running');
+            break;
+        }
+      },
+      function(error) {
+        switch (error.code) {
+          case 'storage/unauthorized':
+            break;
+
+          case 'storage/canceled':
+            break;
+
+          case 'storage/unknown':
+            break;
+        }
+        setImageUploading(false);
+      },
+      function() {
+        uploadTask.snapshot.ref.getDownloadURL().then(function(downloadURL) {
+          console.log('File available at', downloadURL);
+          setStateFunction(downloadURL);
+          setImageUploading(false);
+        });
+      }
+    );
+  };
+
+  const removeImage = url => {};
 
   if (!userData || userData.role !== 'ADMIN') {
     return (
@@ -138,6 +206,11 @@ const Login = () => {
       <Helmet>
         <title>YZED - CREATE</title>
       </Helmet>
+      {imageUploading && (
+        <div className='loading'>
+          <LoadingSpinner color='black' />
+        </div>
+      )}
       <div className='user-form'>
         <h1>Create Product</h1>
         <div className='form-input'>
@@ -166,97 +239,145 @@ const Login = () => {
           <input name='color' type='text' required onChange={e => setColor(e.target.value)} />
         </div>
         <div className='form-input'>
-          <label htmlFor='mainImage'>Main Image</label>
-          <input
-            name='mainImage'
-            type='text'
-            required
-            onChange={e => setMainImage(e.target.value)}
-          />
-        </div>
-        <div className='form-input'>
           <label htmlFor='price'>Price</label>
           <input name='price' type='number' required onChange={e => setPrice(e.target.value)} />
         </div>
         <div className='form-input'>
-          <label htmlFor='glbFile'>GLB File Link</label>
-          <input name='glbFile' type='text' required onChange={e => setGlbFile(e.target.value)} />
+          <label htmlFor='mainImage'>Main Image</label>
+          {!mainImage ? (
+            <input
+              name='mainImage'
+              type='file'
+              required
+              onChange={e => uploadFile(e, setMainImage)}
+            />
+          ) : (
+            <img src={mainImage} alt='Main Image Preview' />
+          )}
         </div>
         <div className='form-input'>
-          <label htmlFor='usdzFile'>USDZ File Link</label>
-          <input name='usdzFile' type='text' required onChange={e => setUsdzFile(e.target.value)} />
+          <label htmlFor='mainImage'>Picture 1</label>
+          {!picture1 ? (
+            <input
+              name='picture 1'
+              type='file'
+              required
+              onChange={e => uploadFile(e, setPicture1)}
+            />
+          ) : (
+            <img src={picture1} alt='Main Image Preview' />
+          )}
         </div>
         <div className='form-input'>
-          <label htmlFor='picture1'>Picture 1</label>
+          <label htmlFor='mainImage'>Picture 2</label>
+          {!picture2 ? (
+            <input
+              name='picture 2'
+              type='file'
+              required
+              onChange={e => uploadFile(e, setPicture2)}
+            />
+          ) : (
+            <img src={picture2} alt='Main Image Preview' />
+          )}
+        </div>
+        <div className='form-input'>
+          <label htmlFor='mainImage'>Picture 3</label>
+          {!picture3 ? (
+            <input
+              name='picture 3'
+              type='file'
+              required
+              onChange={e => uploadFile(e, setPicture3)}
+            />
+          ) : (
+            <img src={picture3} alt='Main Image Preview' />
+          )}
+        </div>
+        <div className='form-input'>
+          <label htmlFor='mainImage'>USDZ File</label>
+          {!usdzFile ? (
+            <input
+              name='usdz file'
+              type='file'
+              required
+              onChange={e => uploadFile(e, setUsdzFile)}
+            />
+          ) : (
+            <h3>File Uploaded!</h3>
+          )}
+        </div>
+        <div className='form-input'>
+          <label htmlFor='usdz'>GLB File</label>
+          {!glbFile ? (
+            <input name='glb file' type='file' required onChange={e => uploadFile(e, setGlbFile)} />
+          ) : (
+            <h3>File Uploaded!</h3>
+          )}
+        </div>
+
+        <div className='form-input'>
+          <label htmlFor='feature'>Features</label>
           <input
-            name='picture1'
+            value={feature}
             type='text'
+            name='feature'
             required
-            onChange={e => {
-              setPicture1(e.target.value);
-            }}
+            onChange={e => setFeature(e.target.value)}
           />
+          <button
+            onClick={() => {
+              if (allFeatures.length < 5) {
+                if (!feature) {
+                  setError('Oops. You must enter something first.');
+                } else {
+                  setAllFeatures([...allFeatures, feature]);
+                  setFeature('');
+                }
+              } else {
+                setError('Oops. You can only have five features at this time.');
+              }
+            }}>
+            Add Feature
+          </button>
         </div>
-        <div className='form-input'>
-          <label htmlFor='picture2'>Picture 2</label>
-          <input
-            name='picture2'
-            type='text'
-            required
-            onChange={e => {
-              setPicture2(e.target.value);
-            }}
-          />
-        </div>
-        <div className='form-input'>
-          <label htmlFor='picture3'>Picture 3</label>
-          <input
-            name='picture3'
-            type='text'
-            required
-            onChange={e => {
-              setPicture3(e.target.value);
-            }}
-          />
-        </div>
-        <div className='form-input'>
-          <label htmlFor='productInformation'>Product Information</label>
-          <textarea
-            name='productInformation'
-            required
-            onChange={e => setProductInformation(e.target.value)}
-          />
+        <div>
+          <ul>
+            {allFeatures.map(feature => (
+              <li>{feature}</li>
+            ))}
+          </ul>
         </div>
         <BlackButton
           onClick={async () => {
-            createProduct(
-              name,
-              brand,
-              mainImage,
-              color,
-              price,
-              sizes,
-              glbFile,
-              usdzFile,
-              [picture1, picture2, picture3],
-              productInformation
-            );
-            // history.push('/shop');
+            if (allFeatures.length) {
+              createProduct(
+                name,
+                brand,
+                mainImage,
+                color,
+                price,
+                sizes,
+                glbFile,
+                usdzFile,
+                [picture1, picture2, picture3],
+                allFeatures
+              );
+            } else {
+              setError('Ooops. Needs at least one feature.');
+            }
           }}>
           Submit
         </BlackButton>
-        <h1>{`${pictures}`}</h1>
-        <h1>{`${picture1}`}</h1>
-        <h1>{`${picture2}`}</h1>
-        <h1>{`${picture3}`}</h1>
       </div>
-      {firebaseError && (
-        <div>
-          <h3>{firebaseError}</h3>
-        </div>
-      )}
+      {firebaseError ||
+        (error && (
+          <div>
+            <h3>{error || firebaseError}</h3>
+          </div>
+        ))}
     </LoginStyles>
   );
 };
 
-export default Login;
+export default CreateProduct;
