@@ -31,7 +31,7 @@ const StyledBurger = styled.button`
     outline: none;
   }
   @media (max-width: 576px) {
-    top: 24px;
+    top: 20px;
     left: 20px;
   }
   div {
@@ -89,37 +89,59 @@ const StretchedNavStyles = styled.div`
   z-index: 500;
   box-shadow: 0px 0px 6px #c7c7c7;
   .right-icons {
+    min-width: 95px;
     svg {
       height: 2.2rem;
+      @media (max-width: 480px) {
+        display: ${({ open }) => (open ? 'none' : '')};
+      }
     }
     a {
       margin-right: 10px;
+      min-height: 40px;
       @media (max-width: 480px) {
-        margin-right: 0px;
+        margin-right: -20px;
       }
     }
-  }
-  button {
-    width: 30px;
-    margin-right: 20px;
-    background: none;
-    border: none;
-    position: relative;
-    height: 2.5rem;
-    @media (max-width: 480px) {
-      font-size: 1.6rem;
-      margin: 0px 10px 0;
+    button {
+      width: 30px;
+      background: none;
+      border: none;
+      position: relative;
+      height: 2.5rem;
+      @media (max-width: 480px) {
+        font-size: 1.6rem;
+        margin: 0px 10px 0;
+      }
+    }
+    #cart-button {
+      margin-right: 30px;
+      @media (max-width: 480px) {
+        margin-right: 0;
+      }
     }
   }
   .left-icons {
+    min-width: 95px;
     button {
+      background: none;
+      border: none;
       height: 2.5rem;
+      width: 2.5rem;
       margin-left: 4.2rem;
+      padding: 0;
       @media (max-width: 480px) {
-        margin-left: 3.8rem;
+        width: 2.5rem;
+        margin-left: 60px;
       }
       svg {
         height: 2.2rem;
+        @media (max-width: 480px) {
+          display: ${({ open }) => (open ? 'none' : 'block')};
+        }
+      }
+      @media (max-width: 480px) {
+        width: ${({ open }) => (open ? '110' : '')};
       }
     }
   }
@@ -143,7 +165,7 @@ const NavigationDrawer = ({ children }) => {
 
   return (
     <>
-      <StretchedNavStyles className='main-stretched-nav'>
+      <StretchedNavStyles className='main-stretched-nav' open={open}>
         <div className='left-icons'>
           <button
             onClick={() => {
@@ -162,7 +184,6 @@ const NavigationDrawer = ({ children }) => {
           <Link to={userData ? '/profile' : '/login'}>
             <UserSVG />
           </Link>
-
           <button
             onClick={() => {
               setOpenBag(!openBag);

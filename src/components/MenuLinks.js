@@ -9,19 +9,17 @@ import InstaSVG from '../assets/icons/icon_instagram';
 export const StyledMenu = styled.nav`
   display: flex;
   flex-direction: column;
-  justify-content: center;
+  justify-content: start;
   background: ${props => props.theme.colors.white};
   transform: ${({ open }) => (open ? 'translateX(0)' : 'translateX(-100%)')};
   height: 100vh;
   text-align: left;
-  padding: 2rem;
   position: ${({ open }) => (open ? 'fixed' : 'absolute')};
-  top: 0;
+  top: 10vh;
   left: 0;
   z-index: 520;
   transition: transform 0.3s ease-in-out;
   font-family: ${props => props.theme.fonts.main};
-  /* box-shadow: ${({ open }) => (open ? '-2px 2px 16px gray' : 'none')}; */
   @media (max-width: 576px) {
     width: 100%;
     padding: 0;
@@ -30,7 +28,7 @@ export const StyledMenu = styled.nav`
   i {
     font-size: 2rem;
     text-transform: uppercase;
-    padding: 2rem 0;
+    padding: 2rem;
     font-weight: bold;
     letter-spacing: 0.5rem;
     color: white;
@@ -55,18 +53,34 @@ export const StyledMenu = styled.nav`
   a.active-link {
     color: ${props => props.theme.colors.black};
   }
-  .social-icons {
-    padding: 2rem 0;
-    @media (max-width: 576px) {
-      margin: 0 auto;
+  .side-links {
+    top: 10vh;
+    position: relative;
+    a {
+      display: block;
     }
   }
-  .social-icons a {
-    display: inline;
-    padding: 5px;
-    color: ${props => props.theme.colors.black};
-    img {
-      height: 35px;
+
+  .top-links {
+    background: ${props => props.theme.colors.black};
+    position: absolute;
+    width: 100%;
+    height: 5rem;
+    line-height: 2rem;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    a {
+      align-self: center;
+      padding: 0;
+      letter-spacing: 0;
+      font-size: 1.5rem;
+      &:hover {
+        color: ${props => props.theme.colors.grey};
+      }
+    }
+    a.top-active-link {
+      border-bottom: 3px solid ${props => props.theme.colors.white};
     }
   }
 `;
@@ -76,47 +90,50 @@ const MenuLinks = ({ open, setOpen }) => {
 
   return (
     <StyledMenu open={open}>
-      <NavLink to='/' exact activeClassName='active-link' onClick={() => setOpen(false)}>
-        Home
-      </NavLink>
-      <NavLink to='/shop' activeClassName='active-link' onClick={() => setOpen(false)}>
-        Shop
-      </NavLink>
-      <NavLink to='/checkout' activeClassName='active-link' onClick={() => setOpen(false)}>
-        My Bag
-      </NavLink>
-      {!userData && (
-        <NavLink to='/subscribe' activeClassName='active-link' onClick={() => setOpen(false)}>
-          Subscribe
-        </NavLink>
-      )}
-      {!userData ? (
-        <NavLink to='/login' activeClassName='active-link' onClick={() => setOpen(false)}>
-          Login
-        </NavLink>
-      ) : (
-        <NavLink to='/profile' activeClassName='active-link' onClick={() => setOpen(false)}>
-          Profile
-          <br />
-          <span>{userData.userName}</span>
-        </NavLink>
-      )}
-      {/* <div className='social-icons'>
-        <a
-          href='https://facebook.com'
-          target='_blank'
-          rel='noopener noreferrer'
+      <div className='top-links'>
+        <NavLink
+          to='/'
+          exact
+          className='top-link'
+          activeClassName='top-active-link'
           onClick={() => setOpen(false)}>
-          <InstaSVG />
-        </a>
-        <a
-          href='https://instagram.com'
-          target='_blank'
-          rel='noopener noreferrer'
+          Home
+        </NavLink>
+        <NavLink
+          to='/shop'
+          className='top-link'
+          activeClassName='top-active-link'
           onClick={() => setOpen(false)}>
-          <img src={InstaLogo} alt='instagram' />
-        </a>
-      </div> */}
+          Shop
+        </NavLink>
+      </div>
+      <div className='side-links'>
+        <NavLink to='/' exact activeClassName='active-link' onClick={() => setOpen(false)}>
+          Home
+        </NavLink>
+        <NavLink to='/shop' activeClassName='active-link' onClick={() => setOpen(false)}>
+          Shop
+        </NavLink>
+        <NavLink to='/checkout' activeClassName='active-link' onClick={() => setOpen(false)}>
+          My Bag
+        </NavLink>
+        {!userData && (
+          <NavLink to='/subscribe' activeClassName='active-link' onClick={() => setOpen(false)}>
+            Subscribe
+          </NavLink>
+        )}
+        {!userData ? (
+          <NavLink to='/login' activeClassName='active-link' onClick={() => setOpen(false)}>
+            Login
+          </NavLink>
+        ) : (
+          <NavLink to='/profile' activeClassName='active-link' onClick={() => setOpen(false)}>
+            Profile
+            <br />
+            <span>{userData.userName}</span>
+          </NavLink>
+        )}
+      </div>
     </StyledMenu>
   );
 };

@@ -297,7 +297,7 @@ const Home = () => {
             cutting edge technology.
           </p>
           <BlackButton>
-            <Link to='/subscribe'>BECOME A YZER</Link>
+            <Link to='/register'>BECOME A YZER</Link>
           </BlackButton>
         </div>
         <div className='timeline'>
