@@ -117,7 +117,7 @@ const BottomWhiteButton = styled.div`
   }
 `;
 
-const CreateProduct = () => {
+const EditProduct = () => {
   const [name, setName] = useState('');
   const [brand, setBrand] = useState('');
   const [color, setColor] = useState('');
@@ -302,4 +302,4 @@ const CreateProduct = () => {
   );
 };
 
-export default CreateProduct;
+export default EditProduct;

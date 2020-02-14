@@ -16,6 +16,8 @@ import ShopCategory from '../pages/ShopCategory';
 import Brand from '../pages/Brand';
 import Sale from '../pages/Sale';
 import CreateProduct from '../pages/CreateProduct';
+import Admin from '../pages/Admin';
+import EditProduct from '../pages/EditProduct';
 
 export default function App() {
   return (
@@ -64,6 +66,12 @@ export default function App() {
           </Route>
           <Route path='/create'>
             <CreateProduct />
+          </Route>
+          <Route path='/edit'>
+            <EditProduct />
+          </Route>
+          <Route path='/admin'>
+            <Admin />
           </Route>
           <Route path='/'>
             <Home />
