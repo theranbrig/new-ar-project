@@ -2,7 +2,6 @@ import React, { useEffect } from 'react';
 import styled from 'styled-components';
 import { useHistory, useParams } from 'react-router-dom';
 import DropdownSearch from './DropdownSearch';
-import { debounce } from 'debounce';
 import FirebaseSearch from './FirebaseSearch';
 
 export const ModalStyles = styled.div`
