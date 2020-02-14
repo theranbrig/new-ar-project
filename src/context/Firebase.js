@@ -53,7 +53,7 @@ const FirebaseProvider = ({ children }) => {
         dbh
           .collection('users')
           .doc(firebase.auth().currentUser.uid)
-          .set({ userName, firstName, lastName, role: 'ADMIN' })
+          .set({ userName, firstName, lastName, role: 'USER' })
           .then(() => {
             dbh
               .collection('newsletterSubscriptions')

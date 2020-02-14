@@ -39,6 +39,11 @@ export const FileInputStyles = styled.div`
     color: tomato;
     font-size: 1.4rem;
   }
+  p {
+    font-size: 0.8rem;
+    align-self: center;
+    text-align: right;
+  }
 `;
 
 const FileUpload = ({ name, setFileUploading, state, setStateFunction, isImage }) => {
@@ -95,7 +100,7 @@ const FileUpload = ({ name, setFileUploading, state, setStateFunction, isImage }
         </>
       ) : (
         <>
-          <p>File Uploaded!</p>
+          <p>{state}</p>
           <button className='remove-button' onClick={() => removeS3File()}>
             <i className='fa fa-times-circle'></i>
           </button>

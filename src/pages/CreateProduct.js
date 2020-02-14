@@ -13,6 +13,7 @@ export const LoginStyles = styled.div`
   margin: 0 auto;
   min-height: calc(90vh - 50px);
   margin-top: calc(10vh + 50px);
+  margin-bottom: 50px;
   .user-form {
     border: 1px solid black;
     padding: 30px 20px;
@@ -102,6 +103,18 @@ export const LoginStyles = styled.div`
     width: 100%;
     padding: 5px;
   }
+  .error-message {
+    text-align: center;
+    color: tomato;
+  }
+  input:invalid,
+  textarea.no-features {
+    border: 1px solid tomato;
+  }
+  .hint {
+    color: tomato;
+    text-align: center;
+  }
 `;
 
 const BlackButton = styled.button`
@@ -165,6 +178,23 @@ const CreateProduct = () => {
 
   const { createProduct } = useContext(ProductContext);
 
+  const checkValid = () => {
+    const isValid =
+      !name &&
+      !brand &&
+      !mainImage &&
+      !color &&
+      !price &&
+      !sizes &&
+      !glbFile &&
+      !usdzFile &&
+      !picture1 &&
+      !picture2 &&
+      !picture3 &&
+      !allFeatures.length;
+    return isValid;
+  };
+
   if (!userData || userData.role !== 'ADMIN') {
     return (
       <LoginStyles>
@@ -222,6 +252,7 @@ const CreateProduct = () => {
             type='text'
             name='feature'
             required
+            className={!allFeatures.length && 'no-features'}
             onChange={e => setFeature(e.target.value)}
           />
           <button
@@ -287,14 +318,14 @@ const CreateProduct = () => {
           isImage={true}
         />
         <FileUpload
-          name='usdz file'
+          name='usdz'
           setFileUploading={setImageUploading}
           state={usdzFile}
           setStateFunction={setUsdzFile}
           isImage={false}
         />
         <FileUpload
-          name='glb file'
+          name='glb'
           setFileUploading={setImageUploading}
           state={glbFile}
           setStateFunction={setGlbFile}
@@ -302,27 +333,31 @@ const CreateProduct = () => {
         />
         {firebaseError ||
           (error && (
-            <div>
+            <div className='error-message'>
               <h3>{error || firebaseError}</h3>
             </div>
           ))}
         <BlackButton
           onClick={async () => {
-            if (allFeatures.length) {
-              createProduct(
-                name,
-                brand,
-                mainImage,
-                color,
-                price,
-                sizes,
-                glbFile,
-                usdzFile,
-                [picture1, picture2, picture3],
-                allFeatures
-              );
+            if (checkValid()) {
+              setError('Oops.  Something is not filled in.');
             } else {
-              setError('Ooops. Needs at least one feature.');
+              if (allFeatures.length) {
+                createProduct(
+                  name,
+                  brand,
+                  mainImage,
+                  color,
+                  price,
+                  sizes,
+                  glbFile,
+                  usdzFile,
+                  [picture1, picture2, picture3],
+                  allFeatures
+                );
+              } else {
+                setError('Ooops. Needs at least one feature.');
+              }
             }
           }}>
           Submit

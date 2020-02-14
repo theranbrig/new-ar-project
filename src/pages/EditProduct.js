@@ -103,6 +103,10 @@ export const LoginStyles = styled.div`
     width: 100%;
     padding: 5px;
   }
+  .error-message {
+    text-align: center;
+    color: tomato;
+  }
 `;
 
 const BlackButton = styled.button`
@@ -198,6 +202,24 @@ const EditProduct = () => {
       });
   }, []);
 
+  const checkValid = () => {
+    return (
+      !product &&
+      !name &&
+      !brand &&
+      !mainImage &&
+      !color &&
+      !price &&
+      !sizes &&
+      !glbFile &&
+      !usdzFile &&
+      !picture1 &&
+      !picture2 &&
+      !picture3 &&
+      !allFeatures.length
+    );
+  };
+
   if (userLoading)
     return (
       <LoginStyles>
@@ -225,7 +247,7 @@ const EditProduct = () => {
       )}
       {product ? (
         <div className='user-form'>
-          <h1>Edit Product</h1>
+          <h1>Edit {name}</h1>
           <div className='form-input'>
             <label htmlFor='name'>NAME:</label>
             <input
@@ -359,28 +381,32 @@ const EditProduct = () => {
           />
           {firebaseError ||
             (error && (
-              <div>
+              <div className='error-message'>
                 <h3>{error || firebaseError}</h3>
               </div>
             ))}
           <BlackButton
             onClick={async () => {
-              if (allFeatures.length) {
-                editProduct(
-                  product,
-                  name,
-                  brand,
-                  mainImage,
-                  color,
-                  price,
-                  sizes,
-                  glbFile,
-                  usdzFile,
-                  [picture1, picture2, picture3],
-                  allFeatures
-                );
+              if (checkValid()) {
+                setError('Oops.  Something is not filled in.');
               } else {
-                setError('Ooops. Needs at least one feature.');
+                if (allFeatures.length) {
+                  editProduct(
+                    product,
+                    name,
+                    brand,
+                    mainImage,
+                    color,
+                    price,
+                    sizes,
+                    glbFile,
+                    usdzFile,
+                    [picture1, picture2, picture3],
+                    allFeatures
+                  );
+                } else {
+                  setError('Ooops. Needs at least one feature.');
+                }
               }
             }}>
             Submit
