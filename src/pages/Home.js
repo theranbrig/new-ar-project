@@ -271,7 +271,7 @@ const Home = () => {
       )}
       <MediaViewer
         glbFile='https://oneoone-resource.s3.ap-northeast-2.amazonaws.com/yzed/GLTF_TRENCH_COAT_RESIZED_ANDBAKED_4.gltf'
-        usdzFile='https://oneoone-resource.s3.ap-northeast-2.amazonaws.com/yzed/GLTF_TRENCH_COAT_RESIZED_ANDBAKED_4.usdz#applePayButtonType=plain'
+        usdzFile='https://oneoone-resource.s3.ap-northeast-2.amazonaws.com/yzed/GLTF_TRENCH_COAT_RESIZED_ANDBAKED_4.usdz'
         displayLink={true}
         productId='5NlpClokHFwJG6Pl7IYz'
       />
