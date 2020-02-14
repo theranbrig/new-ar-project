@@ -36,7 +36,7 @@ export const FileInputStyles = styled.div`
   .remove-button {
     background: transparent;
     border: none;
-    color: pink;
+    color: tomato;
     font-size: 1.4rem;
   }
 `;

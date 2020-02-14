@@ -13,6 +13,7 @@ export const LoginStyles = styled.div`
   margin: 0 auto;
   min-height: calc(90vh - 50px);
   margin-top: calc(10vh + 50px);
+  margin-bottom: 50px;
   .user-form {
     border: 1px solid black;
     padding: 30px 20px;
@@ -51,7 +52,7 @@ export const LoginStyles = styled.div`
       margin: 0 5px;
       border: none;
       border-radius: 0px !important;
-      border-bottom: 1px solid #c7c7c7;
+      border-bottom: 1px solid ${props => props.theme.colors.lightGrey};
       background: white;
       box-shadow: none;
       height: 25px;
@@ -90,9 +91,17 @@ export const LoginStyles = styled.div`
         background: none;
         border: none;
         font-size: 1.5rem;
-        color: pink;
+        color: tomato;
       }
     }
+  }
+  textarea {
+    border: 1px solid ${props => props.theme.colors.lightGrey};
+    resize: none;
+    font-size: 16px;
+    margin-left: 10px;
+    width: 100%;
+    padding: 5px;
   }
 `;
 
@@ -240,7 +249,7 @@ const EditProduct = () => {
             />
           </div>
           <div className='form-input'>
-            <label htmlFor='color'>COLOR</label>
+            <label htmlFor='color'>COLOR:</label>
             <input
               name='color'
               type='text'
@@ -250,7 +259,7 @@ const EditProduct = () => {
             />
           </div>
           <div className='form-input'>
-            <label htmlFor='price'>Price</label>
+            <label htmlFor='price'>PRICE:</label>
             <input
               name='price'
               type='number'
@@ -261,13 +270,15 @@ const EditProduct = () => {
           </div>
 
           <div className='form-input'>
-            <label htmlFor='feature'>FEATURES</label>
-            <input
+            <label htmlFor='feature'>FEATURES: </label>
+            <textarea
               value={feature}
+              rows='3'
               type='text'
               name='feature'
               required
               onChange={e => setFeature(e.target.value)}
+              placeholder='Please enter one at a time'
             />
             <button
               className='add-feature'
