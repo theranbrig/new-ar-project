@@ -67,7 +67,7 @@ export default function App() {
           <Route path='/create'>
             <CreateProduct />
           </Route>
-          <Route path='/edit'>
+          <Route exact path='/edit/:product'>
             <EditProduct />
           </Route>
           <Route path='/admin'>
