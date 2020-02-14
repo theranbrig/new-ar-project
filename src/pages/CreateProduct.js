@@ -28,7 +28,7 @@ export const LoginStyles = styled.div`
     margin: 0 5px;
     border: none;
     border-radius: 0px !important;
-    border-bottom: 1px solid #c7c7c7;
+    border-bottom: 1px solid ${props => props.theme.colors.lightGrey};
     background: white;
     box-shadow: none;
     height: 25px;
@@ -51,7 +51,7 @@ export const LoginStyles = styled.div`
       margin: 0 5px;
       border: none;
       border-radius: 0px !important;
-      border-bottom: 1px solid #c7c7c7;
+      border-bottom: 1px solid ${props => props.theme.colors.lightGrey};
       background: white;
       box-shadow: none;
       height: 25px;
@@ -80,6 +80,27 @@ export const LoginStyles = styled.div`
     background: transparent;
     border: none;
     font-size: 1.5rem;
+  }
+  .features-list {
+    li {
+      display: grid;
+      grid-template-columns: 1fr 30px;
+      grid-gap: 5px;
+      button {
+        background: none;
+        border: none;
+        font-size: 1.5rem;
+        color: tomato;
+      }
+    }
+  }
+  textarea {
+    border: 1px solid ${props => props.theme.colors.lightGrey};
+    resize: none;
+    font-size: 16px;
+    margin-left: 10px;
+    width: 100%;
+    padding: 5px;
   }
 `;
 
@@ -186,18 +207,18 @@ const CreateProduct = () => {
           />
         </div>
         <div className='form-input'>
-          <label htmlFor='color'>COLOR</label>
+          <label htmlFor='color'>COLOR:</label>
           <input name='color' type='text' required onChange={e => setColor(e.target.value)} />
         </div>
         <div className='form-input'>
-          <label htmlFor='price'>Price</label>
+          <label htmlFor='price'>PRICE:</label>
           <input name='price' type='number' required onChange={e => setPrice(e.target.value)} />
         </div>
-
         <div className='form-input'>
-          <label htmlFor='feature'>FEATURES</label>
-          <input
+          <label htmlFor='feature'>FEATURES: </label>
+          <textarea
             value={feature}
+            rows='3'
             type='text'
             name='feature'
             required
@@ -220,14 +241,23 @@ const CreateProduct = () => {
             <i className='fa fa-plus-circle'></i>
           </button>
         </div>
-        {!allFeatures.length && <p>Be sure to add at least one feature.</p>}
-        <div>
-          <ul>
-            {allFeatures.map(feature => (
-              <li>{feature}</li>
-            ))}
-          </ul>
-        </div>
+        {!allFeatures.length && <p className='hint'>Be sure to add at least one feature.</p>}
+        <ul className='features-list'>
+          {allFeatures.map((feature, index) => (
+            <li key={index}>
+              <p>{feature}</p>
+              <button
+                onClick={() => {
+                  console.log(index);
+                  const tempArr = allFeatures.map(feature => feature);
+                  const removed = tempArr.splice(index, 1);
+                  setAllFeatures(tempArr);
+                }}>
+                <i className='fa fa-times-circle'></i>
+              </button>
+            </li>
+          ))}
+        </ul>
         <FileUpload
           name='main image'
           setFileUploading={setImageUploading}
@@ -270,6 +300,12 @@ const CreateProduct = () => {
           setStateFunction={setGlbFile}
           isImage={false}
         />
+        {firebaseError ||
+          (error && (
+            <div>
+              <h3>{error || firebaseError}</h3>
+            </div>
+          ))}
         <BlackButton
           onClick={async () => {
             if (allFeatures.length) {
@@ -292,12 +328,6 @@ const CreateProduct = () => {
           Submit
         </BlackButton>
       </div>
-      {firebaseError ||
-        (error && (
-          <div>
-            <h3>{error || firebaseError}</h3>
-          </div>
-        ))}
     </LoginStyles>
   );
 };

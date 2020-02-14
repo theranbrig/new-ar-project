@@ -297,8 +297,7 @@ const EditProduct = () => {
               <i className='fa fa-plus-circle'></i>
             </button>
           </div>
-          {!allFeatures.length && <p>Be sure to add at least one feature.</p>}
-
+          {!allFeatures.length && <p className='hint'>Be sure to add at least one feature.</p>}
           <ul className='features-list'>
             {allFeatures.map((feature, index) => (
               <li key={index}>
