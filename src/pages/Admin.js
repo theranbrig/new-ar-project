@@ -72,6 +72,7 @@ const Admin = () => {
       <Helmet>
         <title>YZED - CREATE</title>
       </Helmet>
+      <Link to='/create'>Create New Product</Link>
       <h2>Choose a product to edit</h2>
       <ul>
         {products.map(product => (

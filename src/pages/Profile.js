@@ -94,6 +94,11 @@ const Profile = () => {
       <BlackButton>
         <a href='/checkout'>VIEW MY CART</a>
       </BlackButton>
+      {userData.role === 'ADMIN' && (
+        <BlackButton>
+          <a href='/admin'>ADMIN</a>
+        </BlackButton>
+      )}
       <WhiteButton>
         <a href='/'>BACK HOME</a>
       </WhiteButton>

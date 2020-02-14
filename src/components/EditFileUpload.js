@@ -68,14 +68,7 @@ const FileUpload = ({ name, setFileUploading, state, setStateFunction, isImage }
   };
 
   const removeS3File = () => {
-    setFileUploading(true);
-    S3Client.deleteFile(newFileName)
-      .then(response => {
-        console.log(response);
-        setStateFunction('');
-        setFileUploading(false);
-      })
-      .catch(err => console.error(err));
+    setStateFunction('');
   };
 
   return (

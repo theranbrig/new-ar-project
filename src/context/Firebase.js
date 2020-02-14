@@ -32,6 +32,7 @@ export const storage = firebase.storage();
 
 const FirebaseProvider = ({ children }) => {
   const [firebaseError, setFirebaseError] = useState(null);
+  const [userLoading, setUserLoading] = useState(false);
   const [userData, setUserData] = useState(null);
 
   const registerUser = (email, password, userName, firstName, lastName) => {
@@ -85,8 +86,8 @@ const FirebaseProvider = ({ children }) => {
           if (doc.exists) {
             const { userName, firstName, lastName, role } = doc.data();
             userDetails = { id: user.uid, email: user.email, userName, firstName, lastName, role };
+
             if (!userData) {
-              let tempCart = [];
               setUserData(userDetails);
             }
           }
@@ -111,6 +112,7 @@ const FirebaseProvider = ({ children }) => {
         logoutUser,
         firebase,
         storage,
+        userLoading,
       }}>
       {children}
     </FirebaseContext.Provider>

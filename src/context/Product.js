@@ -81,10 +81,44 @@ const ProductProvider = ({ children }) => {
       .catch(err => setFirebaseError(err));
   };
 
+  const editProduct = async (
+    id,
+    name,
+    brand,
+    mainImage,
+    color,
+    price,
+    sizes,
+    glbFile,
+    usdzFile,
+    pictures,
+    features
+  ) => {
+    const keywords = await generateKeywords(brand, name);
+    dbh
+      .collection('products')
+      .doc(id)
+      .set({
+        name,
+        brand,
+        mainImage,
+        color,
+        price,
+        sizes,
+        glbFile,
+        usdzFile,
+        pictures,
+        features,
+        keywords,
+      })
+      .catch(err => setFirebaseError(err));
+  };
+
   return (
     <ProductContext.Provider
       value={{
         createProduct,
+        editProduct,
       }}>
       {children}
     </ProductContext.Provider>

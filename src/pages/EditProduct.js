@@ -1,11 +1,11 @@
 import React, { useState, useContext, useEffect } from 'react';
 import styled from 'styled-components';
 import { FirebaseContext } from '../context/Firebase';
-import { useHistory } from 'react-router-dom';
+import { useHistory, useParams } from 'react-router-dom';
 import { Helmet } from 'react-helmet';
 import { ProductContext } from '../context/Product';
 import LoadingSpinner from '../components/LoadingSpinner';
-import FileUpload from '../components/FileUpload';
+import FileUpload from '../components/EditFileUpload';
 
 export const LoginStyles = styled.div`
   width: 500px;
@@ -81,6 +81,19 @@ export const LoginStyles = styled.div`
     border: none;
     font-size: 1.5rem;
   }
+  .features-list {
+    li {
+      display: grid;
+      grid-template-columns: 1fr 30px;
+      grid-gap: 5px;
+      button {
+        background: none;
+        border: none;
+        font-size: 1.5rem;
+        color: pink;
+      }
+    }
+  }
 `;
 
 const BlackButton = styled.button`
@@ -138,11 +151,50 @@ const EditProduct = () => {
 
   const history = useHistory();
 
-  const { firebaseError, userData, dbh, getProducts, storage, firebase } = useContext(
-    FirebaseContext
-  );
+  const { product } = useParams();
 
-  const { createProduct } = useContext(ProductContext);
+  const { userData, dbh, userLoading, firebaseError } = useContext(FirebaseContext);
+
+  const { editProduct } = useContext(ProductContext);
+
+  useEffect(() => {
+    dbh
+      .collection('products')
+      .doc(product)
+      .get()
+      .then(doc => {
+        console.log(doc.data().brand);
+        const {
+          name,
+          brand,
+          color,
+          price,
+          mainImage,
+          pictures,
+          glbFile,
+          usdzFile,
+          features,
+        } = doc.data();
+        setName(name);
+        setBrand(brand);
+        setPrice(price);
+        setColor(color);
+        setMainImage(mainImage);
+        setPicture1(pictures[0]);
+        setPicture2(pictures[1]);
+        setPicture3(pictures[2]);
+        setUsdzFile(usdzFile);
+        setGlbFile(glbFile);
+        setAllFeatures(features);
+      });
+  }, []);
+
+  if (userLoading)
+    return (
+      <LoginStyles>
+        <LoadingSpinner color='black' />
+      </LoginStyles>
+    );
 
   if (!userData || userData.role !== 'ADMIN') {
     return (
@@ -162,142 +214,171 @@ const EditProduct = () => {
           <LoadingSpinner color='black' />
         </div>
       )}
-      <div className='user-form'>
-        <h1>Create Product</h1>
-        <div className='form-input'>
-          <label htmlFor='name'>NAME:</label>
-          <input
-            name='name'
-            type='name'
-            value={name}
-            required
-            onChange={e => setName(e.target.value)}
-          />
-        </div>
-        <div className='form-input'>
-          <label htmlFor='brand'>BRAND:</label>
-          <input
-            name='brand'
-            type='brand'
-            required
-            onChange={e => {
-              setBrand(e.target.value);
-            }}
-          />
-        </div>
-        <div className='form-input'>
-          <label htmlFor='color'>COLOR</label>
-          <input name='color' type='text' required onChange={e => setColor(e.target.value)} />
-        </div>
-        <div className='form-input'>
-          <label htmlFor='price'>Price</label>
-          <input name='price' type='number' required onChange={e => setPrice(e.target.value)} />
-        </div>
+      {product ? (
+        <div className='user-form'>
+          <h1>Edit Product</h1>
+          <div className='form-input'>
+            <label htmlFor='name'>NAME:</label>
+            <input
+              name='name'
+              type='text'
+              value={name}
+              required
+              onChange={e => setName(e.target.value)}
+            />
+          </div>
+          <div className='form-input'>
+            <label htmlFor='brand'>BRAND:</label>
+            <input
+              name='brand'
+              type='text'
+              value={brand}
+              required
+              onChange={e => {
+                setBrand(e.target.value);
+              }}
+            />
+          </div>
+          <div className='form-input'>
+            <label htmlFor='color'>COLOR</label>
+            <input
+              name='color'
+              type='text'
+              value={color}
+              required
+              onChange={e => setColor(e.target.value)}
+            />
+          </div>
+          <div className='form-input'>
+            <label htmlFor='price'>Price</label>
+            <input
+              name='price'
+              type='number'
+              value={price}
+              required
+              onChange={e => setPrice(e.target.value)}
+            />
+          </div>
 
-        <div className='form-input'>
-          <label htmlFor='feature'>FEATURES</label>
-          <input
-            value={feature}
-            type='text'
-            name='feature'
-            required
-            onChange={e => setFeature(e.target.value)}
-          />
-          <button
-            className='add-feature'
-            onClick={() => {
-              if (allFeatures.length < 5) {
-                if (!feature) {
-                  setError('Oops. You must enter something first.');
+          <div className='form-input'>
+            <label htmlFor='feature'>FEATURES</label>
+            <input
+              value={feature}
+              type='text'
+              name='feature'
+              required
+              onChange={e => setFeature(e.target.value)}
+            />
+            <button
+              className='add-feature'
+              onClick={() => {
+                if (allFeatures.length < 5) {
+                  if (!feature) {
+                    setError('Oops. You must enter something first.');
+                  } else {
+                    setAllFeatures([...allFeatures, feature]);
+                    setFeature('');
+                  }
                 } else {
-                  setAllFeatures([...allFeatures, feature]);
-                  setFeature('');
+                  setError('Oops. You can only have five features at this time.');
                 }
-              } else {
-                setError('Oops. You can only have five features at this time.');
-              }
-            }}>
-            <i className='fa fa-plus-circle'></i>
-          </button>
-        </div>
-        {!allFeatures.length && <p>Be sure to add at least one feature.</p>}
-        <div>
-          <ul>
-            {allFeatures.map(feature => (
-              <li>{feature}</li>
+              }}>
+              <i className='fa fa-plus-circle'></i>
+            </button>
+          </div>
+          {!allFeatures.length && <p>Be sure to add at least one feature.</p>}
+
+          <ul className='features-list'>
+            {allFeatures.map((feature, index) => (
+              <li key={index}>
+                <p>{feature}</p>
+                <button
+                  onClick={() => {
+                    console.log(index);
+                    const tempArr = allFeatures.map(feature => feature);
+                    const removed = tempArr.splice(index, 1);
+                    setAllFeatures(tempArr);
+                  }}>
+                  <i className='fa fa-times-circle'></i>
+                </button>
+              </li>
             ))}
           </ul>
+
+          <FileUpload
+            name='main image'
+            setFileUploading={setImageUploading}
+            state={mainImage}
+            setStateFunction={setMainImage}
+            isImage={true}
+          />
+          <FileUpload
+            name='picture 1'
+            setFileUploading={setImageUploading}
+            state={picture1}
+            setStateFunction={setPicture1}
+            isImage={true}
+          />
+          <FileUpload
+            name='picture 2'
+            setFileUploading={setImageUploading}
+            state={picture2}
+            setStateFunction={setPicture2}
+            isImage={true}
+          />
+          <FileUpload
+            name='picture 3'
+            setFileUploading={setImageUploading}
+            state={picture3}
+            setStateFunction={setPicture3}
+            isImage={true}
+          />
+          <FileUpload
+            name='usdz file'
+            setFileUploading={setImageUploading}
+            state={usdzFile}
+            setStateFunction={setUsdzFile}
+            isImage={false}
+          />
+          <FileUpload
+            name='glb file'
+            setFileUploading={setImageUploading}
+            state={glbFile}
+            setStateFunction={setGlbFile}
+            isImage={false}
+          />
+          {firebaseError ||
+            (error && (
+              <div>
+                <h3>{error || firebaseError}</h3>
+              </div>
+            ))}
+          <BlackButton
+            onClick={async () => {
+              if (allFeatures.length) {
+                editProduct(
+                  product,
+                  name,
+                  brand,
+                  mainImage,
+                  color,
+                  price,
+                  sizes,
+                  glbFile,
+                  usdzFile,
+                  [picture1, picture2, picture3],
+                  allFeatures
+                );
+              } else {
+                setError('Ooops. Needs at least one feature.');
+              }
+            }}>
+            Submit
+          </BlackButton>
         </div>
-        <FileUpload
-          name='main image'
-          setFileUploading={setImageUploading}
-          state={mainImage}
-          setStateFunction={setMainImage}
-          isImage={true}
-        />
-        <FileUpload
-          name='picture 1'
-          setFileUploading={setImageUploading}
-          state={picture1}
-          setStateFunction={setPicture1}
-          isImage={true}
-        />
-        <FileUpload
-          name='picture 2'
-          setFileUploading={setImageUploading}
-          state={picture2}
-          setStateFunction={setPicture2}
-          isImage={true}
-        />
-        <FileUpload
-          name='picture 3'
-          setFileUploading={setImageUploading}
-          state={picture3}
-          setStateFunction={setPicture3}
-          isImage={true}
-        />
-        <FileUpload
-          name='usdz file'
-          setFileUploading={setImageUploading}
-          state={usdzFile}
-          setStateFunction={setUsdzFile}
-          isImage={false}
-        />
-        <FileUpload
-          name='glb file'
-          setFileUploading={setImageUploading}
-          state={glbFile}
-          setStateFunction={setGlbFile}
-          isImage={false}
-        />
-        <BlackButton
-          onClick={async () => {
-            if (allFeatures.length) {
-              createProduct(
-                name,
-                brand,
-                mainImage,
-                color,
-                price,
-                sizes,
-                glbFile,
-                usdzFile,
-                [picture1, picture2, picture3],
-                allFeatures
-              );
-            } else {
-              setError('Ooops. Needs at least one feature.');
-            }
-          }}>
-          Submit
-        </BlackButton>
-      </div>
-      {firebaseError ||
-        (error && (
-          <div>
-            <h3>{error || firebaseError}</h3>
-          </div>
-        ))}
+      ) : (
+        <h1>No product found.</h1>
+      )}
     </LoginStyles>
   );
 };
