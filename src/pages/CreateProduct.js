@@ -52,7 +52,8 @@ export const LoginStyles = styled.div`
       margin: 0 5px;
       border: none;
       border-radius: 0px !important;
-      border-bottom: 1px solid ${props => props.theme.colors.lightGrey};
+      border-bottom: 1px simport { LoginStyles } from './EditProduct';
+olid ${props => props.theme.colors.lightGrey};
       background: white;
       box-shadow: none;
       height: 25px;
@@ -168,13 +169,13 @@ const CreateProduct = () => {
   const [sizes, setSizes] = useState(['S', 'M', 'L']);
   const [keywords, setKeywords] = useState([]);
   const [imageUploading, setImageUploading] = useState(false);
+  const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
+  const [authorizedUser, setAuthorizedUser] = useState(false);
 
   const history = useHistory();
 
-  const { firebaseError, userData, dbh, getProducts, storage, firebase } = useContext(
-    FirebaseContext
-  );
+  const { firebaseError, userData, dbh, userAuth } = useContext(FirebaseContext);
 
   const { createProduct } = useContext(ProductContext);
 
@@ -192,10 +193,37 @@ const CreateProduct = () => {
       !picture2 &&
       !picture3 &&
       !allFeatures.length;
+    console.log(isValid);
     return isValid;
   };
 
-  if (!userData || userData.role !== 'ADMIN') {
+  useEffect(() => {
+    setLoading(true);
+    if (userAuth.uid) {
+      console.log(userAuth);
+      dbh
+        .collection('users')
+        .doc(userAuth.uid)
+        .get()
+        .then(doc => {
+          console.log(doc.data());
+          if (doc.data().role === 'ADMIN') {
+            setAuthorizedUser(true);
+            setLoading(false);
+          }
+        });
+    }
+  }, [userAuth]);
+
+  if (loading) {
+    return (
+      <LoginStyles>
+        <LoadingSpinner color='black' />
+      </LoginStyles>
+    );
+  }
+
+  if (!authorizedUser) {
     return (
       <LoginStyles>
         <h1>You don't have permission to be here. Scram.</h1>
@@ -222,7 +250,9 @@ const CreateProduct = () => {
             type='name'
             value={name}
             required
-            onChange={e => setName(e.target.value)}
+            onChange={e => {
+              setName(e.target.value);
+            }}
           />
         </div>
         <div className='form-input'>

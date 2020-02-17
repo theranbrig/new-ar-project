@@ -17,19 +17,23 @@ const responsive = {
   superLargeDesktop: {
     // the naming can be any, depends on you.
     breakpoint: { max: 4000, min: 3000 },
-    items: 3,
+    items: 1,
+    partialVisibilityGutter: 40,
   },
   desktop: {
     breakpoint: { max: 3000, min: 1024 },
-    items: 3,
+    items: 1,
+    partialVisibilityGutter: 40,
   },
   tablet: {
     breakpoint: { max: 1024, min: 464 },
-    items: 3,
+    items: 1,
+    partialVisibilityGutter: 40,
   },
   mobile: {
     breakpoint: { max: 464, min: 0 },
-    items: 3,
+    items: 1,
+    partialVisibilityGutter: 40,
   },
 };
 
@@ -46,21 +50,27 @@ const SliderStyles = styled.div`
   }
   .break-1 {
     background: ${props => props.theme.colors.white};
-    height: 200px;
+    height: 220px;
     width: 20px;
     position: absolute;
     top: 600px;
     z-index: 10;
-    left: 30%;
+    left: 22%;
+    @media (min-width: 480px) {
+      height: 300px;
+    }
   }
   .break-2 {
     background: ${props => props.theme.colors.white};
-    height: 200px;
+    height: 220px;
     width: 20px;
     position: absolute;
     top: 600px;
     z-index: 10;
-    right: 30%;
+    right: 22%;
+    @media (min-width: 480px) {
+      height: 300px;
+    }
   }
   .selected-user {
     border-bottom-left-radius: 25px;
@@ -100,7 +110,7 @@ const SliderStyles = styled.div`
 
 const MainPageCarousel = () => {
   const carouselRef = useRef();
-  const [currentIndex, setCurrentIndex] = useState(1);
+  const [currentIndex, setCurrentIndex] = useState(0);
   const [user, setUser] = useState(users[currentIndex]);
   const [carousel, setCarousel] = useState(null);
 
@@ -139,18 +149,19 @@ const MainPageCarousel = () => {
         <Carousel
           ref={carouselRef}
           responsive={responsive}
+          centerMode={true}
           infinite={true}
           removeArrowOnDeviceType={['tablet', 'mobile']}
           afterChange={async (previousSlide, { currentSlide, onMove }) => {
             console.log(carouselRef.current.props.children);
             const { slidesToShow } = carouselRef.current.state;
             console.log(currentSlide, slidesToShow);
-            if (currentSlide >= 5 && currentSlide <= 10) {
-              setUser(users[currentSlide - 5]);
-            } else if (currentSlide < 5) {
-              setUser(users[currentSlide + 1]);
+            if (currentSlide >= 2 && currentSlide <= 7) {
+              setUser(users[currentSlide - 2]);
+            } else if (currentSlide > 7) {
+              setUser(users[currentSlide - 8]);
             } else {
-              setUser(users[currentSlide - 11]);
+              setUser(users[5]);
             }
           }}>
           {users.map(user => (

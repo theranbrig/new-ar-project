@@ -42,7 +42,6 @@ const CartProvider = ({ children }) => {
       .where('productId', '==', product.id)
       .get()
       .then(async function(querySnapshot) {
-        console.log(querySnapshot);
         if (!querySnapshot.docs.length) {
           await addToFirebaseCart(userData.id, product, selectedSize, quantity);
         } else {
@@ -70,9 +69,7 @@ const CartProvider = ({ children }) => {
       setCartLoading(false);
     } else {
       const cartItem = { ...product, selectedSize, quantity };
-      console.log(cartItem);
       const cart = JSON.parse(localStorage.getItem('shoppingCart'));
-      console.log(cart);
       if (cart && cart.length) {
         const cartCheckItem = cart.filter(
           item => item.id === cartItem.id && item.selectedSize === cartItem.selectedSize
@@ -145,12 +142,11 @@ const CartProvider = ({ children }) => {
       .where('userId', '==', userData.id)
       .get()
       .then(async querySnapshot => {
-        console.log('QUERY', querySnapshot);
         await querySnapshot.forEach(function(doc) {
           tempCart.push({ cartItemId: doc.ref.id, ...doc.data() });
         });
       });
-    console.log('CART', tempCart);
+
     setCart(tempCart);
     return tempCart;
   };

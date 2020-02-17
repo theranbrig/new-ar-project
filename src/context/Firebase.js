@@ -44,6 +44,7 @@ const FirebaseProvider = ({ children }) => {
   const [firebaseError, setFirebaseError] = useState(null);
   const [userLoading, setUserLoading] = useState(false);
   const [userData, setUserData] = useState(null);
+  const [userAuth, setUserAuth] = useState({});
 
   const registerUser = (email, password, userName, firstName, lastName) => {
     firebase
@@ -88,15 +89,21 @@ const FirebaseProvider = ({ children }) => {
 
   firebase.auth().onAuthStateChanged(function(user) {
     if (user) {
+      setUserAuth(user);
       const userId = dbh.collection('users').doc(firebase.auth().currentUser.uid);
-      let userDetails;
       userId
         .get()
         .then(doc => {
           if (doc.exists) {
             const { userName, firstName, lastName, role } = doc.data();
-            userDetails = { id: user.uid, email: user.email, userName, firstName, lastName, role };
-
+            const userDetails = {
+              id: user.uid,
+              email: user.email,
+              userName,
+              firstName,
+              lastName,
+              role,
+            };
             if (!userData) {
               setUserData(userDetails);
             }
@@ -105,7 +112,6 @@ const FirebaseProvider = ({ children }) => {
         .catch(error => {
           console.log(error);
         });
-      console.log(userData);
     } else {
       setUserData(null);
     }
@@ -123,6 +129,7 @@ const FirebaseProvider = ({ children }) => {
         firebase,
         storage,
         userLoading,
+        userAuth,
       }}>
       {children}
     </FirebaseContext.Provider>
