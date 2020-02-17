@@ -3,6 +3,7 @@ import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import '@firebase/firestore';
 import '@firebase/storage';
+import '@firebase/analytics';
 import 'firebase/auth';
 
 const dotenv = require('dotenv');
@@ -45,6 +46,8 @@ const FirebaseProvider = ({ children }) => {
   const [userLoading, setUserLoading] = useState(false);
   const [userData, setUserData] = useState(null);
   const [userAuth, setUserAuth] = useState({});
+
+  firebase.analytics().logEvent('notification_received');
 
   const registerUser = (email, password, userName, firstName, lastName) => {
     firebase

@@ -13,11 +13,11 @@ export const StyledMenu = styled.nav`
   justify-content: start;
   background: ${props => props.theme.colors.white};
   transform: ${({ open }) => (open ? 'translateX(0)' : 'translateX(-100%)')};
-  min-width: ${({ open }) => (open ? '300px' : '0')};
+  min-width: ${({ open }) => (open ? '350px' : '0')};
   height: 100vh;
   text-align: left;
   position: ${({ open }) => (open ? 'fixed' : 'absolute')};
-  top: 10vh;
+  top: 0;
   left: 0;
   z-index: 520;
   transition: transform 0.3s ease-in-out;
@@ -57,7 +57,7 @@ export const StyledMenu = styled.nav`
     color: ${props => props.theme.colors.black};
   }
   .side-links {
-    top: 10vh;
+    top: 20vh;
     position: relative;
     a {
       display: block;
@@ -69,6 +69,7 @@ export const StyledMenu = styled.nav`
     position: absolute;
     width: 100%;
     height: 5rem;
+    margin-top: 10vh;
     line-height: 2rem;
     display: flex;
     flex-direction: row;
