@@ -56,7 +56,7 @@ const ProductContainer = styled.div`
     left: 0;
     img {
       position: relative;
-      border: 1px solid black;
+      border: 1px solid ${props => props.theme.colors.lightGrey};
     }
     svg {
       width: 80%;
@@ -80,6 +80,9 @@ const ProductContainer = styled.div`
       max-width: 100%;
       border: 1px solid ${props => props.theme.colors.lightGrey};
     }
+  }
+  .selected-photo {
+    border: 1px solid ${props => props.theme.colors.black} !important;
   }
   .main-content-box {
     text-align: center;
@@ -108,7 +111,15 @@ const ProductContainer = styled.div`
     }
   }
   .accordions {
+    position: relative;
+    top: 0px;
     margin: 30px 0 0;
+    padding: 50px 0;
+    background: ${props => props.theme.colors.white};
+    border-radius: 50px;
+    z-index: 400;
+    box-shadow: 0 -6px 6px -6px ${props => props.theme.colors.grey},
+      0 6px 6px -6px ${props => props.theme.colors.grey};
     ul {
       list-style-type: none;
       padding: 0px;
@@ -123,7 +134,7 @@ const ProductContainer = styled.div`
   }
   .accordions p {
     width: 95%;
-    margin: 20px 2.5%;
+    margin: -70px 2.5% 20px;
     font-weight: 300;
   }
   .back-button {
@@ -151,10 +162,11 @@ const ProductContainer = styled.div`
     border-bottom-left-radius: 50px;
     margin-top: 0;
     background: ${props => props.theme.colors.white};
+    box-shadow: 0 6px 6px -6px ${props => props.theme.colors.grey};
   }
   .order-details {
     margin-top: -90px;
-    padding: 90px 0;
+    padding: 70px 0 50px;
     z-index: 10;
     position: relative;
   }
@@ -239,6 +251,7 @@ const Product = () => {
               onClick={() => setMainDisplay('model')}
               effect='blur'
               alt={product.mainImage}
+              className={mainDisplay === 'model' && 'selected-photo'}
             />
             <ThreeDSVG setMainDisplay={setMainDisplay} />
           </div>
@@ -248,6 +261,7 @@ const Product = () => {
               src={image}
               onClick={() => setMainDisplay(image)}
               effect='blur'
+              className={mainDisplay === image && 'selected-photo'}
               alt={image}
             />
           ))}
@@ -260,14 +274,14 @@ const Product = () => {
         <AddToCart sizes={product.sizes} product={product} setIsAdded={setIsAdded} />
       </section>
       <div className='accordions'>
-        <Accordion title='PRODUCT INFORMATION' id='information-accordion'>
+        <Accordion titleRegular='PRODUCT' titleStrong='INFORMATION' id='information-accordion'>
           <ul className='product-information'>
             {product.features.map((feature, index) => (
               <li key={index}>{feature}</li>
             ))}
           </ul>
         </Accordion>
-        <Accordion title={`SIZING TABLE`} last={true}>
+        <Accordion titleRegular='PRODUCT' titleStrong='SIZING'>
           <LazyLoadImage
             src={
               'https://res.cloudinary.com/dq7uyauun/image/upload/v1579495625/size-guide-women-shoes.png'
@@ -277,7 +291,7 @@ const Product = () => {
           />
         </Accordion>
       </div>
-      <ProductBrand />
+      <ProductBrand brandId={product.brandId} />
     </ProductContainer>
   );
 };

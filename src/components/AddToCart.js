@@ -3,7 +3,7 @@ import styled from 'styled-components';
 import { CartContext } from '../context/Cart';
 
 export const AddToCartStyles = styled.div`
-  width: 95%;
+  width: 80%;
   margin: 0 auto;
   .select-wrapper {
     width: 100%;
@@ -30,16 +30,16 @@ export const AddToCartStyles = styled.div`
       border-bottom-left-radius: 25px;
     }
   }
-  /* .select-wrapper:after {
+  .select-wrapper:after {
     font-family: FontAwesome;
     content: '\f107';
     font-size: 28px;
     position: absolute;
-    top: 12px;
+    top: 140px;
     right: 20px;
     color: #434b67;
     pointer-events: none;
-  } */
+  }
   p {
     text-align: center;
   }
@@ -79,7 +79,6 @@ const BlackButton = styled.button`
   display: inline;
   border-top-right-radius: 25px;
   border-bottom-right-radius: 25px;
-
   &:disabled {
     color: #989898;
   }

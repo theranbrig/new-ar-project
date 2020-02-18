@@ -1,19 +1,22 @@
-import React from 'react';
+import React, { useEffect, useContext, useState } from 'react';
 import { useParams, Link } from 'react-router-dom';
 import ProductsPageSearch from '../components/ProductsPageSearch';
 import ShopThumbs from '../components/ShopThumbs';
 import styled from 'styled-components';
 import BackButton from '../components/BackButton';
 import { Helmet } from 'react-helmet';
+import { FirebaseContext } from '../context/Firebase';
+import LogoYSVG from '../assets/icons/yzed_y_logo';
+import LoadingSpinner from '../components/LoadingSpinner';
 
 export const ShopCategoryStyles = styled.div`
   width: 500px;
   max-width: 95%;
   text-align: center;
-  min-height: calc(90vh - 30px);
+  min-height: calc(80vh);
   margin: 0 auto 100px;
   font-family: Montserrat, sans-serif;
-  margin-top: calc(10vh + 50px);
+  margin-top: calc(10vh);
   .category-buttons {
     display: grid;
     grid-template-columns: 1fr 1fr;
@@ -39,43 +42,101 @@ export const ShopCategoryStyles = styled.div`
       text-decoration: none;
     }
   }
+  p {
+    margin-top: 100px;
+    padding: 0 20px;
+  }
+`;
 
+const BrandHeader = styled.div`
+  background: ${({ headerImage }) => (headerImage ? `url('${headerImage}')` : '#272727')};
+  height: 20vh;
+  .brand-logo {
+    background: ${props => props.theme.colors.white};
+    height: 100px;
+    width: 100px;
+    border-radius: 50%;
+    position: absolute;
+    top: 25vh;
+    margin-left: 40px;
+    box-shadow: 0 0px 6px ${props => props.theme.colors.grey};
+    overflow: hidden;
+    svg {
+      height: 50px;
+      padding: 25px 20px;
+    }
+  }
+  button {
+    background: ${props => props.theme.colors.white};
+    height: 50px;
+    width: 200px;
+    border-radius: 25px;
+    position: absolute;
+    font-size: 1rem;
+    letter-spacing: 0.2rem;
+    color: #955b80;
+    top: 27vh;
+    margin-right: 40px;
+    box-shadow: 0 0px 6px ${props => props.theme.colors.grey};
+    overflow: hidden;
+    font-weight: 800;
+  }
 `;
 
 const Brand = () => {
+  const [brand, setBrand] = useState(null);
+  const [loading, setLoading] = useState(false);
   const { name } = useParams();
-  let brandName;
-  let formatedName;
-  if (name.indexOf('-') === -1) {
-    console.log(true);
-    brandName = name;
-    formatedName = name;
-  } else {
-    console.log(false);
-    brandName = name.slice(0, name.indexOf('-'));
-    formatedName = name.replace('-', ' ');
+
+  const { dbh } = useContext(FirebaseContext);
+
+  useEffect(() => {
+    setLoading(true);
+    dbh
+      .collection('brands')
+      .where('name', '==', name)
+      .get()
+      .then(querySnapshot =>
+        querySnapshot.forEach(snapshot => {
+          console.log(snapshot.data());
+          setBrand({ id: snapshot.id, ...snapshot.data() });
+          setLoading(false);
+        })
+      );
+  }, []);
+
+  if (loading) {
+    return (
+      <ShopCategoryStyles>
+        <LoadingSpinner color='black' />
+      </ShopCategoryStyles>
+    );
   }
+
   return (
     <ShopCategoryStyles>
-      <Helmet>
-        <title>YZED - {brandName.toUpperCase()}</title>
-      </Helmet>
-      <BackButton />
-      <h1>{`${formatedName.toUpperCase()}`}</h1>
-      <div className='category-buttons'>
-        <Link to={`/brand/${brandName}-tops`}>TOPS</Link>
-        <Link to={`/brand/${brandName}-bottoms`}>BOTTOMS</Link>
-        <Link to={`/brand/${brandName}-hats`}>HATS</Link>
-        <Link to={`/brand/${brandName}-bags`}>BAGS</Link>
-        <Link to={`/brand/${brandName}-accessories`}>ACCESSORIES</Link>
-        <Link to={`/brand/${brandName}-outerwear`}>OUTERWEAR</Link>
-      </div>
-      <div className='all-link'>
-        <Link to={`/shop`}>BROWSE ALL PRODUCTS</Link>
-      </div>
-      <ProductsPageSearch>
-        <ShopThumbs />
-      </ProductsPageSearch>
+      {brand && (
+        <>
+          <Helmet>
+            <title>YZED - {brand.name.toUpperCase()} Brand</title>
+          </Helmet>
+          <BrandHeader headerImage={brand.headerImage}>
+            <div className='brand-logo'>
+              <LogoYSVG />
+            </div>
+            <button>FOLLOW</button>
+          </BrandHeader>
+          <p>
+            Authentic XOXO lo-fi, sustainable retro +1 air plant pinterest. Franzen synth meggings
+            blog bicycle rights hoodie. Tousled coloring book meditation cred taxidermy. Poutine
+            austin cornhole photo booth retro raw denim cloud bread copper mug glossier. Occupy
+            post-ironic artisan, four dollar toast gastropub kitsch chillwave keytar slow-carb banh
+            mi. Poke chambray vegan single-origin coffee la croix food truck vice poutine PBR&B
+            selvage post-ironic iceland waistcoat. Portland semiotics knausgaard, meh vape selfies
+            vegan poke umami synth beard lomo.
+          </p>
+        </>
+      )}
     </ShopCategoryStyles>
   );
 };

@@ -1,4 +1,5 @@
-import styled from 'styled-components';
+import styled, { className } from 'styled-components';
+import { Link } from 'react-router-dom';
 
 export const BlackButton = styled.div`
   width: 200px;
@@ -36,4 +37,19 @@ export const RoundARButton = styled.button`
   color: ${props => props.theme.black};
   margin-bottom: 10px;
   box-shadow: 0 0 0 8px ${props => props.theme.colors.lightGrey};
+`;
+
+// Be sure to include aria label along with it.
+export const BlackLink = styled.div`
+  background: ${props => props.theme.colors.black};
+  height: 50px;
+  line-height: 50px;
+  text-align: center;
+  border-radius: 25px;
+  a {
+    font-size: 1.2rem;
+    color: ${props => props.theme.colors.white};
+    font-family: ${props => props.theme.colors.main};
+    text-decoration: none;
+  }
 `;
