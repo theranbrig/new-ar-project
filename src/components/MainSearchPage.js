@@ -104,6 +104,7 @@ const DownshiftScreenSearch = ({ setOpenSearch }) => {
             fSProducts.push({ id: doc.ref.id, ...doc.data() });
           });
           setProducts(fSProducts);
+          setLoading(false);
         })
         .catch(err => {
           console.log(err);

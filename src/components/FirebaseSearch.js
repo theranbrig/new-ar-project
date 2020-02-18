@@ -190,7 +190,7 @@ const FirebaseSearch = ({ setOpenSearch }) => {
         </div>
       </SearchStyles>
       <SearchLinkStyles>
-        <Link to={`search/${searchQuery}`}>SEE ALL RESULTS ({`${products.length}`})</Link>
+        <Link to={`/search/${searchQuery}`}>SEE ALL RESULTS ({`${products.length}`})</Link>
       </SearchLinkStyles>
     </>
   );
