@@ -44,10 +44,13 @@ export const SearchStyles = styled.div`
   .products-list {
     background: ${props => props.theme.colors.white};
     border-bottom: 1px solid ${props => props.theme.colors.grey};
+    padding: 20px;
+    height: 100%;
     a.display-link {
       display: grid;
       grid-template-columns: 100px 3fr 1fr;
       grid-gap: 10px;
+      align-items: center;
       background: ${props => props.theme.colors.white};
       text-decoration: none;
       h3,
@@ -55,6 +58,20 @@ export const SearchStyles = styled.div`
       h5 {
         color: ${props => props.theme.colors.black};
         font-family: ${props => props.theme.fonts.main};
+        margin: 0;
+      }
+      h3,
+      h5 {
+        font-weight: 600;
+        padding-left: 0px;
+        font-size: 1.2rem;
+      }
+      h4 {
+        font-weight: 300;
+        font-size: 1.2rem;
+      }
+      h5 {
+        font-size: 1.2rem;
       }
     }
   }
@@ -173,7 +190,7 @@ const FirebaseSearch = ({ setOpenSearch }) => {
         </div>
       </SearchStyles>
       <SearchLinkStyles>
-        <Link>SEE ALL RESULTS ({`${products.length}`})</Link>
+        <Link to={`search/${searchQuery}`}>SEE ALL RESULTS ({`${products.length}`})</Link>
       </SearchLinkStyles>
     </>
   );
