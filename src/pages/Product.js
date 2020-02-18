@@ -15,13 +15,23 @@ import ThreeDSVG from '../assets/icons/icon_ar_toggle';
 import { RoundARButton } from '../utilities/ReusableStyles';
 import BackButton from '../components/BackButton';
 
+const LoadingContainer = styled.div`
+  min-height: 100vh;
+  width: 500px;
+  max-width: 95%;
+  margin: 0 auto;
+  margin-top: calc(10vh + 25px);
+  background: ${props => props.theme.colors.white};
+  position: relative;
+`;
+
 const ProductContainer = styled.div`
   min-height: 100vh;
   width: 500px;
   max-width: 95%;
   margin: 0 auto;
   margin-top: calc(10vh + 25px);
-  font-family: Montserrat, sans-serif;
+  font-family: ${props => props.theme.fonts.main};
   background: ${props => props.theme.colors.lightGrey};
   position: relative;
   model-viewer {
@@ -185,10 +195,11 @@ const Product = () => {
 
   if (!product || loading)
     return (
-      <ProductContainer>
+      <LoadingContainer>
         <LoadingSpinner color='black' />
-      </ProductContainer>
+      </LoadingContainer>
     );
+
   return (
     <ProductContainer>
       <Helmet>

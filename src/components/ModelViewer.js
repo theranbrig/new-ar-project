@@ -1,5 +1,5 @@
 import React, { useState, useRef, useEffect } from 'react';
-
+import '@google/model-viewer';
 import styled from 'styled-components';
 import { useHistory } from 'react-router-dom';
 
@@ -46,7 +46,7 @@ const ModelViewer = ({ glbFile, usdzFile, imageUrl, productId, displayLink }) =>
   }, []);
   return (
     <ModelStyles className='model-box'>
-      {/* <model-viewer
+      <model-viewer
         id='main-viewer'
         src={stateGLB || glbFile}
         alt='YZED 3D MODEL'
@@ -54,11 +54,21 @@ const ModelViewer = ({ glbFile, usdzFile, imageUrl, productId, displayLink }) =>
         ar
         camera-controls
         ios-src={usdzFile}
-        preload
-        poster={imageUrl}
+        // preload
+        // poster={imageUrl}
         quick-look-browsers='safari chrome'
         background-color='#f9f9f9'>
-        {/* {displayLink && (
+        <button slot='hotspot-hand' data-position='-0.55 0.95 0.1' data-normal='-1 0 1'>
+          <div id='annotation'>This hotspot disappears completely</div>
+        </button>
+        <button
+          slot='hotspot-foot'
+          data-position='0.16 0.11 0.15'
+          data-normal='0 1 0.75'
+          data-visibility-attribute='visible'></button>
+        <button slot='hotspot-visor' data-position='0 1.75 0.35' data-normal='0 0 1'></button>
+      </model-viewer>
+      {/* {displayLink && (
           <button
             onClick={() =>
               setStateGLB(
@@ -68,8 +78,8 @@ const ModelViewer = ({ glbFile, usdzFile, imageUrl, productId, displayLink }) =>
             Change
           </button>
         )}
-      </model-viewer> */}
-      <model-viewer
+      </model-viewer>
+     <model-viewer
         id='hotspot-demo'
         camera-controls
         src='../assets/images/Astronaut.glb'
@@ -84,7 +94,6 @@ const ModelViewer = ({ glbFile, usdzFile, imageUrl, productId, displayLink }) =>
           data-normal='0 1 0.75'
           data-visibility-attribute='visible'></button>
         <button slot='hotspot-visor' data-position='0 1.75 0.35' data-normal='0 0 1'></button>
-      </model-viewer>
       <button slot='hotspot-visor' data-position='0 1.75 0.35' data-normal='0 0 1'></button>
       <button slot='hotspot-hand' data-position='-0.55 0.95 0.1' data-normal='-1 0 1'>
         <div id='annotation'>This hotspot disappears completely</div>
@@ -93,7 +102,7 @@ const ModelViewer = ({ glbFile, usdzFile, imageUrl, productId, displayLink }) =>
         slot='hotspot-foot'
         data-position='0.16 0.11 0.15'
         data-normal='0 1 0.75'
-        data-visibility-attribute='visible'></button>
+        data-visibility-attribute='visible'></button> */}
     </ModelStyles>
   );
 };

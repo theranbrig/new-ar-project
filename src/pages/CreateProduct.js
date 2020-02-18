@@ -133,25 +133,6 @@ const BlackButton = styled.button`
   margin-bottom: 10px;
 `;
 
-const BottomWhiteButton = styled.div`
-  width: 200px;
-  border: 2px solid black;
-  border-radius: 0px;
-  height: 50px;
-  line-height: 50px;
-  display: block;
-  margin: 0 auto;
-  font-size: 1.2rem;
-  padding: 0px 40px;
-  font-family: Montserrat, sans-serif;
-  margin: 50px auto 50px;
-  text-align: center;
-  a {
-    color: black;
-    text-decoration: none;
-  }
-`;
-
 const CreateProduct = () => {
   const [name, setName] = useState('');
   const [brand, setBrand] = useState('');

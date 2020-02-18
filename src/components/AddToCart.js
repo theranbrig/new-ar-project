@@ -11,9 +11,10 @@ export const AddToCartStyles = styled.div`
     grid-template-columns: 1fr 1fr;
     justify-content: center;
     align-items: center;
+    margin-top: 10px;
     select {
       border-radius: 0px;
-      border: 2px solid ${props => props.theme.colors.black};
+      border: 1px solid ${props => props.theme.colors.black};
       font-family: ${props => props.theme.fonts.main};
       background: ${props => props.theme.colors.white};
       box-shadow: none;
@@ -22,7 +23,7 @@ export const AddToCartStyles = styled.div`
       -webkit-appearance: none;
       -webkit-border-radius: 0px;
       width: 100%;
-      height: 52px;
+      height: 50px;
       font-size: 20px;
       padding: 0 0 0 20px;
       border-top-left-radius: 25px;
@@ -65,13 +66,12 @@ export const AddToCartStyles = styled.div`
 `;
 
 const BlackButton = styled.button`
-  border: 2px solid ${props => props.theme.colors.black};
+  border: 1px solid ${props => props.theme.colors.black};
   border-radius: 0px;
-  height: 52px;
+  height: 50px;
   display: block;
   margin: -1px auto 0;
   font-size: 1.2rem;
-  padding: 5px auto;
   font-family: ${props => props.theme.fonts.main};
   background: ${props => props.theme.colors.black};
   color: white;
@@ -79,6 +79,7 @@ const BlackButton = styled.button`
   display: inline;
   border-top-right-radius: 25px;
   border-bottom-right-radius: 25px;
+
   &:disabled {
     color: #989898;
   }
@@ -86,7 +87,7 @@ const BlackButton = styled.button`
 
 const AddToCart = ({ sizes, product, setIsAdded }) => {
   const [selectedSize, setSelectedSize] = useState('S');
-  const [quantity, setQuantity] = useState(null);
+  const [quantity, setQuantity] = useState('');
 
   const { addItemToCart } = useContext(CartContext);
 
@@ -98,6 +99,7 @@ const AddToCart = ({ sizes, product, setIsAdded }) => {
       <div className='size-buttons'>
         {sizes.map(size => (
           <button
+            key={size}
             onClick={() => setSelectedSize(size)}
             className={selectedSize === size ? 'active size-button' : 'size-button'}>
             {size.toUpperCase()}
@@ -118,14 +120,13 @@ const AddToCart = ({ sizes, product, setIsAdded }) => {
             </option>
           ))}
         </select>
-
         <BlackButton
           disabled={!selectedSize || !quantity}
           onClick={() => {
             addItemToCart(product, selectedSize, quantity);
             setIsAdded(true);
           }}>
-          Add To Cart
+          ADD TO BAG
         </BlackButton>
       </div>
     </AddToCartStyles>
