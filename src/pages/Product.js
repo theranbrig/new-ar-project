@@ -12,6 +12,8 @@ import AddToCartSuccessModal from '../components/AddToCartSuccessModal';
 import { FirebaseContext } from '../context/Firebase';
 import LoadingSpinner from '../components/LoadingSpinner';
 import ThreeDSVG from '../assets/icons/icon_ar_toggle';
+import { RoundARButton } from '../utilities/ReusableStyles';
+import BackButton from '../components/BackButton';
 
 const ProductContainer = styled.div`
   min-height: 100vh;
@@ -20,10 +22,11 @@ const ProductContainer = styled.div`
   margin: 0 auto;
   margin-top: calc(10vh + 25px);
   font-family: Montserrat, sans-serif;
-  background: ${props => props.theme.colors.white};
+  background: ${props => props.theme.colors.lightGrey};
+  position: relative;
   model-viewer {
     width: 95%;
-    height: 300px;
+    height: 400px;
     margin: 0 auto;
   }
   h1,
@@ -40,16 +43,15 @@ const ProductContainer = styled.div`
   div.ar-pic {
     position: relative !important;
     top: 0;
-
     left: 0;
     img {
       position: relative;
+      border: 1px solid black;
     }
     svg {
-      background: #000000b3;
       width: 80%;
       height: 76%;
-      padding: 10%;
+      padding: 7% 5%;
       position: absolute;
       top: 0;
       left: 0;
@@ -66,6 +68,7 @@ const ProductContainer = styled.div`
       width: 100px;
       height: 100px;
       max-width: 100%;
+      border: 1px solid ${props => props.theme.colors.lightGrey};
     }
   }
   .main-content-box {
@@ -75,7 +78,6 @@ const ProductContainer = styled.div`
     }
   }
   .title-section {
-    margin-top: 30px;
     display: flex;
     flex-direction: row;
     justify-content: space-between;
@@ -114,12 +116,17 @@ const ProductContainer = styled.div`
     margin: 20px 2.5%;
     font-weight: 300;
   }
-  .back-button button {
-    margin-top: 10px;
-    border: none;
-    background: white;
-    .fa-chevron-left {
-      font-size: 1.4rem;
+  .back-button {
+    background: ${props => props.theme.colors.white};
+    padding: 20px;
+    .back-button button {
+      margin-top: 10px;
+      border: none;
+      background: white;
+      color: green;
+      .fa-chevron-left {
+        font-size: 1.4rem;
+      }
     }
   }
   .product-information {
@@ -127,21 +134,20 @@ const ProductContainer = styled.div`
       font-weight: 300;
     }
   }
-`;
-
-const WhiteButton = styled.button`
-  border: 2px solid black;
-  border-radius: 0px;
-  height: 52px;
-  display: block;
-  margin: 20px auto;
-  font-size: 1.2rem;
-  padding: 5px 80px;
-  font-family: Montserrat, sans-serif;
-  background: white;
-  color: black;
-  width: 95%;
-  min-width: 284px;
+  .product-top {
+    padding-bottom: 40px;
+    margin-bottom: 50px;
+    border-bottom-right-radius: 50px;
+    border-bottom-left-radius: 50px;
+    margin-top: 0;
+    background: ${props => props.theme.colors.white};
+  }
+  .order-details {
+    margin-top: -90px;
+    padding: 90px 0;
+    z-index: 10;
+    position: relative;
+  }
 `;
 
 const Product = () => {
@@ -190,56 +196,58 @@ const Product = () => {
       </Helmet>
       {isAdded && <AddToCartSuccessModal setIsAdded={setIsAdded} />}
       <div className='back-button'>
-        <button aria-label='Back Button' onClick={() => history.goBack()}>
-          <i className='fa fa-chevron-left' aria-hidden='true'></i>
-        </button>
+        <BackButton />
       </div>
-      <div className='title-section'>
-        <div className='title-name'>
-          <h3>{product.brand}</h3>
-          <h1>{product.name}</h1>
+      <section className='product-top'>
+        <div className='title-section'>
+          <div className='title-name'>
+            <h3>{product.brand}</h3>
+            <h1>{product.name}</h1>
+          </div>
+          <div className='title-price'>
+            <h2>{`$${(product.price / 100).toFixed(2)}`}</h2>
+          </div>
         </div>
-        <div className='title-price'>
-          <h2>{`$${(product.price / 100).toFixed(2)}`}</h2>
+        <div className='main-content-box'>
+          {mainDisplay === 'model' ? (
+            <MediaViewer
+              glbFile={product.glbFile}
+              usdzFile={product.usdzFile}
+              poster={product.imageUrl}
+              displayLink={false}
+              productId={product.id}
+            />
+          ) : (
+            <LazyLoadImage src={mainDisplay} />
+          )}
         </div>
-      </div>
-      <div className='main-content-box'>
-        {mainDisplay === 'model' ? (
-          <MediaViewer
-            glbFile={product.glbFile}
-            usdzFile={product.usdzFile}
-            poster={product.imageUrl}
-            displayLink={false}
-            productId={product.id}
-          />
-        ) : (
-          <LazyLoadImage src={mainDisplay} />
-        )}
-      </div>
-      <div className='picture-thumbs'>
-        <div className='ar-pic'>
-          <LazyLoadImage
-            src={product.mainImage}
-            onClick={() => setMainDisplay('model')}
-            effect='blur'
-            alt={product.mainImage}
-          />
-          <ThreeDSVG setMainDisplay={setMainDisplay} />
+        <div className='picture-thumbs'>
+          <div className='ar-pic'>
+            <LazyLoadImage
+              src={product.mainImage}
+              onClick={() => setMainDisplay('model')}
+              effect='blur'
+              alt={product.mainImage}
+            />
+            <ThreeDSVG setMainDisplay={setMainDisplay} />
+          </div>
+          {product.pictures.map(image => (
+            <LazyLoadImage
+              key={image}
+              src={image}
+              onClick={() => setMainDisplay(image)}
+              effect='blur'
+              alt={image}
+            />
+          ))}
         </div>
-        {product.pictures.map(image => (
-          <LazyLoadImage
-            key={image}
-            src={image}
-            onClick={() => setMainDisplay(image)}
-            effect='blur'
-            alt={image}
-          />
-        ))}
-      </div>
-      <WhiteButton onClick={() => document.querySelector('model-viewer').activateAR()}>
-        VIEW IN AR
-      </WhiteButton>
-      <AddToCart sizes={product.sizes} product={product} setIsAdded={setIsAdded} />
+        <RoundARButton onClick={() => document.querySelector('model-viewer').activateAR()}>
+          AR
+        </RoundARButton>
+      </section>
+      <section className='order-details '>
+        <AddToCart sizes={product.sizes} product={product} setIsAdded={setIsAdded} />
+      </section>
       <div className='accordions'>
         <Accordion title='PRODUCT INFORMATION' id='information-accordion'>
           <ul className='product-information'>

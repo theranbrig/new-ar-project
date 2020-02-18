@@ -5,6 +5,7 @@ import styled from 'styled-components';
 export const BackButtonStyles = styled.div`
   margin-top: 10px;
   text-align: left;
+  background: ${props => props.theme.colors.white};
   button {
     border: none;
     background: white;
