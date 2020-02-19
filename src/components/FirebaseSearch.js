@@ -9,18 +9,23 @@ import { BackButtonStyles } from './BackButton';
 import { BlackLink } from '../utilities/ReusableStyles';
 
 export const SearchStyles = styled.div`
-  input {
-    border: none;
-    background: transparent;
-    border-bottom: 1px solid ${props => props.theme.colors.white};
-    color: white;
-    width: 80%;
-    margin: 0 10% 20px;
-    height: 30px;
-    line-height: 30px;
-    font-size: 1.2rem;
-    font-family: Montserrat, sans-serif;
-    padding: 3px;
+  .search-box {
+    width: 500px;
+    margin: 0 auto;
+    input {
+      width: 500px;
+      max-width: 95%;
+      border: none;
+      background: transparent;
+      border-bottom: 1px solid ${props => props.theme.colors.white};
+      color: white;
+      margin: 0 0 20px;
+      height: 30px;
+      line-height: 30px;
+      font-size: 1.2rem;
+      font-family: ${props => props.theme.fonts.main};
+      padding: 3px;
+    }
   }
   a.search-link {
     background: transparent;
@@ -42,11 +47,14 @@ export const SearchStyles = styled.div`
     }
   }
   .products-list {
+    width: 100%;
     background: ${props => props.theme.colors.white};
-    border-bottom: 1px solid ${props => props.theme.colors.grey};
-    padding: 20px;
     height: 100%;
     a.display-link {
+      width: 500px;
+      max-width: 95%;
+      margin: 0 auto;
+      padding: 10px 20px;
       display: grid;
       grid-template-columns: 100px 3fr 1fr;
       grid-gap: 10px;
@@ -77,7 +85,7 @@ export const SearchStyles = styled.div`
   }
 `;
 const SearchLinkStyles = styled.div`
-  background: white;
+  background: ${props => props.theme.colors.white};
   position: fixed;
   bottom: 0;
   left: 0;
@@ -113,7 +121,6 @@ const FirebaseSearch = ({ setOpenSearch }) => {
     dbh
       .collection('products')
       .where('keywords', 'array-contains', query.toLowerCase())
-      .limit(5)
       .get()
       .then(querySnapshot => {
         querySnapshot.docs.forEach(doc => {
@@ -133,43 +140,45 @@ const FirebaseSearch = ({ setOpenSearch }) => {
   return (
     <>
       <SearchStyles>
-        <input
-          aria-label='search input'
-          value={searchQuery}
-          onChange={e => {
-            if (e.target.value === '') {
-              setProducts([]);
-            } else {
-              searchForProduct(e.target.value);
-            }
-            setSearchQuery(e.target.value);
-          }}
-          type='text'
-        />
-        {products.map(product => {
-          return (
-            <Link
-              className='search-link'
-              key={product.id}
-              name={product.name}
-              id={product.id}
-              onClick={() => {
-                setOpenSearch(false);
-                setSearchQuery('');
+        <div className='search-box'>
+          <input
+            aria-label='search input'
+            value={searchQuery}
+            onChange={e => {
+              if (e.target.value === '') {
                 setProducts([]);
-                history.push(`/product/${product.id}`);
-              }}>
-              <Highlighter
-                highlightClassName='highlighted-text'
-                searchWords={[searchQuery]}
-                autoEscape={true}
-                textToHighlight={`${product.brand} ${product.name}`}
-              />
-            </Link>
-          );
-        })}
+              } else {
+                searchForProduct(e.target.value);
+              }
+              setSearchQuery(e.target.value);
+            }}
+            type='text'
+          />
+          {products.slice(0, 5).map(product => {
+            return (
+              <Link
+                className='search-link'
+                key={product.id}
+                name={product.name}
+                id={product.id}
+                onClick={() => {
+                  setOpenSearch(false);
+                  setSearchQuery('');
+                  setProducts([]);
+                  history.push(`/product/${product.id}`);
+                }}>
+                <Highlighter
+                  highlightClassName='highlighted-text'
+                  searchWords={[searchQuery]}
+                  autoEscape={true}
+                  textToHighlight={`${product.brand} ${product.name}`}
+                />
+              </Link>
+            );
+          })}
+        </div>
         <div className='products-list'>
-          {products.map(product => (
+          {products.slice(0, 5).map(product => (
             <Link
               to={`/product/${product.id}`}
               className='display-link'
@@ -197,7 +206,7 @@ const FirebaseSearch = ({ setOpenSearch }) => {
             setSearchQuery('');
             setProducts([]);
           }}>
-          >SEE ALL RESULTS ({`${products.length}`})
+          SEE ALL RESULTS ({`${products.length}`})
         </Link>
       </SearchLinkStyles>
     </>

@@ -11,7 +11,7 @@ export const ModalStyles = styled.div`
   -moz-box-shadow: 0px 10px 0px 0px rgba(0, 0, 3, 0.28);
   box-shadow: 0px 10px 0px 0px rgba(0, 0, 3, 0.28);
   transition: 0.5s;
-  background: ${props => props.theme.colors.black};
+  background: ${props => props.theme.colors.white};
   position: fixed;
   top: 10vh;
   width: 100%;
@@ -30,10 +30,11 @@ export const ModalStyles = styled.div`
     }
   }
   .modal-content {
-    width: 500px;
-    max-width: 95%;
+    width: 100%;
+
     margin: 0 auto;
     font-family: ${props => props.theme.fonts.main};
+    background: ${props => props.theme.colors.black};
     h3 {
       color: white;
       font-weight: 300;
@@ -43,8 +44,8 @@ export const ModalStyles = styled.div`
   .modal-top {
     display: grid;
     grid-template-columns: 6fr 1fr;
-    width: 95%;
-    margin: 20px 2.5%;
+    width: 500px;
+    margin: 20px auto;
     grid-gap: 10px;
     align-items: center;
     button,
@@ -57,7 +58,7 @@ export const ModalStyles = styled.div`
       font-family: ${props => props.theme.fonts.main};
       font-size: 1.1rem;
       line-height: 1.6rem;
-      background: white;
+      background: ${props => props.theme.colors.white};
       text-decoration: none;
       color: black;
       justify-self: right;
