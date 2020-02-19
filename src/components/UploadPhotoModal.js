@@ -107,6 +107,9 @@ export const UploadStyles = styled.div`
   }
   .bottom-content {
     margin-top: 30px;
+    button {
+      width: 70%;
+    }
   }
 `;
 
@@ -186,8 +189,37 @@ const UploadPhotoModal = () => {
               </div>
             </div>
           )}
+          {uploadState === 3 && (
+            <div className='top-content'>
+              <div className='title-buttons'>
+                <div className='left-content'></div>
+                <h1>Picture Details</h1>
+                <div className='right-content'>
+                  <label>Description</label>
+                  <textarea />
+                </div>
+              </div>
+              <div className='selected-photo'>
+                <div class='upload-btn-wrapper'>
+                  <LazyLoadImage src={currentPictureUrl} alt='chosen image' />
+                </div>
+              </div>
+            </div>
+          )}
           <div className='bottom-content'>
-            {uploadState === 2 && <BlackButtonClick>NEXT STEP (2/2)</BlackButtonClick>}
+            {uploadState === 2 && (
+              <BlackButtonClick onClick={() => setUploadState(3)}>NEXT STEP (2/2)</BlackButtonClick>
+            )}
+            {uploadState === 3 && (
+              <>
+                <BlackButtonClick onClick={() => setUploadState(2)}>
+                  Previous Step (2/2)
+                </BlackButtonClick>
+                <BlackButtonClick onClick={() => setUploadState(4)}>
+                  Upload Picture
+                </BlackButtonClick>
+              </>
+            )}
           </div>
         </div>
       )}
