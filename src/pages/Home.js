@@ -47,6 +47,7 @@ const HomeStyles = styled.div`
       h3,
       h4 {
         margin: 0;
+        font-size: 1rem;
       }
       h3 {
         color: ${props => props.theme.colors.grey};
@@ -68,8 +69,9 @@ const HomeStyles = styled.div`
     color: ${props => props.theme.colors.grey};
   }
   .discover-box {
-    color: ${props => props.theme.colors.grey};
+    color: ${props => props.theme.colors.mediumGrey};
     h3 {
+      font-size: 0.9rem;
       margin: 50px 0 0;
       letter-spacing: 0.1rem;
       font-weight: 400;
@@ -87,16 +89,17 @@ const HomeStyles = styled.div`
     justify-content: space-between;
     a {
       color: ${props => props.theme.colors.grey};
-      padding: 3px 0;
+      height: 16px;
       text-decoration: none;
-      border-bottom: 1px solid ${props => props.theme.colors.grey};
-      height: 1.4rem;
-      font-size: 1rem;
+      border-bottom: 1px solid ${props => props.theme.colors.mediumGrey};
+      height: 1rem;
+      font-size: 0.9rem;
       line-height: 1rem;
       align-self: center;
+      min-width: 100px;
     }
     .square-area {
-      width: 104px;
+      width: 100px;
     }
   }
   .connected-content {
@@ -142,8 +145,8 @@ const HomeStyles = styled.div`
     width: 15px;
     height: 15px;
     transform: rotate(45deg);
-    border-bottom: 2px solid ${props => props.theme.colors.grey};
-    border-right: 2px solid ${props => props.theme.colors.grey};
+    border-bottom: 2px solid ${props => props.theme.colors.mediumGrey};
+    border-right: 2px solid ${props => props.theme.colors.mediumGrey};
     margin: 0 auto;
     margin-bottom: 20px;
   }
@@ -165,7 +168,6 @@ const HomeStyles = styled.div`
       p {
         font-size: 1rem;
         padding: 0 20px;
-        
       }
     }
   }
@@ -219,7 +221,6 @@ const Home = () => {
       <MediaViewer
         glbFile='https://oneoone-resource.s3.ap-northeast-2.amazonaws.com/yzed/GLTF_TRENCH_COAT_RESIZED_ANDBAKED_4.gltf'
         usdzFile='https://oneoone-resource.s3.ap-northeast-2.amazonaws.com/yzed/GLTF_TRENCH_COAT_RESIZED_ANDBAKED_4.usdz'
-        displayLink={true}
         productId='5NlpClokHFwJG6Pl7IYz'
       />
 

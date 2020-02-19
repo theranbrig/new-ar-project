@@ -85,8 +85,8 @@ const FileUpload = ({ name, setFileUploading, state, setStateFunction, isImage }
     <FileInputStyles>
       <label htmlFor={name}>{name.toUpperCase()}:</label>
       {!state ? (
-        <div class='upload-btn-wrapper'>
-          <button class='btn'>Upload A File</button>
+        <div className='upload-btn-wrapper'>
+          <button className='btn'>Upload A File</button>
           <input type='file' name={name} onChange={e => uploadS3File(e)} />
         </div>
       ) : isImage ? (

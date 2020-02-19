@@ -14,6 +14,7 @@ import LoadingSpinner from '../components/LoadingSpinner';
 import ThreeDSVG from '../assets/icons/icon_ar_toggle';
 import { RoundARButton } from '../utilities/ReusableStyles';
 import BackButton from '../components/BackButton';
+import { ModalContext } from '../context/Modal';
 
 const LoadingContainer = styled.div`
   min-height: 100vh;
@@ -181,6 +182,7 @@ const Product = () => {
   const { id } = useParams();
 
   const { dbh } = useContext(FirebaseContext);
+  const { setPhotoUploadOpen } = useContext(ModalContext);
 
   useEffect(() => {
     setLoading(true);
@@ -266,6 +268,13 @@ const Product = () => {
         </div>
         <RoundARButton onClick={() => document.querySelector('model-viewer').activateAR()}>
           AR
+        </RoundARButton>
+        <RoundARButton
+          onClick={() => {
+            console.log('clicked');
+            setPhotoUploadOpen(true);
+          }}>
+          Photo
         </RoundARButton>
       </section>
       <section className='order-details '>

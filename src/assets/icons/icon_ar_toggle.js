@@ -7,7 +7,8 @@ const ThreeDSVG = ({ setMainDisplay }) => {
       xmlns='http://www.w3.org/2000/svg'
       width='39.434'
       height='42.328'
-      viewBox='0 0 39.434 42.328'>
+      viewBox='0 0 39.434 42.328'
+      fill='#272727'>
       <g id='_3d_1_' data-name='3d (1)' transform='translate(-15.676 0)'>
         <g id='Group_4' data-name='Group 4' transform='translate(15.676 0)'>
           <g id='Group_3' data-name='Group 3' transform='translate(0 0)'>

@@ -11,6 +11,7 @@ import SearchSVG from '../assets/icons/icon_search';
 import FullShopBagSVG from '../assets/icons/icon_shoppingbag_full';
 import UserSVG from '../assets/icons/icon_user';
 import LogoSVG from '../assets/icons/yzed_logo';
+import UploadPhoto from '../components/UploadPhotoModal';
 
 const StyledBurger = styled.button`
   position: fixed;
@@ -201,6 +202,7 @@ const NavigationDrawer = ({ children }) => {
         cartLoading={cartLoading}
         setOpenBag={setOpenBag}
       />
+      <UploadPhoto />
       <SearchModal openSearch={openSearch} setOpenSearch={setOpenSearch} />
       <div>{children}</div>
       <div ref={node}>

@@ -3,6 +3,7 @@ import AppRouter from './components/AppRouter';
 import FirebaseProvider from './context/Firebase';
 import ProductProvider from './context/Product';
 import CartProvider from './context/Cart';
+import ModalProvider from './context/Modal';
 import YZEDTheme from './utilities/YZEDTheme';
 
 function App() {
@@ -11,7 +12,9 @@ function App() {
       <FirebaseProvider>
         <CartProvider>
           <ProductProvider>
-            <AppRouter />
+            <ModalProvider>
+              <AppRouter />
+            </ModalProvider>
           </ProductProvider>
         </CartProvider>
       </FirebaseProvider>
