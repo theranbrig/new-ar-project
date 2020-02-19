@@ -78,13 +78,14 @@ const ModelViewer = ({ glbFile, usdzFile, imageUrl, productId, displayLink }) =>
             Change
           </button>
         )}
-      </model-viewer>
-     <model-viewer
+      </model-viewer>*/}
+      {/* <model-viewer
         id='hotspot-demo'
         camera-controls
         src='../assets/images/Astronaut.glb'
         alt='A 3D model of an astronaut.'>
         <button slot='hotspot-visor' data-position='0 1.75 0.35' data-normal='0 0 1'></button>
+
         <button slot='hotspot-hand' data-position='-0.55 0.95 0.1' data-normal='-1 0 1'>
           <div id='annotation'>This hotspot disappears completely</div>
         </button>
@@ -92,17 +93,9 @@ const ModelViewer = ({ glbFile, usdzFile, imageUrl, productId, displayLink }) =>
           slot='hotspot-foot'
           data-position='0.16 0.11 0.15'
           data-normal='0 1 0.75'
-          data-visibility-attribute='visible'></button>
-        <button slot='hotspot-visor' data-position='0 1.75 0.35' data-normal='0 0 1'></button>
-      <button slot='hotspot-visor' data-position='0 1.75 0.35' data-normal='0 0 1'></button>
-      <button slot='hotspot-hand' data-position='-0.55 0.95 0.1' data-normal='-1 0 1'>
-        <div id='annotation'>This hotspot disappears completely</div>
-      </button>
-      <button
-        slot='hotspot-foot'
-        data-position='0.16 0.11 0.15'
-        data-normal='0 1 0.75'
-        data-visibility-attribute='visible'></button> */}
+          data-visibility-attribute='visible'
+          onClick={() => history.push('/shop')}></button>
+      </model-viewer> */}
     </ModelStyles>
   );
 };

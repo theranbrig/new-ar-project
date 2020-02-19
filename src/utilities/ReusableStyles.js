@@ -5,8 +5,9 @@ export const BlackButton = styled.div`
   width: 200px;
   border: 2px solid ${props => props.theme.colors.black};
   border-radius: 25px;
-  height: 50px;
-  line-height: 50px;
+  height: 45px;
+  line-height: 45px;
+  letter-spacing: 3px;
   display: block;
   margin: 0 auto;
   background: ${props => props.theme.colors.black};
@@ -26,12 +27,14 @@ export const RoundARButton = styled.button`
   border-radius: 0px;
   height: 75px;
   width: 75px;
-  line-height: 75px;
+  line-height: 71px;
   display: block;
   margin: 30px auto;
   font-size: 1.2rem;
-  font-weight: 700;
+  font-weight: 600;
+  letter-spacing: 3px;
   border-radius: 50%;
+  text-align: center;
   font-family: ${props => props.theme.fonts.main};
   background: ${props => props.theme.colors.lightGrey};
   color: ${props => props.theme.black};
@@ -42,10 +45,11 @@ export const RoundARButton = styled.button`
 // Be sure to include aria label along with it.
 export const BlackLink = styled.div`
   background: ${props => props.theme.colors.black};
-  height: 50px;
-  line-height: 50px;
+  height: 45px;
+  line-height: 45px;
   text-align: center;
   border-radius: 25px;
+  letter-spacing: 3px;
   a {
     font-size: 1.2rem;
     color: ${props => props.theme.colors.white};

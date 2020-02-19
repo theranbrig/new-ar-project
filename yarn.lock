@@ -1298,15 +1298,23 @@
   resolved "https://registry.yarnpkg.com/@firebase/webchannel-wrapper/-/webchannel-wrapper-0.2.35.tgz#232e857698efb30cdda98b6f6a7a31a905d16147"
   integrity sha512-7njiGBbFW0HCnuKNEJLcQt9EjfOzG8EJiXlFJwA3XfgiFxPVHmXrcF4d5yold2wfiwCwrXpeNTGZ854oRr6Hcw==
 
-"@google/model-viewer@^0.8.1":
-  version "0.8.1"
-  resolved "https://registry.yarnpkg.com/@google/model-viewer/-/model-viewer-0.8.1.tgz#12527f17fde187e6d935799b54652c53738ac55a"
-  integrity sha512-6smJoYwcLTTqiPfegw5yvmJh+8l0MULYTwbvtac254L6fYZMYWWikTShQ3Srj5iiHapFOv57nCojl54e8Lgy8Q==
+"@google/3dom@0.0.1-alpha.3":
+  version "0.0.1-alpha.3"
+  resolved "https://registry.yarnpkg.com/@google/3dom/-/3dom-0.0.1-alpha.3.tgz#fa3dc1f49106b487511c12f5168f4e24080f1a08"
+  integrity sha512-zKMYdhFosEczvdglEpL+AJwcfc/1C+Y4Fks3XXaJvl32LwMhSlfhR+KQsXzEQ0OsSNgD/rahwgXwUkh5QEFlwg==
   dependencies:
+    three "^0.113.2"
+
+"@google/model-viewer@^0.9.0":
+  version "0.9.0"
+  resolved "https://registry.yarnpkg.com/@google/model-viewer/-/model-viewer-0.9.0.tgz#dc694be867e5b315dccf3037b29a0b63fbaeca2c"
+  integrity sha512-wgHBOzJGnKSWln5s4+8r9Jsf9/g7LOU2xgjCVt6Wz4ikahgrmt3yvRC6J2dEsns7RkdQFMwR3qiZCSgtsp7UTw==
+  dependencies:
+    "@google/3dom" "0.0.1-alpha.3"
     "@types/resize-observer-browser" "^0.1.2"
     "@types/webgl2" "^0.0.5"
     lit-element "^2.2.0"
-    three "^0.110.0"
+    three "^0.113.2"
 
 "@grpc/proto-loader@^0.5.0":
   version "0.5.3"
@@ -11006,10 +11014,10 @@ text-table@0.2.0, text-table@^0.2.0:
   resolved "https://registry.yarnpkg.com/text-table/-/text-table-0.2.0.tgz#7f5ee823ae805207c00af2df4a84ec3fcfa570b4"
   integrity sha1-f17oI66AUgfACvLfSoTsP8+lcLQ=
 
-three@^0.110.0:
-  version "0.110.0"
-  resolved "https://registry.yarnpkg.com/three/-/three-0.110.0.tgz#8719591de1336269113ee79f4268ba247b2324f8"
-  integrity sha512-wlurH8XBO9Sd5VIw8nBa+taLR20kqaI4e9FiuMh6tqK8eOS2q2R+ZoUyufbyDTVTHhs8GiTbv0r2CMLkwerFJg==
+three@^0.113.2:
+  version "0.113.2"
+  resolved "https://registry.yarnpkg.com/three/-/three-0.113.2.tgz#04791d491fe4359330f9dbe7b767db18bfb35d67"
+  integrity sha512-x3vrKW41/UtbWbWduWKGlfIc043SvHWr3YltehYq+UGb9YglQ2oztNGvl2eut05JtNSmP11Mh3t6Xak5/0e+Fg==
 
 throat@^4.0.0:
   version "4.1.0"

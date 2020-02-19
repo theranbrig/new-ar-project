@@ -75,7 +75,7 @@ const SliderStyles = styled.div`
   .selected-user {
     border-bottom-left-radius: 25px;
     border-bottom-right-radius: 25px;
-    box-shadow: 0px 0px 6px #c7c7c7;
+    box-shadow: ${props => props.theme.boxShadows.allAround};
     width: 300px;
     margin: 0 auto;
     svg {

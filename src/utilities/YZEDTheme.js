@@ -14,6 +14,12 @@ const theme = {
     medium: '2em',
     large: '3em',
   },
+  boxShadows: {
+    topAndBottom: '0 -6px 6px -6px #b9b9b9, 0 6px 6px -6px #b9b9b9;',
+    bottom: '0 6px 6px -6px #b9b9b9;',
+    top: '0 -6px 6px -6px #b9b9b9;',
+    allAround: '0 0 6px #b9b9b9;',
+  },
 };
 const YZEDTheme = ({ children }) => {
   return <ThemeProvider theme={theme}>{children}</ThemeProvider>;

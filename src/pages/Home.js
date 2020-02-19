@@ -115,7 +115,8 @@ const HomeStyles = styled.div`
         }
       }
       p {
-        font-size: 1.5rem;
+        font-size: 1rem;
+        padding: 0 20px;
       }
     }
     .timeline {
@@ -126,11 +127,10 @@ const HomeStyles = styled.div`
       border-radius: 50px;
       padding-bottom: 20px;
       background-color: ${props => props.theme.colors.white};
-      box-shadow: 0 -6px 6px -6px ${props => props.theme.colors.grey},
-        0 6px 6px -6px ${props => props.theme.colors.grey};
+      box-shadow: ${props => props.theme.boxShadows.topAndBottom};
       h3 {
         padding-top: 30px;
-        font-size: 1.8rem;
+        font-size: 1.5rem;
         font-weight: 300;
         strong {
           font-weight: 700;
@@ -163,7 +163,9 @@ const HomeStyles = styled.div`
         }
       }
       p {
-        font-size: 1.5rem;
+        font-size: 1rem;
+        padding: 0 20px;
+        
       }
     }
   }
