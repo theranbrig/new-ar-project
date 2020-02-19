@@ -1,113 +1,10 @@
-import React, { useState, useEffect, useContext } from 'react';
+import React, { useState, useContext } from 'react';
 import debounce from 'lodash.debounce';
 import { FirebaseContext } from '../context/Firebase';
 import { Link, useHistory } from 'react-router-dom';
 import { formatProductName, formatPrice } from '../utilities/formatting';
 import Highlighter from 'react-highlight-words';
 import styled from 'styled-components';
-import { BackButtonStyles } from './BackButton';
-import { BlackLink } from '../utilities/ReusableStyles';
-
-export const SearchStyles = styled.div`
-  .search-box {
-    width: 500px;
-    margin: 0 auto;
-    input {
-      width: 500px;
-      max-width: 95%;
-      border: none;
-      background: transparent;
-      border-bottom: 1px solid ${props => props.theme.colors.white};
-      color: white;
-      margin: 0 0 20px;
-      height: 30px;
-      line-height: 30px;
-      font-size: 1.2rem;
-      font-family: ${props => props.theme.fonts.main};
-      padding: 3px;
-    }
-  }
-  a.search-link {
-    background: transparent;
-    color: ${props => props.theme.colors.white};
-    width: 100%;
-    font-family: ${props => props.theme.fonts.main};
-    font-size: 1.4rem;
-    border: none;
-    padding: 10px 0;
-    text-align: left;
-    font-weight: 300;
-    letter-spacing: 0.05rem;
-    text-decoration: none;
-    display: block;
-    .highlighted-text {
-      background: transparent;
-      font-weight: 600;
-      color: ${props => props.theme.colors.white};
-    }
-  }
-  .products-list {
-    width: 100%;
-    background: ${props => props.theme.colors.white};
-    height: 100%;
-    a.display-link {
-      width: 500px;
-      max-width: 95%;
-      margin: 0 auto;
-      padding: 10px 20px;
-      display: grid;
-      grid-template-columns: 100px 3fr 1fr;
-      grid-gap: 10px;
-      align-items: center;
-      background: ${props => props.theme.colors.white};
-      text-decoration: none;
-      h3,
-      h4,
-      h5 {
-        color: ${props => props.theme.colors.black};
-        font-family: ${props => props.theme.fonts.main};
-        margin: 0;
-      }
-      h3,
-      h5 {
-        font-weight: 600;
-        padding-left: 0px;
-        font-size: 1.2rem;
-      }
-      h4 {
-        font-weight: 300;
-        font-size: 1.2rem;
-      }
-      h5 {
-        font-size: 1.2rem;
-      }
-    }
-  }
-`;
-const SearchLinkStyles = styled.div`
-  background: ${props => props.theme.colors.white};
-  position: fixed;
-  bottom: 0;
-  left: 0;
-  height: 10vh;
-  width: 100%;
-  text-align: center;
-  display: grid;
-  grid-template-columns: 1fr;
-  align-items: center;
-  justify-content: center;
-  a {
-    padding: 0px 20px;
-    line-height: 50px;
-    margin: 20px auto;
-    text-align: center;
-    border-radius: 25px;
-    background: ${props => props.theme.colors.black};
-    color: ${props => props.theme.colors.white};
-    text-decoration: none;
-    font-family: ${props => props.theme.fonts.main};
-  }
-`;
 
 const FirebaseSearch = ({ setOpenSearch }) => {
   const history = useHistory();
@@ -214,3 +111,104 @@ const FirebaseSearch = ({ setOpenSearch }) => {
 };
 
 export default FirebaseSearch;
+
+const SearchStyles = styled.div`
+  .search-box {
+    width: 500px;
+    margin: 0 auto;
+    input {
+      width: 500px;
+      max-width: 95%;
+      border: none;
+      background: transparent;
+      border-bottom: 1px solid ${props => props.theme.colors.white};
+      color: white;
+      margin: 0 0 20px;
+      height: 30px;
+      line-height: 30px;
+      font-size: 1.2rem;
+      font-family: ${props => props.theme.fonts.main};
+      padding: 3px;
+    }
+  }
+  a.search-link {
+    background: transparent;
+    color: ${props => props.theme.colors.white};
+    width: 100%;
+    font-family: ${props => props.theme.fonts.main};
+    font-size: 1.4rem;
+    border: none;
+    padding: 10px 0;
+    text-align: left;
+    font-weight: 300;
+    letter-spacing: 0.05rem;
+    text-decoration: none;
+    display: block;
+    .highlighted-text {
+      background: transparent;
+      font-weight: 600;
+      color: ${props => props.theme.colors.white};
+    }
+  }
+  .products-list {
+    width: 100%;
+    background: ${props => props.theme.colors.white};
+    height: 100%;
+    a.display-link {
+      width: 500px;
+      max-width: 95%;
+      margin: 0 auto;
+      padding: 10px 20px;
+      display: grid;
+      grid-template-columns: 100px 3fr 1fr;
+      grid-gap: 10px;
+      align-items: center;
+      background: ${props => props.theme.colors.white};
+      text-decoration: none;
+      h3,
+      h4,
+      h5 {
+        color: ${props => props.theme.colors.black};
+        font-family: ${props => props.theme.fonts.main};
+        margin: 0;
+      }
+      h3,
+      h5 {
+        font-weight: 600;
+        padding-left: 0px;
+        font-size: 1.2rem;
+      }
+      h4 {
+        font-weight: 300;
+        font-size: 1.2rem;
+      }
+      h5 {
+        font-size: 1.2rem;
+      }
+    }
+  }
+`;
+const SearchLinkStyles = styled.div`
+  background: ${props => props.theme.colors.white};
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  height: 10vh;
+  width: 100%;
+  text-align: center;
+  display: grid;
+  grid-template-columns: 1fr;
+  align-items: center;
+  justify-content: center;
+  a {
+    padding: 0px 20px;
+    line-height: 50px;
+    margin: 20px auto;
+    text-align: center;
+    border-radius: 25px;
+    background: ${props => props.theme.colors.black};
+    color: ${props => props.theme.colors.white};
+    text-decoration: none;
+    font-family: ${props => props.theme.fonts.main};
+  }
+`;

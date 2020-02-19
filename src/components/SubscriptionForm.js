@@ -2,12 +2,13 @@ import React, { useState, useContext } from 'react';
 import { useHistory, Link } from 'react-router-dom';
 import styled from 'styled-components';
 import { FirebaseContext } from '../context/Firebase';
+import LoadingSpinner from '../components/LoadingSpinner';
 
 const FormStyles = styled.div`
   margin: 0 auto;
   width: 500px;
   max-width: 90%;
-  font-family: Montserrat, sans-serif;
+  font-family: ${props => props.theme.fonts.main};
   .box-area {
     border: 1px solid;
     margin: 50px 0;
@@ -65,8 +66,8 @@ const BlackButton = styled.button`
   margin: 0 auto;
   font-size: 1.2rem;
   padding: 5px 80px;
-  font-family: Montserrat, sans-serif;
-  background: black;
+  font-family: ${props => props.theme.fonts.main};
+  background: ${props => props.theme.colors.black};
   color: white;
   min-width: 284px;
   margin-bottom: 10px;
@@ -85,11 +86,11 @@ const BottomWhiteButton = styled.div`
   margin: 0 auto;
   font-size: 1.2rem;
   padding: 0px 40px;
-  font-family: Montserrat, sans-serif;
+  font-family: ${props => props.theme.fonts.main};
   margin: 50px auto 50px;
   text-align: center;
   a {
-    color: black;
+    color: ${props => props.theme.colors.black};
     text-decoration: none;
   }
 `;
@@ -131,6 +132,13 @@ const SubscriptionForm = () => {
       }
     });
   };
+
+  if (loading)
+    return (
+      <FormStyles>
+        <LoadingSpinner color='black' />
+      </FormStyles>
+    );
 
   return (
     <>

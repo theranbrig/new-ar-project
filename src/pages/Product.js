@@ -1,5 +1,5 @@
 import React, { useEffect, useState, useContext } from 'react';
-import { useParams, useHistory } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 import styled from 'styled-components';
 import MediaViewer from '../components/ModelViewer';
 import { LazyLoadImage } from 'react-lazy-load-image-component';
@@ -177,8 +177,6 @@ const Product = () => {
   const [loading, setLoading] = useState(false);
   const [isAdded, setIsAdded] = useState(false);
   const [mainDisplay, setMainDisplay] = useState('model');
-
-  const history = useHistory();
 
   const { id } = useParams();
 

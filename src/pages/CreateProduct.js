@@ -7,132 +7,6 @@ import { ProductContext } from '../context/Product';
 import LoadingSpinner from '../components/LoadingSpinner';
 import FileUpload from '../components/FileUpload';
 
-export const LoginStyles = styled.div`
-  width: 500px;
-  max-width: 95%;
-  margin: 0 auto;
-  min-height: calc(90vh - 50px);
-  margin-top: calc(10vh + 50px);
-  margin-bottom: 50px;
-  .user-form {
-    border: 1px solid black;
-    padding: 30px 20px;
-    margin-top: 50px;
-    font-family: ${props => props.theme.fonts.main};
-    h1 {
-      text-align: center;
-    }
-  }
-  input,
-  select {
-    flex: 1;
-    margin: 0 5px;
-    border: none;
-    border-radius: 0px !important;
-    border-bottom: 1px solid ${props => props.theme.colors.lightGrey};
-    background: white;
-    box-shadow: none;
-    height: 25px;
-    font-size: 1.1rem;
-    -webkit-appearance: none;
-    -webkit-border-radius: 0px;
-    margin-left: 10px;
-  }
-  label {
-    height: 25px;
-    line-height: 25px;
-    font-size: 1.1rem;
-  }
-  .form-input {
-    display: flex;
-    margin: 20px 0;
-    input,
-    select {
-      flex: 2;
-      margin: 0 5px;
-      border: none;
-      border-radius: 0px !important;
-      border-bottom: 1px simport { LoginStyles } from './EditProduct';
-olid ${props => props.theme.colors.lightGrey};
-      background: white;
-      box-shadow: none;
-      height: 25px;
-      font-size: 1.1rem;
-      -webkit-appearance: none;
-      -webkit-border-radius: 0px;
-      margin-left: 10px;
-    }
-    label {
-      height: 25px;
-      line-height: 25px;
-      font-size: 1.1rem;
-    }
-  }
-  .loading {
-    position: fixed;
-    display: grid;
-    background: #2323234f;
-    height: 100vh;
-    width: 100vw;
-    top: 0;
-    left: 0;
-    padding-top: 20vh;
-  }
-  .add-feature {
-    background: transparent;
-    border: none;
-    font-size: 1.5rem;
-  }
-  .features-list {
-    li {
-      display: grid;
-      grid-template-columns: 1fr 30px;
-      grid-gap: 5px;
-      button {
-        background: none;
-        border: none;
-        font-size: 1.5rem;
-        color: tomato;
-      }
-    }
-  }
-  textarea {
-    border: 1px solid ${props => props.theme.colors.lightGrey};
-    resize: none;
-    font-size: 16px;
-    margin-left: 10px;
-    width: 100%;
-    padding: 5px;
-  }
-  .error-message {
-    text-align: center;
-    color: tomato;
-  }
-  input:invalid,
-  textarea.no-features {
-    border: 1px solid tomato;
-  }
-  .hint {
-    color: tomato;
-    text-align: center;
-  }
-`;
-
-const BlackButton = styled.button`
-  border: 2px solid black;
-  border-radius: 0px;
-  height: 52px;
-  display: block;
-  margin: 0 auto;
-  font-size: 1.2rem;
-  padding: 5px 80px;
-  font-family: Montserrat, sans-serif;
-  background: black;
-  color: white;
-  min-width: 284px;
-  margin-bottom: 10px;
-`;
-
 const CreateProduct = () => {
   const [name, setName] = useState('');
   const [brand, setBrand] = useState('');
@@ -146,9 +20,7 @@ const CreateProduct = () => {
   const [picture1, setPicture1] = useState('');
   const [picture2, setPicture2] = useState('');
   const [picture3, setPicture3] = useState('');
-  const [pictures, setPictures] = useState([]);
   const [sizes, setSizes] = useState(['S', 'M', 'L']);
-  const [keywords, setKeywords] = useState([]);
   const [imageUploading, setImageUploading] = useState(false);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
@@ -379,3 +251,129 @@ const CreateProduct = () => {
 };
 
 export default CreateProduct;
+
+export const LoginStyles = styled.div`
+  width: 500px;
+  max-width: 95%;
+  margin: 0 auto;
+  min-height: calc(90vh - 50px);
+  margin-top: calc(10vh + 50px);
+  margin-bottom: 50px;
+  .user-form {
+    border: 1px solid black;
+    padding: 30px 20px;
+    margin-top: 50px;
+    font-family: ${props => props.theme.fonts.main};
+    h1 {
+      text-align: center;
+    }
+  }
+  input,
+  select {
+    flex: 1;
+    margin: 0 5px;
+    border: none;
+    border-radius: 0px !important;
+    border-bottom: 1px solid ${props => props.theme.colors.lightGrey};
+    background: white;
+    box-shadow: none;
+    height: 25px;
+    font-size: 1.1rem;
+    -webkit-appearance: none;
+    -webkit-border-radius: 0px;
+    margin-left: 10px;
+  }
+  label {
+    height: 25px;
+    line-height: 25px;
+    font-size: 1.1rem;
+  }
+  .form-input {
+    display: flex;
+    margin: 20px 0;
+    input,
+    select {
+      flex: 2;
+      margin: 0 5px;
+      border: none;
+      border-radius: 0px !important;
+      border-bottom: 1px simport { LoginStyles } from './EditProduct';
+olid ${props => props.theme.colors.lightGrey};
+      background: white;
+      box-shadow: none;
+      height: 25px;
+      font-size: 1.1rem;
+      -webkit-appearance: none;
+      -webkit-border-radius: 0px;
+      margin-left: 10px;
+    }
+    label {
+      height: 25px;
+      line-height: 25px;
+      font-size: 1.1rem;
+    }
+  }
+  .loading {
+    position: fixed;
+    display: grid;
+    background: #2323234f;
+    height: 100vh;
+    width: 100vw;
+    top: 0;
+    left: 0;
+    padding-top: 20vh;
+  }
+  .add-feature {
+    background: transparent;
+    border: none;
+    font-size: 1.5rem;
+  }
+  .features-list {
+    li {
+      display: grid;
+      grid-template-columns: 1fr 30px;
+      grid-gap: 5px;
+      button {
+        background: none;
+        border: none;
+        font-size: 1.5rem;
+        color: tomato;
+      }
+    }
+  }
+  textarea {
+    border: 1px solid ${props => props.theme.colors.lightGrey};
+    resize: none;
+    font-size: 16px;
+    margin-left: 10px;
+    width: 100%;
+    padding: 5px;
+  }
+  .error-message {
+    text-align: center;
+    color: tomato;
+  }
+  input:invalid,
+  textarea.no-features {
+    border: 1px solid tomato;
+  }
+  .hint {
+    color: tomato;
+    text-align: center;
+  }
+`;
+
+const BlackButton = styled.button`
+  border: 2px solid black;
+  border-radius: 0px;
+  height: 52px;
+  display: block;
+  margin: 0 auto;
+  font-size: 1.2rem;
+  padding: 5px 80px;
+  font-family: Montserrat, sans-serif;
+  background: black;
+  color: white;
+  min-width: 284px;
+  margin-bottom: 10px;
+`;

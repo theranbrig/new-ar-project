@@ -1,6 +1,5 @@
-import React, { useContext, useState, useEffect } from 'react';
+import React, { useContext, useState } from 'react';
 import styled from 'styled-components';
-import yzedLogo from '../assets/images/yzed-logo.png';
 import MenuLinks from './MenuLinks';
 import ShoppingBagModal from './ShoppingBagModal';
 import { CartContext } from '../context/Cart';
@@ -155,11 +154,10 @@ const StretchedNavStyles = styled.div`
 
 const NavigationDrawer = ({ children }) => {
   const [open, setOpen] = useState(false);
-  const [stateCart, setStateCart] = useState([]);
   const [openBag, setOpenBag] = useState(false);
   const [openSearch, setOpenSearch] = useState(false);
-  const { cart, cartLoading, clearLocalCart } = useContext(CartContext);
-  const { userData, dbh } = useContext(FirebaseContext);
+  const { cart, cartLoading } = useContext(CartContext);
+  const { userData } = useContext(FirebaseContext);
 
   const node = React.useRef();
 
