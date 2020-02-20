@@ -48,7 +48,7 @@ export const WhiteButtonClick = styled.button`
   display: block;
   margin: 0 auto;
   background: ${props => props.theme.colors.white};
-  font-size: 1.2rem;
+  font-size: 1rem;
   padding: 0px 40px;
   font-weight: 600;
   font-family: ${props => props.theme.fonts.main};

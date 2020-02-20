@@ -16,7 +16,7 @@ import debounce from 'lodash.debounce';
 import { FirebaseContext } from '../context/Firebase';
 import { formatProductName } from '../utilities/formatting';
 
-export const UploadStyles = styled.div`
+const UploadStyles = styled.div`
   height: ${({ photoUploadOpen }) => (photoUploadOpen ? '90vh' : '0px')};
   transform: ${({ photoUploadOpen }) => (photoUploadOpen ? 'scaleY(100%)' : 'scaleY(0)')};
   width: 100%;
@@ -112,9 +112,9 @@ export const UploadStyles = styled.div`
     width: 100%;
   }
   .bottom-content {
-    margin-top: 30px;
+    margin-top: 20px;
     button {
-      width: 70%;
+      width: 80%;
     }
   }
   .tags {
@@ -134,6 +134,7 @@ export const UploadStyles = styled.div`
     }
     h3 {
       margin-left: calc(10% - 10px);
+      margin-bottom: 5px;
       font-size: 1.2rem;
       color: ${props => props.theme.colors.black};
       font-weight: 700;
@@ -143,7 +144,7 @@ export const UploadStyles = styled.div`
     label {
       margin-left: calc(10% - 10px);
       display: block;
-      margin-bottom: 20px;
+      margin-bottom: 5px;
       font-size: 1.2rem;
       color: ${props => props.theme.colors.black};
       font-weight: 700;
@@ -194,6 +195,7 @@ export const UploadStyles = styled.div`
   }
   .product-item {
     display: grid;
+    padding: 5px;
     grid-template-columns: 70px 1fr;
     grid-gap: 10px;
     border: 1px solid ${props => props.theme.colors.lightGrey};
@@ -215,20 +217,33 @@ export const UploadStyles = styled.div`
       font-weight: 300;
     }
   }
+  .selected {
+    border: 1px solid ${props => props.theme.colors.black};
+  }
+  .add-another {
+    margin: 0 auto;
+    display: block;
+    border: none;
+    border-bottom: 1px solid ${props => props.theme.colors.grey};
+    color: ${props => props.theme.colors.grey};
+    background: none;
+  }
 `;
 
 const UploadPhotoModal = () => {
   const [uploadState, setUploadState] = useState(4);
   const [loading, setLoading] = useState(false);
   const [taggedProducts, setTaggedProducts] = useState([]);
+  const [description, setDescription] = useState('');
   const [query, setQuery] = useState('');
   const [searchProducts, setSearchProducts] = useState([]);
   const [currentPictureUrl, setCurrentPictureUrl] = useState(
     'https://oneoone-resource.s3.ap-northeast-2.amazonaws.com/yzed/1LB6OI5uf.jpeg'
   );
+  const [error, setError] = useState('');
 
   const { photoUploadOpen, setPhotoUploadOpen } = useContext(ModalContext);
-  const { dbh } = useContext(FirebaseContext);
+  const { dbh, userData } = useContext(FirebaseContext);
 
   const config = {
     bucketName: 'oneoone-resource',
@@ -260,24 +275,58 @@ const UploadPhotoModal = () => {
     dbh
       .collection('products')
       .where('keywords', 'array-contains', query.toLowerCase())
-      .limit(5)
       .get()
       .then(querySnapshot => {
         querySnapshot.docs.forEach(doc => {
-          const { name, price, mainImage, brand } = doc.data();
-          tempItems.push({
-            id: doc.id,
-            name: formatProductName(name),
-            mainImage,
-            brand: brand.toUpperCase(),
-          });
+          if (!checkIfTagged(doc.id)) {
+            const { name, price, mainImage, brand } = doc.data();
+            tempItems.push({
+              id: doc.id,
+              name: formatProductName(name),
+              mainImage,
+              brand: brand.toUpperCase(),
+            });
+          }
         });
         setSearchProducts(tempItems);
       });
   }, 150);
 
-  const addToTagList = id => {
-    setTaggedProducts([...taggedProducts, id]);
+  const uploadUserPhoto = () => {
+    setError('');
+    setLoading(true);
+    if (currentPictureUrl.length && userData && description.length && taggedProducts.length) {
+      dbh
+        .collection('userPhotos')
+        .set({
+          url: currentPictureUrl,
+          userId: userData.id,
+          tags: taggedProducts,
+          description,
+          likes: 0,
+        })
+        .then(() => {
+          setLoading(false);
+          setUploadState(1);
+          setTaggedProducts([]);
+          setDescription('');
+          setCurrentPictureUrl('');
+        });
+    }
+    if (!description.length) {
+      setError('Please enter a description.');
+    }
+    if (!taggedProducts.length) {
+      setError('Please select a product to tag.');
+    }
+  };
+
+  const addToTagList = product => {
+    setTaggedProducts([...taggedProducts, product]);
+  };
+
+  const checkIfTagged = id => {
+    return taggedProducts.some(product => product.id === id);
   };
 
   return (
@@ -331,7 +380,13 @@ const UploadPhotoModal = () => {
               </div>
               <section className='description'>
                 <label>Description</label>
-                <textarea rows='4' />
+                <textarea
+                  rows='4'
+                  name='description'
+                  value={description}
+                  onChange={e => setDescription(e.target.value)}
+                  required
+                />
               </section>
               <section className='tags'>
                 <h3>Products in this picture</h3>
@@ -339,10 +394,20 @@ const UploadPhotoModal = () => {
                   <>
                     <div className='tagged-products'>
                       {taggedProducts.map(product => (
-                        <h1>hi</h1>
+                        <div key={product.id} className='product-item'>
+                          <img src={product.mainImage} alt={product.name} />
+                          <div className='button-content'>
+                            <h3>{product.brand}</h3>
+                            <h4>{product.name}</h4>
+                          </div>
+                        </div>
                       ))}
                     </div>
-                    <button onClick={() => setUploadState(4)}>Add another product</button>
+                    {taggedProducts.length < 3 && (
+                      <button onClick={() => setUploadState(4)} className='add-another'>
+                        Add another product
+                      </button>
+                    )}
                   </>
                 ) : (
                   <div className='add-tags'>
@@ -382,19 +447,22 @@ const UploadPhotoModal = () => {
                 />
               </section>
               <section className='product-list'>
-                {searchProducts.map(item => (
+                {searchProducts.map(product => (
                   <div
-                    key={item.id}
-                    className='product-item'
+                    key={product.id}
+                    className={checkIfTagged(product.id) ? 'product-item selected' : 'product-item'}
                     onClick={() => {
-                      addToTagList(item.id);
-                      setQuery('');
-                      setUploadState(3);
+                      if (!checkIfTagged(product.id) && taggedProducts.length <= 2) {
+                        addToTagList(product);
+                        setQuery('');
+                        setSearchProducts([]);
+                        setUploadState(3);
+                      }
                     }}>
-                    <img src={item.mainImage} alt={item.name} />
+                    <img src={product.mainImage} alt={product.name} />
                     <div className='button-content'>
-                      <h3>{item.brand}</h3>
-                      <h4>{item.name}</h4>
+                      <h3>{product.brand}</h3>
+                      <h4>{product.name}</h4>
                     </div>
                   </div>
                 ))}
@@ -410,7 +478,10 @@ const UploadPhotoModal = () => {
                 <WhiteButtonClick onClick={() => setUploadState(2)}>
                   Previous Step (2/2)
                 </WhiteButtonClick>
-                <BlackButtonClick onClick={() => setUploadState(4)}>
+                <BlackButtonClick
+                  onClick={() => {
+                    uploadUserPhoto();
+                  }}>
                   Upload Picture
                 </BlackButtonClick>
               </>
