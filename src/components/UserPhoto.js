@@ -11,7 +11,7 @@ export const PhotoStyles = styled.div`
   padding: 10px;
   img {
     border: 1px solid ${props => props.theme.colors.lightGrey};
-    border-radius: 5px;
+    border-radius: 3px;
   }
   .likes-and-time {
     display: flex;
