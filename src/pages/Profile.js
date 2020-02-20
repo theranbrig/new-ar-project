@@ -6,6 +6,7 @@ import { Helmet } from 'react-helmet';
 import AddPhotoSVG from '../assets/icons/icon_add_photo';
 import { ModalContext } from '../context/Modal';
 import moment from 'moment';
+import UserPhoto from '../components/UserPhoto';
 
 export const ProfileStyles = styled.div`
   width: 500px;
@@ -26,11 +27,6 @@ export const ProfileStyles = styled.div`
     }
     h5 {
       font-weight: 300;
-    }
-  }
-  .photo {
-    img {
-      border: 1px solid ${props => props.theme.colors.lightGrey};
     }
   }
 `;
@@ -105,6 +101,7 @@ const Profile = () => {
   const history = useHistory();
 
   useEffect(() => {
+    window.scrollTo(0, 0);
     setLoading(true);
     console.log(myPhotos);
     if (userData || !myPhotos) {
@@ -119,7 +116,7 @@ const Profile = () => {
             tempPhotos.push(doc.data());
             setLoading(false);
           });
-          setPhotos(tempPhotos);
+          setPhotos(tempPhotos.sort((a, b) => b.addedOn.seconds - a.addedOn.seconds));
         });
     }
     if (userData && myPhotos) {
@@ -147,11 +144,7 @@ const Profile = () => {
         <AddPhotoSVG fill='#fff' />
       </AddPhotoButton>
       {photos.map(photo => (
-        <div className='photo' key='photo.url'>
-          <img src={photo.url} alt={photo.description} height='340px' width='225px;' />
-          <p>{photo.description}</p>
-          <p>{moment.unix(photo.addedOn.seconds).fromNow()}</p>
-        </div>
+        <UserPhoto photo={photo} userName={userData.userName} key={photo.imageUrl} />
       ))}
       {userData.role === 'ADMIN' && (
         <BlackButton>

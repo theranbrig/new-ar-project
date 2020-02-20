@@ -102,7 +102,6 @@ const SliderStyles = styled.div`
         font-family: ${props => props.theme.fonts.main};
         margin: 3px auto;
         color: ${props => props.theme.colors.black};
-        text-decoration: none;
       }
       h4 {
         font-size: 1.2rem;
@@ -127,10 +126,15 @@ const MainPageCarousel = () => {
   console.log(user);
   return (
     <SliderStyles>
-      <div className='selected-user'>
-        <LazyLoadImage src={user.profile_image_url} alt={user.name} effect='blur' height='300px' />
-        <div className='user-information'>
-          <Link to='/user/gZctMW4ASGNvAcrwVvAP80NlAa32'>
+      <Link to='/user/gZctMW4ASGNvAcrwVvAP80NlAa32'>
+        <div className='selected-user'>
+          <LazyLoadImage
+            src={user.profile_image_url}
+            alt={user.name}
+            effect='blur'
+            height='300px'
+          />
+          <div className='user-information'>
             <div className='user-data'>
               <InstaSVG />
               <div className='user-data-content'>
@@ -138,23 +142,23 @@ const MainPageCarousel = () => {
                 <h5>{user.name}</h5>
               </div>
             </div>
-          </Link>
-        </div>
-        <div className='user-data'>
-          <FollowerSVG />
-          <div className='user-data-content'>
-            <h4>{user.followers}</h4>
-            <h5>New Followers</h5>
+            <div className='user-data'>
+              <FollowerSVG />
+              <div className='user-data-content'>
+                <h4>{user.followers}</h4>
+                <h5>New Followers</h5>
+              </div>
+            </div>
+            <div className='user-data'>
+              <ImpressionSVG />
+              <div className='user-data-content'>
+                <h4>{user.impressions}</h4>
+                <h5>New Impressions</h5>
+              </div>
+            </div>
           </div>
         </div>
-        <div className='user-data'>
-          <ImpressionSVG />
-          <div className='user-data-content'>
-            <h4>{user.impressions}</h4>
-            <h5>New Impressions</h5>
-          </div>
-        </div>
-      </div>
+      </Link>
       <div className='carousel-section'>
         <div className='break-1'></div>
         <div className='break-2'></div>

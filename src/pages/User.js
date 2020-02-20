@@ -6,6 +6,7 @@ import { Helmet } from 'react-helmet';
 import AddPhotoSVG from '../assets/icons/icon_add_photo';
 import { ModalContext } from '../context/Modal';
 import moment from 'moment';
+import UserPhoto from '../components/UserPhoto';
 
 export const UserStyles = styled.div`
   width: 500px;
@@ -99,12 +100,14 @@ const AddPhotoButton = styled.button`
 const User = () => {
   const [loading, setLoading] = useState(false);
   const [photos, setPhotos] = useState([]);
+  const [user, setUser] = useState(null);
   const { logoutUser, dbh } = useContext(FirebaseContext);
 
   const history = useHistory();
   const { id } = useParams();
 
   useEffect(() => {
+    window.scrollTo(0, 0);
     setLoading(true);
     let tempPhotos = [];
     dbh
@@ -113,17 +116,17 @@ const User = () => {
       .get()
       .then(querySnapshot => {
         querySnapshot.forEach(doc => {
-          console.log(doc.data());
+          console.log(doc.data().addedOn.seconds);
           tempPhotos.push(doc.data());
         });
-        setPhotos(tempPhotos);
+        setPhotos(tempPhotos.sort((a, b) => b.addedOn.seconds - a.addedOn.seconds));
         dbh
           .collection('users')
           .doc(id)
           .get()
           .then(doc => {
+            setUser({ id: doc.id, ...doc.data() });
             setLoading(false);
-            console.log(doc);
           });
       });
   }, []);
@@ -136,22 +139,21 @@ const User = () => {
     );
   return (
     <UserStyles>
-      <h1>Hello</h1>
       <Helmet>
         <title>YZED - Uer</title>
       </Helmet>
-      <h1>@Svetlana</h1>
-      <div className='stats-item'>
-        <h5>{photos.length}</h5>
-        <h4>Pictures</h4>
-      </div>
-      {photos.map(photo => (
-        <div className='photo' key='photo.url'>
-          <img src={photo.url} alt={photo.description} height='340px' width='225px;' />
-          <p>{photo.description}</p>
-          <p>{moment.unix(photo.addedOn.seconds).fromNow()}</p>
-        </div>
-      ))}
+      {user && (
+        <>
+          <h1>@{user.userName}</h1>
+          <div className='stats-item'>
+            <h5>{photos.length}</h5>
+            <h4>Pictures</h4>
+          </div>
+          {photos.map(photo => (
+            <UserPhoto photo={photo} key={photo.imageUrl} userName={user.userName} />
+          ))}
+        </>
+      )}
     </UserStyles>
   );
 };
