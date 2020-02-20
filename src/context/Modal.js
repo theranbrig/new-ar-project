@@ -1,4 +1,4 @@
-import React, { useContext, useState } from 'react';
+import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 
 export const ModalContext = React.createContext();

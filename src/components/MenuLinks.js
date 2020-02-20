@@ -1,8 +1,6 @@
 import React, { useContext, useState } from 'react';
 import styled from 'styled-components';
 import { NavLink } from 'react-router-dom';
-import FBLogo from '../assets/icons/facebook-5-64.png';
-import InstaLogo from '../assets/icons/instagram-5-64.png';
 import { FirebaseContext } from '../context/Firebase';
 import InstaSVG from '../assets/icons/icon_instagram';
 import StoreMenuLinks from './StoreMenuLinks';

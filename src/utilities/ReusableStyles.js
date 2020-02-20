@@ -39,6 +39,23 @@ export const BlackButtonClick = styled.button`
   color: ${props => props.theme.colors.white};
 `;
 
+export const WhiteButtonClick = styled.button`
+  border: 2px solid ${props => props.theme.colors.black};
+  border-radius: 25px;
+  height: 45px;
+  line-height: 42px;
+  letter-spacing: 3px;
+  display: block;
+  margin: 0 auto;
+  background: ${props => props.theme.colors.white};
+  font-size: 1.2rem;
+  padding: 0px 40px;
+  font-weight: 600;
+  font-family: ${props => props.theme.fonts.main};
+  margin: 0 auto 30px;
+  color: ${props => props.theme.colors.black};
+`;
+
 export const RoundARButton = styled.button`
   border: 2px solid ${props => props.theme.colors.white};
   border-radius: 0px;

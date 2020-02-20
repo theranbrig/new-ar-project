@@ -75,6 +75,8 @@ const Profile = () => {
 
   const history = useHistory();
 
+  useEffect(() => {}, []);
+
   if (!userData)
     return (
       <ProfileStyles>

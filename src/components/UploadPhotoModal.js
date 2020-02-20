@@ -7,8 +7,11 @@ import S3 from 'aws-s3-pro';
 import shortid from 'shortid';
 import CameraSVG from '../assets/icons/icon_photo';
 import LoadingSpinner from './LoadingSpinner';
-import { BlackButtonClick } from '../utilities/ReusableStyles';
+import { BlackButtonClick, WhiteButtonClick } from '../utilities/ReusableStyles';
 import { LazyLoadImage } from 'react-lazy-load-image-component';
+import 'react-lazy-load-image-component/src/effects/blur.css';
+import SavePlusSVG from '../assets/icons/icon_save_plus';
+import SearchSVG from '../assets/icons/icon_search';
 
 export const UploadStyles = styled.div`
   height: ${({ photoUploadOpen }) => (photoUploadOpen ? '90vh' : '0px')};
@@ -111,11 +114,82 @@ export const UploadStyles = styled.div`
       width: 70%;
     }
   }
+  .tags {
+    .add-tags {
+      margin: 0 auto;
+      width: 80%;
+      display: grid;
+      grid-template-columns: 100px 1fr;
+      align-items: center;
+      border: 1px solid ${props => props.theme.colors.lightGrey};
+      padding: 10px;
+      grid-gap: 10px;
+      .plus-icon {
+        background: ${props => props.theme.colors.black};
+        height: 100px;
+      }
+    }
+    h3 {
+      margin-left: calc(10% - 10px);
+      font-size: 1.2rem;
+      color: ${props => props.theme.colors.black};
+      font-weight: 700;
+    }
+  }
+  .description {
+    label {
+      margin-left: calc(10% - 10px);
+      display: block;
+      margin-bottom: 20px;
+      font-size: 1.2rem;
+      color: ${props => props.theme.colors.black};
+      font-weight: 700;
+    }
+    textarea {
+      margin-top: 30px;
+      padding: 10px;
+      width: 80%;
+      margin: 0 auto;
+      display: block;
+      border-color: ${props => props.theme.colors.lightGrey};
+      resize: none;
+      background: ${props => props.theme.colors.white};
+      font-family: ${props => props.theme.fonts.main};
+      font-size: 1rem;
+    }
+  }
+  .search-bar {
+    svg {
+      height: 1.5rem;
+      position: absolute;
+      margin-left: 40px;
+      margin-top: 8px;
+      @media (max-width: 480px) {
+        margin-left: 25px;
+      }
+    }
+    input {
+      margin: 0 auto;
+      display: block;
+      width: 80%;
+      font-size: 1.5rem;
+      font-family: ${props => props.theme.fonts.main};
+      padding: 5px 10px 5px 50px;
+      border-radius: 25px;
+      box-shadow: none;
+      border: 1px solid ${props => props.theme.colors.lightGrey};
+      @media (max-width: 480px) {
+        padding-left: 40px;
+      }
+    }
+  }
 `;
 
 const UploadPhotoModal = () => {
-  const [uploadState, setUploadState] = useState(2);
+  const [uploadState, setUploadState] = useState(4);
   const [loading, setLoading] = useState(false);
+  const [taggedProducts, setTaggedProducts] = useState([]);
+  const [query, setQuery] = useState('');
   const [currentPictureUrl, setCurrentPictureUrl] = useState(
     'https://oneoone-resource.s3.ap-northeast-2.amazonaws.com/yzed/1LB6OI5uf.jpeg'
   );
@@ -146,6 +220,8 @@ const UploadPhotoModal = () => {
       })
       .catch(err => console.error(err));
   };
+
+  const productSearch = () => {};
 
   return (
     <UploadStyles photoUploadOpen={true}>
@@ -184,7 +260,7 @@ const UploadPhotoModal = () => {
               </div>
               <div className='selected-photo'>
                 <div class='upload-btn-wrapper'>
-                  <LazyLoadImage src={currentPictureUrl} alt='chosen image' />
+                  <LazyLoadImage src={currentPictureUrl} alt='chosen image' effect='blur' />
                 </div>
               </div>
             </div>
@@ -194,27 +270,59 @@ const UploadPhotoModal = () => {
               <div className='title-buttons'>
                 <div className='left-content'></div>
                 <h1>Picture Details</h1>
-                <div className='right-content'>
-                  <label>Description</label>
-                  <textarea />
-                </div>
+                <div className='right-content'></div>
               </div>
-              <div className='selected-photo'>
-                <div class='upload-btn-wrapper'>
-                  <LazyLoadImage src={currentPictureUrl} alt='chosen image' />
+              <section className='description'>
+                <label>Description</label>
+                <textarea rows='4' />
+              </section>
+              <section className='tags'>
+                <h3>Products in this picture</h3>
+                <div className='add-tags'>
+                  <button
+                    className='plus-icon'
+                    aria-label='Search products to tag'
+                    onClick={() => setUploadState(4)}>
+                    <SavePlusSVG />
+                  </button>
+                  <div className='content'>
+                    <h4>Show 'em what you got!</h4>
+                    <p>Hit the search icon to add featured products to your post</p>
+                  </div>
                 </div>
-              </div>
+              </section>
             </div>
           )}
+          {uploadState === 4 && (
+            <div className='top-content'>
+              <div className='title-buttons'>
+                <div className='left-content'></div>
+                <h1>Search</h1>
+                <div className='right-content'></div>
+              </div>
+              <section className='search-bar'>
+                <SearchSVG />
+                <input
+                  type='text'
+                  value={query}
+                  onChange={e => setQuery(e.target.value)}
+                  aria-label='Search for product'
+                  placeholder='Search'
+                />
+              </section>
+              <section className='product-list'></section>
+            </div>
+          )}
+
           <div className='bottom-content'>
             {uploadState === 2 && (
               <BlackButtonClick onClick={() => setUploadState(3)}>NEXT STEP (2/2)</BlackButtonClick>
             )}
             {uploadState === 3 && (
               <>
-                <BlackButtonClick onClick={() => setUploadState(2)}>
+                <WhiteButtonClick onClick={() => setUploadState(2)}>
                   Previous Step (2/2)
-                </BlackButtonClick>
+                </WhiteButtonClick>
                 <BlackButtonClick onClick={() => setUploadState(4)}>
                   Upload Picture
                 </BlackButtonClick>

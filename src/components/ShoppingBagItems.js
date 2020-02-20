@@ -1,7 +1,6 @@
 import React, { useContext } from 'react';
 import styled from 'styled-components';
 import { CartContext } from '../context/Cart';
-import { FirebaseContext } from '../context/Firebase';
 import { Link } from 'react-router-dom';
 
 export const ItemsStyles = styled.div`
@@ -75,8 +74,6 @@ export const ItemsStyles = styled.div`
 
 const ShoppingBagItems = ({ cartLoading, canEdit, mode, setOpenBag }) => {
   const { cart, removeItemFromCart } = useContext(CartContext);
-
-  const { userData } = useContext(FirebaseContext);
 
   if (cartLoading)
     return (
