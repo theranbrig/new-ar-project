@@ -15,6 +15,7 @@ import SearchSVG from '../assets/icons/icon_search';
 import debounce from 'lodash.debounce';
 import { FirebaseContext } from '../context/Firebase';
 import { formatProductName } from '../utilities/formatting';
+import { useHistory } from 'react-router-dom';
 
 const UploadStyles = styled.div`
   height: ${({ photoUploadOpen }) => (photoUploadOpen ? '90vh' : '0px')};
@@ -253,6 +254,8 @@ const UploadPhotoModal = () => {
     secretAccessKey: process.env.REACT_APP_S3_SECRET_ACCESS_KEY,
   };
 
+  const history = useHistory();
+
   const S3Client = new S3(config);
 
   const newFileName = shortid.generate();
@@ -306,11 +309,13 @@ const UploadPhotoModal = () => {
           likes: 0,
         })
         .then(() => {
+          setPhotoUploadOpen(false);
           setLoading(false);
           setUploadState(1);
           setTaggedProducts([]);
           setDescription('');
           setCurrentPictureUrl('');
+          history.push('/profile');
         });
     }
     if (!description.length) {
@@ -330,7 +335,7 @@ const UploadPhotoModal = () => {
   };
 
   return (
-    <UploadStyles photoUploadOpen={true}>
+    <UploadStyles photoUploadOpen={photoUploadOpen}>
       {loading ? (
         <LoadingSpinner color='black' />
       ) : (

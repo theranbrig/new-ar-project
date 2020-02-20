@@ -37,10 +37,7 @@ export const StyledMenu = styled.nav`
     -webkit-text-stroke-color: ${props => props.theme.colors.black};
     text-decoration: none;
     transition: color 0.3s linear;
-    @media (max-width: 576px) {
-      font-size: 2rem;
-      text-align: center;
-    }
+
     &:hover {
       color: ${props => props.theme.colors.black};
     }
