@@ -19,6 +19,7 @@ import CreateProduct from '../pages/CreateProduct';
 import Admin from '../pages/Admin';
 import EditProduct from '../pages/EditProduct';
 import UploadPhoto from '../pages/UploadPhoto';
+import User from '../pages/User';
 
 export default function App() {
   return (
@@ -74,11 +75,11 @@ export default function App() {
           <Route path='/admin'>
             <Admin />
           </Route>
+          <Route exact path='/user/:id'>
+            <User />
+          </Route>
           <Route path='/'>
             <Home />
-          </Route>
-          <Route path='/upload-photo'>
-            <UploadPhoto />
           </Route>
         </Switch>
       </div>

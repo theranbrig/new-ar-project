@@ -1,13 +1,13 @@
 import React, { useContext, useEffect, useState } from 'react';
 import { FirebaseContext } from '../context/Firebase';
 import styled from 'styled-components';
-import { useHistory } from 'react-router-dom';
+import { useHistory, useParams } from 'react-router-dom';
 import { Helmet } from 'react-helmet';
 import AddPhotoSVG from '../assets/icons/icon_add_photo';
 import { ModalContext } from '../context/Modal';
 import moment from 'moment';
 
-export const ProfileStyles = styled.div`
+export const UserStyles = styled.div`
   width: 500px;
   max-width: 95%;
   margin: 0 auto;
@@ -96,56 +96,55 @@ const AddPhotoButton = styled.button`
   margin-bottom: 20px;
 `;
 
-const Profile = () => {
+const User = () => {
   const [loading, setLoading] = useState(false);
   const [photos, setPhotos] = useState([]);
-  const { userData, logoutUser, dbh, myPhotos } = useContext(FirebaseContext);
-  const { setPhotoUploadOpen } = useContext(ModalContext);
+  const { logoutUser, dbh } = useContext(FirebaseContext);
 
   const history = useHistory();
+  const { id } = useParams();
 
   useEffect(() => {
     setLoading(true);
-    console.log(myPhotos);
-    if (userData || !myPhotos) {
-      let tempPhotos = [];
-      dbh
-        .collection('userPhotos')
-        .where('userId', '==', userData.id)
-        .get()
-        .then(querySnapshot => {
-          querySnapshot.forEach(doc => {
-            console.log(doc.data());
-            tempPhotos.push(doc.data());
-            setLoading(false);
-          });
-          setPhotos(tempPhotos);
+    let tempPhotos = [];
+    dbh
+      .collection('userPhotos')
+      .where('userId', '==', id)
+      .get()
+      .then(querySnapshot => {
+        querySnapshot.forEach(doc => {
+          console.log(doc.data());
+          tempPhotos.push(doc.data());
         });
-    }
-    if (userData && myPhotos) {
-      setPhotos(myPhotos);
-    }
-  }, [userData, dbh, myPhotos]);
+        setPhotos(tempPhotos);
+        dbh
+          .collection('users')
+          .doc(id)
+          .get()
+          .then(doc => {
+            setLoading(false);
+            console.log(doc);
+          });
+      });
+  }, []);
 
-  if (!userData || loading)
+  if (loading)
     return (
-      <ProfileStyles>
+      <UserStyles>
         <h1>Loading...</h1>
-      </ProfileStyles>
+      </UserStyles>
     );
   return (
-    <ProfileStyles>
+    <UserStyles>
+      <h1>Hello</h1>
       <Helmet>
-        <title>YZED - {userData.userName.toUpperCase()}</title>
+        <title>YZED - Uer</title>
       </Helmet>
-      <h1>@{userData.userName}</h1>
+      <h1>@Svetlana</h1>
       <div className='stats-item'>
         <h5>{photos.length}</h5>
         <h4>Pictures</h4>
       </div>
-      <AddPhotoButton onClick={() => setPhotoUploadOpen(true)} aria-label='add photo'>
-        <AddPhotoSVG fill='#fff' />
-      </AddPhotoButton>
       {photos.map(photo => (
         <div className='photo' key='photo.url'>
           <img src={photo.url} alt={photo.description} height='340px' width='225px;' />
@@ -153,20 +152,8 @@ const Profile = () => {
           <p>{moment.unix(photo.addedOn.seconds).fromNow()}</p>
         </div>
       ))}
-      {userData.role === 'ADMIN' && (
-        <BlackButton>
-          <a href='/admin'>ADMIN</a>
-        </BlackButton>
-      )}
-      <WhiteLogoutButton
-        onClick={() => {
-          logoutUser();
-          history.push('/');
-        }}>
-        SIGN OUT
-      </WhiteLogoutButton>
-    </ProfileStyles>
+    </UserStyles>
   );
 };
 
-export default Profile;
+export default User;

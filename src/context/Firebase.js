@@ -1,5 +1,5 @@
 import * as firebase from 'firebase/app';
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import '@firebase/firestore';
 import '@firebase/storage';
@@ -121,7 +121,6 @@ const FirebaseProvider = ({ children }) => {
     }
   });
 
-
   const uploadUserPhoto = (currentPictureUrl, description, taggedProducts) => {
     if (currentPictureUrl.length && userData && description.length && taggedProducts.length) {
       dbh
@@ -134,6 +133,22 @@ const FirebaseProvider = ({ children }) => {
           description,
           likes: 0,
           addedOn: new Date(),
+        })
+        .then(() => {
+          if (userData) {
+            let tempPhotos = [];
+            dbh
+              .collection('userPhotos')
+              .where('userId', '==', userData.id)
+              .get()
+              .then(querySnapshot => {
+                querySnapshot.forEach(doc => {
+                  console.log(doc.data());
+                  tempPhotos.push(doc.data());
+                });
+                setMyPhotos(tempPhotos);
+              });
+          }
         });
     }
   };
