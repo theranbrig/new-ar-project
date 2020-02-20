@@ -1,6 +1,8 @@
 import React from 'react';
 import styled from 'styled-components';
 import moment from 'moment';
+import { LazyLoadImage } from 'react-lazy-load-image-component';
+import 'react-lazy-load-image-component/src/effects/blur.css';
 
 export const PhotoStyles = styled.div`
   width: 400px;
@@ -47,7 +49,13 @@ export const PhotoStyles = styled.div`
 const UserPhoto = ({ photo, userName }) => {
   return (
     <PhotoStyles>
-      <img src={photo.url} alt={photo.description} height='340px' width='225px;' />
+      <LazyLoadImage
+        src={photo.url}
+        alt={photo.description}
+        effect='blur'
+        height='340px'
+        width='225px;'
+      />
       <p className='likes-and-time'>
         <div className='likes'>
           <h4>

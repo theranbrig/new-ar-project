@@ -269,13 +269,6 @@ const Product = () => {
         <RoundARButton onClick={() => document.querySelector('model-viewer').activateAR()}>
           AR
         </RoundARButton>
-        <RoundARButton
-          onClick={() => {
-            console.log('clicked');
-            setPhotoUploadOpen(true);
-          }}>
-          Photo
-        </RoundARButton>
       </section>
       <section className='order-details '>
         <AddToCart sizes={product.sizes} product={product} setIsAdded={setIsAdded} />

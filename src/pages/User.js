@@ -139,11 +139,11 @@ const User = () => {
     );
   return (
     <UserStyles>
-      <Helmet>
-        <title>YZED - Uer</title>
-      </Helmet>
       {user && (
         <>
+          <Helmet>
+            <title>YZED - {user.userName}</title>
+          </Helmet>
           <h1>@{user.userName}</h1>
           <div className='stats-item'>
             <h5>{photos.length}</h5>
