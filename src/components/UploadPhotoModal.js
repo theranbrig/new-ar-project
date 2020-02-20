@@ -12,6 +12,9 @@ import { LazyLoadImage } from 'react-lazy-load-image-component';
 import 'react-lazy-load-image-component/src/effects/blur.css';
 import SavePlusSVG from '../assets/icons/icon_save_plus';
 import SearchSVG from '../assets/icons/icon_search';
+import debounce from 'lodash.debounce';
+import { FirebaseContext } from '../context/Firebase';
+import { formatProductName } from '../utilities/formatting';
 
 export const UploadStyles = styled.div`
   height: ${({ photoUploadOpen }) => (photoUploadOpen ? '90vh' : '0px')};
@@ -159,6 +162,7 @@ export const UploadStyles = styled.div`
     }
   }
   .search-bar {
+    height: 10vh;
     svg {
       height: 1.5rem;
       position: absolute;
@@ -183,6 +187,34 @@ export const UploadStyles = styled.div`
       }
     }
   }
+  .product-list {
+    background: ${props => props.theme.colors.white};
+    overflow-y: scroll;
+    height: 70vh;
+  }
+  .product-item {
+    display: grid;
+    grid-template-columns: 70px 1fr;
+    grid-gap: 10px;
+    border: 1px solid ${props => props.theme.colors.lightGrey};
+    width: 90%;
+    margin: 0 auto 10px;
+    align-items: center;
+    img {
+      width: 100%;
+    }
+    h3,
+    h4 {
+      margin: 0;
+      font-size: 1rem;
+    }
+    h3 {
+      font-weight: 600;
+    }
+    h4 {
+      font-weight: 300;
+    }
+  }
 `;
 
 const UploadPhotoModal = () => {
@@ -190,11 +222,13 @@ const UploadPhotoModal = () => {
   const [loading, setLoading] = useState(false);
   const [taggedProducts, setTaggedProducts] = useState([]);
   const [query, setQuery] = useState('');
+  const [searchProducts, setSearchProducts] = useState([]);
   const [currentPictureUrl, setCurrentPictureUrl] = useState(
     'https://oneoone-resource.s3.ap-northeast-2.amazonaws.com/yzed/1LB6OI5uf.jpeg'
   );
 
   const { photoUploadOpen, setPhotoUploadOpen } = useContext(ModalContext);
+  const { dbh } = useContext(FirebaseContext);
 
   const config = {
     bucketName: 'oneoone-resource',
@@ -221,7 +255,30 @@ const UploadPhotoModal = () => {
       .catch(err => console.error(err));
   };
 
-  const productSearch = () => {};
+  const productSearch = debounce(query => {
+    let tempItems = [];
+    dbh
+      .collection('products')
+      .where('keywords', 'array-contains', query.toLowerCase())
+      .limit(5)
+      .get()
+      .then(querySnapshot => {
+        querySnapshot.docs.forEach(doc => {
+          const { name, price, mainImage, brand } = doc.data();
+          tempItems.push({
+            id: doc.id,
+            name: formatProductName(name),
+            mainImage,
+            brand: brand.toUpperCase(),
+          });
+        });
+        setSearchProducts(tempItems);
+      });
+  }, 150);
+
+  const addToTagList = id => {
+    setTaggedProducts([...taggedProducts, id]);
+  };
 
   return (
     <UploadStyles photoUploadOpen={true}>
@@ -278,18 +335,29 @@ const UploadPhotoModal = () => {
               </section>
               <section className='tags'>
                 <h3>Products in this picture</h3>
-                <div className='add-tags'>
-                  <button
-                    className='plus-icon'
-                    aria-label='Search products to tag'
-                    onClick={() => setUploadState(4)}>
-                    <SavePlusSVG />
-                  </button>
-                  <div className='content'>
-                    <h4>Show 'em what you got!</h4>
-                    <p>Hit the search icon to add featured products to your post</p>
+                {taggedProducts.length ? (
+                  <>
+                    <div className='tagged-products'>
+                      {taggedProducts.map(product => (
+                        <h1>hi</h1>
+                      ))}
+                    </div>
+                    <button onClick={() => setUploadState(4)}>Add another product</button>
+                  </>
+                ) : (
+                  <div className='add-tags'>
+                    <button
+                      className='plus-icon'
+                      aria-label='Search products to tag'
+                      onClick={() => setUploadState(4)}>
+                      <SavePlusSVG />
+                    </button>
+                    <div className='content'>
+                      <h4>Show 'em what you got!</h4>
+                      <p>Hit the search icon to add featured products to your post</p>
+                    </div>
                   </div>
-                </div>
+                )}
               </section>
             </div>
           )}
@@ -305,15 +373,34 @@ const UploadPhotoModal = () => {
                 <input
                   type='text'
                   value={query}
-                  onChange={e => setQuery(e.target.value)}
+                  onChange={e => {
+                    setQuery(e.target.value);
+                    productSearch(e.target.value);
+                  }}
                   aria-label='Search for product'
                   placeholder='Search'
                 />
               </section>
-              <section className='product-list'></section>
+              <section className='product-list'>
+                {searchProducts.map(item => (
+                  <div
+                    key={item.id}
+                    className='product-item'
+                    onClick={() => {
+                      addToTagList(item.id);
+                      setQuery('');
+                      setUploadState(3);
+                    }}>
+                    <img src={item.mainImage} alt={item.name} />
+                    <div className='button-content'>
+                      <h3>{item.brand}</h3>
+                      <h4>{item.name}</h4>
+                    </div>
+                  </div>
+                ))}
+              </section>
             </div>
           )}
-
           <div className='bottom-content'>
             {uploadState === 2 && (
               <BlackButtonClick onClick={() => setUploadState(3)}>NEXT STEP (2/2)</BlackButtonClick>
