@@ -232,19 +232,17 @@ const UploadStyles = styled.div`
 `;
 
 const UploadPhotoModal = () => {
-  const [uploadState, setUploadState] = useState(4);
+  const [uploadState, setUploadState] = useState(1);
   const [loading, setLoading] = useState(false);
   const [taggedProducts, setTaggedProducts] = useState([]);
   const [description, setDescription] = useState('');
   const [query, setQuery] = useState('');
   const [searchProducts, setSearchProducts] = useState([]);
-  const [currentPictureUrl, setCurrentPictureUrl] = useState(
-    'https://oneoone-resource.s3.ap-northeast-2.amazonaws.com/yzed/1LB6OI5uf.jpeg'
-  );
+  const [currentPictureUrl, setCurrentPictureUrl] = useState('');
   const [error, setError] = useState('');
 
   const { photoUploadOpen, setPhotoUploadOpen } = useContext(ModalContext);
-  const { dbh, userData } = useContext(FirebaseContext);
+  const { dbh, userData, uploadUserPhoto } = useContext(FirebaseContext);
 
   const config = {
     bucketName: 'oneoone-resource',
@@ -295,28 +293,18 @@ const UploadPhotoModal = () => {
       });
   }, 150);
 
-  const uploadUserPhoto = () => {
+  const uploadPhoto = async () => {
     setError('');
     setLoading(true);
     if (currentPictureUrl.length && userData && description.length && taggedProducts.length) {
-      dbh
-        .collection('userPhotos')
-        .set({
-          url: currentPictureUrl,
-          userId: userData.id,
-          tags: taggedProducts,
-          description,
-          likes: 0,
-        })
-        .then(() => {
-          setPhotoUploadOpen(false);
-          setLoading(false);
-          setUploadState(1);
-          setTaggedProducts([]);
-          setDescription('');
-          setCurrentPictureUrl('');
-          history.push('/profile');
-        });
+      await uploadUserPhoto(currentPictureUrl, description, taggedProducts);
+      setPhotoUploadOpen(false);
+      setLoading(false);
+      setUploadState(1);
+      setTaggedProducts([]);
+      setDescription('');
+      setCurrentPictureUrl('');
+      history.push('/profile');
     }
     if (!description.length) {
       setError('Please enter a description.');
@@ -485,7 +473,7 @@ const UploadPhotoModal = () => {
                 </WhiteButtonClick>
                 <BlackButtonClick
                   onClick={() => {
-                    uploadUserPhoto();
+                    uploadPhoto();
                   }}>
                   Upload Picture
                 </BlackButtonClick>

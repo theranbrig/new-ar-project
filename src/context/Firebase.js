@@ -46,6 +46,7 @@ const FirebaseProvider = ({ children }) => {
   const [userLoading, setUserLoading] = useState(false);
   const [userData, setUserData] = useState(null);
   const [userAuth, setUserAuth] = useState({});
+  const [myPhotos, setMyPhotos] = useState([]);
 
   firebase.analytics().logEvent('notification_received');
 
@@ -120,6 +121,23 @@ const FirebaseProvider = ({ children }) => {
     }
   });
 
+
+  const uploadUserPhoto = (currentPictureUrl, description, taggedProducts) => {
+    if (currentPictureUrl.length && userData && description.length && taggedProducts.length) {
+      dbh
+        .collection('userPhotos')
+        .doc()
+        .set({
+          url: currentPictureUrl,
+          userId: userData.id,
+          tags: taggedProducts,
+          description,
+          likes: 0,
+          addedOn: new Date(),
+        });
+    }
+  };
+
   return (
     <FirebaseContext.Provider
       value={{
@@ -133,6 +151,8 @@ const FirebaseProvider = ({ children }) => {
         storage,
         userLoading,
         userAuth,
+        uploadUserPhoto,
+        myPhotos,
       }}>
       {children}
     </FirebaseContext.Provider>

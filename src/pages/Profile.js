@@ -1,8 +1,10 @@
-import React, { useContext, useEffect } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { FirebaseContext } from '../context/Firebase';
 import styled from 'styled-components';
 import { useHistory } from 'react-router-dom';
 import { Helmet } from 'react-helmet';
+import AddPhotoSVG from '../assets/icons/icon_add_photo';
+import { ModalContext } from '../context/Modal';
 
 export const ProfileStyles = styled.div`
   width: 500px;
@@ -71,13 +73,33 @@ const WhiteLogoutButton = styled.button`
 `;
 
 const Profile = () => {
-  const { userData, logoutUser } = useContext(FirebaseContext);
+  const [loading, setLoading] = useState(false);
+  const [photos, setPhotos] = useState([]);
+  const { userData, logoutUser, dbh, uploadUserPhoto } = useContext(FirebaseContext);
+  const { setPhotoUploadOpen } = useContext(ModalContext);
 
   const history = useHistory();
 
-  useEffect(() => {}, []);
+  useEffect(() => {
+    setLoading(true);
+    if (userData) {
+      let tempPhotos = [];
+      dbh
+        .collection('userPhotos')
+        .where('userId', '==', userData.id)
+        .get()
+        .then(querySnapshot => {
+          querySnapshot.forEach(doc => {
+            console.log(doc.data());
+            tempPhotos.push(doc.data());
+            setLoading(false);
+          });
+          setPhotos(tempPhotos);
+        });
+    }
+  }, [userData, dbh, uploadUserPhoto()]);
 
-  if (!userData)
+  if (!userData || loading)
     return (
       <ProfileStyles>
         <h1>Loading...</h1>
@@ -88,14 +110,16 @@ const Profile = () => {
       <Helmet>
         <title>YZED - {userData.userName.toUpperCase()}</title>
       </Helmet>
-      <h1>
-        {userData.firstName} {userData.lastName}
-      </h1>
-      <h1>{userData.userName}</h1>
-      <h1>{userData.email}</h1>
-      <BlackButton>
-        <a href='/checkout'>VIEW MY CART</a>
+      <h1>@{userData.userName}</h1>
+      <BlackButton onClick={() => setPhotoUploadOpen(true)}>
+        <AddPhotoSVG fill='#fff' />
       </BlackButton>
+      {photos.map(photo => (
+        <div>
+          <img src={photo.url} alt={photo.description} height='340px' width='225px;' />
+          <p>{photo.description}</p>
+        </div>
+      ))}
       {userData.role === 'ADMIN' && (
         <BlackButton>
           <a href='/admin'>ADMIN</a>
