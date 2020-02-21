@@ -3,6 +3,7 @@ import styled from 'styled-components';
 import moment from 'moment';
 import { LazyLoadImage } from 'react-lazy-load-image-component';
 import 'react-lazy-load-image-component/src/effects/blur.css';
+import { Link } from 'react-router-dom';
 
 export const PhotoStyles = styled.div`
   width: 400px;
@@ -46,9 +47,10 @@ export const PhotoStyles = styled.div`
       margin-top: 3px;
       margin-bottom: 3px;
     }
-    span {
+    a {
       color: tomato;
       margin-right: 5px;
+      text-decoration: none;
     }
   }
 `;
@@ -77,7 +79,7 @@ const UserPhoto = ({ photo, userName }) => {
         <h4>@{userName}</h4>
         <p>
           {photo.tags.map(tag => (
-            <span>{`#${tag.brand}-${tag.name}`}</span>
+            <Link to={`/product/${tag.id}`}>{`#${tag.brand}-${tag.name}`}</Link>
           ))}
         </p>
         <p>{photo.description}</p>

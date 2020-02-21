@@ -269,7 +269,7 @@ const UploadPhotoModal = () => {
   const uploadS3File = e => {
     setLoading(true);
     const file = e.target.files[0];
-    S3Client.uploadFile({ ...file }, newFileName)
+    S3Client.uploadFile(file, newFileName)
       .then(data => {
         console.log(data);
         setCurrentPictureUrl(data.location);
