@@ -4,7 +4,7 @@ import UserSVG from '../assets/icons/icon_user';
 
 export const UserInfoStyles = styled.div`
   h1 {
-    font-weight: 300;
+    font-weight: 600;
   }
   .stats-item {
     margin: 10px auto;

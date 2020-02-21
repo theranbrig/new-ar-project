@@ -20,7 +20,7 @@ export const ProfileStyles = styled.div`
   font-family: Montserrat, sans-serif;
   text-align: center;
   min-height: 90vh;
- 
+
   .buttons {
     width: 90%;
     margin: 0 auto;
@@ -97,7 +97,7 @@ const AddPhotoButton = styled.button`
 const Profile = () => {
   const [loading, setLoading] = useState(false);
   const [photos, setPhotos] = useState([]);
-  const [editProfile, setEditProfile] = useState(false);
+  const [editProfile, setEditProfile] = useState(true);
 
   const { userData, logoutUser, dbh, myPhotos } = useContext(FirebaseContext);
   const { setPhotoUploadOpen } = useContext(ModalContext);
@@ -142,7 +142,7 @@ const Profile = () => {
       {!editProfile ? (
         <UserInfo userData={userData} photos={photos} />
       ) : (
-        <section className='user-info edit'></section>
+        <EditUserInfo description={userData.description ?? ''} userName={userData.userName} />
       )}
       <section className='buttons'>
         <AddPhotoButton

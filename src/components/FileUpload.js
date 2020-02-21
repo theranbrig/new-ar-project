@@ -60,7 +60,9 @@ const FileUpload = ({ name, setFileUploading, state, setStateFunction, isImage }
   const newFileName = shortid.generate();
 
   const uploadS3File = e => {
+    setFileUploading(true);
     const file = e.target.files[0];
+    console.log(file);
     S3Client.uploadFile(file, newFileName)
       .then(data => {
         console.log(data);
