@@ -9,6 +9,7 @@ export const PhotoStyles = styled.div`
   max-width: 90%;
   margin: 20px auto;
   padding: 10px;
+  border: 1px solid ${props => props.theme.colors.lightGrey};
   img {
     border: 1px solid ${props => props.theme.colors.lightGrey};
     border-radius: 3px;
@@ -42,11 +43,17 @@ export const PhotoStyles = styled.div`
     p {
       font-weight: 300;
       margin-top: 3px;
+      margin-bottom: 3px;
+    }
+    span {
+      color: tomato;
+      margin-right: 5px;
     }
   }
 `;
 
 const UserPhoto = ({ photo, userName }) => {
+  console.log('PHOTO', photo);
   return (
     <PhotoStyles>
       <LazyLoadImage
@@ -67,6 +74,11 @@ const UserPhoto = ({ photo, userName }) => {
       </p>
       <div className='description'>
         <h4>@{userName}</h4>
+        <p>
+          {photo.tags.map(tag => (
+            <span>{`#${tag.brand}-${tag.name}`}</span>
+          ))}
+        </p>
         <p>{photo.description}</p>
       </div>
     </PhotoStyles>

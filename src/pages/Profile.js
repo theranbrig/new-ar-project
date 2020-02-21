@@ -7,6 +7,7 @@ import AddPhotoSVG from '../assets/icons/icon_add_photo';
 import { ModalContext } from '../context/Modal';
 import moment from 'moment';
 import UserPhoto from '../components/UserPhoto';
+import SettingsSVG from '../assets/icons/icon_settings';
 
 export const ProfileStyles = styled.div`
   width: 500px;
@@ -28,6 +29,13 @@ export const ProfileStyles = styled.div`
     h5 {
       font-weight: 300;
     }
+  }
+  .buttons {
+    width: 90%;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
   }
 `;
 
@@ -90,11 +98,16 @@ const AddPhotoButton = styled.button`
   background: ${props => props.theme.colors.black};
   border-radius: 25px;
   margin-bottom: 20px;
+  svg {
+    height: 80%;
+  }
 `;
 
 const Profile = () => {
   const [loading, setLoading] = useState(false);
   const [photos, setPhotos] = useState([]);
+  const [editProfile, setEditProfile] = useState(false);
+
   const { userData, logoutUser, dbh, myPhotos } = useContext(FirebaseContext);
   const { setPhotoUploadOpen } = useContext(ModalContext);
 
@@ -135,14 +148,28 @@ const Profile = () => {
       <Helmet>
         <title>YZED - {userData.userName.toUpperCase()}</title>
       </Helmet>
-      <h1>@{userData.userName}</h1>
-      <div className='stats-item'>
-        <h5>{photos.length}</h5>
-        <h4>Pictures</h4>
-      </div>
-      <AddPhotoButton onClick={() => setPhotoUploadOpen(true)} aria-label='add photo'>
-        <AddPhotoSVG fill='#fff' />
-      </AddPhotoButton>
+      {!editProfile ? (
+        <section className='user-info'>
+          <h1>@{userData.userName}</h1>
+          <div className='stats-item'>
+            <h5>{photos.length}</h5>
+            <h4>Pictures</h4>
+          </div>
+        </section>
+      ) : (
+        <section className='user-info edit'></section>
+      )}
+      <section className='buttons'>
+        <AddPhotoButton
+          onClick={() => {
+            setEditProfile(!editProfile);
+          }}>
+          <SettingsSVG />
+        </AddPhotoButton>
+        <AddPhotoButton onClick={() => setPhotoUploadOpen(true)} aria-label='add photo'>
+          <AddPhotoSVG fill='#fff' />
+        </AddPhotoButton>
+      </section>
       {photos.map(photo => (
         <UserPhoto photo={photo} userName={userData.userName} key={photo.imageUrl} />
       ))}
