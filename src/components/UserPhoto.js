@@ -10,6 +10,7 @@ export const PhotoStyles = styled.div`
   margin: 20px auto;
   padding: 10px;
   border: 1px solid ${props => props.theme.colors.lightGrey};
+  border-radius: 3px;
   img {
     border: 1px solid ${props => props.theme.colors.lightGrey};
     border-radius: 3px;

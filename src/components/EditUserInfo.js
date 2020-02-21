@@ -55,6 +55,7 @@ export const EditUserStyles = styled.div`
 const EditUserInfo = ({ description, photo, userName, userId, setEditProfile }) => {
   const [editDescription, setEditDescription] = useState(description);
   const [editPhoto, setEditPhoto] = useState(false);
+  const [loading, setLoading] = useState(false);
   const [preview, setPreview] = useState(null);
   const [newUserPhoto, setNewUserPhoto] = useState('');
 
@@ -74,6 +75,7 @@ const EditUserInfo = ({ description, photo, userName, userId, setEditProfile }) 
   const S3Client = new S3(config);
 
   const updateProfile = () => {
+    setLoading(true);
     if (preview && preview.image) {
       const file = preview.image;
       S3Client.uploadFile(convertFile(file, newFileName), newFileName)
@@ -87,6 +89,7 @@ const EditUserInfo = ({ description, photo, userName, userId, setEditProfile }) 
               setEditPhoto(false);
               history.push('/profile');
               window.location.reload(true);
+              setLoading(false);
             });
         })
         .catch(err => console.error(err));
@@ -99,7 +102,9 @@ const EditUserInfo = ({ description, photo, userName, userId, setEditProfile }) 
           setEditPhoto(false);
           history.push('/profile');
           window.location.reload(true);
-        });
+          setLoading(false);
+        })
+        .catch(err => console.error(err));
     }
   };
 
@@ -117,6 +122,7 @@ const EditUserInfo = ({ description, photo, userName, userId, setEditProfile }) 
             src={photo ?? null}
             cropRadius={145}
             onCrop={image => onCrop(image)}
+            onImageLoad={image => onCrop(image)}
           />
           <button
             className='cancel'
@@ -155,6 +161,7 @@ const EditUserInfo = ({ description, photo, userName, userId, setEditProfile }) 
         UPDATE
       </BlackButtonClick>
       <WhiteButtonClick
+        disabled={loading}
         onClick={() => {
           history.push('/profile');
         }}>
