@@ -8,6 +8,9 @@ import { ModalContext } from '../context/Modal';
 import moment from 'moment';
 import UserPhoto from '../components/UserPhoto';
 import SettingsSVG from '../assets/icons/icon_settings';
+import UserSVG from '../assets/icons/icon_user';
+import UserInfo from '../components/UserInfo';
+import EditUserInfo from '../components/EditUserInfo';
 
 export const ProfileStyles = styled.div`
   width: 500px;
@@ -17,19 +20,7 @@ export const ProfileStyles = styled.div`
   font-family: Montserrat, sans-serif;
   text-align: center;
   min-height: 90vh;
-  h1 {
-    font-weight: 300;
-  }
-  .stats-item {
-    margin: 10px auto;
-    h4,
-    h5 {
-      margin: 0;
-    }
-    h5 {
-      font-weight: 300;
-    }
-  }
+ 
   .buttons {
     width: 90%;
     margin: 0 auto;
@@ -149,13 +140,7 @@ const Profile = () => {
         <title>YZED - {userData.userName.toUpperCase()}</title>
       </Helmet>
       {!editProfile ? (
-        <section className='user-info'>
-          <h1>@{userData.userName}</h1>
-          <div className='stats-item'>
-            <h5>{photos.length}</h5>
-            <h4>Pictures</h4>
-          </div>
-        </section>
+        <UserInfo userData={userData} photos={photos} />
       ) : (
         <section className='user-info edit'></section>
       )}

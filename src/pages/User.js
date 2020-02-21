@@ -7,6 +7,7 @@ import AddPhotoSVG from '../assets/icons/icon_add_photo';
 import { ModalContext } from '../context/Modal';
 import moment from 'moment';
 import UserPhoto from '../components/UserPhoto';
+import UserInfo from '../components/UserInfo';
 
 export const UserStyles = styled.div`
   width: 500px;
@@ -144,11 +145,7 @@ const User = () => {
           <Helmet>
             <title>YZED - {user.userName}</title>
           </Helmet>
-          <h1>@{user.userName}</h1>
-          <div className='stats-item'>
-            <h5>{photos.length}</h5>
-            <h4>Pictures</h4>
-          </div>
+          <UserInfo photos={photos} userData={user} />
           {photos.map(photo => (
             <UserPhoto photo={photo} key={photo.imageUrl} userName={user.userName} />
           ))}

@@ -200,7 +200,7 @@ const UploadStyles = styled.div`
     grid-template-columns: 70px 1fr 30px;
     grid-gap: 10px;
     border: 1px solid ${props => props.theme.colors.lightGrey};
-    width: 90%;
+    width: calc(80% + 10px);
     margin: 0 auto 10px;
     align-items: center;
     img {
@@ -240,15 +240,13 @@ const UploadStyles = styled.div`
 `;
 
 const UploadPhotoModal = () => {
-  const [uploadState, setUploadState] = useState(3);
+  const [uploadState, setUploadState] = useState(1);
   const [loading, setLoading] = useState(false);
   const [taggedProducts, setTaggedProducts] = useState([]);
   const [description, setDescription] = useState('');
   const [query, setQuery] = useState('');
   const [searchProducts, setSearchProducts] = useState([]);
-  const [currentPictureUrl, setCurrentPictureUrl] = useState(
-    'https://oneoone-resource.s3-ap-northeast-2.amazonaws.com/yzed/PWz-y7OQ.jpg'
-  );
+  const [currentPictureUrl, setCurrentPictureUrl] = useState('');
   const [error, setError] = useState('');
 
   const { photoUploadOpen, setPhotoUploadOpen } = useContext(ModalContext);
@@ -333,7 +331,7 @@ const UploadPhotoModal = () => {
   };
 
   return (
-    <UploadStyles photoUploadOpen={true}>
+    <UploadStyles photoUploadOpen={photoUploadOpen}>
       {loading ? (
         <LoadingSpinner color='black' />
       ) : (
