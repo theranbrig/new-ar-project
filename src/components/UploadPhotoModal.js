@@ -197,7 +197,7 @@ const UploadStyles = styled.div`
   .product-item {
     display: grid;
     padding: 5px;
-    grid-template-columns: 70px 1fr;
+    grid-template-columns: 70px 1fr 30px;
     grid-gap: 10px;
     border: 1px solid ${props => props.theme.colors.lightGrey};
     width: 90%;
@@ -217,6 +217,14 @@ const UploadStyles = styled.div`
     h4 {
       font-weight: 300;
     }
+    button {
+      background: none;
+      border: none;
+      i {
+        color: tomato;
+        font-size: 1.5rem;
+      }
+    }
   }
   .selected {
     border: 1px solid ${props => props.theme.colors.black};
@@ -232,13 +240,15 @@ const UploadStyles = styled.div`
 `;
 
 const UploadPhotoModal = () => {
-  const [uploadState, setUploadState] = useState(1);
+  const [uploadState, setUploadState] = useState(3);
   const [loading, setLoading] = useState(false);
   const [taggedProducts, setTaggedProducts] = useState([]);
   const [description, setDescription] = useState('');
   const [query, setQuery] = useState('');
   const [searchProducts, setSearchProducts] = useState([]);
-  const [currentPictureUrl, setCurrentPictureUrl] = useState('');
+  const [currentPictureUrl, setCurrentPictureUrl] = useState(
+    'https://oneoone-resource.s3-ap-northeast-2.amazonaws.com/yzed/PWz-y7OQ.jpg'
+  );
   const [error, setError] = useState('');
 
   const { photoUploadOpen, setPhotoUploadOpen } = useContext(ModalContext);
@@ -323,7 +333,7 @@ const UploadPhotoModal = () => {
   };
 
   return (
-    <UploadStyles photoUploadOpen={photoUploadOpen}>
+    <UploadStyles photoUploadOpen={true}>
       {loading ? (
         <LoadingSpinner color='black' />
       ) : (
@@ -386,13 +396,21 @@ const UploadPhotoModal = () => {
                 {taggedProducts.length ? (
                   <>
                     <div className='tagged-products'>
-                      {taggedProducts.map(product => (
+                      {taggedProducts.map((product, index) => (
                         <div key={product.id} className='product-item'>
                           <img src={product.mainImage} alt={product.name} />
                           <div className='button-content'>
                             <h3>{product.brand}</h3>
                             <h4>{product.name}</h4>
                           </div>
+                          <button
+                            onClick={() => {
+                              setTaggedProducts(
+                                taggedProducts.filter(item => item.id !== product.id)
+                              );
+                            }}>
+                            <i className='fa fa-times-circle-o'></i>
+                          </button>
                         </div>
                       ))}
                     </div>
