@@ -115,7 +115,7 @@ const Register = () => {
 
   useEffect(() => {
     if (userData) {
-      history.push('/');
+      history.push('/profile');
     }
   }, [userData, history]);
 
@@ -189,7 +189,8 @@ const Register = () => {
           onClick={async () => {
             setLoading(true);
             await registerUser(email, password, userName, firstName, lastName);
-            setLoading(false)
+            history.push('/profile');
+            setLoading(false);
           }}>
           {loading ? 'Submitting...' : 'Submit'}
         </BlackButton>
