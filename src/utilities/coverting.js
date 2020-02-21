@@ -1,4 +1,4 @@
-export const convertFile = file => {
+export const convertFile = (file, newFileName) => {
   const byteString = atob(file.split(',')[1]);
   const ab = new ArrayBuffer(byteString.length);
   const ia = new Uint8Array(ab);

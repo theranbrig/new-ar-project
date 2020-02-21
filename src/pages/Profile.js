@@ -11,6 +11,7 @@ import SettingsSVG from '../assets/icons/icon_settings';
 import UserSVG from '../assets/icons/icon_user';
 import UserInfo from '../components/UserInfo';
 import EditUserInfo from '../components/EditUserInfo';
+import LoadingSpinner from '../components/LoadingSpinner';
 
 export const ProfileStyles = styled.div`
   width: 500px;
@@ -97,17 +98,19 @@ const AddPhotoButton = styled.button`
 const Profile = () => {
   const [loading, setLoading] = useState(false);
   const [photos, setPhotos] = useState([]);
-  const [editProfile, setEditProfile] = useState(true);
+  const [editProfile, setEditProfile] = useState(false);
+  const [updated, setUpdated] = useState(false);
 
   const { userData, logoutUser, dbh, myPhotos } = useContext(FirebaseContext);
   const { setPhotoUploadOpen } = useContext(ModalContext);
 
   const history = useHistory();
 
+  console.log(userData);
+
   useEffect(() => {
     window.scrollTo(0, 0);
     setLoading(true);
-    console.log(myPhotos);
     if (userData || !myPhotos) {
       let tempPhotos = [];
       dbh
@@ -131,7 +134,7 @@ const Profile = () => {
   if (!userData || loading)
     return (
       <ProfileStyles>
-        <h1>Loading...</h1>
+        <LoadingSpinner color='black' />
       </ProfileStyles>
     );
   return (
@@ -139,15 +142,11 @@ const Profile = () => {
       <Helmet>
         <title>YZED - {userData.userName.toUpperCase()}</title>
       </Helmet>
-      {!editProfile ? (
-        <UserInfo userData={userData} photos={photos} />
-      ) : (
-        <EditUserInfo description={userData.description ?? ''} userName={userData.userName} />
-      )}
+      <UserInfo userData={userData} photos={photos} />
       <section className='buttons'>
         <AddPhotoButton
           onClick={() => {
-            setEditProfile(!editProfile);
+            history.push('/profile/edit');
           }}>
           <SettingsSVG />
         </AddPhotoButton>

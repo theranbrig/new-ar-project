@@ -20,6 +20,7 @@ import Admin from '../pages/Admin';
 import EditProduct from '../pages/EditProduct';
 import UploadPhoto from '../pages/UploadPhoto';
 import User from '../pages/User';
+import ProfileEdit from '../pages/ProfileEdit';
 
 export default function App() {
   return (
@@ -62,6 +63,9 @@ export default function App() {
           </Route>
           <Route path='/search/:query'>
             <MainSearchPage />
+          </Route>
+          <Route exact path='/profile/edit'>
+            <ProfileEdit />
           </Route>
           <Route path='/profile'>
             <Profile />

@@ -99,7 +99,15 @@ const FirebaseProvider = ({ children }) => {
         .get()
         .then(doc => {
           if (doc.exists) {
-            const { userName, firstName, lastName, role, description, photo } = doc.data();
+            const {
+              userName,
+              firstName,
+              lastName,
+              role,
+              description,
+              photo,
+              followers,
+            } = doc.data();
             const userDetails = {
               id: user.uid,
               email: user.email,
@@ -109,6 +117,7 @@ const FirebaseProvider = ({ children }) => {
               role,
               description,
               photo,
+              followers,
             };
             if (!userData) {
               console.log(userDetails);

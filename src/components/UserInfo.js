@@ -3,6 +3,13 @@ import styled from 'styled-components';
 import UserSVG from '../assets/icons/icon_user';
 
 export const UserInfoStyles = styled.div`
+  font-family: ${props => props.theme.fonts.main};
+  p {
+    width: 70%;
+    margin: 0 auto;
+    font-size: 1.3rem;
+    font-weight: 300;
+  }
   h1 {
     font-weight: 600;
   }
@@ -11,10 +18,16 @@ export const UserInfoStyles = styled.div`
     h4,
     h5 {
       margin: 0;
+      font-size: 1.3rem;
     }
-    h5 {
+    h4 {
       font-weight: 300;
     }
+  }
+  .user-stats {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
   }
   .user-photo {
     height: 100px;
@@ -24,6 +37,9 @@ export const UserInfoStyles = styled.div`
     border-radius: 50%;
     border: 3px solid ${props => props.theme.colors.white};
     svg {
+      height: 100%;
+    }
+    img {
       height: 100%;
     }
   }
@@ -38,10 +54,16 @@ const UserInfo = ({ userData, photos }) => {
         </div>
         <h1>@{userData.userName}</h1>
         {userData.description && <p>{userData.description}</p>}
-        <div className='stats-item'>
-          <h5>{photos.length}</h5>
-          <h4>Pictures</h4>
-        </div>
+        <section className='user-stats'>
+          <div className='stats-item'>
+            <h5>{photos.length}</h5>
+            <h4>Pictures</h4>
+          </div>
+          <div className='stats-item'>
+            <h5>{userData.followers.length}</h5>
+            <h4>Followers</h4>
+          </div>
+        </section>
       </section>
     </UserInfoStyles>
   );
