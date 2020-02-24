@@ -40,7 +40,7 @@ const UploadStyles = styled.div`
     .top-content {
       width: 500px;
       max-width: 100%;
-      height: 70vh;
+      height: 65vh;
       margin: 0 auto;
       background: ${props => props.theme.colors.white};
       border-bottom-left-radius: 50px;
@@ -116,7 +116,7 @@ const UploadStyles = styled.div`
     width: 100%;
   }
   .bottom-content {
-    margin-top: 20px;
+    margin-top: 10px;
     button {
       width: 80%;
     }
@@ -503,11 +503,11 @@ const UploadPhotoModal = () => {
                         </div>
                       ))}
                     </div>
-                    {taggedProducts.length < 3 && (
+                    {/* {taggedProducts.length < 3 && (
                       <button onClick={() => setUploadState(3)} className='add-another'>
                         Add another product
                       </button>
-                    )}
+                    )} */}
                   </>
                 ) : (
                   <div className='add-tags'>
@@ -578,12 +578,16 @@ const UploadPhotoModal = () => {
                 <WhiteButtonClick onClick={() => setUploadState(1)}>
                   Previous Step (2/2)
                 </WhiteButtonClick>
-                <BlackButtonClick
-                  onClick={() => {
-                    uploadPhoto();
-                  }}>
-                  Upload Picture
-                </BlackButtonClick>
+                {description.length && taggedProducts.length && currentPictureUrl.length && (
+                  <BlackButtonClick
+                    onClick={() => {
+                      if (description.length && taggedProducts.length && currentPictureUrl.length) {
+                        uploadPhoto();
+                      }
+                    }}>
+                    Upload Picture
+                  </BlackButtonClick>
+                )}
               </>
             )}
           </div>

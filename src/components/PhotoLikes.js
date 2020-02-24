@@ -82,7 +82,8 @@ const PhotoLikes = ({ photoId }) => {
           {isLiked ? <LikeFilledSVG /> : <LikeEmptySVG />}
         </button>
         <h4>
-          <strong>{photo && photo.likes ? photo.likes : 0}</strong> Likes
+          <strong>{photo && photo.likes ? photo.likes : 0}</strong> Like
+          {((photo && photo.likes > 1) || (photo && photo.likes === 0)) && 's'}
         </h4>
       </div>
     </LikeStyles>
