@@ -1,4 +1,4 @@
-import React, { useContext, useState } from 'react';
+import React, { useContext, useState, useCallback } from 'react';
 import styled from 'styled-components';
 import { ModalContext } from '../context/Modal';
 import S3FileUpload from 'react-s3';
@@ -16,6 +16,9 @@ import debounce from 'lodash.debounce';
 import { FirebaseContext } from '../context/Firebase';
 import { formatProductName } from '../utilities/formatting';
 import { useHistory } from 'react-router-dom';
+import ReactCrop from 'react-image-crop';
+import 'react-image-crop/dist/ReactCrop.css';
+import { convertFile } from '../utilities/coverting';
 
 const UploadStyles = styled.div`
   height: ${({ photoUploadOpen }) => (photoUploadOpen ? '90vh' : '0px')};
@@ -237,10 +240,108 @@ const UploadStyles = styled.div`
     color: ${props => props.theme.colors.grey};
     background: none;
   }
+  .ReactCrop {
+    max-width: 90%;
+    width: 350px;
+    height: 350px;
+    margin-left: calc(50% - 175px);
+  }
 `;
+
+const CropperComponent = ({ src, setImageString, uploadS3File }) => {
+  const [upImg, setUpImg] = useState();
+  const [imgRef, setImgRef] = useState(null);
+  const [crop, setCrop] = useState({
+    unit: '%',
+    width: 50,
+    height: 50,
+    x: 25,
+    y: 15,
+    aspect: 10 / 16,
+  });
+  const [result, setResult] = useState();
+
+  const onSelectFile = e => {
+    if (e.target.files && e.target.files.length > 0) {
+      const reader = new FileReader();
+      reader.addEventListener('load', () => setUpImg(reader.result));
+      reader.readAsDataURL(e.target.files[0]);
+    }
+  };
+
+  const onLoad = useCallback(img => {
+    setImgRef(img);
+  }, []);
+
+  const makeClientCrop = crop => {
+    if (imgRef && crop.width && crop.height) {
+      const croppedImageUrl = getCroppedImg(imgRef, crop, 'newFile.jpeg');
+      setResult(croppedImageUrl);
+    }
+  };
+
+  const getCroppedImg = (image, crop, fileName) => {
+    const canvas = document.createElement('canvas');
+    const scaleX = image.naturalWidth / image.width;
+    const scaleY = image.naturalHeight / image.height;
+    canvas.width = crop.width;
+    canvas.height = crop.height;
+    const ctx = canvas.getContext('2d');
+    ctx.drawImage(
+      image,
+      crop.x * scaleX,
+      crop.y * scaleY,
+      crop.width * scaleX,
+      crop.height * scaleY,
+      0,
+      0,
+      crop.width,
+      crop.height
+    );
+    const imageFile = canvas.toDataURL('image/png');
+    setImageString(imageFile);
+    return imageFile;
+  };
+
+  return (
+    <div className='App'>
+      {upImg ? (
+        <>
+          <ReactCrop
+            src={upImg}
+            onImageLoaded={onLoad}
+            crop={crop}
+            onChange={c => setCrop(c)}
+            onComplete={makeClientCrop}
+            ruleOfThirds
+          />
+          {result ? (
+            <BlackButtonClick
+              onClick={() => {
+                uploadS3File();
+              }}>
+              Select Photo
+            </BlackButtonClick>
+          ) : (
+            <p>Please select the photo area.</p>
+          )}
+        </>
+      ) : (
+        <>
+          <button class='btn'>
+            <CameraSVG />
+            <p>Click here to browse your camera roll</p>
+          </button>
+          <input type='file' name='file upload' accept='image/*' onChange={onSelectFile} />
+        </>
+      )}
+    </div>
+  );
+};
 
 const UploadPhotoModal = () => {
   const [uploadState, setUploadState] = useState(1);
+  const [imageString, setImageString] = useState('');
   const [loading, setLoading] = useState(false);
   const [taggedProducts, setTaggedProducts] = useState([]);
   const [description, setDescription] = useState('');
@@ -266,10 +367,10 @@ const UploadPhotoModal = () => {
 
   const newFileName = shortid.generate();
 
-  const uploadS3File = e => {
+  const uploadS3File = () => {
+    console.log(convertFile(imageString, newFileName));
     setLoading(true);
-    const file = e.target.files[0];
-    S3Client.uploadFile(file, newFileName)
+    S3Client.uploadFile(convertFile(imageString, newFileName), newFileName)
       .then(data => {
         console.log(data);
         setCurrentPictureUrl(data.location);
@@ -347,32 +448,22 @@ const UploadPhotoModal = () => {
               </div>
               <div className='select-photo'>
                 <div class='upload-btn-wrapper'>
-                  <button class='btn'>
-                    <CameraSVG />
-                    <p>Click here to browse your camera roll</p>
-                  </button>
-                  <input type='file' name='file upload' onChange={e => uploadS3File(e)} />
+                  <div className='selected-photo'>
+                    <div className='crop-area'>
+                      <CropperComponent
+                        src={currentPictureUrl}
+                        setImageString={setImageString}
+                        uploadS3File={uploadS3File}
+                        setUploadState={2}
+                      />
+                    </div>
+                  </div>
                 </div>
               </div>
             </div>
           )}
+
           {uploadState === 2 && (
-            <div className='top-content'>
-              <div className='title-buttons'>
-                <div className='left-content'></div>
-                <h1>Select Picture</h1>
-                <div className='right-content'>
-                  <button onClick={() => setPhotoUploadOpen(false)}>X</button>
-                </div>
-              </div>
-              <div className='selected-photo'>
-                <div class='upload-btn-wrapper'>
-                  <LazyLoadImage src={currentPictureUrl} alt='chosen image' effect='blur' />
-                </div>
-              </div>
-            </div>
-          )}
-          {uploadState === 3 && (
             <div className='top-content'>
               <div className='title-buttons'>
                 <div className='left-content'></div>
@@ -413,7 +504,7 @@ const UploadPhotoModal = () => {
                       ))}
                     </div>
                     {taggedProducts.length < 3 && (
-                      <button onClick={() => setUploadState(4)} className='add-another'>
+                      <button onClick={() => setUploadState(3)} className='add-another'>
                         Add another product
                       </button>
                     )}
@@ -423,7 +514,7 @@ const UploadPhotoModal = () => {
                     <button
                       className='plus-icon'
                       aria-label='Search products to tag'
-                      onClick={() => setUploadState(4)}>
+                      onClick={() => setUploadState(3)}>
                       <SavePlusSVG />
                     </button>
                     <div className='content'>
@@ -435,7 +526,7 @@ const UploadPhotoModal = () => {
               </section>
             </div>
           )}
-          {uploadState === 4 && (
+          {uploadState === 3 && (
             <div className='top-content'>
               <div className='title-buttons'>
                 <div className='left-content'></div>
@@ -465,7 +556,7 @@ const UploadPhotoModal = () => {
                         addToTagList(product);
                         setQuery('');
                         setSearchProducts([]);
-                        setUploadState(3);
+                        setUploadState(2);
                       }
                     }}>
                     <img src={product.mainImage} alt={product.name} />
@@ -479,12 +570,12 @@ const UploadPhotoModal = () => {
             </div>
           )}
           <div className='bottom-content'>
-            {uploadState === 2 && (
+            {/* {uploadState === 1 && (
               <BlackButtonClick onClick={() => setUploadState(3)}>NEXT STEP (2/2)</BlackButtonClick>
-            )}
-            {uploadState === 3 && (
+            )} */}
+            {uploadState === 2 && (
               <>
-                <WhiteButtonClick onClick={() => setUploadState(2)}>
+                <WhiteButtonClick onClick={() => setUploadState(1)}>
                   Previous Step (2/2)
                 </WhiteButtonClick>
                 <BlackButtonClick
