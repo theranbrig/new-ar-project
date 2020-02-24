@@ -119,8 +119,7 @@ const Profile = () => {
         .get()
         .then(querySnapshot => {
           querySnapshot.forEach(doc => {
-            console.log(doc.data());
-            tempPhotos.push(doc.data());
+            tempPhotos.push({ id: doc.id, ...doc.data() });
             setLoading(false);
           });
           setPhotos(tempPhotos.sort((a, b) => b.addedOn.seconds - a.addedOn.seconds));

@@ -38,8 +38,7 @@ const User = () => {
       .get()
       .then(querySnapshot => {
         querySnapshot.forEach(doc => {
-          console.log(doc.data().addedOn.seconds);
-          tempPhotos.push(doc.data());
+          tempPhotos.push({ id: doc.id, ...doc.data() });
         });
         setPhotos(tempPhotos.sort((a, b) => b.addedOn.seconds - a.addedOn.seconds));
         dbh

@@ -4,6 +4,7 @@ import moment from 'moment';
 import { LazyLoadImage } from 'react-lazy-load-image-component';
 import 'react-lazy-load-image-component/src/effects/blur.css';
 import { Link } from 'react-router-dom';
+import PhotoLikes from '../components/PhotoLikes';
 
 export const PhotoStyles = styled.div`
   width: 400px;
@@ -68,10 +69,7 @@ const UserPhoto = ({ photo, userName }) => {
       />
       <p className='likes-and-time'>
         <div className='likes'>
-          <h4>
-            <i className='fa fa-heart'></i>
-            <strong>{photo.likes}</strong> Likes
-          </h4>
+          <PhotoLikes photoId={photo.id} />
         </div>
         <p className='date'>{moment.unix(photo.addedOn.seconds).fromNow()}</p>
       </p>
