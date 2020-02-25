@@ -70,10 +70,10 @@ export const RoundARButton = styled.button`
   border-radius: 50%;
   text-align: center;
   font-family: ${props => props.theme.fonts.main};
-  background: ${props => props.theme.colors.lightGrey};
-  color: ${props => props.theme.black};
+  background: ${props => props.theme.colors.black};
+  color: ${props => props.theme.colors.white};
   margin-bottom: 10px;
-  box-shadow: 0 0 0 8px ${props => props.theme.colors.lightGrey};
+  box-shadow: 0 0 0 8px ${props => props.theme.colors.black};
 `;
 
 // Be sure to include aria label along with it.
