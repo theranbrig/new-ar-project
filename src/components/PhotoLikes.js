@@ -34,8 +34,10 @@ const PhotoLikes = ({ photoId }) => {
           dbh
             .collection('userPhotos')
             .doc(photoId)
-            .update({ likes: firebase.firestore.FieldValue.increment(-1) });
-          setIsLiked(!isLiked);
+            .update({ likes: firebase.firestore.FieldValue.increment(-1) })
+            .then(() => {
+              setIsLiked(!isLiked);
+            });
         });
     } else {
       dbh
@@ -47,14 +49,16 @@ const PhotoLikes = ({ photoId }) => {
           dbh
             .collection('userPhotos')
             .doc(photoId)
-            .update({ likes: firebase.firestore.FieldValue.increment(1) });
-          setIsLiked(!isLiked);
+            .update({ likes: firebase.firestore.FieldValue.increment(1) })
+            .then(() => {
+              setIsLiked(!isLiked);
+            });
         });
     }
   };
 
   useEffect(() => {
-    if (userData) {
+    if (userData.loggedIn) {
       dbh
         .collection('users')
         .doc(userData.id)
@@ -73,7 +77,7 @@ const PhotoLikes = ({ photoId }) => {
             });
         });
     }
-  }, [userData, setIsLiked, toggleLike, userLoading]);
+  }, [setIsLiked, toggleLike, userLoading]);
 
   if (userLoading) return null;
 
