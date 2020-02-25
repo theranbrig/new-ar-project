@@ -101,7 +101,7 @@ const TagButton = styled.div`
   border-radius: 20px;
   background: ${props => props.theme.colors.white};
   z-index: 600;
-  box-shadow: ${props => props.theme.boxShadows.allAround};
+  box-shadow: ${({ showTags, theme }) => (showTags ? '' : `${theme.boxShadows.allAround}`)};
   svg {
     height: 24px;
     margin-top: 8px;
@@ -134,11 +134,12 @@ const Tag = ({ tag, setShowTags }) => {
 
 const UserPhoto = ({ photo, userName }) => {
   const [showTags, setShowTags] = useState(false);
-  console.log(photo);
+
   return (
     <PhotoStyles>
       <div className='image'>
         <TagButton
+          showTags={showTags}
           onClick={() => {
             setShowTags(true);
           }}>
