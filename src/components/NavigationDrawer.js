@@ -56,7 +56,7 @@ const StyledBurger = styled.button`
   }
 `;
 
-const Burger = ({ open, setOpen, setOpenBag, setOpenSearch }) => {
+const Burger = ({ open, setOpen, setOpenBag, setOpenSearch, setPhotoUploadOpen }) => {
   return (
     <StyledBurger
       open={open}
@@ -64,6 +64,7 @@ const Burger = ({ open, setOpen, setOpenBag, setOpenSearch }) => {
         setOpen(!open);
         setOpenBag(false);
         setOpenSearch(false);
+        setPhotoUploadOpen(false);
       }}
       aria-label='Toggle Menu'>
       <div />
@@ -147,6 +148,7 @@ const NavigationDrawer = ({ children }) => {
               setOpen(false);
               setOpenBag(false);
               setOpenSearch(!openSearch);
+              setPhotoUploadOpen(false);
             }}
             aria-label='Open Search'>
             <SearchSVG />
@@ -168,6 +170,7 @@ const NavigationDrawer = ({ children }) => {
               setOpenBag(!openBag);
               setOpen(false);
               setOpenSearch(false);
+              setPhotoUploadOpen(false);
             }}
             aria-label='Toggle Cart'
             id='cart-button'>
@@ -181,6 +184,7 @@ const NavigationDrawer = ({ children }) => {
         setOpenSearch={setOpenSearch}
         cartLoading={cartLoading}
         setOpenBag={setOpenBag}
+        setPhotoUploadOpen={setPhotoUploadOpen}
       />
       <UploadPhoto />
       <SearchModal openSearch={openSearch} setOpenSearch={setOpenSearch} />
@@ -191,6 +195,7 @@ const NavigationDrawer = ({ children }) => {
           setOpen={setOpen}
           setOpenBag={setOpenBag}
           setOpenSearch={setOpenSearch}
+          setPhotoUploadOpen={setPhotoUploadOpen}
         />
         <MenuLinks open={open} setOpen={setOpen} />
       </div>

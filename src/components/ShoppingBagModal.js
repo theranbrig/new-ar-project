@@ -71,7 +71,6 @@ const ShoppingBagModal = ({ openBag, shoppingBag, setValue, cartLoading, setOpen
   const { cart } = useContext(FirebaseContext);
 
   const history = useHistory();
-  useEffect(() => {}, [shoppingBag, cart]);
 
   return (
     <ModalStyles openBag={openBag}>
