@@ -92,16 +92,30 @@ const TagStyles = styled.div`
   }
 `;
 
-const TagButton = styled.div`
+const ShowTagButton = styled.div`
   position: absolute;
   right: 10px;
   top: 10px;
   width: 40px;
   height: 40px;
   border-radius: 20px;
+  z-index: 2;
   background: ${props => props.theme.colors.white};
-  z-index: 600;
-  box-shadow: ${({ showTags, theme }) => (showTags ? '' : `${theme.boxShadows.allAround}`)};
+  box-shadow: ${props => props.theme.boxShadows.allAround};
+  svg {
+    height: 24px;
+    margin-top: 8px;
+  }
+`;
+
+const HideTagButton = styled.div`
+  position: absolute;
+  right: 10px;
+  top: 10px;
+  width: 40px;
+  height: 40px;
+  border-radius: 20px;
+  border: 1px solid ${props => props.theme.colors.white};
   svg {
     height: 24px;
     margin-top: 8px;
@@ -111,12 +125,12 @@ const TagButton = styled.div`
 const Tag = ({ tag, setShowTags }) => {
   return (
     <TagStyles>
-      <TagButton
+      <HideTagButton
         onClick={() => {
           setShowTags(false);
         }}>
-        <CloseSVG />
-      </TagButton>
+        <CloseSVG fill='white' />
+      </HideTagButton>
       <Link to={`/products/${tag.id}`}>
         <h3>{tag.brand}</h3>
         <h4>{tag.name}</h4>
@@ -138,13 +152,15 @@ const UserPhoto = ({ photo, userName }) => {
   return (
     <PhotoStyles>
       <div className='image'>
-        <TagButton
-          showTags={showTags}
-          onClick={() => {
-            setShowTags(true);
-          }}>
-          <TagSVG />
-        </TagButton>
+        {!showTags && (
+          <ShowTagButton
+            showTags={showTags}
+            onClick={() => {
+              setShowTags(true);
+            }}>
+            <TagSVG />
+          </ShowTagButton>
+        )}
         <LazyLoadImage
           src={photo.url}
           alt={photo.description}

@@ -218,9 +218,7 @@ const Product = () => {
         <title>YZED - {product.name.toUpperCase()}</title>
       </Helmet>
       {isAdded && <AddToCartSuccessModal setIsAdded={setIsAdded} />}
-      <div className='back-button'>
-        <BackButton />
-      </div>
+
       <section className='product-top'>
         <div className='title-section'>
           <div className='title-name'>
