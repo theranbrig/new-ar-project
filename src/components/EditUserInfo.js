@@ -68,7 +68,6 @@ const EditUserInfo = ({ description, photo, userName, userId, setEditProfile }) 
     accessKeyId: process.env.REACT_APP_S3_ACCESS_KEY_ID,
     secretAccessKey: process.env.REACT_APP_S3_SECRET_ACCESS_KEY,
   };
-  
   const history = useHistory();
 
   const newFileName = shortid.generate();

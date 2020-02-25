@@ -97,7 +97,6 @@ const MenuLinks = ({ open, setOpen }) => {
     <StyledMenu open={open}>
       <div className='top-links'>
         <button
-          exact
           className={showHome ? 'top-link-active' : 'top-link'}
           onClick={() => setShowHome(true)}>
           YZED

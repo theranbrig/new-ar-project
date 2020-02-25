@@ -328,7 +328,7 @@ const CropperComponent = ({ src, setImageString, uploadS3File }) => {
         </>
       ) : (
         <>
-          <button class='btn'>
+          <button className='btn'>
             <CameraSVG />
             <p>Click here to browse your camera roll</p>
           </button>
@@ -447,7 +447,7 @@ const UploadPhotoModal = () => {
                 </div>
               </div>
               <div className='select-photo'>
-                <div class='upload-btn-wrapper'>
+                <div className='upload-btn-wrapper'>
                   <div className='selected-photo'>
                     <div className='crop-area'>
                       <CropperComponent
