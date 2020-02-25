@@ -21,11 +21,13 @@ const LikeStyles = styled.div`
 const PhotoLikes = ({ photoId }) => {
   const [isLiked, setIsLiked] = useState(false);
   const [photo, setPhoto] = useState(null);
+  const [clicked, setClicked] = useState(false);
 
   const { dbh, userData, firebase, userLoading } = useContext(FirebaseContext);
 
   const toggleLike = () => {
-    if (isLiked) {
+    setClicked(true);
+    if (isLiked && !clicked) {
       dbh
         .collection('users')
         .doc(userData.id)
@@ -37,9 +39,10 @@ const PhotoLikes = ({ photoId }) => {
             .update({ likes: firebase.firestore.FieldValue.increment(-1) })
             .then(() => {
               setIsLiked(!isLiked);
+              setClicked(false);
             });
         });
-    } else {
+    } else if (!clicked && !isLiked) {
       dbh
         .collection('users')
         .doc(userData.id)
@@ -52,6 +55,7 @@ const PhotoLikes = ({ photoId }) => {
             .update({ likes: firebase.firestore.FieldValue.increment(1) })
             .then(() => {
               setIsLiked(!isLiked);
+              setClicked(false);
             });
         });
     }

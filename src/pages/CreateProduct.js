@@ -231,7 +231,7 @@ const CreateProduct = () => {
                   brand,
                   mainImage,
                   color,
-                  price,
+                  parseInt(price),
                   sizes,
                   glbFile,
                   usdzFile,
