@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import styled from 'styled-components';
 import moment from 'moment';
 import { LazyLoadImage } from 'react-lazy-load-image-component';
@@ -57,7 +57,7 @@ export const PhotoStyles = styled.div`
 `;
 
 const UserPhoto = ({ photo, userName }) => {
-  console.log('PHOTO', photo);
+  const [showTags, setShowTags] = useState(false);
   return (
     <PhotoStyles>
       <LazyLoadImage

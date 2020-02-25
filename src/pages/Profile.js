@@ -101,7 +101,7 @@ const Profile = () => {
   const [editProfile, setEditProfile] = useState(false);
   const [updated, setUpdated] = useState(false);
 
-  const { userData, logoutUser, dbh, myPhotos, userLoading } = useContext(FirebaseContext);
+  const { userData, logoutUser, dbh, userLoading } = useContext(FirebaseContext);
   const { setPhotoUploadOpen } = useContext(ModalContext);
 
   const history = useHistory();
@@ -111,24 +111,19 @@ const Profile = () => {
   useEffect(() => {
     window.scrollTo(0, 0);
     setLoading(true);
-    if (userData || !myPhotos) {
-      let tempPhotos = [];
-      dbh
-        .collection('userPhotos')
-        .where('userId', '==', userData.id)
-        .get()
-        .then(querySnapshot => {
-          querySnapshot.forEach(doc => {
-            tempPhotos.push({ id: doc.id, ...doc.data() });
-            setLoading(false);
-          });
-          setPhotos(tempPhotos.sort((a, b) => b.addedOn.seconds - a.addedOn.seconds));
+    let tempPhotos = [];
+    dbh
+      .collection('userPhotos')
+      .where('userId', '==', userData.id)
+      .get()
+      .then(querySnapshot => {
+        querySnapshot.forEach(doc => {
+          tempPhotos.push({ id: doc.id, ...doc.data() });
+          setLoading(false);
         });
-    }
-    if (userData && myPhotos) {
-      setPhotos(myPhotos);
-    }
-  }, [userData, dbh, myPhotos]);
+        setPhotos(tempPhotos.sort((a, b) => b.addedOn.seconds - a.addedOn.seconds));
+      });
+  }, [userData, dbh]);
 
   if (!userData || loading || userLoading)
     return (

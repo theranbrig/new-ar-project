@@ -45,7 +45,6 @@ const FirebaseProvider = ({ children }) => {
   const [firebaseError, setFirebaseError] = useState(null);
   const [userLoading, setUserLoading] = useState(true);
   const [userAuth, setUserAuth] = useState({});
-  const [myPhotos, setMyPhotos] = useState([]);
   const [userData, setUserData] = useState({
     id: '',
     loggedIn: false,
@@ -100,52 +99,6 @@ const FirebaseProvider = ({ children }) => {
         });
     }
   };
-
-  // firebase.auth().onAuthStateChanged(function(user) {
-  //   setUserLoading(true);
-  //   if (user) {
-  //     const userId = dbh.collection('users').doc(firebase.auth().currentUser.uid);
-  //     userId
-  //       .get()
-  //       .then(doc => {
-  //         if (doc.exists) {
-  //           const {
-  //             userName,
-  //             firstName,
-  //             lastName,
-  //             role,
-  //             description,
-  //             photo,
-  //             followers,
-  //           } = doc.data();
-  //           const userDetails = {
-  //             id: user.uid,
-  //             email: user.email,
-  //             userName,
-  //             firstName,
-  //             lastName,
-  //             role,
-  //             description,
-  //             photo,
-  //             followers,
-  //           };
-  //           if (!userData) {
-  //             console.log(userDetails);
-  //             setUserData(userDetails);
-  //           } else {
-  //           }
-  //         }
-  //       })
-  //       .then(() => {
-  //         setUserLoading(false);
-  //       })
-  //       .catch(error => {
-  //         console.log(error);
-  //       });
-  //   } else {
-  //     setUserData(null);
-  //   }
-  // });
 
   const onAuthStateChange = async callback => {
     setUserLoading(true);
@@ -222,20 +175,7 @@ const FirebaseProvider = ({ children }) => {
           addedOn: new Date(),
         })
         .then(() => {
-          if (userData) {
-            let tempPhotos = [];
-            dbh
-              .collection('userPhotos')
-              .where('userId', '==', userData.id)
-              .get()
-              .then(querySnapshot => {
-                querySnapshot.forEach(doc => {
-                  console.log(doc.data());
-                  tempPhotos.push({ id: doc.id, ...doc.data() });
-                });
-                setMyPhotos(tempPhotos);
-              });
-          }
+          onAuthStateChange(setUserData);
         });
     }
   };
@@ -254,7 +194,6 @@ const FirebaseProvider = ({ children }) => {
         userLoading,
         userAuth,
         uploadUserPhoto,
-        myPhotos,
       }}>
       {children}
     </FirebaseContext.Provider>

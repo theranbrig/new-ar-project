@@ -405,7 +405,12 @@ const UploadPhotoModal = () => {
   const uploadPhoto = async () => {
     setError('');
     setLoading(true);
-    if (currentPictureUrl.length && userData && description.length && taggedProducts.length) {
+    if (
+      currentPictureUrl.length &&
+      userData.loggedIn &&
+      description.length &&
+      taggedProducts.length
+    ) {
       await uploadUserPhoto(currentPictureUrl, description, taggedProducts);
       setPhotoUploadOpen(false);
       setLoading(false);
@@ -462,7 +467,6 @@ const UploadPhotoModal = () => {
               </div>
             </div>
           )}
-
           {uploadState === 2 && (
             <div className='top-content'>
               <div className='title-buttons'>
@@ -503,11 +507,6 @@ const UploadPhotoModal = () => {
                         </div>
                       ))}
                     </div>
-                    {/* {taggedProducts.length < 3 && (
-                      <button onClick={() => setUploadState(3)} className='add-another'>
-                        Add another product
-                      </button>
-                    )} */}
                   </>
                 ) : (
                   <div className='add-tags'>
@@ -570,11 +569,9 @@ const UploadPhotoModal = () => {
             </div>
           )}
           <div className='bottom-content'>
-            {/* {uploadState === 1 && (
-              <BlackButtonClick onClick={() => setUploadState(3)}>NEXT STEP (2/2)</BlackButtonClick>
-            )} */}
             {uploadState === 2 && (
               <>
+                {error && <p>{error}</p>}
                 <WhiteButtonClick onClick={() => setUploadState(1)}>
                   Previous Step (2/2)
                 </WhiteButtonClick>
