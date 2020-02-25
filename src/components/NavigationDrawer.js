@@ -96,7 +96,7 @@ const StretchedNavStyles = styled.div`
     background: transparent;
   }
   .left-icons {
-    width: 95px;
+    width: 100px;
     button {
       margin-left: 50px;
       height: 50px;
