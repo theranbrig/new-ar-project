@@ -19,6 +19,7 @@ import { useHistory } from 'react-router-dom';
 import ReactCrop from 'react-image-crop';
 import 'react-image-crop/dist/ReactCrop.css';
 import { convertFile } from '../utilities/coverting';
+import CloseSVG from '../assets/icons/icon_close';
 
 const UploadStyles = styled.div`
   height: ${({ photoUploadOpen }) => (photoUploadOpen ? '90vh' : '0px')};
@@ -50,7 +51,7 @@ const UploadStyles = styled.div`
         display: flex;
         flex-direction: row;
         justify-content: space-between;
-        height: 10vh;
+        height: 5vh;
         .left-content {
           width: 60px;
         }
@@ -63,7 +64,11 @@ const UploadStyles = styled.div`
           align-self: center;
           button {
             border: none;
-            font-size: 1.5rem;
+            background: none;
+            border: none;
+            svg {
+              height: 16px;
+            }
           }
         }
       }
@@ -84,10 +89,10 @@ const UploadStyles = styled.div`
         border-radius: 0px;
         font-size: 20px;
         font-weight: bold;
-        height: 350px;
+        height: 340px;
         overflow: hidden;
         width: 100%;
-        max-width: 250px;
+        max-width: 225px;
         margin: 20px auto 60px;
         svg {
           height: 100px;
@@ -242,9 +247,8 @@ const UploadStyles = styled.div`
   }
   .ReactCrop {
     max-width: 90%;
-    width: 350px;
-    height: 350px;
-    margin-left: calc(50% - 175px);
+    width: 225px;
+    height: 340px;
   }
 `;
 
@@ -448,7 +452,9 @@ const UploadPhotoModal = () => {
                 <div className='left-content'></div>
                 <h1>Select Picture</h1>
                 <div className='right-content'>
-                  <button onClick={() => setPhotoUploadOpen(false)}>X</button>
+                  <button aria-label='close' onClick={() => setPhotoUploadOpen(false)}>
+                    <CloseSVG />
+                  </button>
                 </div>
               </div>
               <div className='select-photo'>
@@ -575,7 +581,7 @@ const UploadPhotoModal = () => {
                 <WhiteButtonClick onClick={() => setUploadState(1)}>
                   Previous Step (2/2)
                 </WhiteButtonClick>
-                {description.length && taggedProducts.length && currentPictureUrl.length && (
+                {description.length && taggedProducts.length && currentPictureUrl.length ? (
                   <BlackButtonClick
                     onClick={() => {
                       if (description.length && taggedProducts.length && currentPictureUrl.length) {
@@ -584,7 +590,7 @@ const UploadPhotoModal = () => {
                     }}>
                     Upload Picture
                   </BlackButtonClick>
-                )}
+                ) : null}
               </>
             )}
           </div>

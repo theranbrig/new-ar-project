@@ -12,11 +12,13 @@ import FullShopBagSVG from '../assets/icons/icon_shoppingbag_full';
 import UserSVG from '../assets/icons/icon_user';
 import LogoSVG from '../assets/icons/yzed_logo';
 import UploadPhoto from '../components/UploadPhotoModal';
+import AddPhotoSVG from '../assets/icons/icon_add_photo';
+import { ModalContext } from '../context/Modal';
 
 const StyledBurger = styled.button`
   position: fixed;
   top: 3vh;
-  left: 30px;
+  left: 10px;
   display: flex;
   flex-direction: column;
   justify-content: space-around;
@@ -32,7 +34,7 @@ const StyledBurger = styled.button`
   }
   @media (max-width: 576px) {
     top: 20px;
-    left: 20px;
+    left: 15px;
   }
   div {
     width: 2rem;
@@ -88,67 +90,39 @@ const StretchedNavStyles = styled.div`
   top: 0;
   z-index: 500;
   box-shadow: 0px 0px 6px #c7c7c7;
-  .right-icons {
-    min-width: 95px;
-    svg {
-      height: 2.2rem;
-      @media (max-width: 480px) {
-        display: ${({ open }) => (open ? 'none' : '')};
-      }
-    }
-    a {
-      margin-right: 10px;
-      min-height: 40px;
-      @media (max-width: 480px) {
-        margin-right: -20px;
-      }
-    }
+  button {
+    border: none;
+    background: transparent;
+  }
+  .left-icons {
+    width: 95px;
     button {
-      width: 30px;
-      background: none;
-      border: none;
-      position: relative;
-      height: 2.5rem;
-      @media (max-width: 480px) {
-        font-size: 1.6rem;
-        margin: 0px 10px 0;
-      }
-    }
-    #cart-button {
-      margin-right: 30px;
-      @media (max-width: 480px) {
-        margin-right: 0;
+      margin-left: 50px;
+      height: 50px;
+      width: 50px;
+      svg {
+        height: 35px;
       }
     }
   }
-  .left-icons {
-    min-width: 95px;
+  .right-icons {
+    width: 100px;
     button {
-      background: none;
-      border: none;
-      height: 2.5rem;
-      width: 2.5rem;
-      margin-left: 4.2rem;
-      padding: 0;
-      @media (max-width: 480px) {
-        width: 2.5rem;
-        margin-left: 60px;
-      }
+      height: 50px;
+      width: 50px;
       svg {
-        height: 2.2rem;
-        @media (max-width: 480px) {
-          display: ${({ open }) => (open ? 'none' : 'block')};
-        }
-      }
-      @media (max-width: 480px) {
-        width: ${({ open }) => (open ? '110' : '')};
+        height: 35px;
       }
     }
   }
   .logo-link svg {
-    height: 4vh;
+    height: 25px;
     @media (max-width: 480px) {
-      height: 2.5vh;
+      display: ${({ open }) => (open ? 'none' : '')};
+      height: 20px;
+    }
+    @media (min-width: 500px) {
+      height: 40px;
     }
   }
 `;
@@ -159,6 +133,8 @@ const NavigationDrawer = ({ children }) => {
   const [openSearch, setOpenSearch] = useState(false);
   const { cart, cartLoading } = useContext(CartContext);
   const { userData } = useContext(FirebaseContext);
+
+  const { setPhotoUploadOpen, photoUploadOpen } = useContext(ModalContext);
 
   const node = React.useRef();
 
@@ -180,9 +156,13 @@ const NavigationDrawer = ({ children }) => {
           <LogoSVG />
         </Link>
         <div className='right-icons'>
-          <Link to={userData ? '/profile' : '/login'}>
-            <UserSVG />
-          </Link>
+          <button
+            aria-label='Open Upload Photo'
+            onClick={() => {
+              setPhotoUploadOpen(!photoUploadOpen);
+            }}>
+            <AddPhotoSVG />
+          </button>
           <button
             onClick={() => {
               setOpenBag(!openBag);

@@ -21,7 +21,7 @@ const AccordionButton = styled.button`
   border: none;
   border-bottom: ${({ last }) => (last ? '1px solid #989898' : 'none')};
   text-align: center;
-  font-size: 1.5rem;
+  font-size: 1.2rem;
   font-weight: 300;
   strong {
     font-weight: 600;

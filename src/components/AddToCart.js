@@ -19,7 +19,7 @@ export const AddToCartStyles = styled.div`
       background: ${props => props.theme.colors.white};
       box-shadow: none;
       height: 25px;
-      font-size: 1.1rem;
+      font-size: 1rem;
       -webkit-appearance: none;
       -webkit-border-radius: 0px;
       width: 100%;
@@ -29,16 +29,6 @@ export const AddToCartStyles = styled.div`
       border-top-left-radius: 25px;
       border-bottom-left-radius: 25px;
     }
-  }
-  .select-wrapper:after {
-    font-family: FontAwesome;
-    content: '\f107';
-    font-size: 28px;
-    position: absolute;
-    top: 140px;
-    right: 20px;
-    color: #434b67;
-    pointer-events: none;
   }
   p {
     text-align: center;
@@ -51,11 +41,12 @@ export const AddToCartStyles = styled.div`
       background: transparent;
       border: none;
       font-family: ${props => props.theme.fonts.main};
-      font-size: 1.5rem;
+      font-size: 1.1rem;
       margin: 0 20px;
       height: 52px;
-      width: 50px;
-      line-height: 50px;
+      width: 52px;
+      line-height: 52px;
+      text-align: center;
     }
     .active {
       color: ${props => props.theme.colors.white};
@@ -71,7 +62,7 @@ const BlackButton = styled.button`
   height: 50px;
   display: block;
   margin: -1px auto 0;
-  font-size: 1.2rem;
+  font-size: 1rem;
   font-family: ${props => props.theme.fonts.main};
   background: ${props => props.theme.colors.black};
   color: white;

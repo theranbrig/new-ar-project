@@ -46,6 +46,7 @@ const SliderStyles = styled.div`
   }
   .slider-cell-content {
     background: ${props => props.theme.colors.lightGrey};
+    min-height: 188px;
     img {
       width: 100%;
       height: 100%;
