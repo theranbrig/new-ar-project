@@ -205,7 +205,7 @@ const UploadStyles = styled.div`
   .product-item {
     display: grid;
     padding: 5px;
-    grid-template-columns: 70px 1fr 30px;
+    grid-template-columns: 70px 1fr 40px;
     grid-gap: 10px;
     border: 1px solid ${props => props.theme.colors.lightGrey};
     width: calc(80% + 10px);
@@ -228,9 +228,9 @@ const UploadStyles = styled.div`
     button {
       background: none;
       border: none;
-      i {
-        color: tomato;
-        font-size: 1.5rem;
+      width: 40px;
+      svg {
+        height: 16px;
       }
     }
   }
@@ -508,7 +508,7 @@ const UploadPhotoModal = () => {
                                 taggedProducts.filter(item => item.id !== product.id)
                               );
                             }}>
-                            <i className='fa fa-times-circle-o'></i>
+                            <CloseSVG fill='tomato' />
                           </button>
                         </div>
                       ))}
