@@ -25,7 +25,7 @@ export const PhotoStyles = styled.div`
     justify-content: space-between;
     align-items: center;
     width: 90%;
-    margin: 0 auto;
+    margin: 5px auto;
     i {
       margin-right: 10px;
     }
@@ -171,9 +171,7 @@ const UserPhoto = ({ photo, userName }) => {
         {showTags && <Tag tag={photo.tags[0]} setShowTags={setShowTags} />}
       </div>
       <p className='likes-and-time'>
-        <div className='likes'>
-          <PhotoLikes photoId={photo.id} />
-        </div>
+        <PhotoLikes photoId={photo.id} />
         <p className='date'>{moment.unix(photo.addedOn.seconds).fromNow()}</p>
       </p>
       <div className='description'>

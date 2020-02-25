@@ -6,15 +6,21 @@ import LikeEmptySVG from '../assets/icons/icon_like_empty';
 import '@firebase/firestore';
 
 const LikeStyles = styled.div`
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
   button {
     background: none;
     border: none;
+
     svg {
-      height: 16px;
+      height: 25px;
     }
   }
   h4 {
     display: inline;
+    font-size: 20px;
   }
 `;
 
@@ -87,15 +93,11 @@ const PhotoLikes = ({ photoId }) => {
 
   return (
     <LikeStyles>
-      <div className='likes'>
-        <button onClick={() => toggleLike()}>
-          {isLiked ? <LikeFilledSVG /> : <LikeEmptySVG />}
-        </button>
-        <h4>
-          <strong>{photo && photo.likes ? photo.likes : 0}</strong> Like
-          {((photo && photo.likes > 1) || (photo && photo.likes === 0)) && 's'}
-        </h4>
-      </div>
+      <button onClick={() => toggleLike()}>{isLiked ? <LikeFilledSVG /> : <LikeEmptySVG />}</button>
+      <h4>
+        <strong>{photo && photo.likes ? photo.likes : 0}</strong> Like
+        {((photo && photo.likes > 1) || (photo && photo.likes === 0)) && 's'}
+      </h4>
     </LikeStyles>
   );
 };
