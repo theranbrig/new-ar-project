@@ -261,7 +261,7 @@ const Product = () => {
               src={image}
               onClick={() => setMainDisplay(image)}
               effect='blur'
-              className={mainDisplay === image && 'selected-photo'}
+              className={mainDisplay === image ? 'selected-photo' : ''}
               alt={image}
             />
           ))}

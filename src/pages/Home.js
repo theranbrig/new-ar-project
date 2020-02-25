@@ -208,7 +208,7 @@ const Home = () => {
         <title>YZED - HOME</title>
       </Helmet>
       {mainProduct && (
-        <h3 className='main-product-title'>
+        <div className='main-product-title'>
           <div className='date-and-price'>
             <h3>{displayDate}</h3>
             <h4>{formatPrice(mainProduct.price)}</h4>
@@ -216,7 +216,7 @@ const Home = () => {
           <h3>
             <strong>{mainProduct.brand}</strong> {mainProduct.name}
           </h3>
-        </h3>
+        </div>
       )}
       <MediaViewer
         glbFile='https://oneoone-resource.s3.ap-northeast-2.amazonaws.com/yzed/GLTF_TRENCH_COAT_RESIZED_ANDBAKED_4.gltf'

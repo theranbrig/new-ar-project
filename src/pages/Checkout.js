@@ -55,7 +55,7 @@ const Checkout = () => {
   const [cartTotal, setCartTotal] = useState('');
   const [cartItems, setCartItems] = useState([]);
   const { cart, cartLoading, clearLocalCart } = useContext(CartContext);
-  const { userData, dbh } = useContext(FirebaseContext);
+  const { userData, dbh, userLoading } = useContext(FirebaseContext);
 
   const history = useHistory();
 
@@ -64,9 +64,9 @@ const Checkout = () => {
       return accum + parseInt(item.price);
     }, 0);
     setCartTotal(total);
-  }, [cart, userData]);
+  }, [cart]);
 
-  if ((cartLoading && !userData) || checkoutLoading) {
+  if ((cartLoading && !userData) || checkoutLoading || userLoading) {
     return (
       <CartStyles>
         <LoadingSpinner color='black' />
@@ -80,7 +80,7 @@ const Checkout = () => {
         <title>YZED - MY BAG ({`${cart.length}`})</title>
       </Helmet>
       <BackButton />
-      {!cart.length && <h1>No Items in Bag...</h1>}
+      {userData && !cart.length && <h1>No Items in Bag...</h1>}
       <ShoppingBagItems canEdit={true} cartLoading={cartLoading} mode='light' />
       <div className='cart-details'>
         <h2>Total: {`$${(cartTotal / 100).toFixed(2)}`}</h2>

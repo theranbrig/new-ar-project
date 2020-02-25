@@ -45,8 +45,10 @@ const SliderStyles = styled.div`
     margin: 30px 0;
   }
   .slider-cell-content {
+    background: ${props => props.theme.colors.lightGrey};
     img {
       width: 100%;
+      height: 100%;
     }
   }
   .break-1 {

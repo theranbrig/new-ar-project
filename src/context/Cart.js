@@ -8,7 +8,7 @@ const CartProvider = ({ children }) => {
   const [cart, setCart] = useState([]);
   const [cartLoading, setCartLoading] = useState(false);
 
-  const { userData, dbh } = useContext(FirebaseContext);
+  const { userData, dbh, userLoading } = useContext(FirebaseContext);
 
   const addToFirebaseCart = (userId, product, size, quantity) => {
     console.log(product);
@@ -34,7 +34,6 @@ const CartProvider = ({ children }) => {
   };
 
   const checkFirebaseItemExists = async (product, selectedSize, quantity) => {
-    console.log(product);
     dbh
       .collection('cartItems')
       .where('userId', '==', userData.id)
@@ -43,13 +42,13 @@ const CartProvider = ({ children }) => {
       .get()
       .then(async function(querySnapshot) {
         if (!querySnapshot.docs.length) {
-          await addToFirebaseCart(userData.id, product, selectedSize, quantity);
+          await addToFirebaseCart(userData.id, product, selectedSize, parseInt(quantity));
         } else {
           querySnapshot.forEach(function(doc) {
             const cartItem = dbh.collection('cartItems').doc(doc.id);
             cartItem.get().then(async doc => {
               const oldQuantity = doc.data().quantity;
-              await cartItem.update({ quantity: oldQuantity + quantity });
+              await cartItem.update({ quantity: parseInt(oldQuantity) + parseInt(quantity) });
               const newCart = getFirebaseCart(userData);
               setCart(newCart);
               setCartLoading(false);
@@ -64,11 +63,11 @@ const CartProvider = ({ children }) => {
 
   const addItemToCart = async (product, selectedSize, quantity) => {
     setCartLoading(true);
-    if (userData) {
+    if (userData.loggedIn) {
       await checkFirebaseItemExists(product, selectedSize, quantity);
       setCartLoading(false);
     } else {
-      const cartItem = { ...product, selectedSize, quantity };
+      const cartItem = { ...product, selectedSize, quantity: parseInt(quantity) };
       const cart = JSON.parse(localStorage.getItem('shoppingCart'));
       if (cart && cart.length) {
         const cartCheckItem = cart.filter(
@@ -81,7 +80,7 @@ const CartProvider = ({ children }) => {
         } else {
           cartCheckItem[0] = {
             ...product,
-            quantity: cartCheckItem[0].quantity + quantity,
+            quantity: parseInt(cartCheckItem[0].quantity) + parseInt(quantity),
             selectedSize: cartCheckItem[0].selectedSize,
           };
           let itemIndex;
@@ -106,7 +105,7 @@ const CartProvider = ({ children }) => {
 
   const removeItemFromCart = async (index, cartItemId) => {
     if (window.confirm('Delete the item from your cart?')) {
-      if (!userData) {
+      if (!userData.loggedIn) {
         setCartLoading(true);
         const cartData = await JSON.parse(localStorage.getItem('shoppingCart'));
         await cartData.splice(index, 1);
@@ -155,7 +154,7 @@ const CartProvider = ({ children }) => {
     setCartLoading(true);
     let cartItems = [];
     const fetchData = async () => {
-      if (userData) {
+      if (userData.loggedIn) {
         cartItems = await getFirebaseCart(userData);
         setCart(cartItems);
         setCartLoading(false);
@@ -165,8 +164,10 @@ const CartProvider = ({ children }) => {
         setCartLoading(false);
       }
     };
-    fetchData();
-  }, [userData, setCart]);
+    if (!userLoading) {
+      fetchData();
+    }
+  }, [setCart, userLoading]);
 
   return (
     <CartContext.Provider

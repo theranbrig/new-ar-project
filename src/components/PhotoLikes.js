@@ -22,7 +22,7 @@ const PhotoLikes = ({ photoId }) => {
   const [isLiked, setIsLiked] = useState(false);
   const [photo, setPhoto] = useState(null);
 
-  const { dbh, userData, firebase } = useContext(FirebaseContext);
+  const { dbh, userData, firebase, userLoading } = useContext(FirebaseContext);
 
   const toggleLike = () => {
     if (isLiked) {
@@ -73,7 +73,9 @@ const PhotoLikes = ({ photoId }) => {
             });
         });
     }
-  }, [userData, setIsLiked, toggleLike]);
+  }, [userData, setIsLiked, toggleLike, userLoading]);
+
+  if (userLoading) return null;
 
   return (
     <LikeStyles>

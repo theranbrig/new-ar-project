@@ -8,6 +8,7 @@ import { ModalContext } from '../context/Modal';
 import moment from 'moment';
 import UserPhoto from '../components/UserPhoto';
 import UserInfo from '../components/UserInfo';
+import LoadingSpinner from '../components/LoadingSpinner';
 
 export const UserStyles = styled.div`
   width: 500px;
@@ -23,7 +24,7 @@ const User = () => {
   const [loading, setLoading] = useState(false);
   const [photos, setPhotos] = useState([]);
   const [user, setUser] = useState(null);
-  const { logoutUser, dbh } = useContext(FirebaseContext);
+  const { logoutUser, dbh, userLoading } = useContext(FirebaseContext);
 
   const history = useHistory();
   const { id } = useParams();
@@ -52,10 +53,10 @@ const User = () => {
       });
   }, []);
 
-  if (loading)
+  if (loading || userLoading)
     return (
       <UserStyles>
-        <h1>Loading...</h1>
+        <LoadingSpinner color='black' />
       </UserStyles>
     );
   return (

@@ -43,10 +43,20 @@ export const storage = firebase.storage();
 
 const FirebaseProvider = ({ children }) => {
   const [firebaseError, setFirebaseError] = useState(null);
-  const [userLoading, setUserLoading] = useState(false);
-  const [userData, setUserData] = useState(null);
+  const [userLoading, setUserLoading] = useState(true);
   const [userAuth, setUserAuth] = useState({});
   const [myPhotos, setMyPhotos] = useState([]);
+  const [userData, setUserData] = useState({
+    id: '',
+    loggedIn: false,
+    userName: '',
+    firstName: '',
+    lastName: '',
+    role: '',
+    description: '',
+    photo: [],
+    followers: [],
+  });
 
   firebase.analytics().logEvent('notification_received');
 
@@ -91,47 +101,112 @@ const FirebaseProvider = ({ children }) => {
     }
   };
 
-  firebase.auth().onAuthStateChanged(function(user) {
-    if (user) {
-      setUserAuth(user);
-      const userId = dbh.collection('users').doc(firebase.auth().currentUser.uid);
-      userId
-        .get()
-        .then(doc => {
-          if (doc.exists) {
-            const {
-              userName,
-              firstName,
-              lastName,
-              role,
-              description,
-              photo,
-              followers,
-            } = doc.data();
-            const userDetails = {
-              id: user.uid,
-              email: user.email,
-              userName,
-              firstName,
-              lastName,
-              role,
-              description,
-              photo,
-              followers,
-            };
-            if (!userData) {
-              console.log(userDetails);
-              setUserData(userDetails);
+  // firebase.auth().onAuthStateChanged(function(user) {
+  //   setUserLoading(true);
+  //   if (user) {
+  //     const userId = dbh.collection('users').doc(firebase.auth().currentUser.uid);
+  //     userId
+  //       .get()
+  //       .then(doc => {
+  //         if (doc.exists) {
+  //           const {
+  //             userName,
+  //             firstName,
+  //             lastName,
+  //             role,
+  //             description,
+  //             photo,
+  //             followers,
+  //           } = doc.data();
+  //           const userDetails = {
+  //             id: user.uid,
+  //             email: user.email,
+  //             userName,
+  //             firstName,
+  //             lastName,
+  //             role,
+  //             description,
+  //             photo,
+  //             followers,
+  //           };
+  //           if (!userData) {
+  //             console.log(userDetails);
+  //             setUserData(userDetails);
+  //           } else {
+  //           }
+  //         }
+  //       })
+  //       .then(() => {
+  //         setUserLoading(false);
+  //       })
+  //       .catch(error => {
+  //         console.log(error);
+  //       });
+  //   } else {
+  //     setUserData(null);
+  //   }
+  // });
+
+  const onAuthStateChange = async callback => {
+    setUserLoading(true);
+    await firebase.auth().onAuthStateChanged(user => {
+      if (user) {
+        const userId = dbh
+          .collection('users')
+          .doc(user.uid)
+          .get()
+          .then(doc => {
+            if (doc.exists) {
+              const {
+                userName,
+                firstName,
+                lastName,
+                role,
+                description,
+                photo,
+                followers,
+              } = doc.data();
+              const userDetails = {
+                id: user.uid,
+                email: user.email,
+                userName,
+                firstName,
+                lastName,
+                role,
+                description,
+                photo,
+                followers,
+              };
+              callback({ loggedIn: true, id: user.uid, ...userDetails });
+              setUserLoading(false);
             }
-          }
-        })
-        .catch(error => {
-          console.log(error);
+          });
+      } else {
+        callback({
+          loggedIn: false,
+          id: '',
+          loggedIn: false,
+          userName: '',
+          firstName: '',
+          lastName: '',
+          role: '',
+          description: '',
+          photo: [],
+          followers: [],
         });
-    } else {
-      setUserData(null);
-    }
-  });
+        setUserLoading(false);
+      }
+    });
+  };
+
+  useEffect(() => {
+    setUserLoading(true);
+    const unsubscribe = onAuthStateChange(setUserData);
+
+    return () => {
+      unsubscribe();
+    };
+  }, []);
 
   const uploadUserPhoto = (currentPictureUrl, description, taggedProducts) => {
     if (currentPictureUrl.length && userData && description.length && taggedProducts.length) {

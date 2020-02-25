@@ -101,7 +101,7 @@ const Profile = () => {
   const [editProfile, setEditProfile] = useState(false);
   const [updated, setUpdated] = useState(false);
 
-  const { userData, logoutUser, dbh, myPhotos } = useContext(FirebaseContext);
+  const { userData, logoutUser, dbh, myPhotos, userLoading } = useContext(FirebaseContext);
   const { setPhotoUploadOpen } = useContext(ModalContext);
 
   const history = useHistory();
@@ -130,7 +130,7 @@ const Profile = () => {
     }
   }, [userData, dbh, myPhotos]);
 
-  if (!userData || loading)
+  if (!userData || loading || userLoading)
     return (
       <ProfileStyles>
         <LoadingSpinner color='black' />
