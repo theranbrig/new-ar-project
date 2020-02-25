@@ -44,25 +44,35 @@ const BlackButton = styled.button`
 
 const Admin = () => {
   const [products, setProducts] = useState([]);
-  const { userData, dbh } = useContext(FirebaseContext);
+  const [loading, setLoading] = useState(false);
+  const { userData, dbh, userLoading } = useContext(FirebaseContext);
+  const history = useHistory();
 
   useEffect(() => {
-    let tempProducts = [];
-    dbh
-      .collection('products')
-      .get()
-      .then(function(querySnapshot) {
-        querySnapshot.forEach(function(doc) {
-          tempProducts.push({ id: doc.id, ...doc.data() });
-        });
-        setProducts(tempProducts);
-      });
-  }, []);
+    setLoading(true);
+    if (!userLoading) {
+      if (!userData.loggedIn || userData.role !== 'ADMIN') {
+        history.push('/');
+      } else {
+        let tempProducts = [];
+        dbh
+          .collection('products')
+          .get()
+          .then(function(querySnapshot) {
+            querySnapshot.forEach(function(doc) {
+              tempProducts.push({ id: doc.id, ...doc.data() });
+            });
+            setProducts(tempProducts);
+            setLoading(false);
+          });
+      }
+    }
+  }, [userLoading]);
 
-  if (!userData || userData.role !== 'ADMIN') {
+  if (userLoading || loading) {
     return (
       <LoginStyles>
-        <h1>You don't have permission to be here. Scram.</h1>
+        <LoadingSpinner color='black' />
       </LoginStyles>
     );
   }

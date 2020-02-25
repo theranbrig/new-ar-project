@@ -109,7 +109,7 @@ const Login = () => {
 
   useEffect(() => {
     console.log(userData);
-    if (userData) {
+    if (userData.loggedIn) {
       history.push('/');
     }
   }, [userData, history]);

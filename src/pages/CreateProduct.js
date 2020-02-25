@@ -28,7 +28,7 @@ const CreateProduct = () => {
 
   const history = useHistory();
 
-  const { firebaseError, userData, dbh, userAuth } = useContext(FirebaseContext);
+  const { firebaseError, userData, dbh, userLoading } = useContext(FirebaseContext);
 
   const { createProduct } = useContext(ProductContext);
 
@@ -46,29 +46,22 @@ const CreateProduct = () => {
       !picture2 &&
       !picture3 &&
       !allFeatures.length;
-    console.log(isValid);
     return isValid;
   };
 
   useEffect(() => {
     setLoading(true);
-    if (userAuth.uid) {
-      console.log(userAuth);
-      dbh
-        .collection('users')
-        .doc(userAuth.uid)
-        .get()
-        .then(doc => {
-          console.log(doc.data());
-          if (doc.data().role === 'ADMIN') {
-            setAuthorizedUser(true);
-            setLoading(false);
-          }
-        });
+    if (!userLoading) {
+      if (userData.role !== 'ADMIN') {
+        history.push('/');
+      } else {
+        setAuthorizedUser(true);
+        setLoading(false);
+      }
     }
-  }, [userAuth]);
+  }, [userLoading]);
 
-  if (loading) {
+  if (loading || userLoading) {
     return (
       <LoginStyles>
         <LoadingSpinner color='black' />

@@ -124,7 +124,7 @@ const MenuLinks = ({ open, setOpen }) => {
                 Subscribe
               </NavLink>
             )}
-            {!userData ? (
+            {!userData.loggedIn ? (
               <NavLink to='/login' activeClassName='active-link' onClick={() => setOpen(false)}>
                 Login
               </NavLink>

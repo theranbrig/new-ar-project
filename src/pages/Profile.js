@@ -111,19 +111,25 @@ const Profile = () => {
   useEffect(() => {
     window.scrollTo(0, 0);
     setLoading(true);
-    let tempPhotos = [];
-    dbh
-      .collection('userPhotos')
-      .where('userId', '==', userData.id)
-      .get()
-      .then(querySnapshot => {
-        querySnapshot.forEach(doc => {
-          tempPhotos.push({ id: doc.id, ...doc.data() });
-          setLoading(false);
-        });
-        setPhotos(tempPhotos.sort((a, b) => b.addedOn.seconds - a.addedOn.seconds));
-      });
-  }, [userData, dbh]);
+    if (!userLoading) {
+      if (userData.loggedIn) {
+        let tempPhotos = [];
+        dbh
+          .collection('userPhotos')
+          .where('userId', '==', userData.id)
+          .get()
+          .then(querySnapshot => {
+            querySnapshot.forEach(doc => {
+              tempPhotos.push({ id: doc.id, ...doc.data() });
+              setLoading(false);
+            });
+            setPhotos(tempPhotos.sort((a, b) => b.addedOn.seconds - a.addedOn.seconds));
+          });
+      } else {
+        history.push('/login');
+      }
+    }
+  }, [userData, dbh, userLoading]);
 
   if (!userData || loading || userLoading)
     return (

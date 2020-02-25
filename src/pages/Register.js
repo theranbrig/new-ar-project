@@ -114,7 +114,7 @@ const Register = () => {
   const { registerUser, firebaseError, userData } = useContext(FirebaseContext);
 
   useEffect(() => {
-    if (userData) {
+    if (userData.loggedIn) {
       history.push('/profile');
     }
   }, [userData, history]);
