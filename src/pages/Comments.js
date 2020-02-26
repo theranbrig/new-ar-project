@@ -236,14 +236,15 @@ const RepliesStyles = styled.div`
   }
   .reply-content {
     display: grid;
-    grid-template-columns: 40px 1fr;
+    grid-template-columns: 45px 1fr;
     grid-gap: 5px;
     margin: 5px auto;
     max-width: 400px;
   }
   .comment-info {
     display: grid;
-    grid-template-columns: 50px 1fr;
+    grid-template-columns: 45px 1fr;
+    align-items: center;
     grid-gap: 5px;
     p {
       font-weight: 300;
@@ -254,8 +255,8 @@ const RepliesStyles = styled.div`
       text-decoration: none;
     }
     img {
-      width: 50px;
-      height: 50px;
+      width: 45px;
+      height: 45px;
     }
   }
 `;
@@ -276,7 +277,11 @@ const Replies = ({ comment, setSelectedReplies, photoRef, sendReply }) => {
           console.log(doc.data());
           tempReplies.push({ id: doc.id, ...doc.data() });
         });
-        setReplies(tempReplies);
+        setReplies(
+          tempReplies.sort((a, b) => {
+            return b.addedOn.seconds - a.addedOn.seconds;
+          })
+        );
         setLoading(false);
       });
   };
@@ -330,7 +335,7 @@ const Replies = ({ comment, setSelectedReplies, photoRef, sendReply }) => {
           </div>
         </div>
       ))}
-      <CreateReplies sendReply={sendReply} commentId={comment.id} />
+      {userData.loggedIn && <CreateReplies sendReply={sendReply} commentId={comment.id} />}
     </RepliesStyles>
   );
 };
@@ -426,7 +431,7 @@ const Comments = () => {
               showPhotos={showPhotos}
             />
           ))}
-          {<CreateComments sendComment={sendComment} />}
+          {userData.loggedIn && <CreateComments sendComment={sendComment} />}
         </>
       )}
     </CommentsStyles>
