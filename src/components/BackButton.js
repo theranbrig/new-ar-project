@@ -1,16 +1,20 @@
 import React from 'react';
 import { useHistory } from 'react-router-dom';
 import styled from 'styled-components';
+import ChevronUp from '../assets/icons/icon_chevron_up';
+
 
 export const BackButtonStyles = styled.div`
-  margin-top: 10px;
   text-align: left;
   background: ${props => props.theme.colors.white};
   button {
     border: none;
-    background: white;
-    .fa-chevron-left {
-      font-size: 1.4rem;
+    background: transparent;
+    height: 40px;
+    width: 40px;
+    padding: 0;
+    svg {
+      height: 20px;
     }
   }
 `;
@@ -20,7 +24,7 @@ const BackButton = () => {
   return (
     <BackButtonStyles>
       <button onClick={() => history.goBack()} aria-label='Back Button'>
-        <i className='fa fa-chevron-left' aria-hidden='true'></i>
+        <ChevronUp />
       </button>
     </BackButtonStyles>
   );

@@ -21,6 +21,7 @@ import EditProduct from '../pages/EditProduct';
 import UploadPhoto from '../pages/UploadPhoto';
 import User from '../pages/User';
 import ProfileEdit from '../pages/ProfileEdit';
+import Comments from '../pages/Comments';
 
 export default function App() {
   return (
@@ -81,6 +82,9 @@ export default function App() {
           </Route>
           <Route exact path='/user/:id'>
             <User />
+          </Route>
+          <Route exact path='/comments/:photoId'>
+            <Comments />
           </Route>
           <Route path='/'>
             <Home />

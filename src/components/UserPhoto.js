@@ -8,6 +8,68 @@ import PhotoLikes from '../components/PhotoLikes';
 import CloseSVG from '../assets/icons/icon_close';
 import TagSVG from '../assets/icons/icon_tag';
 
+const Tag = ({ tag, setShowTags }) => {
+  return (
+    <TagStyles>
+      <HideTagButton
+        onClick={() => {
+          setShowTags(false);
+        }}>
+        <CloseSVG fill='white' />
+      </HideTagButton>
+      <Link to={`/products/${tag.id}`}>
+        <h3>{tag.brand}</h3>
+        <h4>{tag.name}</h4>
+        <LazyLoadImage
+          src={tag.mainImage}
+          alt={tag.name}
+          effect='blur'
+          height='100px'
+          width='100px;'
+        />
+      </Link>
+    </TagStyles>
+  );
+};
+
+const UserPhoto = ({ photo, userName }) => {
+  const [showTags, setShowTags] = useState(false);
+
+  return (
+    <PhotoStyles>
+      <div className='image'>
+        {!showTags && (
+          <ShowTagButton
+            showTags={showTags}
+            onClick={() => {
+              setShowTags(true);
+            }}>
+            <TagSVG />
+          </ShowTagButton>
+        )}
+        <LazyLoadImage
+          src={photo.url}
+          alt={photo.description}
+          effect='blur'
+          height='340px'
+          width='225px;'
+        />
+        {showTags && <Tag tag={photo.tags[0]} setShowTags={setShowTags} />}
+      </div>
+      <p className='likes-and-time'>
+        <PhotoLikes photoId={photo.id} />
+        <p className='date'>{moment.unix(photo.addedOn.seconds).fromNow()}</p>
+      </p>
+      <div className='description'>
+        <h4>@{userName}</h4>
+        <p>{photo.description}</p>
+        <Link to={`/comments/${photo.id}`}>Read all comments...</Link>
+      </div>
+    </PhotoStyles>
+  );
+};
+
+export default UserPhoto;
 export const PhotoStyles = styled.div`
   width: 400px;
   max-width: 90%;
@@ -58,8 +120,8 @@ export const PhotoStyles = styled.div`
     margin: 0 auto;
   }
   a {
-    color: tomato;
-    margin-right: 5px;
+    color: ${props => props.theme.colors.grey};
+    font-weight: 300;
     text-decoration: none;
   }
 `;
@@ -121,65 +183,3 @@ const HideTagButton = styled.div`
     margin-top: 8px;
   }
 `;
-
-const Tag = ({ tag, setShowTags }) => {
-  return (
-    <TagStyles>
-      <HideTagButton
-        onClick={() => {
-          setShowTags(false);
-        }}>
-        <CloseSVG fill='white' />
-      </HideTagButton>
-      <Link to={`/products/${tag.id}`}>
-        <h3>{tag.brand}</h3>
-        <h4>{tag.name}</h4>
-        <LazyLoadImage
-          src={tag.mainImage}
-          alt={tag.name}
-          effect='blur'
-          height='100px'
-          width='100px;'
-        />
-      </Link>
-    </TagStyles>
-  );
-};
-
-const UserPhoto = ({ photo, userName }) => {
-  const [showTags, setShowTags] = useState(false);
-
-  return (
-    <PhotoStyles>
-      <div className='image'>
-        {!showTags && (
-          <ShowTagButton
-            showTags={showTags}
-            onClick={() => {
-              setShowTags(true);
-            }}>
-            <TagSVG />
-          </ShowTagButton>
-        )}
-        <LazyLoadImage
-          src={photo.url}
-          alt={photo.description}
-          effect='blur'
-          height='340px'
-          width='225px;'
-        />
-        {showTags && <Tag tag={photo.tags[0]} setShowTags={setShowTags} />}
-      </div>
-      <p className='likes-and-time'>
-        <PhotoLikes photoId={photo.id} />
-        <p className='date'>{moment.unix(photo.addedOn.seconds).fromNow()}</p>
-      </p>
-      <div className='description'>
-        <h4>@{userName}</h4>
-        <p>{photo.description}</p>
-      </div>
-    </PhotoStyles>
-  );
-};
-
-export default UserPhoto;
