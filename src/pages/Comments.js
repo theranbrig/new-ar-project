@@ -13,9 +13,9 @@ const CommentsStyles = styled.div`
   margin-top: 10vh;
   width: 500px;
   max-width: 95%;
-  margin: 10vh auto 0;
-  min-height: 90vh;
-  padding: 10px;
+  margin: 12vh auto 0;
+  min-height: 88vh;
+  padding: 0 10px;
 `;
 
 const CreateCommentsStyles = styled.div``;
@@ -380,7 +380,11 @@ const Comments = () => {
       querySnapshot.forEach(doc => {
         tempComments.push({ id: doc.id, ...doc.data() });
       });
-      setComments(tempComments);
+      setComments(
+        tempComments.sort((a, b) => {
+          return b.addedOn.seconds - a.addedOn.seconds;
+        })
+      );
       setLoading(false);
     });
   };
