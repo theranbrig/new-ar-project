@@ -18,17 +18,6 @@ const CommentsStyles = styled.div`
   padding: 10px;
 `;
 
-const RepliesStyles = styled.div`
-  button {
-    border: none;
-    background: none;
-    padding: 0;
-    svg {
-      height: 16px;
-    }
-  }
-`;
-
 const CreateCommentsStyles = styled.div``;
 
 const CreateComments = ({ sendComment }) => {
@@ -87,16 +76,47 @@ const CreateReplies = ({ commentId, sendReply }) => {
 };
 
 const CommentStyles = styled.div`
-  display: grid;
-  grid-template-columns: 4fr 1fr;
-  .back-button button {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  font-family: ${props => props.theme.fonts.main};
+  margin: 30px 0;
+  .comment-body {
+    width: 100%;
+    .user {
+      color: ${props => props.theme.colors.black};
+      text-decoration: none;
+      font-weight: 700;
+    }
+    p {
+      margin: 5px 0;
+    }
+  }
+  .replies-button {
     border: none;
     background: none;
     padding: 0;
+    font-family: ${props => props.theme.fonts.main};
+    font-size: 0.9rem;
+    color: ${props => props.theme.colors.grey};
+    span {
+      margin-right: 10px;
+    }
   }
   .upVotes {
-    svg {
-      height: 20px;
+    align-self: center;
+    text-align: center;
+    width: 80px;
+    button {
+      background: none;
+      border: none;
+      svg {
+        height: 20px;
+      }
+    }
+    p {
+      margin: 5px 0 0;
     }
   }
 `;
@@ -119,29 +139,126 @@ const Comment = ({ comment, setSelectedReplies, photoRef, showPhotos }) => {
       <div className='comment-body'>
         <p className='comment'>
           <span>
-            <Link to={`/user/${comment.user.id}`}>@{comment.user.userName}</Link> {comment.comment}
+            <Link className='user' to={`/user/${comment.user.id}`}>
+              @{comment.user.userName}
+            </Link>{' '}
+            {comment.comment}
           </span>
         </p>
-        <p className='date'>{moment.unix(comment.addedOn.seconds).fromNow()}</p>
-        <button
-          className='back-button'
-          onClick={() => {
-            setSelectedReplies(comment);
-          }}>
-          {replyCount === 0
-            ? 'Start the conversation...'
-            : replyCount === 1
-            ? 'View the reply...'
-            : `View all ${replyCount} replies...`}
-        </button>
+        <div className='comment-actions'>
+          <button
+            className='replies-button'
+            onClick={() => {
+              setSelectedReplies(comment);
+            }}>
+            <span className='date'>{moment.unix(comment.addedOn.seconds).fromNow()}</span>
+            reply({replyCount})
+          </button>
+        </div>
       </div>
       <div className='upVotes'>
-        {comment.upVotes > 0 ? <FilledUpVoteSVG /> : <EmptyUpVoteSVG />}
+        <button>{comment.upVotes > 0 ? <FilledUpVoteSVG /> : <EmptyUpVoteSVG />}</button>
         <p>{comment.upVotes}</p>
       </div>
     </CommentStyles>
   );
 };
+
+const RepliesStyles = styled.div`
+  font-family: ${props => props.theme.fonts.main};
+  button {
+    border: none;
+    background: none;
+    svg {
+      height: 16px;
+    }
+  }
+  .reply {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    font-family: ${props => props.theme.fonts.main};
+    margin: 30px 0;
+    .reply-body {
+      img {
+        width: 40px;
+        height: 40px;
+      }
+    }
+    p.reply-info {
+      width: 100%;
+      display: inline;
+      min-height: 40px;
+      font-weight: 300;
+      margin: 0;
+      .user {
+        color: ${props => props.theme.colors.black};
+        text-decoration: none;
+        font-weight: 700;
+        background: none;
+      }
+    }
+    .replies-button {
+      border: none;
+      background: none;
+      padding: 0;
+      font-family: ${props => props.theme.fonts.main};
+      font-size: 0.9rem;
+      color: ${props => props.theme.colors.grey};
+      span {
+        margin-right: 10px;
+      }
+    }
+    .upVotes {
+      align-self: center;
+      text-align: center;
+      width: 80px;
+      button {
+        background: none;
+        border: none;
+        svg {
+          height: 20px;
+        }
+      }
+      p {
+        margin: 5px 0 0;
+        font-weight: 300;
+      }
+    }
+  }
+  .reply-actions {
+    font-weight: 300;
+    color: ${props => props.theme.colors.grey};
+  }
+  h3 {
+    font-size: 1.1rem;
+  }
+  .reply-content {
+    display: grid;
+    grid-template-columns: 40px 1fr;
+    grid-gap: 5px;
+    margin: 5px auto;
+    max-width: 400px;
+  }
+  .comment-info {
+    display: grid;
+    grid-template-columns: 50px 1fr;
+    grid-gap: 5px;
+    p {
+      font-weight: 300;
+    }
+    a {
+      font-weight: 700;
+      color: ${props => props.theme.colors.black};
+      text-decoration: none;
+    }
+    img {
+      width: 50px;
+      height: 50px;
+    }
+  }
+`;
 
 const Replies = ({ comment, setSelectedReplies, photoRef, sendReply }) => {
   const [loading, setLoading] = useState(false);
@@ -181,12 +298,37 @@ const Replies = ({ comment, setSelectedReplies, photoRef, sendReply }) => {
         }}>
         <ChevronLeft />
       </button>
-      <h1>Replying to:</h1>
-      <p>
-        <Link>@{comment.user.userName}</Link> {comment.comment}
-      </p>
+      <h3>Replying to:</h3>
+      <div className='comment-info'>
+        <img src={comment.user.photo} />
+        <p>
+          <Link>@{comment.user.userName}</Link> {comment.comment}
+        </p>
+      </div>
+      <h3>Other replies:</h3>
       {replies.map(reply => (
-        <h2>{reply.reply}</h2>
+        <div className='reply'>
+          <div className='reply-body'>
+            <div className='reply-content'>
+              <img src={reply.user.photo} alt={reply.user.userName} />
+              <p className='reply-info'>
+                <span>
+                  <Link className='user' to={`/user/${reply.user.id}`}>
+                    @{reply.user.userName}
+                  </Link>{' '}
+                  {reply.reply}
+                </span>
+              </p>
+            </div>
+            <div className='reply-actions'>
+              <span className='date'>{moment.unix(reply.addedOn.seconds).fromNow()}</span>
+            </div>
+          </div>
+          <div className='upVotes'>
+            <button>{reply.upVotes > 0 ? <FilledUpVoteSVG /> : <EmptyUpVoteSVG />}</button>
+            <p>{reply.upVotes}</p>
+          </div>
+        </div>
       ))}
       <CreateReplies sendReply={sendReply} commentId={comment.id} />
     </RepliesStyles>
@@ -197,7 +339,7 @@ const Comments = () => {
   const [loading, setLoading] = useState(false);
   const [comments, setComments] = useState([]);
   const [showPhotos, setShowPhotos] = useState(false);
-  const [selectedReplies, setSelectedReplies] = useState(null);
+  const [selectedReplies, setSelectedReplies] = useState('');
   const { dbh, userData, userLoading } = useContext(FirebaseContext);
 
   const { photoId } = useParams();
