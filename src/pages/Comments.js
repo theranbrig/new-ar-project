@@ -5,6 +5,9 @@ import LoadingSpinner from '../components/LoadingSpinner';
 import { useParams, Link } from 'react-router-dom';
 import moment from 'moment';
 import BackButton from '../components/BackButton';
+import ChevronLeft from '../assets/icons/icon_chevron_left';
+import FilledUpVoteSVG from '../assets/icons/icon_upvote_filled';
+import EmptyUpVoteSVG from '../assets/icons/icon_upvote_empty';
 
 const CommentsStyles = styled.div`
   margin-top: 10vh;
@@ -12,9 +15,19 @@ const CommentsStyles = styled.div`
   max-width: 95%;
   margin: 10vh auto 0;
   min-height: 90vh;
+  padding: 10px;
 `;
 
-const CommentStyles = styled.div``;
+const RepliesStyles = styled.div`
+  button {
+    border: none;
+    background: none;
+    padding: 0;
+    svg {
+      height: 16px;
+    }
+  }
+`;
 
 const CreateCommentsStyles = styled.div``;
 
@@ -73,7 +86,22 @@ const CreateReplies = ({ commentId, sendReply }) => {
   );
 };
 
-const Comment = ({ comment, setSelectedReplies, photoRef }) => {
+const CommentStyles = styled.div`
+  display: grid;
+  grid-template-columns: 4fr 1fr;
+  .back-button button {
+    border: none;
+    background: none;
+    padding: 0;
+  }
+  .upVotes {
+    svg {
+      height: 20px;
+    }
+  }
+`;
+
+const Comment = ({ comment, setSelectedReplies, photoRef, showPhotos }) => {
   const [replyCount, setReplyCount] = useState(0);
 
   const { userLoading } = useContext(FirebaseContext);
@@ -87,18 +115,29 @@ const Comment = ({ comment, setSelectedReplies, photoRef }) => {
   }, []);
 
   return (
-    <CommentStyles>
+    <CommentStyles showPhotos={showPhotos}>
       <div className='comment-body'>
-        <p>
-          <Link to={`/user/${comment.user.id}`}>{comment.user.userName}</Link> {comment.comment}
+        <p className='comment'>
+          <span>
+            <Link to={`/user/${comment.user.id}`}>@{comment.user.userName}</Link> {comment.comment}
+          </span>
         </p>
-        <p>{moment.unix(comment.addedOn.seconds).fromNow()}</p>
+        <p className='date'>{moment.unix(comment.addedOn.seconds).fromNow()}</p>
         <button
+          className='back-button'
           onClick={() => {
             setSelectedReplies(comment);
           }}>
-          Show all {replyCount} {replyCount === 1 ? 'reply' : 'replies'}...
+          {replyCount === 0
+            ? 'Start the conversation...'
+            : replyCount === 1
+            ? 'View the reply...'
+            : `View all ${replyCount} replies...`}
         </button>
+      </div>
+      <div className='upVotes'>
+        {comment.upVotes > 0 ? <FilledUpVoteSVG /> : <EmptyUpVoteSVG />}
+        <p>{comment.upVotes}</p>
       </div>
     </CommentStyles>
   );
@@ -135,25 +174,29 @@ const Replies = ({ comment, setSelectedReplies, photoRef, sendReply }) => {
   }, []);
 
   return (
-    <div>
+    <RepliesStyles>
       <button
         onClick={() => {
           setSelectedReplies(null);
         }}>
-        X
+        <ChevronLeft />
       </button>
-      <h1>{comment.comment}</h1>
+      <h1>Replying to:</h1>
+      <p>
+        <Link>@{comment.user.userName}</Link> {comment.comment}
+      </p>
       {replies.map(reply => (
         <h2>{reply.reply}</h2>
       ))}
       <CreateReplies sendReply={sendReply} commentId={comment.id} />
-    </div>
+    </RepliesStyles>
   );
 };
 
 const Comments = () => {
   const [loading, setLoading] = useState(false);
   const [comments, setComments] = useState([]);
+  const [showPhotos, setShowPhotos] = useState(false);
   const [selectedReplies, setSelectedReplies] = useState(null);
   const { dbh, userData, userLoading } = useContext(FirebaseContext);
 
@@ -218,7 +261,6 @@ const Comments = () => {
 
   return (
     <CommentsStyles>
-      <BackButton />
       {selectedReplies ? (
         <Replies
           sendReply={sendReply}
@@ -228,12 +270,14 @@ const Comments = () => {
         />
       ) : (
         <>
+          <BackButton />
           {comments.map(comment => (
             <Comment
               key={comment.id}
               comment={comment}
               setSelectedReplies={setSelectedReplies}
               photoRef={photoRef}
+              showPhotos={showPhotos}
             />
           ))}
           {<CreateComments sendComment={sendComment} />}

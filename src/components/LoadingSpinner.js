@@ -51,7 +51,6 @@ const LoadingSpinner = ({ color }) => {
         <div></div>
         <div></div>
       </div>
-      <h3>Loading...</h3>
     </SpinnerStyles>
   );
 };
