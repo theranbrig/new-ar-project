@@ -9,10 +9,45 @@ import ChevronLeft from '../assets/icons/icon_chevron_left';
 import FilledUpVoteSVG from '../assets/icons/icon_upvote_filled';
 import EmptyUpVoteSVG from '../assets/icons/icon_upvote_empty';
 import UploadPhotoComment from '../components/UploadPhotoComment';
-import CameraSVG from '../assets/icons/icon_photo';
+import CameraSVG from '../assets/icons/icon_camera';
 import TextareaAutosize from 'react-textarea-autosize';
+import ChevronRight from '../assets/icons/icon_chevron_right';
 
-const CreateCommentsStyles = styled.div``;
+const CreateCommentsStyles = styled.div`
+  border: 1px solid ${props => props.theme.colors.lightGrey};
+  padding: 5px;
+  border-radius: 25px;
+  textarea {
+    display: block;
+    margin: 0 auto;
+    font-size: 16px;
+    width: 90%;
+    resize: none;
+    border: none;
+    padding: 5px;
+    background: transparent;
+    font-family: ${props => props.theme.fonts.main};
+    font-weight: 300;
+  }
+  button {
+    font-family: ${props => props.theme.fonts.main};
+    background: transparent !important;
+    margin: 10px 5%;
+    font-weight: 700;
+    width: 90% !important;
+    text-align: left;
+    padding: 0;
+    font-size: 16px;
+    display: flex;
+    flex-direction: row;
+    font-weight: 300;
+    justify-content: space-between;
+    svg {
+      align-self: center;
+      height: 6px;
+    }
+  }
+`;
 
 export const CreateComments = ({ sendComment }) => {
   const [comment, setComment] = useState('');
@@ -20,24 +55,29 @@ export const CreateComments = ({ sendComment }) => {
 
   return (
     <CreateCommentsStyles>
-      <input
-        type='text'
+      <TextareaAutosize
+        minRows='1'
+        maxRows='5'
+        placeholder='Tap to write...'
         name='comment'
         value={comment}
         onChange={e => {
           setComment(e.target.value);
         }}
       />
-      <button
-        disabled={!comment.length}
-        onClick={() => {
-          if (comment.length) {
-            sendComment(comment);
-            setComment('');
-          }
-        }}>
-        Send
-      </button>
+      {comment.length > 0 && (
+        <button
+          disabled={!comment.length}
+          onClick={() => {
+            if (comment.length) {
+              sendComment(comment);
+              setComment('');
+            }
+          }}>
+          Add Comment
+          <ChevronRight />
+        </button>
+      )}
     </CreateCommentsStyles>
   );
 };
@@ -84,7 +124,15 @@ const CommentStyles = styled.div`
       font-weight: 700;
     }
     p {
-      margin: 5px 0;
+      font-weight: ${props => props.theme.fonts.main};
+      span {
+        margin: 5px 5px 0 0;
+        svg {
+          vertical-align: middle;
+          display: inline-block;
+          height: 16px;
+        }
+      }
     }
   }
   .replies-button {
@@ -113,6 +161,14 @@ const CommentStyles = styled.div`
       margin: 5px 0 0;
     }
   }
+  .comment-photo {
+    display: grid;
+    grid-template-columns: 40px 1fr;
+    grid-gap: 20px;
+    img {
+      width: 40px;
+    }
+  }
 `;
 
 const Comment = ({ comment, setSelectedReplies, photoRef, showPhotos }) => {
@@ -131,14 +187,20 @@ const Comment = ({ comment, setSelectedReplies, photoRef, showPhotos }) => {
   return (
     <CommentStyles showPhotos={showPhotos}>
       <div className='comment-body'>
-        <p className='comment'>
-          <span>
+        <div className={comment.photo ? 'comment-photo' : 'comment-no-photo'}>
+          {comment.photo && <img src={comment.photo} alt={`${comment.user.userName}-photo`} />}
+          <p>
+            {comment.photo && (
+              <span>
+                <CameraSVG fill='#272727' />
+              </span>
+            )}
             <Link className='user' to={`/user/${comment.user.id}`}>
               @{comment.user.userName}
             </Link>{' '}
             {comment.comment}
-          </span>
-        </p>
+          </p>
+        </div>
         <div className='comment-actions'>
           <button
             className='replies-button'
@@ -224,6 +286,7 @@ const RepliesStyles = styled.div`
   .reply-actions {
     font-weight: 300;
     color: ${props => props.theme.colors.grey};
+    margin-left: 50px;
   }
   h3 {
     font-size: 1.1rem;
@@ -341,15 +404,23 @@ const CommentsStyles = styled.div`
   margin: 12vh auto 0;
   min-height: 88vh;
   padding: 0 10px;
+
   .comment-inputs {
+    display: grid;
+    grid-template-columns: 45px 45px 1fr;
+    grid-gap: 10px;
+    img {
+      height: 45px;
+      width: 45px;
+    }
     button {
-      height: 32px;
-      width: 32px;
-      border-radius: 50%;
       background: ${props => props.theme.colors.black};
       border: none;
+      height: 45px;
+      width: 45px;
+      border-radius: 50%;
       svg {
-        height: 12px;
+        height: 20px;
       }
     }
   }
@@ -456,6 +527,7 @@ const Comments = () => {
           ))}
           {userData.loggedIn && (
             <div className='comment-inputs'>
+              <img src={userData.photo} alt={userData.userName} />
               <button
                 onClick={() => {
                   setUploadPhotoComment(!uploadPhotoComment);

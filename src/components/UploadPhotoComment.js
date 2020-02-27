@@ -21,6 +21,7 @@ import 'react-image-crop/dist/ReactCrop.css';
 import { convertFile } from '../utilities/coverting';
 import CloseSVG from '../assets/icons/icon_close';
 import TextareaAutosize from 'react-textarea-autosize';
+import ChevronRight from '../assets/icons/icon_chevron_right';
 
 const UploadStyles = styled.div`
   width: 100%;
@@ -53,10 +54,14 @@ const UploadStyles = styled.div`
           width: 60px;
           align-self: center;
           button {
-            border: none;
+            border: 1px solid ${props => props.theme.colors.grey};
+            height: 32px;
+            width: 32px;
             background: none;
-            border: none;
+            border-radius: 16px;
+
             svg {
+              margin-top: 2px;
               height: 16px;
             }
           }
@@ -125,29 +130,34 @@ const UploadStyles = styled.div`
     height: 340px;
   }
   .comment-input {
-    position: relative;
     border: 1px solid ${props => props.theme.colors.lightGrey};
-    text-align: right;
     padding: 5px;
-    border-radius: 20px;
+    border-radius: 25px;
     textarea {
-      background: ${props => props.theme.colors.white};
-      width: 90%;
       display: block;
       margin: 0 auto;
-      font-size: 1rem;
-      font-family: ${props => props.theme.fonts.main};
-      border: none;
+      font-size: 16px;
+      width: 90%;
       resize: none;
+      border: none;
+      padding: 5px;
+      background: transparent;
     }
     button {
-      height: 25px;
-      color: ${props => props.theme.colors.white};
-      background: ${props => props.theme.colors.black};
-      font-family: ${props => props.theme.fonts.main};
-      border-radius: 12.5px;
-      &:disabled {
-        color: ${props => props.theme.colors.grey};
+      background: transparent !important;
+      margin: 10px 5%;
+      font-weight: 700;
+      width: 90% !important;
+      text-align: left;
+      padding: 0;
+      font-size: 16px;
+      display: flex;
+      flex-direction: row;
+      justify-content: space-between;
+      border: none;
+      svg {
+        align-self: center;
+        height: 12px;
       }
     }
   }
@@ -220,7 +230,29 @@ const CropperComponent = ({ src, setImageString, uploadS3File, comment, setComme
             onComplete={makeClientCrop}
             ruleOfThirds
           />
-          <p>Please select the photo area.</p>
+          <p>Please select the photo area above and add a comment below to submit.</p>
+          <div className='comment-input'>
+            <TextareaAutosize
+              placeholder='Tap to write..'
+              name='comment'
+              value={comment}
+              minRows='1'
+              maxRows='5'
+              onChange={e => {
+                setComment(e.target.value);
+              }}
+            />
+            {comment && result && (
+              <button
+                disabled={!comment || !result}
+                onClick={() => {
+                  uploadS3File();
+                }}>
+                Add Photo...
+                <ChevronRight />
+              </button>
+            )}
+          </div>
         </>
       ) : (
         <>
@@ -231,24 +263,6 @@ const CropperComponent = ({ src, setImageString, uploadS3File, comment, setComme
           <input type='file' name='file upload' accept='image/*' onChange={onSelectFile} />
         </>
       )}
-
-      <div className='comment-input'>
-        <textarea
-          name='comment'
-          value={comment}
-          rows='2'
-          onChange={e => {
-            setComment(e.target.value);
-          }}
-        />
-        <button
-          disabled={!comment || !result}
-          onClick={() => {
-            uploadS3File();
-          }}>
-          SEND
-        </button>
-      </div>
     </div>
   );
 };
@@ -296,6 +310,7 @@ const SelectPhoto = ({ photoRef, photoId, setUploadPhotoComment }) => {
             photo: data.location,
           });
         setLoading(false);
+        setUploadPhotoComment(false);
       })
       .catch(err => console.error(err));
   };
