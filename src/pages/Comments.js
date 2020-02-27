@@ -10,6 +10,7 @@ import FilledUpVoteSVG from '../assets/icons/icon_upvote_filled';
 import EmptyUpVoteSVG from '../assets/icons/icon_upvote_empty';
 import UploadPhotoComment from '../components/UploadPhotoComment';
 import CameraSVG from '../assets/icons/icon_photo';
+import TextareaAutosize from 'react-textarea-autosize';
 
 const CreateCommentsStyles = styled.div``;
 
@@ -355,7 +356,7 @@ const CommentsStyles = styled.div`
 `;
 
 const Comments = () => {
-  const [uploadPhotoComment, setUploadPhotoComment] = useState(true);
+  const [uploadPhotoComment, setUploadPhotoComment] = useState(false);
   const [loading, setLoading] = useState(false);
   const [comments, setComments] = useState([]);
   const [showPhotos, setShowPhotos] = useState(false);
@@ -376,6 +377,7 @@ const Comments = () => {
         user: { id: userData.id, userName: userData.userName, photo: userData.photo },
         addedOn: new Date(),
         upVotes: 0,
+        photo: '',
       });
   };
 

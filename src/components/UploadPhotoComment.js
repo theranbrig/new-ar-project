@@ -20,6 +20,7 @@ import ReactCrop from 'react-image-crop';
 import 'react-image-crop/dist/ReactCrop.css';
 import { convertFile } from '../utilities/coverting';
 import CloseSVG from '../assets/icons/icon_close';
+import TextareaAutosize from 'react-textarea-autosize';
 
 const UploadStyles = styled.div`
   width: 100%;
@@ -123,6 +124,33 @@ const UploadStyles = styled.div`
     width: 225px;
     height: 340px;
   }
+  .comment-input {
+    position: relative;
+    border: 1px solid ${props => props.theme.colors.lightGrey};
+    text-align: right;
+    padding: 5px;
+    border-radius: 20px;
+    textarea {
+      background: ${props => props.theme.colors.white};
+      width: 90%;
+      display: block;
+      margin: 0 auto;
+      font-size: 1rem;
+      font-family: ${props => props.theme.fonts.main};
+      border: none;
+      resize: none;
+    }
+    button {
+      height: 25px;
+      color: ${props => props.theme.colors.white};
+      background: ${props => props.theme.colors.black};
+      font-family: ${props => props.theme.fonts.main};
+      border-radius: 12.5px;
+      &:disabled {
+        color: ${props => props.theme.colors.grey};
+      }
+    }
+  }
 `;
 
 const CropperComponent = ({ src, setImageString, uploadS3File, comment, setComment }) => {
@@ -192,26 +220,7 @@ const CropperComponent = ({ src, setImageString, uploadS3File, comment, setComme
             onComplete={makeClientCrop}
             ruleOfThirds
           />
-          {result ? (
-            <>
-              <input
-                type='text'
-                name='comment'
-                value={comment}
-                onChange={e => {
-                  setComment(e.target.value);
-                }}
-              />
-              <BlackButtonClick
-                onClick={() => {
-                  uploadS3File();
-                }}>
-                Select Photo
-              </BlackButtonClick>
-            </>
-          ) : (
-            <p>Please select the photo area.</p>
-          )}
+          <p>Please select the photo area.</p>
         </>
       ) : (
         <>
@@ -222,6 +231,24 @@ const CropperComponent = ({ src, setImageString, uploadS3File, comment, setComme
           <input type='file' name='file upload' accept='image/*' onChange={onSelectFile} />
         </>
       )}
+
+      <div className='comment-input'>
+        <textarea
+          name='comment'
+          value={comment}
+          rows='2'
+          onChange={e => {
+            setComment(e.target.value);
+          }}
+        />
+        <button
+          disabled={!comment || !result}
+          onClick={() => {
+            uploadS3File();
+          }}>
+          SEND
+        </button>
+      </div>
     </div>
   );
 };
