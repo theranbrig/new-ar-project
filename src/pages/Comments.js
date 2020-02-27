@@ -8,19 +8,12 @@ import BackButton from '../components/BackButton';
 import ChevronLeft from '../assets/icons/icon_chevron_left';
 import FilledUpVoteSVG from '../assets/icons/icon_upvote_filled';
 import EmptyUpVoteSVG from '../assets/icons/icon_upvote_empty';
-
-const CommentsStyles = styled.div`
-  margin-top: 10vh;
-  width: 500px;
-  max-width: 95%;
-  margin: 12vh auto 0;
-  min-height: 88vh;
-  padding: 0 10px;
-`;
+import UploadPhotoComment from '../components/UploadPhotoComment';
+import CameraSVG from '../assets/icons/icon_photo';
 
 const CreateCommentsStyles = styled.div``;
 
-const CreateComments = ({ sendComment }) => {
+export const CreateComments = ({ sendComment }) => {
   const [comment, setComment] = useState('');
   const { dbh } = useContext(FirebaseContext);
 
@@ -340,7 +333,29 @@ const Replies = ({ comment, setSelectedReplies, photoRef, sendReply }) => {
   );
 };
 
+const CommentsStyles = styled.div`
+  margin-top: 10vh;
+  width: 500px;
+  max-width: 95%;
+  margin: 12vh auto 0;
+  min-height: 88vh;
+  padding: 0 10px;
+  .comment-inputs {
+    button {
+      height: 32px;
+      width: 32px;
+      border-radius: 50%;
+      background: ${props => props.theme.colors.black};
+      border: none;
+      svg {
+        height: 12px;
+      }
+    }
+  }
+`;
+
 const Comments = () => {
+  const [uploadPhotoComment, setUploadPhotoComment] = useState(true);
   const [loading, setLoading] = useState(false);
   const [comments, setComments] = useState([]);
   const [showPhotos, setShowPhotos] = useState(false);
@@ -412,7 +427,13 @@ const Comments = () => {
 
   return (
     <CommentsStyles>
-      {selectedReplies ? (
+      {uploadPhotoComment ? (
+        <UploadPhotoComment
+          photoRef={photoRef}
+          photoId={photoId}
+          setUploadPhotoComment={setUploadPhotoComment}
+        />
+      ) : selectedReplies ? (
         <Replies
           sendReply={sendReply}
           comment={selectedReplies}
@@ -431,7 +452,18 @@ const Comments = () => {
               showPhotos={showPhotos}
             />
           ))}
-          {userData.loggedIn && <CreateComments sendComment={sendComment} />}
+          {userData.loggedIn && (
+            <div className='comment-inputs'>
+              <button
+                onClick={() => {
+                  setUploadPhotoComment(!uploadPhotoComment);
+                  console.log(uploadPhotoComment);
+                }}>
+                <CameraSVG fill='white' />
+              </button>
+              <CreateComments sendComment={sendComment} />
+            </div>
+          )}
         </>
       )}
     </CommentsStyles>
