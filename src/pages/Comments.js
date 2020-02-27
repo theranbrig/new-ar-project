@@ -439,6 +439,7 @@ const CommentsStyles = styled.div`
 const Comments = () => {
   const [uploadPhotoComment, setUploadPhotoComment] = useState(false);
   const [loading, setLoading] = useState(false);
+  const [dateSort, setDateSort] = useState(true);
   const [comments, setComments] = useState([]);
   const [showPhotos, setShowPhotos] = useState(false);
   const [selectedReplies, setSelectedReplies] = useState('');
@@ -492,6 +493,16 @@ const Comments = () => {
     });
   };
 
+  const sortByDate = () => {
+    setDateSort(true);
+    setComments([...comments.sort((a, b) => b.addedOn.seconds - a.addedOn.seconds)]);
+  };
+
+  const sortByPopularity = () => {
+    setDateSort(false);
+    setComments([...comments.sort((a, b) => b.upVotes - a.upVotes)]);
+  };
+
   useEffect(() => {
     setLoading(true);
     const unsubscribe = checkComments();
@@ -528,6 +539,14 @@ const Comments = () => {
           <section className='top-section'>
             <BackButton />
             <h1>Replies ({comments.length})</h1>
+          </section>
+          <section className='buttons'>
+            <button disabled={!dateSort} onClick={() => sortByPopularity()}>
+              BEST
+            </button>
+            <button disabled={dateSort} onClick={() => sortByDate()}>
+              NEWEST
+            </button>
           </section>
           {comments.map(comment => (
             <Comment
