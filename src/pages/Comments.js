@@ -17,6 +17,7 @@ const CreateCommentsStyles = styled.div`
   border: 1px solid ${props => props.theme.colors.lightGrey};
   padding: 5px;
   border-radius: 25px;
+  margin-bottom: 50px;
   textarea {
     display: block;
     margin: 0 auto;
@@ -33,7 +34,7 @@ const CreateCommentsStyles = styled.div`
     font-family: ${props => props.theme.fonts.main};
     background: transparent !important;
     margin: 10px 5%;
-    font-weight: 700;
+    font-weight: 700 !important;
     width: 90% !important;
     text-align: left;
     padding: 0;
@@ -44,7 +45,7 @@ const CreateCommentsStyles = styled.div`
     justify-content: space-between;
     svg {
       align-self: center;
-      height: 6px;
+      height: 16px !important;
     }
   }
 `;
@@ -124,7 +125,7 @@ const CommentStyles = styled.div`
       font-weight: 700;
     }
     p {
-      font-weight: ${props => props.theme.fonts.main};
+      font-weight: 300;
       span {
         margin: 5px 5px 0 0;
         svg {
@@ -424,6 +425,15 @@ const CommentsStyles = styled.div`
       }
     }
   }
+  .top-section {
+    font-family: ${props => props.theme.fonts.main};
+    display: grid;
+    grid-template-columns: 50px 1fr;
+    align-items: center;
+    h1 {
+      margin: 0;
+    }
+  }
 `;
 
 const Comments = () => {
@@ -515,7 +525,10 @@ const Comments = () => {
         />
       ) : (
         <>
-          <BackButton />
+          <section className='top-section'>
+            <BackButton />
+            <h1>Replies ({comments.length})</h1>
+          </section>
           {comments.map(comment => (
             <Comment
               key={comment.id}
