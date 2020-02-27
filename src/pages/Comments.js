@@ -88,7 +88,7 @@ const CreateReplies = ({ commentId, sendReply }) => {
 
   return (
     <CreateCommentsStyles>
-      <input
+      <TextareaAutosize
         type='text'
         name='reply'
         value={reply}
@@ -96,16 +96,19 @@ const CreateReplies = ({ commentId, sendReply }) => {
           setReply(e.target.value);
         }}
       />
-      <button
-        disabled={!reply.length}
-        onClick={() => {
-          if (reply.length) {
-            sendReply(commentId, reply);
-            setReply('');
-          }
-        }}>
-        Reply
-      </button>
+      {reply.length > 0 && (
+        <button
+          disabled={!reply.length}
+          onClick={() => {
+            if (reply.length) {
+              sendReply(commentId, reply);
+              setReply('');
+            }
+          }}>
+          Reply
+          <ChevronRight />
+        </button>
+      )}
     </CreateCommentsStyles>
   );
 };
@@ -376,7 +379,7 @@ const Replies = ({ comment, setSelectedReplies, photoRef, sendReply }) => {
           <Link>@{comment.user.userName}</Link> {comment.comment}
         </p>
       </div>
-      <h3>Other replies:</h3>
+      {replies.length ? <h3>Other replies:</h3> : <h3>Nothing here yet...</h3>}
       {replies.map(reply => (
         <div className='reply'>
           <div className='reply-body'>
@@ -440,6 +443,40 @@ const CommentsStyles = styled.div`
     align-items: center;
     h1 {
       margin: 0;
+    }
+  }
+
+  .buttons {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    width: 95%;
+    margin: 10px auto;
+    font-family: ${props => props.theme.fonts.main};
+    .sort-button {
+      height: 30px;
+      width: 100px;
+      border-radius: 15px;
+      border: 2px solid ${props => props.theme.colors.lightGrey};
+      color: ${props => props.theme.colors.lightGrey};
+      margin: 5px;
+      background: transparent;
+      &:disabled {
+        border: 1px solid ${props => props.theme.colors.black};
+        color: ${props => props.theme.colors.black};
+      }
+    }
+    .toggle-button {
+      margin: 5px 20px 5px 0;
+      height: 32px;
+      width: 32px;
+      padding: 0;
+      background: none;
+      border: none;
+      svg {
+        height: 30px;
+        vertical-align: center;
+      }
     }
   }
 `;
@@ -549,13 +586,22 @@ const Comments = () => {
             <h1>Replies ({comments.length})</h1>
           </section>
           <section className='buttons'>
-            <button disabled={!dateSort} onClick={() => sortByPopularity()}>
-              BEST
-            </button>
-            <button disabled={dateSort} onClick={() => sortByDate()}>
-              NEWEST
-            </button>
-            <button onClick={() => setShowPhotos(!showPhotos)}>Show Photos</button>
+            <div className='left-buttons'>
+              <button
+                className='sort-button'
+                disabled={!dateSort}
+                onClick={() => sortByPopularity()}>
+                BEST
+              </button>
+              <button className='sort-button' disabled={dateSort} onClick={() => sortByDate()}>
+                NEWEST
+              </button>
+            </div>
+            <div className='right-buttons'>
+              <button className='toggle-button' onClick={() => setShowPhotos(!showPhotos)}>
+                <CameraSVG fill='black' />
+              </button>
+            </div>
           </section>
           {comments.map(comment => (
             <Comment
