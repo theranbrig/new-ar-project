@@ -124,7 +124,9 @@ const CommentStyles = styled.div`
       text-decoration: none;
       font-weight: 700;
     }
+    margin-bottom: 5px;
     p {
+      margin: 0;
       font-weight: 300;
       span {
         margin: 5px 5px 0 0;
@@ -170,6 +172,10 @@ const CommentStyles = styled.div`
       width: 40px;
     }
   }
+  .comment-photo,
+  .comment-no-photo {
+    margin-bottom: 8px;
+  }
 `;
 
 const Comment = ({ comment, setSelectedReplies, photoRef, showPhotos }) => {
@@ -188,8 +194,10 @@ const Comment = ({ comment, setSelectedReplies, photoRef, showPhotos }) => {
   return (
     <CommentStyles showPhotos={showPhotos}>
       <div className='comment-body'>
-        <div className={comment.photo ? 'comment-photo' : 'comment-no-photo'}>
-          {comment.photo && <img src={comment.photo} alt={`${comment.user.userName}-photo`} />}
+        <div className={comment.photo && showPhotos ? 'comment-photo' : 'comment-no-photo'}>
+          {showPhotos && comment.photo && (
+            <img src={comment.photo} alt={`${comment.user.userName}-photo`} />
+          )}
           <p>
             {comment.photo && (
               <span>
@@ -441,7 +449,7 @@ const Comments = () => {
   const [loading, setLoading] = useState(false);
   const [dateSort, setDateSort] = useState(true);
   const [comments, setComments] = useState([]);
-  const [showPhotos, setShowPhotos] = useState(false);
+  const [showPhotos, setShowPhotos] = useState(true);
   const [selectedReplies, setSelectedReplies] = useState('');
   const { dbh, userData, userLoading } = useContext(FirebaseContext);
 
@@ -547,6 +555,7 @@ const Comments = () => {
             <button disabled={dateSort} onClick={() => sortByDate()}>
               NEWEST
             </button>
+            <button onClick={() => setShowPhotos(!showPhotos)}>Show Photos</button>
           </section>
           {comments.map(comment => (
             <Comment
