@@ -306,7 +306,7 @@ const SelectPhoto = ({ photoRef, photoId, setUploadPhotoComment }) => {
             photoId,
             user: { id: userData.id, userName: userData.userName, photo: userData.photo },
             addedOn: new Date(),
-            upVotes: 0,
+            upVotes: [],
             photo: data.location,
           });
         setLoading(false);

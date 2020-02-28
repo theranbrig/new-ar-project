@@ -181,8 +181,9 @@ const CommentStyles = styled.div`
   }
 `;
 
-const Comment = ({ comment, setSelectedReplies, photoRef, showPhotos }) => {
+const Comment = ({ comment, setSelectedReplies, photoRef, showPhotos, toggleUpvoteComment }) => {
   const [replyCount, setReplyCount] = useState(0);
+  const [displayPhoto, setDisplayPhoto] = useState(false);
 
   const { userLoading } = useContext(FirebaseContext);
 
@@ -192,11 +193,13 @@ const Comment = ({ comment, setSelectedReplies, photoRef, showPhotos }) => {
       .doc(comment.id)
       .collection('replies')
       .onSnapshot(querySnapshot => setReplyCount(querySnapshot.docs.length));
+    console.log(comment);
   }, []);
 
   return (
     <CommentStyles showPhotos={showPhotos}>
       <div className='comment-body'>
+        {displayPhoto && <ViewPhoto toggleUpvoteComment={toggleUpvoteComment} comment={comment} />}
         <div className={comment.photo && showPhotos ? 'comment-photo' : 'comment-no-photo'}>
           {showPhotos && comment.photo && (
             <img src={comment.photo} alt={`${comment.user.userName}-photo`} />
@@ -225,8 +228,13 @@ const Comment = ({ comment, setSelectedReplies, photoRef, showPhotos }) => {
         </div>
       </div>
       <div className='upVotes'>
-        <button>{comment.upVotes > 0 ? <FilledUpVoteSVG /> : <EmptyUpVoteSVG />}</button>
-        <p>{comment.upVotes}</p>
+        <button
+          onClick={() => {
+            toggleUpvoteComment(comment.id, comment.liked);
+          }}>
+          {comment.liked ? <FilledUpVoteSVG /> : <EmptyUpVoteSVG />}
+        </button>
+        <p>{comment.upVotes.length}</p>
       </div>
     </CommentStyles>
   );
@@ -416,7 +424,6 @@ const CommentsStyles = styled.div`
   margin: 12vh auto 0;
   min-height: 88vh;
   padding: 0 10px;
-
   .comment-inputs {
     display: grid;
     grid-template-columns: 45px 45px 1fr;
@@ -484,15 +491,40 @@ const CommentsStyles = styled.div`
 const Comments = () => {
   const [uploadPhotoComment, setUploadPhotoComment] = useState(false);
   const [loading, setLoading] = useState(false);
+  const [commentLiked, setCommentLiked] = useState(false);
   const [dateSort, setDateSort] = useState(true);
   const [comments, setComments] = useState([]);
   const [showPhotos, setShowPhotos] = useState(true);
   const [selectedReplies, setSelectedReplies] = useState('');
-  const { dbh, userData, userLoading } = useContext(FirebaseContext);
+  const { dbh, userData, userLoading, firebase } = useContext(FirebaseContext);
 
   const { photoId } = useParams();
 
   const photoRef = dbh.collection('userPhotos').doc(photoId);
+
+  const toggleUpvoteComment = (commentId, commentLiked) => {
+    if (commentLiked) {
+      dbh
+        .collection('userPhotos')
+        .doc(photoId)
+        .collection('comments')
+        .doc(commentId)
+        .update({ upVotes: firebase.firestore.FieldValue.arrayRemove(userData.id) })
+        .then(() => {
+          checkComments();
+        });
+    } else {
+      dbh
+        .collection('userPhotos')
+        .doc(photoId)
+        .collection('comments')
+        .doc(commentId)
+        .update({ upVotes: firebase.firestore.FieldValue.arrayUnion(userData.id) })
+        .then(() => {
+          checkComments();
+        });
+    }
+  };
 
   const sendComment = comment => {
     photoRef
@@ -524,18 +556,26 @@ const Comments = () => {
   };
 
   const checkComments = () => {
-    photoRef.collection('comments').onSnapshot(querySnapshot => {
-      let tempComments = [];
-      querySnapshot.forEach(doc => {
-        tempComments.push({ id: doc.id, ...doc.data() });
+    if (!userLoading) {
+      photoRef.collection('comments').onSnapshot(querySnapshot => {
+        let tempComments = [];
+        querySnapshot.forEach(doc => {
+          console.log(doc.data());
+          let liked;
+          if (userData.loggedIn) {
+            liked = doc.data().upVotes.some(vote => vote === userData.id);
+          }
+          tempComments.push({ id: doc.id, liked, ...doc.data() });
+        });
+
+        setComments(
+          tempComments.sort((a, b) => {
+            return b.addedOn.seconds - a.addedOn.seconds;
+          })
+        );
+        setLoading(false);
       });
-      setComments(
-        tempComments.sort((a, b) => {
-          return b.addedOn.seconds - a.addedOn.seconds;
-        })
-      );
-      setLoading(false);
-    });
+    }
   };
 
   const sortByDate = () => {
@@ -545,7 +585,7 @@ const Comments = () => {
 
   const sortByPopularity = () => {
     setDateSort(false);
-    setComments([...comments.sort((a, b) => b.upVotes - a.upVotes)]);
+    setComments([...comments.sort((a, b) => b.upVotes.length - a.upVotes.length)]);
   };
 
   useEffect(() => {
@@ -555,7 +595,7 @@ const Comments = () => {
       checkComments();
       setLoading(false);
     };
-  }, []);
+  }, [userLoading]);
 
   if (loading || userLoading)
     return (
@@ -610,6 +650,7 @@ const Comments = () => {
               setSelectedReplies={setSelectedReplies}
               photoRef={photoRef}
               showPhotos={showPhotos}
+              toggleUpvoteComment={toggleUpvoteComment}
             />
           ))}
           {userData.loggedIn && (
@@ -628,6 +669,16 @@ const Comments = () => {
         </>
       )}
     </CommentsStyles>
+  );
+};
+
+const ViewPhotoStyles = styled.div``;
+
+const ViewPhoto = ({ comment }) => {
+  return (
+    <ViewPhotoStyles>
+      <img src={comment.url} alt={comment.comment} />
+    </ViewPhotoStyles>
   );
 };
 
