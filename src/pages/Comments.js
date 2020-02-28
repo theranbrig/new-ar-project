@@ -12,6 +12,7 @@ import UploadPhotoComment from '../components/UploadPhotoComment';
 import CameraSVG from '../assets/icons/icon_camera';
 import TextareaAutosize from 'react-textarea-autosize';
 import ChevronRight from '../assets/icons/icon_chevron_right';
+import CloseSVG from '../assets/icons/icon_close';
 
 const CreateCommentsStyles = styled.div`
   border: 1px solid ${props => props.theme.colors.lightGrey};
@@ -199,10 +200,22 @@ const Comment = ({ comment, setSelectedReplies, photoRef, showPhotos, toggleUpvo
   return (
     <CommentStyles showPhotos={showPhotos}>
       <div className='comment-body'>
-        {displayPhoto && <ViewPhoto toggleUpvoteComment={toggleUpvoteComment} comment={comment} />}
+        {displayPhoto && (
+          <ViewPhoto
+            toggleUpvoteComment={toggleUpvoteComment}
+            comment={comment}
+            setDisplayPhoto={setDisplayPhoto}
+          />
+        )}
         <div className={comment.photo && showPhotos ? 'comment-photo' : 'comment-no-photo'}>
           {showPhotos && comment.photo && (
-            <img src={comment.photo} alt={`${comment.user.userName}-photo`} />
+            <img
+              src={comment.photo}
+              alt={`${comment.user.userName}-photo`}
+              onClick={() => {
+                setDisplayPhoto(true);
+              }}
+            />
           )}
           <p>
             {comment.photo && (
@@ -672,12 +685,83 @@ const Comments = () => {
   );
 };
 
-const ViewPhotoStyles = styled.div``;
+const ViewPhotoStyles = styled.div`
+  position: absolute;
+  left: 0;
+  top: 0;
+  background: #272727f8;
+  width: 100%;
+  height: 100vh;
+  z-index: 800;
+  color: ${props => props.theme.colors.white};
+  font-family: ${props => props.theme.fonts.main};
+  .photo-modal {
+    width: 400px;
+    height: 600px;
+    max-width: 95%;
+    margin-top: 10vh;
+    margin: 0 auto;
+    img {
+      width: 90%;
+      display: block;
+      margin: 0 auto 20px;
+    }
+    .photo-info {
+      width: 90%;
+      margin: 0 auto;
+      svg {
+        height: 16px;
+        vertical-align: middle;
+      }
+      a {
+        color: ${props => props.theme.colors.white};
+        text-decoration: none;
+        margin: 0 10px;
+        font-weight: 700;
+      }
+      p {
+        font-weight: 300;
+      }
+    }
+    .top {
+      width: 90%;
+      display: flex;
+      flex-direction: row;
+      justify-content: space-between;
+      margin: 5vh auto 0;
+      button {
+        border: none;
+        background: none;
+        svg {
+          height: 16px;
+        }
+      }
+    }
+  }
+`;
 
-const ViewPhoto = ({ comment }) => {
+const ViewPhoto = ({ comment, setDisplayPhoto }) => {
   return (
-    <ViewPhotoStyles>
-      <img src={comment.url} alt={comment.comment} />
+    <ViewPhotoStyles
+      onClick={() => {
+        setDisplayPhoto(false);
+      }}>
+      <div className='photo-modal'>
+        <section className='top'>
+          <h1>Picture Reply</h1>
+          <button aria-label='close modal'>
+            <CloseSVG fill='#fff' />
+          </button>
+        </section>
+        <img src={comment.photo} alt={comment.comment} />
+        <div className='photo-info'>
+          <p>
+            <CameraSVG fill='#fff' />
+            <Link to={`/user/${comment.user.id}`}>@{comment.user.userName}</Link>
+            {comment.comment}
+          </p>
+        </div>
+      </div>
     </ViewPhotoStyles>
   );
 };

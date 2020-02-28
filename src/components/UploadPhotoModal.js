@@ -288,8 +288,8 @@ const CropperComponent = ({ src, setImageString, uploadS3File }) => {
     const canvas = document.createElement('canvas');
     const scaleX = image.naturalWidth / image.width;
     const scaleY = image.naturalHeight / image.height;
-    canvas.width = crop.width;
-    canvas.height = crop.height;
+    canvas.width = Math.ceil(crop.width * scaleX);
+    canvas.height = Math.ceil(crop.height * scaleY);
     const ctx = canvas.getContext('2d');
     ctx.drawImage(
       image,
@@ -299,8 +299,8 @@ const CropperComponent = ({ src, setImageString, uploadS3File }) => {
       crop.height * scaleY,
       0,
       0,
-      crop.width,
-      crop.height
+      crop.width * scaleX,
+      crop.height * scaleY
     );
     const imageFile = canvas.toDataURL('image/png');
     setImageString(imageFile);

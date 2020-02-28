@@ -26,7 +26,7 @@ import ChevronRight from '../assets/icons/icon_chevron_right';
 const UploadStyles = styled.div`
   width: 100%;
   margin: 10vh 0 0;
-  height: 70vh;
+  height: 90vh;
   background: ${props => props.theme.colors.white};
   z-index: 600;
   transition: 0.5s;
@@ -72,10 +72,11 @@ const UploadStyles = styled.div`
         overflow: hidden;
         display: inline-block;
         width: 70%;
-        margin: 30px 15%;
-        height: 80%;
+        margin: 30px 15% 0;
+        height: 100%;
         max-height: 600px;
         text-align: center;
+        padding-bottom: 200px;
       }
       .btn {
         border: 1px solid #b9b9b9;
@@ -115,19 +116,19 @@ const UploadStyles = styled.div`
     height: 350px;
     width: 100%;
   }
-  .bottom-content {
-    margin-top: 10px;
-    button {
-      width: 80%;
-    }
-  }
   .selected {
     border: 1px solid ${props => props.theme.colors.black};
   }
   .ReactCrop {
-    max-width: 90%;
-    width: 225px;
-    height: 340px;
+    width: 350px;
+    height: 450px;
+  }
+  img.ReactCrop__image {
+    display: block;
+    min-height: 500px;
+  }
+  p {
+    margin-top: 20px;
   }
   .comment-input {
     border: 1px solid ${props => props.theme.colors.lightGrey};
@@ -168,10 +169,8 @@ const CropperComponent = ({ src, setImageString, uploadS3File, comment, setComme
   const [imgRef, setImgRef] = useState(null);
   const [crop, setCrop] = useState({
     unit: '%',
-    width: 50,
-    height: 50,
-    x: 25,
-    y: 15,
+    width: 400,
+
     aspect: 10 / 16,
   });
   const [result, setResult] = useState();
@@ -199,8 +198,8 @@ const CropperComponent = ({ src, setImageString, uploadS3File, comment, setComme
     const canvas = document.createElement('canvas');
     const scaleX = image.naturalWidth / image.width;
     const scaleY = image.naturalHeight / image.height;
-    canvas.width = crop.width;
-    canvas.height = crop.height;
+    canvas.width = Math.ceil(crop.width * scaleX);
+    canvas.height = Math.ceil(crop.height * scaleY);
     const ctx = canvas.getContext('2d');
     ctx.drawImage(
       image,
@@ -210,9 +209,10 @@ const CropperComponent = ({ src, setImageString, uploadS3File, comment, setComme
       crop.height * scaleY,
       0,
       0,
-      crop.width,
-      crop.height
+      crop.width * scaleX,
+      crop.height * scaleY
     );
+
     const imageFile = canvas.toDataURL('image/png');
     setImageString(imageFile);
     return imageFile;
