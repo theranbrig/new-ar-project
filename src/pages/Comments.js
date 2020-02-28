@@ -130,6 +130,7 @@ const CommentStyles = styled.div`
     }
     margin-bottom: 5px;
     p {
+      font-size: 0.8rem;
       margin: 0;
       font-weight: 300;
       span {
@@ -205,6 +206,8 @@ const Comment = ({ comment, setSelectedReplies, photoRef, showPhotos, toggleUpvo
             toggleUpvoteComment={toggleUpvoteComment}
             comment={comment}
             setDisplayPhoto={setDisplayPhoto}
+            replies={replyCount}
+            setSelectedReplies={setSelectedReplies}
           />
         )}
         <div className={comment.photo && showPhotos ? 'comment-photo' : 'comment-no-photo'}>
@@ -721,6 +724,7 @@ const ViewPhotoStyles = styled.div`
       }
       p {
         font-weight: 300;
+        font-size: 0.9rem;
       }
     }
     .top {
@@ -738,18 +742,47 @@ const ViewPhotoStyles = styled.div`
       }
     }
   }
+  .bottom-row {
+    margin: 10px auto 0;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    p {
+      font-weight: 300;
+      align-self: center;
+      font-size: 0.9rem;
+      span {
+        margin-right: 5px;
+      }
+      button {
+        color: ${props => props.theme.colors.white};
+        font-weight: 600;
+        font-size: 0.9rem;
+      }
+    }
+    .upVotes {
+      width: 50px;
+    }
+  }
 `;
 
-const ViewPhoto = ({ comment, setDisplayPhoto }) => {
+const ViewPhoto = ({
+  comment,
+  setDisplayPhoto,
+  toggleUpvoteComment,
+  replies,
+  setSelectedReplies,
+}) => {
   return (
-    <ViewPhotoStyles
-      onClick={() => {
-        setDisplayPhoto(false);
-      }}>
+    <ViewPhotoStyles>
       <div className='photo-modal'>
         <section className='top'>
           <h1>Picture Reply</h1>
-          <button aria-label='close modal'>
+          <button
+            onClick={() => {
+              setDisplayPhoto(false);
+            }}
+            aria-label='close modal'>
             <CloseSVG fill='#fff' />
           </button>
         </section>
@@ -760,6 +793,28 @@ const ViewPhoto = ({ comment, setDisplayPhoto }) => {
             <Link to={`/user/${comment.user.id}`}>@{comment.user.userName}</Link>
             {comment.comment}
           </p>
+          <div className='bottom-row'>
+            <p>
+              <span>{moment.unix(comment.addedOn.seconds).fromNow()}</span> repl
+              {replies === 1 ? 'y' : 'ies'}({replies})
+              <button
+                onClick={() => {
+                  setDisplayPhoto(false);
+                  setSelectedReplies(comment);
+                }}>
+                reply
+              </button>
+            </p>
+            <div className='upVotes'>
+              <button
+                onClick={() => {
+                  toggleUpvoteComment(comment.id, comment.liked);
+                }}>
+                {comment.liked ? <FilledUpVoteSVG fill='#fff' /> : <EmptyUpVoteSVG fill='#fff' />}
+              </button>
+              <p>{comment.upVotes.length}</p>
+            </div>
+          </div>
         </div>
       </div>
     </ViewPhotoStyles>
