@@ -131,12 +131,12 @@ const UserPhoto = ({ photo, userName, userData }) => {
       </div>
       <div className='likes-and-time'>
         <PhotoLikes
-          photoId={currentPhoto.id}
           photo={currentPhoto}
           toggleLike={toggleLike}
           isLiked={isLiked}
           setIsLiked={setIsLiked}
           loading={likeLoading}
+          userData={userData}
         />
         <p className='date'>{moment.unix(currentPhoto.addedOn.seconds).fromNow()}</p>
       </div>

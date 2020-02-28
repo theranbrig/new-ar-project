@@ -24,10 +24,10 @@ const LikeStyles = styled.div`
   }
 `;
 
-const PhotoLikes = ({ photo, toggleLike, isLiked, loading }) => {
+const PhotoLikes = ({ photo, toggleLike, isLiked, loading, userData }) => {
   return (
     <LikeStyles>
-      <button disabled={loading} onClick={() => toggleLike()}>
+      <button disabled={loading || !userData.loggedIn} onClick={() => toggleLike()}>
         {isLiked ? <LikeFilledSVG /> : <LikeEmptySVG />}
       </button>
       <h4>
