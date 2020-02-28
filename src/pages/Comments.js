@@ -503,7 +503,7 @@ const Comments = () => {
         photoId,
         user: { id: userData.id, userName: userData.userName, photo: userData.photo },
         addedOn: new Date(),
-        upVotes: 0,
+        upVotes: [],
         photo: '',
       });
   };
@@ -519,7 +519,7 @@ const Comments = () => {
         commentId,
         user: { id: userData.id, userName: userData.userName, photo: userData.photo },
         addedOn: new Date(),
-        upVotes: 0,
+        upVotes: [],
       });
   };
 

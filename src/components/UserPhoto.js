@@ -38,6 +38,7 @@ const UserPhoto = ({ photo, userName, userData }) => {
   const [showTags, setShowTags] = useState(false);
   const [isLiked, setIsLiked] = useState(false);
   const [loading, setLoading] = useState(false);
+  const [commentNumber, setCommentNumber] = useState(0);
   const [likeLoading, setLikeLoading] = useState(false);
   const [currentPhoto, setCurrentPhoto] = useState(null);
 
@@ -73,9 +74,13 @@ const UserPhoto = ({ photo, userName, userData }) => {
       .doc(photo.id)
       .get()
       .then(doc => {
-        console.log(doc.data());
+        dbh
+          .collection('userPhotos')
+          .doc(photo.id)
+          .collection('comments')
+          .get()
+          .then(doc => setCommentNumber(doc.docs.length));
         setCurrentPhoto({ id: doc.id, ...doc.data() });
-        console.log(userData);
         if (userData.loggedIn) {
           if (doc.data().likes.some(like => like === userData.id)) {
             setIsLiked(true);
@@ -83,6 +88,7 @@ const UserPhoto = ({ photo, userName, userData }) => {
             setIsLiked(false);
           }
         }
+
         setLikeLoading(false);
         setLoading(false);
       });
@@ -137,7 +143,9 @@ const UserPhoto = ({ photo, userName, userData }) => {
       <div className='description'>
         <h4>@{userName}</h4>
         <p>{currentPhoto.description}</p>
-        <Link to={`/comments/${currentPhoto.id}`}>Read all comments...</Link>
+        <Link to={`/comments/${currentPhoto.id}`}>
+          Read {commentNumber > 1 && 'all'} {commentNumber} comment{commentNumber !== 1 && 's'}...
+        </Link>
       </div>
     </PhotoStyles>
   );
