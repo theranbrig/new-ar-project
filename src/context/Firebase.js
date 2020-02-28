@@ -157,7 +157,7 @@ const FirebaseProvider = ({ children }) => {
     const unsubscribe = onAuthStateChange(setUserData);
 
     return () => {
-      unsubscribe();
+      onAuthStateChange(setUserData);
     };
   }, []);
 
@@ -171,7 +171,7 @@ const FirebaseProvider = ({ children }) => {
           userId: userData.id,
           tags: taggedProducts,
           description,
-          likes: 0,
+          likes: [],
           addedOn: new Date(),
         })
         .then(() => {

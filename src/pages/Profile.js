@@ -137,6 +137,7 @@ const Profile = () => {
         <LoadingSpinner color='black' />
       </ProfileStyles>
     );
+    
   return (
     <ProfileStyles>
       <Helmet>
@@ -155,7 +156,12 @@ const Profile = () => {
         </AddPhotoButton>
       </section>
       {photos.map(photo => (
-        <UserPhoto photo={photo} userName={userData.userName} key={photo.imageUrl} />
+        <UserPhoto
+          photo={photo}
+          userName={userData.userName}
+          key={photo.imageUrl}
+          userData={userData}
+        />
       ))}
       {userData.role === 'ADMIN' && (
         <BlackButton>

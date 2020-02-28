@@ -24,7 +24,7 @@ const User = () => {
   const [loading, setLoading] = useState(false);
   const [photos, setPhotos] = useState([]);
   const [user, setUser] = useState(null);
-  const { logoutUser, dbh, userLoading } = useContext(FirebaseContext);
+  const { logoutUser, dbh, userLoading, userData } = useContext(FirebaseContext);
 
   const history = useHistory();
   const { id } = useParams();
@@ -68,7 +68,12 @@ const User = () => {
           </Helmet>
           <UserInfo photos={photos} userData={user} />
           {photos.map(photo => (
-            <UserPhoto photo={photo} key={photo.imageUrl} userName={user.userName} />
+            <UserPhoto
+              photo={photo}
+              key={photo.imageUrl}
+              userName={user.userName}
+              userData={userData}
+            />
           ))}
         </>
       )}

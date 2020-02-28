@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useContext, useEffect } from 'react';
 import styled from 'styled-components';
 import moment from 'moment';
 import { LazyLoadImage } from 'react-lazy-load-image-component';
@@ -7,6 +7,8 @@ import { Link } from 'react-router-dom';
 import PhotoLikes from '../components/PhotoLikes';
 import CloseSVG from '../assets/icons/icon_close';
 import TagSVG from '../assets/icons/icon_tag';
+import { FirebaseContext } from '../context/Firebase';
+import LoadingSpinner from '../components/LoadingSpinner';
 
 const Tag = ({ tag, setShowTags }) => {
   return (
@@ -32,8 +34,73 @@ const Tag = ({ tag, setShowTags }) => {
   );
 };
 
-const UserPhoto = ({ photo, userName }) => {
+const UserPhoto = ({ photo, userName, userData }) => {
   const [showTags, setShowTags] = useState(false);
+  const [isLiked, setIsLiked] = useState(false);
+  const [loading, setLoading] = useState(false);
+  const [likeLoading, setLikeLoading] = useState(false);
+  const [currentPhoto, setCurrentPhoto] = useState(null);
+
+  const { dbh, firebase, userLoading } = useContext(FirebaseContext);
+
+  const toggleLike = () => {
+    setLikeLoading(true);
+    if (isLiked) {
+      dbh
+        .collection('userPhotos')
+        .doc(photo.id)
+        .update({ likes: firebase.firestore.FieldValue.arrayRemove(userData.id) })
+        .then(() => {
+          getPhotoData(true);
+        });
+    } else {
+      dbh
+        .collection('userPhotos')
+        .doc(photo.id)
+        .update({ likes: firebase.firestore.FieldValue.arrayUnion(userData.id) })
+        .then(() => {
+          getPhotoData(true);
+        });
+    }
+  };
+
+  const getPhotoData = likeClick => {
+    if (!likeClick) {
+      setLoading(true);
+    }
+    dbh
+      .collection('userPhotos')
+      .doc(photo.id)
+      .get()
+      .then(doc => {
+        console.log(doc.data());
+        setCurrentPhoto({ id: doc.id, ...doc.data() });
+        console.log(userData);
+        if (userData.loggedIn) {
+          if (doc.data().likes.some(like => like === userData.id)) {
+            setIsLiked(true);
+          } else {
+            setIsLiked(false);
+          }
+        }
+        setLikeLoading(false);
+        setLoading(false);
+      });
+  };
+
+  useEffect(() => {
+    getPhotoData();
+    return () => {
+      getPhotoData();
+    };
+  }, []);
+
+  if (loading || userLoading || !currentPhoto)
+    return (
+      <PhotoStyles>
+        <LoadingSpinner color='black' />
+      </PhotoStyles>
+    );
 
   return (
     <PhotoStyles>
@@ -48,33 +115,42 @@ const UserPhoto = ({ photo, userName }) => {
           </ShowTagButton>
         )}
         <LazyLoadImage
-          src={photo.url}
-          alt={photo.description}
+          src={currentPhoto.url}
+          alt={currentPhoto.description}
           effect='blur'
           height='340px'
           width='225px;'
         />
-        {showTags && <Tag tag={photo.tags[0]} setShowTags={setShowTags} />}
+        {showTags && <Tag tag={currentPhoto.tags[0]} setShowTags={setShowTags} />}
       </div>
-      <p className='likes-and-time'>
-        <PhotoLikes photoId={photo.id} />
-        <p className='date'>{moment.unix(photo.addedOn.seconds).fromNow()}</p>
-      </p>
+      <div className='likes-and-time'>
+        <PhotoLikes
+          photoId={currentPhoto.id}
+          photo={currentPhoto}
+          toggleLike={toggleLike}
+          isLiked={isLiked}
+          setIsLiked={setIsLiked}
+          loading={likeLoading}
+        />
+        <p className='date'>{moment.unix(currentPhoto.addedOn.seconds).fromNow()}</p>
+      </div>
       <div className='description'>
         <h4>@{userName}</h4>
-        <p>{photo.description}</p>
-        <Link to={`/comments/${photo.id}`}>Read all comments...</Link>
+        <p>{currentPhoto.description}</p>
+        <Link to={`/comments/${currentPhoto.id}`}>Read all comments...</Link>
       </div>
     </PhotoStyles>
   );
 };
 
 export default UserPhoto;
+
 export const PhotoStyles = styled.div`
   width: 400px;
   max-width: 90%;
   margin: 20px auto;
   padding: 10px;
+  min-height: 480px;
   border: 1px solid ${props => props.theme.colors.lightGrey};
   border-radius: 3px;
   img {

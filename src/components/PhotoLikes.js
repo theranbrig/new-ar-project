@@ -24,79 +24,15 @@ const LikeStyles = styled.div`
   }
 `;
 
-const PhotoLikes = ({ photoId }) => {
-  const [isLiked, setIsLiked] = useState(false);
-  const [photo, setPhoto] = useState(null);
-  const [clicked, setClicked] = useState(false);
-
-  const { dbh, userData, firebase, userLoading } = useContext(FirebaseContext);
-
-  const toggleLike = () => {
-    setClicked(true);
-    if (isLiked && !clicked) {
-      dbh
-        .collection('users')
-        .doc(userData.id)
-        .update({ likedPhotos: firebase.firestore.FieldValue.arrayRemove(photoId) })
-        .then(() => {
-          dbh
-            .collection('userPhotos')
-            .doc(photoId)
-            .update({ likes: firebase.firestore.FieldValue.increment(-1) })
-            .then(() => {
-              setIsLiked(!isLiked);
-              setClicked(false);
-            });
-        });
-    } else if (!clicked && !isLiked) {
-      dbh
-        .collection('users')
-        .doc(userData.id)
-        .update({ likedPhotos: firebase.firestore.FieldValue.arrayUnion(photoId) })
-        .then(() => {
-          setIsLiked(!isLiked);
-          dbh
-            .collection('userPhotos')
-            .doc(photoId)
-            .update({ likes: firebase.firestore.FieldValue.increment(1) })
-            .then(() => {
-              setIsLiked(!isLiked);
-              setClicked(false);
-            });
-        });
-    }
-  };
-
-  useEffect(() => {
-    if (userData.loggedIn) {
-      dbh
-        .collection('users')
-        .doc(userData.id)
-        .get()
-        .then(doc => {
-          const likedPhotos = doc.data().likedPhotos;
-          if (likedPhotos.some(photo => photo === photoId)) {
-            setIsLiked(true);
-          }
-          dbh
-            .collection('userPhotos')
-            .doc(photoId)
-            .get()
-            .then(doc => {
-              setPhoto({ id: doc.id, ...doc.data() });
-            });
-        });
-    }
-  }, [setIsLiked, toggleLike, userLoading]);
-
-  if (userLoading) return null;
-
+const PhotoLikes = ({ photo, toggleLike, isLiked, loading }) => {
   return (
     <LikeStyles>
-      <button onClick={() => toggleLike()}>{isLiked ? <LikeFilledSVG /> : <LikeEmptySVG />}</button>
+      <button disabled={loading} onClick={() => toggleLike()}>
+        {isLiked ? <LikeFilledSVG /> : <LikeEmptySVG />}
+      </button>
       <h4>
-        <strong>{photo && photo.likes ? photo.likes : 0}</strong> Like
-        {((photo && photo.likes > 1) || (photo && photo.likes === 0)) && 's'}
+        <strong>{photo.likes.length}</strong> Like
+        {photo.likes.length !== 1 && 's'}
       </h4>
     </LikeStyles>
   );
