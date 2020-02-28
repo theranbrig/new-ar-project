@@ -158,13 +158,15 @@ const NavigationDrawer = ({ children }) => {
           <LogoSVG />
         </Link>
         <div className='right-icons'>
-          <button
-            aria-label='Open Upload Photo'
-            onClick={() => {
-              setPhotoUploadOpen(!photoUploadOpen);
-            }}>
-            <AddPhotoSVG />
-          </button>
+          {userData.loggedIn && (
+            <button
+              aria-label='Open Upload Photo'
+              onClick={() => {
+                setPhotoUploadOpen(!photoUploadOpen);
+              }}>
+              <AddPhotoSVG />
+            </button>
+          )}
           <button
             onClick={() => {
               setOpenBag(!openBag);

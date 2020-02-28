@@ -71,8 +71,8 @@ const UploadStyles = styled.div`
         position: relative;
         overflow: hidden;
         display: inline-block;
-        width: 70%;
-        margin: 30px 15% 0;
+        width: 90%;
+        margin: 0 5%;
         height: 100%;
         max-height: 600px;
         text-align: center;
@@ -237,7 +237,7 @@ const CropperComponent = ({ src, setImageString, uploadS3File, comment, setComme
               name='comment'
               value={comment}
               minRows='1'
-              maxRows='5'
+              maxRows='3'
               onChange={e => {
                 setComment(e.target.value);
               }}
