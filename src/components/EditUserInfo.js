@@ -223,7 +223,7 @@ const CropperComponent = ({
   const [imgRef, setImgRef] = useState(null);
   const [crop, setCrop] = useState({
     unit: '%',
-    width: 200,
+    width: 50,
     aspect: 1 / 1,
   });
   const [result, setResult] = useState();

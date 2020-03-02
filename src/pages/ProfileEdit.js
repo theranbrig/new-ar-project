@@ -43,14 +43,16 @@ const Profile = () => {
   const history = useHistory();
 
   useEffect(() => {
-    window.scrollTo(0, 0);
     setLoading(true);
-    if (userData) {
+    window.scrollTo(0, 0);
+    if (userData.loggedIn) {
       setLoading(false);
+    } else {
+      history.push('/login');
     }
   }, [userData]);
 
-  if (!userData || loading)
+  if (!userData.loggedIn || loading)
     return (
       <ProfileStyles>
         <LoadingSpinner color='black' />

@@ -19,7 +19,7 @@ import { ModalContext } from '../context/Modal';
 const LoadingContainer = styled.div`
   min-height: 100vh;
   width: 500px;
-  max-width: 95%;
+  max-width: 100%;
   margin: 0 auto;
   margin-top: calc(10vh + 25px);
   background: ${props => props.theme.colors.white};
@@ -29,7 +29,7 @@ const LoadingContainer = styled.div`
 const ProductContainer = styled.div`
   min-height: 100vh;
   width: 500px;
-  max-width: 95%;
+  max-width: 100%;
   margin: 0 auto;
   margin-top: calc(10vh + 25px);
   font-family: ${props => props.theme.fonts.main};
