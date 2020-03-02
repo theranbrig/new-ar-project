@@ -802,7 +802,8 @@ const ViewPhotoStyles = styled.div`
     display: flex;
     flex-direction: row;
     justify-content: space-between;
-    p {
+    p,
+    h5 {
       font-weight: 300;
       align-self: center;
       font-size: 0.9rem;
@@ -815,8 +816,20 @@ const ViewPhotoStyles = styled.div`
         font-size: 0.9rem;
       }
     }
+    h5 {
+      margin: 0;
+    }
     .upVotes {
       width: 50px;
+    }
+    button {
+      background: transparent;
+      border: none;
+    }
+    p.comment {
+      overflow: hidden;
+      text-overflow: ellipsis;
+      max-height: 82px;
     }
   }
 `;
@@ -843,13 +856,13 @@ const ViewPhoto = ({
         </section>
         <img src={comment.photo} alt={comment.comment} />
         <div className='photo-info'>
-          <p>
+          <p className='comment'>
             <CameraSVG fill='#fff' />
             <Link to={`/user/${comment.user.id}`}>@{comment.user.userName}</Link>
             {comment.comment}
           </p>
           <div className='bottom-row'>
-            <p>
+            <h5>
               <span>{moment.unix(comment.addedOn.seconds).fromNow()}</span> repl
               {replies === 1 ? 'y' : 'ies'}({replies})
               <button
@@ -859,7 +872,7 @@ const ViewPhoto = ({
                 }}>
                 reply
               </button>
-            </p>
+            </h5>
             <div className='upVotes'>
               <button
                 onClick={() => {
@@ -867,7 +880,7 @@ const ViewPhoto = ({
                 }}>
                 {comment.liked ? <FilledUpVoteSVG fill='#fff' /> : <EmptyUpVoteSVG fill='#fff' />}
               </button>
-              <p>{comment.upVotes.length}</p>
+              <h5>{comment.upVotes.length}</h5>
             </div>
           </div>
         </div>

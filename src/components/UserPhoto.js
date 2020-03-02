@@ -81,6 +81,7 @@ const UserPhoto = ({ photo, userName, userData }) => {
           .get()
           .then(doc => setCommentNumber(doc.docs.length));
         setCurrentPhoto({ id: doc.id, ...doc.data() });
+        console.log(doc.data());
         if (userData.loggedIn) {
           if (doc.data().likes.some(like => like === userData.id)) {
             setIsLiked(true);
