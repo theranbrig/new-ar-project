@@ -157,7 +157,7 @@ const CommentStyles = styled.div`
   }
 `;
 
-const Comment = ({ comment, setSelectedReplies, photoRef, showPhotos, toggleUpvoteComment }) => {
+const Comment = ({ comment, setSelectedReplies, photoRef, toggleUpvoteComment }) => {
   const [replyCount, setReplyCount] = useState(0);
   const [displayPhoto, setDisplayPhoto] = useState(false);
 
@@ -173,7 +173,7 @@ const Comment = ({ comment, setSelectedReplies, photoRef, showPhotos, toggleUpvo
   }, []);
 
   return (
-    <CommentStyles showPhotos={showPhotos}>
+    <CommentStyles>
       <div className='comment-body'>
         {displayPhoto && (
           <ViewPhoto
@@ -184,8 +184,8 @@ const Comment = ({ comment, setSelectedReplies, photoRef, showPhotos, toggleUpvo
             setSelectedReplies={setSelectedReplies}
           />
         )}
-        <div className={comment.photo && showPhotos ? 'comment-photo' : 'comment-no-photo'}>
-          {showPhotos && comment.photo && (
+        <div className={comment.photo ? 'comment-photo' : 'comment-no-photo'}>
+          {comment.photo && (
             <img
               src={comment.photo}
               alt={`${comment.user.userName}-photo`}
@@ -236,9 +236,9 @@ const Comments = () => {
   const [commentLiked, setCommentLiked] = useState(false);
   const [dateSort, setDateSort] = useState(true);
   const [comments, setComments] = useState([]);
-  const [showPhotos, setShowPhotos] = useState(true);
+  const [hidePhotos, setHidePhotos] = useState(false);
+  const [hideCommentOnlyPosts, setHideCommentOnlyPosts] = useState(false);
   const [selectedReplies, setSelectedReplies] = useState('');
-  const [showCommentOnlyPosts, setShowCommentOnlyPosts] = useState(true);
 
   const { dbh, userData, userLoading, firebase } = useContext(FirebaseContext);
 
@@ -332,13 +332,22 @@ const Comments = () => {
     setComments([...comments.sort((a, b) => b.upVotes.length - a.upVotes.length)]);
   };
 
-  const sortCommentOnly = () => {
-    if (showCommentOnlyPosts) {
-      setComments([...comments.filter(comment => comment.photo === '')]);
-    } else {
+  const togglePhotoPosts = () => {
+    if (hidePhotos) {
       checkComments();
+    } else {
+      setComments([...comments.filter(comment => comment.photo === '')]);
     }
-    setShowCommentOnlyPosts(!showCommentOnlyPosts);
+    setHidePhotos(!hidePhotos);
+  };
+
+  const toggleCommentPosts = () => {
+    if (hideCommentOnlyPosts) {
+      checkComments();
+    } else {
+      setComments([...comments.filter(comment => comment.photo !== '')]);
+    }
+    setHideCommentOnlyPosts(!hideCommentOnlyPosts);
   };
 
   useEffect(() => {
@@ -391,11 +400,17 @@ const Comments = () => {
               </button>
             </div>
             <div className='right-buttons'>
-              <button className='toggle-button' onClick={() => setShowPhotos(!showPhotos)}>
-                <PictureSVG fill={!showPhotos && '#c7c7c7'} />
+              <button
+                disabled={hideCommentOnlyPosts}
+                className='toggle-button'
+                onClick={() => togglePhotoPosts()}>
+                <PictureSVG fill={hidePhotos && '#c7c7c7'} />
               </button>
-              <button className='toggle-button' onClick={() => sortCommentOnly()}>
-                <TextSVG fill={!showCommentOnlyPosts && '#c7c7c7'} />
+              <button
+                disabled={hidePhotos}
+                className='toggle-button'
+                onClick={() => toggleCommentPosts()}>
+                <TextSVG fill={hideCommentOnlyPosts && '#c7c7c7'} />
               </button>
             </div>
           </section>
@@ -405,7 +420,6 @@ const Comments = () => {
               comment={comment}
               setSelectedReplies={setSelectedReplies}
               photoRef={photoRef}
-              showPhotos={showPhotos}
               toggleUpvoteComment={toggleUpvoteComment}
             />
           ))}
