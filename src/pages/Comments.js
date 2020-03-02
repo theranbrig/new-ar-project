@@ -401,7 +401,6 @@ const Replies = ({ comment, setSelectedReplies, photoRef, sendReply }) => {
       .onSnapshot(querySnapshot => {
         let tempReplies = [];
         querySnapshot.forEach(doc => {
-          console.log(doc.data());
           let liked = false;
           if (userData.loggedIn) {
             liked = doc.data().upVotes.some(vote => vote === userData.id);
@@ -428,7 +427,7 @@ const Replies = ({ comment, setSelectedReplies, photoRef, sendReply }) => {
       checkReplies();
       setLoading(false);
     };
-  }, [userLoading]);
+  }, []);
 
   return (
     <RepliesStyles>
