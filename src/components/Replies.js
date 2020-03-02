@@ -60,6 +60,7 @@ const CreateReplies = ({ commentId, sendReply }) => {
         type='text'
         name='reply'
         value={reply}
+        placeholder='Tap to write...'
         onChange={e => {
           setReply(e.target.value);
         }}
@@ -184,6 +185,7 @@ const RepliesStyles = styled.div`
     img {
       width: 45px;
       height: 45px;
+      border-radius: 50%;
     }
   }
 `;

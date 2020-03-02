@@ -161,7 +161,7 @@ const Comment = ({ comment, setSelectedReplies, photoRef, toggleUpvoteComment })
   const [replyCount, setReplyCount] = useState(0);
   const [displayPhoto, setDisplayPhoto] = useState(false);
 
-  const { userLoading } = useContext(FirebaseContext);
+  const { userLoading, userData } = useContext(FirebaseContext);
 
   useEffect(() => {
     photoRef
@@ -219,6 +219,7 @@ const Comment = ({ comment, setSelectedReplies, photoRef, toggleUpvoteComment })
       </div>
       <div className='upVotes'>
         <button
+          disabled={!userData.loggedIn}
           onClick={() => {
             toggleUpvoteComment(comment.id, comment.liked);
           }}>
@@ -247,26 +248,28 @@ const Comments = () => {
   const photoRef = dbh.collection('userPhotos').doc(photoId);
 
   const toggleUpvoteComment = (commentId, commentLiked) => {
-    if (commentLiked) {
-      dbh
-        .collection('userPhotos')
-        .doc(photoId)
-        .collection('comments')
-        .doc(commentId)
-        .update({ upVotes: firebase.firestore.FieldValue.arrayRemove(userData.id) })
-        .then(() => {
-          checkComments();
-        });
-    } else {
-      dbh
-        .collection('userPhotos')
-        .doc(photoId)
-        .collection('comments')
-        .doc(commentId)
-        .update({ upVotes: firebase.firestore.FieldValue.arrayUnion(userData.id) })
-        .then(() => {
-          checkComments();
-        });
+    if (userData.loggedIn) {
+      if (commentLiked) {
+        dbh
+          .collection('userPhotos')
+          .doc(photoId)
+          .collection('comments')
+          .doc(commentId)
+          .update({ upVotes: firebase.firestore.FieldValue.arrayRemove(userData.id) })
+          .then(() => {
+            checkComments();
+          });
+      } else {
+        dbh
+          .collection('userPhotos')
+          .doc(photoId)
+          .collection('comments')
+          .doc(commentId)
+          .update({ upVotes: firebase.firestore.FieldValue.arrayUnion(userData.id) })
+          .then(() => {
+            checkComments();
+          });
+      }
     }
   };
 
@@ -304,7 +307,7 @@ const Comments = () => {
       photoRef.collection('comments').onSnapshot(querySnapshot => {
         let tempComments = [];
         querySnapshot.forEach(doc => {
-          console.log(doc.data());
+
           let liked;
           if (userData.loggedIn) {
             liked = doc.data().upVotes.some(vote => vote === userData.id);
@@ -456,6 +459,7 @@ const CommentsStyles = styled.div`
     img {
       height: 45px;
       width: 45px;
+      border-radius: 50%;
     }
     button {
       background: ${props => props.theme.colors.black};

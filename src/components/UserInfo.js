@@ -41,6 +41,7 @@ export const UserInfoStyles = styled.div`
     }
     img {
       height: 100%;
+      border-radius: 50%;
     }
   }
 `;
