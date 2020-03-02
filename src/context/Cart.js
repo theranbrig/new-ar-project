@@ -167,7 +167,7 @@ const CartProvider = ({ children }) => {
     if (!userLoading) {
       fetchData();
     }
-  }, [setCart, userLoading]);
+  }, [setCart, userLoading, userData]);
 
   return (
     <CartContext.Provider
