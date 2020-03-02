@@ -5,11 +5,11 @@ const PictureSVG = ({ fill }) => {
     <svg
       version='1.1'
       id='Capa_1'
-      xmlns='http://www.w3.org/2Picture
+      xmlns='http://www.w3.org/2000/svg'
       x='0px'
       y='0px'
       viewBox='0 0 298.73 298.73'
-      fill={fill ?? "#272727"}>
+      fill={fill ?? '#272727'}>
       <g>
         <path
           d='M264.959,9.35H33.787C15.153,9.35,0,24.498,0,43.154v212.461c0,18.634,15.153,33.766,33.787,33.766

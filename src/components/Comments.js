@@ -15,6 +15,8 @@ import ChevronRight from '../assets/icons/icon_chevron_right';
 import CloseSVG from '../assets/icons/icon_close';
 import ViewPhoto from './ViewPhoto';
 import Replies from './Replies';
+import PictureSVG from '../assets/icons/icon_picture';
+import TextSVG from '../assets/icons/icon_text';
 
 const CreateCommentsStyles = styled.div`
   border: 1px solid ${props => props.theme.colors.lightGrey};
@@ -236,6 +238,8 @@ const Comments = () => {
   const [comments, setComments] = useState([]);
   const [showPhotos, setShowPhotos] = useState(true);
   const [selectedReplies, setSelectedReplies] = useState('');
+  const [showCommentOnlyPosts, setShowCommentOnlyPosts] = useState(true);
+
   const { dbh, userData, userLoading, firebase } = useContext(FirebaseContext);
 
   const { photoId } = useParams();
@@ -328,6 +332,15 @@ const Comments = () => {
     setComments([...comments.sort((a, b) => b.upVotes.length - a.upVotes.length)]);
   };
 
+  const sortCommentOnly = () => {
+    if (showCommentOnlyPosts) {
+      setComments([...comments.filter(comment => comment.photo === '')]);
+    } else {
+      checkComments();
+    }
+    setShowCommentOnlyPosts(!showCommentOnlyPosts);
+  };
+
   useEffect(() => {
     setLoading(true);
     const unsubscribe = checkComments();
@@ -379,7 +392,10 @@ const Comments = () => {
             </div>
             <div className='right-buttons'>
               <button className='toggle-button' onClick={() => setShowPhotos(!showPhotos)}>
-                <CameraSVG fill='black' />
+                <PictureSVG fill={!showPhotos && '#c7c7c7'} />
+              </button>
+              <button className='toggle-button' onClick={() => sortCommentOnly()}>
+                <TextSVG fill={!showCommentOnlyPosts && '#c7c7c7'} />
               </button>
             </div>
           </section>
