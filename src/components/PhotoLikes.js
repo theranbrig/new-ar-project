@@ -13,9 +13,22 @@ const LikeStyles = styled.div`
   button {
     background: none;
     border: none;
-
+  }
+  .liked {
+    position: relative;
     svg {
       height: 25px;
+      opacity: ${({ isLiked, loading }) => ((loading && !isLiked) || isLiked ? '1' : '0')};
+      transition-duration: 0.5s;
+    }
+  }
+  .notLiked {
+    position: relative;
+    svg {
+      height: 25px;
+      position: absolute;
+      left: 0;
+      top: -25px;
     }
   }
   h4 {
@@ -26,9 +39,14 @@ const LikeStyles = styled.div`
 
 const PhotoLikes = ({ photo, toggleLike, isLiked, loading, userData }) => {
   return (
-    <LikeStyles>
+    <LikeStyles isLiked={isLiked} loading={loading}>
       <button disabled={loading || !userData.loggedIn} onClick={() => toggleLike()}>
-        {isLiked ? <LikeFilledSVG /> : <LikeEmptySVG />}
+        <div className='liked'>
+          <LikeFilledSVG />
+        </div>
+        <div className='notLiked'>
+          <LikeEmptySVG />
+        </div>
       </button>
       <h4>
         <strong>{photo.likes.length}</strong> Like
