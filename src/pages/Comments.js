@@ -306,11 +306,20 @@ const RepliesStyles = styled.div`
       align-self: center;
       text-align: center;
       width: 80px;
-      button {
-        background: none;
-        border: none;
+      button.liked {
+        position: relative;
         svg {
-          height: 20px;
+          height: 25px;
+          transition-duration: 0.5s;
+        }
+      }
+      button.notLiked {
+        position: relative;
+        svg {
+          height: 25px;
+          position: absolute;
+          left: 0;
+          top: -25px;
         }
       }
       p {
@@ -357,7 +366,32 @@ const RepliesStyles = styled.div`
 const Replies = ({ comment, setSelectedReplies, photoRef, sendReply }) => {
   const [loading, setLoading] = useState(false);
   const [replies, setReplies] = useState([]);
-  const { dbh, userData, userLoading } = useContext(FirebaseContext);
+  const { dbh, userData, userLoading, firebase } = useContext(FirebaseContext);
+
+  const toggleLikeReply = (replyId, liked) => {
+    setLoading(true);
+    if (liked) {
+      photoRef
+        .collection('comments')
+        .doc(comment.id)
+        .collection('replies')
+        .doc(replyId)
+        .update({ upVotes: firebase.firestore.FieldValue.arrayRemove(userData.id) })
+        .then(() => {
+          checkReplies();
+        });
+    } else {
+      photoRef
+        .collection('comments')
+        .doc(comment.id)
+        .collection('replies')
+        .doc(replyId)
+        .update({ upVotes: firebase.firestore.FieldValue.arrayUnion(userData.id) })
+        .then(() => {
+          checkReplies();
+        });
+    }
+  };
 
   const checkReplies = () => {
     photoRef
@@ -368,7 +402,15 @@ const Replies = ({ comment, setSelectedReplies, photoRef, sendReply }) => {
         let tempReplies = [];
         querySnapshot.forEach(doc => {
           console.log(doc.data());
-          tempReplies.push({ id: doc.id, ...doc.data() });
+          let liked = false;
+          if (userData.loggedIn) {
+            liked = doc.data().upVotes.some(vote => vote === userData.id);
+          }
+          tempReplies.push({
+            id: doc.id,
+            ...doc.data(),
+            liked,
+          });
         });
         setReplies(
           tempReplies.sort((a, b) => {
@@ -386,7 +428,7 @@ const Replies = ({ comment, setSelectedReplies, photoRef, sendReply }) => {
       checkReplies();
       setLoading(false);
     };
-  }, []);
+  }, [userLoading]);
 
   return (
     <RepliesStyles>
@@ -423,8 +465,22 @@ const Replies = ({ comment, setSelectedReplies, photoRef, sendReply }) => {
             </div>
           </div>
           <div className='upVotes'>
-            <button>{reply.upVotes > 0 ? <FilledUpVoteSVG /> : <EmptyUpVoteSVG />}</button>
-            <p>{reply.upVotes}</p>
+            <button
+              aria-label='upvote reply'
+              onClick={() => {
+                toggleLikeReply(reply.id, reply.liked);
+              }}>
+              {reply.liked ? (
+                <div className='liked'>
+                  <FilledUpVoteSVG loading={loading} />
+                </div>
+              ) : (
+                <div className='notLiked'>
+                  <EmptyUpVoteSVG loading={loading} />
+                </div>
+              )}
+            </button>
+            <p>{reply.upVotes.length}</p>
           </div>
         </div>
       ))}
