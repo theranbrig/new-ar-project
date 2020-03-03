@@ -1,6 +1,7 @@
-import React, { useState, useContext } from 'react';
-import styled from 'styled-components';
+import React, { useContext, useState } from 'react';
+
 import { CartContext } from '../context/Cart';
+import styled from 'styled-components';
 
 export const AddToCartStyles = styled.div`
   width: 80%;
@@ -113,6 +114,7 @@ const AddToCart = ({ sizes, product, setIsAdded }) => {
         <BlackButton
           disabled={!selectedSize || !quantity}
           onClick={() => {
+            console.log(product, selectedSize, quantity);
             addItemToCart(product, selectedSize, quantity);
             setIsAdded(true);
           }}>

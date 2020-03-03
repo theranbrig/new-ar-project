@@ -1,6 +1,7 @@
-import React, { useState, useContext, useEffect } from 'react';
-import PropTypes from 'prop-types';
+import React, { useContext, useEffect, useState } from 'react';
+
 import { FirebaseContext } from './Firebase';
+import PropTypes from 'prop-types';
 
 export const CartContext = React.createContext();
 
@@ -25,6 +26,7 @@ const CartProvider = ({ children }) => {
         color: product.color,
         brand: product.brand,
         price: product.price,
+        sizes: product.sizes,
       })
       .then(async () => {
         const newCart = await getFirebaseCart(userData);
@@ -133,6 +135,30 @@ const CartProvider = ({ children }) => {
     setCart([]);
   };
 
+  const editCartItem = async (product, quantity, selectedSize, index) => {
+    if (userData.loggedIn) {
+      dbh
+        .collection('cartItems')
+        .doc(product.cartItemId)
+        .update({ quantity, selectedSize })
+        .then(async () => {
+          const cartItems = await getFirebaseCart(userData);
+          setCart(cartItems);
+          setCartLoading(false);
+        });
+    } else {
+      const cartItems = await JSON.parse(localStorage.getItem('shoppingCart'));
+      console.log(cartItems);
+      const item = cartItems[index];
+      item.quantity = quantity;
+      item.selectedSize = selectedSize;
+      console.log(item);
+      localStorage.setItem('shoppingCart', JSON.stringify(cartItems));
+      setCart(JSON.parse(localStorage.getItem('shoppingCart')));
+      setCartLoading(false);
+    }
+  };
+
   const getFirebaseCart = async userData => {
     setCartLoading(true);
     let tempCart = [];
@@ -150,23 +176,33 @@ const CartProvider = ({ children }) => {
     return tempCart;
   };
 
-  useEffect(() => {
+  const watchCart = () => {
     setCartLoading(true);
     let cartItems = [];
-    const fetchData = async () => {
-      if (userData.loggedIn) {
-        cartItems = await getFirebaseCart(userData);
-        setCart(cartItems);
-        setCartLoading(false);
-      } else {
-        cartItems = (await JSON.parse(localStorage.getItem('shoppingCart'))) || [];
-        setCart(cartItems);
-        setCartLoading(false);
-      }
-    };
-    if (!userLoading) {
-      fetchData();
+    if (userData.loggedIn) {
+      dbh
+        .collection('cartItems')
+        .where('userId', '==', userData.id)
+        .get()
+        .then(querySnapshot => {
+          querySnapshot.forEach(function(doc) {
+            cartItems.push({ cartItemId: doc.ref.id, ...doc.data() });
+          });
+          setCart(cartItems);
+          setCartLoading(false);
+        });
+    } else {
+      cartItems = JSON.parse(localStorage.getItem('shoppingCart')) || [];
+      setCart(cartItems);
+      setCartLoading(false);
     }
+  };
+
+  useEffect(() => {
+    watchCart();
+    return () => {
+      watchCart();
+    };
   }, [setCart, userLoading, userData]);
 
   return (
@@ -177,6 +213,7 @@ const CartProvider = ({ children }) => {
         cartLoading,
         removeItemFromCart,
         clearLocalCart,
+        editCartItem,
       }}>
       {children}
     </CartContext.Provider>

@@ -1,17 +1,19 @@
-import React, { useEffect, useState, useContext } from 'react';
-import styled from 'styled-components';
-import ProductThumbs from '../components/ProductThumbs';
 import '@google/model-viewer';
-import ArrowIcon from '../assets/images/down-arrow.png';
-import MainPageCarousel from '../components/UserCarousel';
-import { Link } from 'react-router-dom';
-import MediaViewer from '../components/ModelViewer';
-import { Helmet } from 'react-helmet';
-import { FirebaseContext } from '../context/Firebase';
-import LoadingSpinner from '../components/LoadingSpinner';
-import moment from 'moment';
-import { formatPrice } from '../utilities/formatting';
+
 import { BlackButton, RoundARButton } from '../utilities/ReusableStyles';
+import React, { useContext, useEffect, useState } from 'react';
+
+import ArrowIcon from '../assets/images/down-arrow.png';
+import { FirebaseContext } from '../context/Firebase';
+import { Helmet } from 'react-helmet';
+import { Link } from 'react-router-dom';
+import LoadingSpinner from '../components/LoadingSpinner';
+import MainPageCarousel from '../components/UserCarousel';
+import MediaViewer from '../components/ModelViewer';
+import ProductThumbs from '../components/ProductThumbs';
+import { formatPrice } from '../utilities/formatting';
+import moment from 'moment';
+import styled from 'styled-components';
 
 const HomeStyles = styled.div`
   margin: 0 auto;
@@ -208,21 +210,23 @@ const Home = () => {
         <title>YZED - HOME</title>
       </Helmet>
       {mainProduct && (
-        <div className='main-product-title'>
-          <div className='date-and-price'>
-            <h3>{displayDate}</h3>
-            <h4>{formatPrice(mainProduct.price)}</h4>
+        <>
+          <div className='main-product-title'>
+            <div className='date-and-price'>
+              <h3>{displayDate}</h3>
+              <h4>{formatPrice(mainProduct.price)}</h4>
+            </div>
+            <h3>
+              <strong>{mainProduct.brand}</strong> {mainProduct.name}
+            </h3>
           </div>
-          <h3>
-            <strong>{mainProduct.brand}</strong> {mainProduct.name}
-          </h3>
-        </div>
+          <MediaViewer
+            glbFile={mainProduct.glbFile}
+            usdzFile={mainProduct.usdzFile}
+            productId='5NlpClokHFwJG6Pl7IYz'
+          />
+        </>
       )}
-      <MediaViewer
-        glbFile='https://oneoone-resource.s3.ap-northeast-2.amazonaws.com/yzed/GLTF_TRENCH_COAT_RESIZED_ANDBAKED_4.gltf'
-        usdzFile='https://oneoone-resource.s3.ap-northeast-2.amazonaws.com/yzed/GLTF_TRENCH_COAT_RESIZED_ANDBAKED_4.usdz'
-        productId='5NlpClokHFwJG6Pl7IYz'
-      />
 
       <section className='product-buttons'>
         <div className='square-area'></div>

@@ -45,7 +45,7 @@ const ModelViewer = ({ glbFile, usdzFile, imageUrl, productId, displayLink }) =>
     <ModelStyles className='model-box'>
       <model-viewer
         id='main-viewer'
-        src={stateGLB || glbFile}
+        src={glbFile}
         alt='YZED 3D MODEL'
         auto-rotate
         ar
@@ -53,7 +53,6 @@ const ModelViewer = ({ glbFile, usdzFile, imageUrl, productId, displayLink }) =>
         camera-controls
         ios-src={usdzFile}
         autoplay
-        quick-look-browsers='safari chrome'
         background-color='#f9f9f9'></model-viewer>
     </ModelStyles>
   );
