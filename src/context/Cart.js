@@ -78,7 +78,6 @@ const CartProvider = ({ children }) => {
         if (!cartCheckItem.length) {
           await localStorage.setItem('shoppingCart', JSON.stringify([cartItem, ...cart]));
           setCart([...JSON.parse(localStorage.getItem('shoppingCart'))]);
-          console.log('LOCAL', JSON.parse(localStorage.getItem('shoppingCart')));
           setCartLoading(false);
         } else {
           cartCheckItem[0] = {
@@ -96,15 +95,11 @@ const CartProvider = ({ children }) => {
           cart.push(cartCheckItem[0]);
           await localStorage.setItem('shoppingCart', JSON.stringify([...cart]));
           setCart([...JSON.parse(localStorage.getItem('shoppingCart'))]);
-          console.log('LOCAL', JSON.parse(localStorage.getItem('shoppingCart')));
-
           setCartLoading(false);
         }
       } else {
         await localStorage.setItem('shoppingCart', JSON.stringify([cartItem]));
         setCart([...JSON.parse(localStorage.getItem('shoppingCart'))]);
-        console.log('LOCAL', JSON.parse(localStorage.getItem('shoppingCart')));
-
         setCartLoading(false);
       }
     }
