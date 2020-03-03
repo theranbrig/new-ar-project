@@ -146,6 +146,7 @@ const ShoppingBagItems = ({ cartLoading, canEdit, mode, setOpenBag }) => {
 export default ShoppingBagItems;
 
 const ItemUpdate = ({ item, index }) => {
+  console.log('ITEM', item);
   const { editCartItem } = useContext(CartContext);
   const [currentSize, setCurrentSize] = useState(item.selectedSize);
   const [currentQuantity, setCurrentQuantity] = useState(item.quantity);
@@ -177,7 +178,7 @@ const ItemUpdate = ({ item, index }) => {
           name='select quantity'>
           {quantities.map(quantity => (
             <option key={quantity}>
-              {quantity} {quantity === 1 ? 'PC' : 'PCS'}
+              {quantity}
             </option>
           ))}
         </select>
