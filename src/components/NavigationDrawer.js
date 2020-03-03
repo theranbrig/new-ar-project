@@ -1,19 +1,19 @@
 import React, { useContext, useState } from 'react';
-import styled from 'styled-components';
-import MenuLinks from './MenuLinks';
-import ShoppingBagModal from './ShoppingBagModal';
-import { CartContext } from '../context/Cart';
-import SearchModal from './SearchModal';
-import { FirebaseContext } from '../context/Firebase';
-import { Link } from 'react-router-dom';
-import ShopBagSVG from '../assets/icons/icon_shoppingbag';
-import SearchSVG from '../assets/icons/icon_search';
-import FullShopBagSVG from '../assets/icons/icon_shoppingbag_full';
-import UserSVG from '../assets/icons/icon_user';
-import LogoSVG from '../assets/icons/yzed_logo';
-import UploadPhoto from '../components/UploadPhotoModal';
+
 import AddPhotoSVG from '../assets/icons/icon_add_photo';
+import { CartContext } from '../context/Cart';
+import { FirebaseContext } from '../context/Firebase';
+import FullShopBagSVG from '../assets/icons/icon_shoppingbag_full';
+import { Link } from 'react-router-dom';
+import LogoSVG from '../assets/icons/yzed_logo';
+import MenuLinks from './MenuLinks';
 import { ModalContext } from '../context/Modal';
+import SearchModal from './SearchModal';
+import SearchSVG from '../assets/icons/icon_search';
+import ShopBagSVG from '../assets/icons/icon_shoppingbag';
+import ShoppingBagModal from './ShoppingBagModal';
+import UploadPhoto from '../components/UploadPhotoModal';
+import styled from 'styled-components';
 
 const StyledBurger = styled.button`
   position: fixed;
@@ -131,7 +131,7 @@ const StretchedNavStyles = styled.div`
 const NavigationDrawer = ({ children }) => {
   const [open, setOpen] = useState(false);
   const [openBag, setOpenBag] = useState(false);
-  const [openSearch, setOpenSearch] = useState(false);
+  const [openSearch, setOpenSearch] = useState(true);
   const { cart, cartLoading } = useContext(CartContext);
   const { userData } = useContext(FirebaseContext);
 

@@ -18,7 +18,6 @@ import Sale from '../pages/Sale';
 import CreateProduct from '../pages/CreateProduct';
 import Admin from '../pages/Admin';
 import EditProduct from '../pages/EditProduct';
-import UploadPhoto from '../pages/UploadPhoto';
 import User from '../pages/User';
 import ProfileEdit from '../pages/ProfileEdit';
 import Comments from '../pages/Comments';

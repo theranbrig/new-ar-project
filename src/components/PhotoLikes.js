@@ -1,9 +1,9 @@
-import React, { useContext, useState, useEffect } from 'react';
-import styled from 'styled-components';
-import { FirebaseContext } from '../context/Firebase';
-import LikeFilledSVG from '../assets/icons/icon_like_filled';
-import LikeEmptySVG from '../assets/icons/icon_like_empty';
 import '@firebase/firestore';
+
+import LikeEmptySVG from '../assets/icons/icon_like_empty';
+import LikeFilledSVG from '../assets/icons/icon_like_filled';
+import React from 'react';
+import styled from 'styled-components';
 
 const LikeStyles = styled.div`
   display: flex;

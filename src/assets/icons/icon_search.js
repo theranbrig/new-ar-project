@@ -1,6 +1,6 @@
 import React from 'react';
 
-const SearchSVG = ({ setMainDisplay }) => {
+const SearchSVG = ({ fill }) => {
   return (
     <svg
       version='1.1'
@@ -9,7 +9,7 @@ const SearchSVG = ({ setMainDisplay }) => {
       x='0px'
       y='0px'
       viewBox='0 0 185.94 187.09'
-      fill='#272727'>
+      fill={fill ?? '#272727'}>
       <path
         className='st0'
         d='M81.73,128.75c32.13,19.02,73.73,8.36,92.75-23.75c15.77-26.63,11.5-60.5-10.39-82.38l-0.25-0.25l0.01,0

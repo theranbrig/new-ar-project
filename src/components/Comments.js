@@ -1,22 +1,23 @@
-import React, { useContext, useState, useEffect } from 'react';
-import styled from 'styled-components';
-import { FirebaseContext } from '../context/Firebase';
-import LoadingSpinner from '../components/LoadingSpinner';
-import { useParams, Link } from 'react-router-dom';
-import moment from 'moment';
+import { Link, useParams } from 'react-router-dom';
+import React, { useContext, useEffect, useState } from 'react';
+
 import BackButton from '../components/BackButton';
-import ChevronLeft from '../assets/icons/icon_chevron_left';
-import FilledUpVoteSVG from '../assets/icons/icon_upvote_filled';
-import EmptyUpVoteSVG from '../assets/icons/icon_upvote_empty';
-import UploadPhotoComment from '../components/UploadPhotoComment';
 import CameraSVG from '../assets/icons/icon_camera';
-import TextareaAutosize from 'react-textarea-autosize';
+import ChevronLeft from '../assets/icons/icon_chevron_left';
 import ChevronRight from '../assets/icons/icon_chevron_right';
 import CloseSVG from '../assets/icons/icon_close';
-import ViewPhoto from './ViewPhoto';
-import Replies from './Replies';
+import EmptyUpVoteSVG from '../assets/icons/icon_upvote_empty';
+import FilledUpVoteSVG from '../assets/icons/icon_upvote_filled';
+import { FirebaseContext } from '../context/Firebase';
+import LoadingSpinner from '../components/LoadingSpinner';
 import PictureSVG from '../assets/icons/icon_picture';
+import Replies from './Replies';
 import TextSVG from '../assets/icons/icon_text';
+import TextareaAutosize from 'react-textarea-autosize';
+import UploadPhotoComment from '../components/UploadPhotoComment';
+import ViewPhoto from './ViewPhoto';
+import moment from 'moment';
+import styled from 'styled-components';
 
 const CreateCommentsStyles = styled.div`
   border: 1px solid ${props => props.theme.colors.lightGrey};
@@ -307,7 +308,6 @@ const Comments = () => {
       photoRef.collection('comments').onSnapshot(querySnapshot => {
         let tempComments = [];
         querySnapshot.forEach(doc => {
-
           let liked;
           if (userData.loggedIn) {
             liked = doc.data().upVotes.some(vote => vote === userData.id);

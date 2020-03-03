@@ -1,14 +1,16 @@
-import React, { useState, useContext, useEffect } from 'react';
-import styled from 'styled-components';
-import moment from 'moment';
-import { LazyLoadImage } from 'react-lazy-load-image-component';
 import 'react-lazy-load-image-component/src/effects/blur.css';
-import { Link } from 'react-router-dom';
-import PhotoLikes from '../components/PhotoLikes';
+
+import React, { useContext, useEffect, useState } from 'react';
+
 import CloseSVG from '../assets/icons/icon_close';
-import TagSVG from '../assets/icons/icon_tag';
 import { FirebaseContext } from '../context/Firebase';
+import { LazyLoadImage } from 'react-lazy-load-image-component';
+import { Link } from 'react-router-dom';
 import LoadingSpinner from '../components/LoadingSpinner';
+import PhotoLikes from '../components/PhotoLikes';
+import TagSVG from '../assets/icons/icon_tag';
+import moment from 'moment';
+import styled from 'styled-components';
 
 const Tag = ({ tag, setShowTags }) => {
   return (

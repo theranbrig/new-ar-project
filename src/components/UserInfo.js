@@ -1,6 +1,6 @@
 import React from 'react';
-import styled from 'styled-components';
 import UserSVG from '../assets/icons/icon_user';
+import styled from 'styled-components';
 
 export const UserInfoStyles = styled.div`
   font-family: ${props => props.theme.fonts.main};

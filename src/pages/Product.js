@@ -1,20 +1,20 @@
-import React, { useEffect, useState, useContext } from 'react';
-import { useParams } from 'react-router-dom';
-import styled from 'styled-components';
-import MediaViewer from '../components/ModelViewer';
-import { LazyLoadImage } from 'react-lazy-load-image-component';
 import 'react-lazy-load-image-component/src/effects/blur.css';
-import { Helmet } from 'react-helmet';
-import AddToCart from '../components/AddToCart';
+
+import React, { useContext, useEffect, useState } from 'react';
+
 import Accordion from '../components/Accordion';
-import ProductBrand from '../components/ProductBrand';
+import AddToCart from '../components/AddToCart';
 import AddToCartSuccessModal from '../components/AddToCartSuccessModal';
 import { FirebaseContext } from '../context/Firebase';
+import { Helmet } from 'react-helmet';
+import { LazyLoadImage } from 'react-lazy-load-image-component';
 import LoadingSpinner from '../components/LoadingSpinner';
-import ThreeDSVG from '../assets/icons/icon_ar_toggle';
+import MediaViewer from '../components/ModelViewer';
+import ProductBrand from '../components/ProductBrand';
 import { RoundARButton } from '../utilities/ReusableStyles';
-import BackButton from '../components/BackButton';
-import { ModalContext } from '../context/Modal';
+import ThreeDSVG from '../assets/icons/icon_ar_toggle';
+import styled from 'styled-components';
+import { useParams } from 'react-router-dom';
 
 const LoadingContainer = styled.div`
   min-height: 100vh;
@@ -182,7 +182,6 @@ const Product = () => {
   const { id } = useParams();
 
   const { dbh } = useContext(FirebaseContext);
-  const { setPhotoUploadOpen } = useContext(ModalContext);
 
   useEffect(() => {
     setLoading(true);

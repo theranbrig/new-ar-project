@@ -1,9 +1,11 @@
-import React, { useState, useContext } from 'react';
-import debounce from 'lodash.debounce';
-import { FirebaseContext } from '../context/Firebase';
 import { Link, useHistory } from 'react-router-dom';
-import { formatProductName, formatPrice } from '../utilities/formatting';
+import React, { useContext, useState } from 'react';
+import { formatPrice, formatProductName } from '../utilities/formatting';
+
+import { FirebaseContext } from '../context/Firebase';
 import Highlighter from 'react-highlight-words';
+import SearchSVG from '../assets/icons/icon_search';
+import debounce from 'lodash.debounce';
 import styled from 'styled-components';
 
 const FirebaseSearch = ({ setOpenSearch }) => {
@@ -51,6 +53,7 @@ const FirebaseSearch = ({ setOpenSearch }) => {
             }}
             type='text'
           />
+          <SearchSVG fill={'#fff'} />
           {products.slice(0, 5).map(product => {
             return (
               <Link
@@ -116,9 +119,11 @@ const SearchStyles = styled.div`
   .search-box {
     width: 500px;
     margin: 0 auto;
+    max-width: 90%;
+    position: relative;
     input {
       width: 500px;
-      max-width: 95%;
+      max-width: 100%;
       border: none;
       background: transparent;
       border-bottom: 1px solid ${props => props.theme.colors.white};
@@ -129,6 +134,12 @@ const SearchStyles = styled.div`
       font-size: 1.2rem;
       font-family: ${props => props.theme.fonts.main};
       padding: 3px;
+    }
+    svg {
+      height: 25px;
+      position: absolute;
+      right: 0px;
+      top: 5px;
     }
   }
   a.search-link {

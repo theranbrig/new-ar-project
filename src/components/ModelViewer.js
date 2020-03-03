@@ -1,5 +1,7 @@
-import React, { useState, useRef, useEffect } from 'react';
 import '@google/model-viewer';
+
+import React, { useState } from 'react';
+
 import styled from 'styled-components';
 import { useHistory } from 'react-router-dom';
 
