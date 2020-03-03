@@ -1,17 +1,15 @@
 import React, { useContext, useEffect, useState } from 'react';
+
+import AddPhotoSVG from '../assets/icons/icon_add_photo';
 import { FirebaseContext } from '../context/Firebase';
+import { Helmet } from 'react-helmet';
+import LoadingSpinner from '../components/LoadingSpinner';
+import { ModalContext } from '../context/Modal';
+import SettingsSVG from '../assets/icons/icon_settings';
+import UserInfo from '../components/UserInfo';
+import UserPhoto from '../components/UserPhoto';
 import styled from 'styled-components';
 import { useHistory } from 'react-router-dom';
-import { Helmet } from 'react-helmet';
-import AddPhotoSVG from '../assets/icons/icon_add_photo';
-import { ModalContext } from '../context/Modal';
-import moment from 'moment';
-import UserPhoto from '../components/UserPhoto';
-import SettingsSVG from '../assets/icons/icon_settings';
-import UserSVG from '../assets/icons/icon_user';
-import UserInfo from '../components/UserInfo';
-import EditUserInfo from '../components/EditUserInfo';
-import LoadingSpinner from '../components/LoadingSpinner';
 
 export const ProfileStyles = styled.div`
   width: 500px;
@@ -28,23 +26,6 @@ export const ProfileStyles = styled.div`
     display: flex;
     flex-direction: row;
     justify-content: space-around;
-  }
-`;
-
-const WhiteButton = styled.div`
-  border: 2px solid black;
-  border-radius: 0px;
-  height: 50px;
-  line-height: 50px;
-  display: block;
-  margin: 0 auto;
-  font-size: 1.2rem;
-  font-family: Montserrat, sans-serif;
-  text-align: center;
-  width: 50%;
-  a {
-    color: black;
-    text-decoration: none;
   }
 `;
 
@@ -98,8 +79,6 @@ const AddPhotoButton = styled.button`
 const Profile = () => {
   const [loading, setLoading] = useState(false);
   const [photos, setPhotos] = useState([]);
-  const [editProfile, setEditProfile] = useState(false);
-  const [updated, setUpdated] = useState(false);
 
   const { userData, logoutUser, dbh, userLoading } = useContext(FirebaseContext);
   const { setPhotoUploadOpen } = useContext(ModalContext);
@@ -137,7 +116,7 @@ const Profile = () => {
         <LoadingSpinner color='black' />
       </ProfileStyles>
     );
-    
+
   return (
     <ProfileStyles>
       <Helmet>

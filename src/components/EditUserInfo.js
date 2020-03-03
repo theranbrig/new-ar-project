@@ -1,28 +1,19 @@
-import React, { useContext, useState, useCallback } from 'react';
-import styled from 'styled-components';
-import { ModalContext } from '../context/Modal';
-import S3FileUpload from 'react-s3';
-import { uploadFile } from 'react-s3';
-import S3 from 'aws-s3-pro';
-import shortid from 'shortid';
-import CameraSVG from '../assets/icons/icon_photo';
-import LoadingSpinner from './LoadingSpinner';
-import { BlackButtonClick, WhiteButtonClick } from '../utilities/ReusableStyles';
-import { LazyLoadImage } from 'react-lazy-load-image-component';
 import 'react-lazy-load-image-component/src/effects/blur.css';
-import SavePlusSVG from '../assets/icons/icon_save_plus';
-import SearchSVG from '../assets/icons/icon_search';
-import debounce from 'lodash.debounce';
-import { FirebaseContext } from '../context/Firebase';
-import { useHistory } from 'react-router-dom';
-import ReactCrop from 'react-image-crop';
 import 'react-image-crop/dist/ReactCrop.css';
-import { convertFile } from '../utilities/coverting';
-import CloseSVG from '../assets/icons/icon_close';
-import TextareaAutosize from 'react-textarea-autosize';
-import ChevronRight from '../assets/icons/icon_chevron_right';
+
+import { BlackButtonClick, WhiteButtonClick } from '../utilities/ReusableStyles';
+import React, { useCallback, useContext, useState } from 'react';
+
+import CameraSVG from '../assets/icons/icon_photo';
+import { FirebaseContext } from '../context/Firebase';
+import { LazyLoadImage } from 'react-lazy-load-image-component';
+import ReactCrop from 'react-image-crop';
+import S3 from 'aws-s3-pro';
 import UserSVG from '../assets/icons/icon_user';
-import Avatar from 'react-avatar-edit';
+import { convertFile } from '../utilities/coverting';
+import shortid from 'shortid';
+import styled from 'styled-components';
+import { useHistory } from 'react-router-dom';
 
 const UploadStyles = styled.div`
   width: 100%;
@@ -176,8 +167,6 @@ export const EditUserStyles = styled.div`
 
 const EditUserInfo = ({ description, photo, userName, userId, setEditProfile }) => {
   const [editPhoto, setEditPhoto] = useState(false);
-  const [loading, setLoading] = useState(false);
-  const [preview, setPreview] = useState(null);
   const [newUserPhoto, setNewUserPhoto] = useState('');
 
   return (
@@ -334,14 +323,11 @@ const CropperComponent = ({
 };
 
 const SelectPhoto = ({ photoRef, photoId, setUploadPhotoComment, description, setEditPhoto }) => {
-  const [comment, setComment] = useState('');
-  const [uploadState, setUploadState] = useState(1);
   const [imageString, setImageString] = useState('');
-  const [loading, setLoading] = useState(false);
-  const [currentPictureUrl, setCurrentPictureUrl] = useState('');
-  const [error, setError] = useState('');
 
-  const { dbh, userData, userLoading } = useContext(FirebaseContext);
+  const [currentPictureUrl, setCurrentPictureUrl] = useState('');
+
+  const { dbh, userData } = useContext(FirebaseContext);
 
   const config = {
     bucketName: 'oneoone-resource',
@@ -359,7 +345,7 @@ const SelectPhoto = ({ photoRef, photoId, setUploadPhotoComment, description, se
 
   const uploadS3File = async description => {
     console.log(convertFile(imageString, newFileName));
-    setLoading(true);
+
     await S3Client.uploadFile(convertFile(imageString, newFileName), newFileName)
       .then(data => {
         setCurrentPictureUrl(data.location);
@@ -371,28 +357,9 @@ const SelectPhoto = ({ photoRef, photoId, setUploadPhotoComment, description, se
             setEditPhoto(false);
             history.push('/profile');
             window.location.reload(true);
-            setLoading(false);
           });
       })
       .catch(err => console.error(err));
-  };
-
-  const updateProfile = () => {
-    setLoading(true);
-    if (imageString) {
-      uploadS3File();
-    } else {
-      dbh
-        .collection('users')
-        .doc(userData.id)
-        .update({ description })
-        .then(() => {
-          setEditPhoto(false);
-          history.push('/profile');
-          window.location.reload(true);
-          setLoading(false);
-        });
-    }
   };
 
   return (

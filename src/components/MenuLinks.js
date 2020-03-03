@@ -1,9 +1,9 @@
 import React, { useContext, useState } from 'react';
-import styled from 'styled-components';
-import { NavLink } from 'react-router-dom';
+
 import { FirebaseContext } from '../context/Firebase';
-import InstaSVG from '../assets/icons/icon_instagram';
+import { NavLink } from 'react-router-dom';
 import StoreMenuLinks from './StoreMenuLinks';
+import styled from 'styled-components';
 
 export const StyledMenu = styled.nav`
   display: flex;

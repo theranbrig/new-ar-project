@@ -1,9 +1,7 @@
 import React from 'react';
-import S3FileUpload from 'react-s3';
-import { uploadFile } from 'react-s3';
 import S3 from 'aws-s3-pro';
-import styled from 'styled-components';
 import shortid from 'shortid';
+import styled from 'styled-components';
 
 export const FileInputStyles = styled.div`
   display: flex;

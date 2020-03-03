@@ -6,9 +6,7 @@ import EmptyUpVoteSVG from '../assets/icons/icon_upvote_empty';
 import FilledUpVoteSVG from '../assets/icons/icon_upvote_filled';
 import { FirebaseContext } from '../context/Firebase';
 import { Link } from 'react-router-dom';
-import LoadingSpinner from '../components/LoadingSpinner';
 import TextareaAutosize from 'react-textarea-autosize';
-import UploadPhotoComment from '../components/UploadPhotoComment';
 import moment from 'moment';
 import styled from 'styled-components';
 
@@ -191,7 +189,7 @@ const RepliesStyles = styled.div`
 const Replies = ({ comment, setSelectedReplies, photoRef, sendReply }) => {
   const [loading, setLoading] = useState(false);
   const [replies, setReplies] = useState([]);
-  const { dbh, userData, userLoading, firebase } = useContext(FirebaseContext);
+  const { userData, firebase } = useContext(FirebaseContext);
 
   const toggleLikeReply = (replyId, liked) => {
     setLoading(true);
@@ -247,7 +245,7 @@ const Replies = ({ comment, setSelectedReplies, photoRef, sendReply }) => {
 
   useEffect(() => {
     setLoading(true);
-    const unsubscribe = checkReplies();
+    checkReplies();
     return () => {
       checkReplies();
       setLoading(false);
@@ -264,7 +262,7 @@ const Replies = ({ comment, setSelectedReplies, photoRef, sendReply }) => {
       </button>
       <h3>Replying to:</h3>
       <div className='comment-info'>
-        <img src={comment.user.photo} />
+        <img src={comment.user.photo} alt={comment.user.userName} />
         <p>
           <Link>@{comment.user.userName}</Link> {comment.comment}
         </p>

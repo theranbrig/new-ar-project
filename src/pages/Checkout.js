@@ -1,12 +1,13 @@
 import React, { useContext, useEffect, useState } from 'react';
+
+import BackButton from '../components/BackButton';
 import { CartContext } from '../context/Cart';
+import { FirebaseContext } from '../context/Firebase';
+import { Helmet } from 'react-helmet';
+import LoadingSpinner from '../components/LoadingSpinner';
 import ShoppingBagItems from '../components/ShoppingBagItems';
 import styled from 'styled-components';
 import { useHistory } from 'react-router-dom';
-import { FirebaseContext } from '../context/Firebase';
-import BackButton from '../components/BackButton';
-import LoadingSpinner from '../components/LoadingSpinner';
-import { Helmet } from 'react-helmet';
 
 export const CartStyles = styled.div`
   width: 500px;
@@ -53,9 +54,8 @@ const BlackButton = styled.button`
 const Checkout = () => {
   const [checkoutLoading, setCheckoutLoading] = useState(false);
   const [cartTotal, setCartTotal] = useState('');
-  const [cartItems, setCartItems] = useState([]);
   const { cart, cartLoading, clearLocalCart } = useContext(CartContext);
-  const { userData, dbh, userLoading } = useContext(FirebaseContext);
+  const { userData, userLoading } = useContext(FirebaseContext);
 
   const history = useHistory();
 
@@ -88,10 +88,12 @@ const Checkout = () => {
       <BlackButton
         disabled={!cart.length}
         onClick={() => {
+          setCheckoutLoading(true);
           if (!userData) {
             clearLocalCart();
           }
           history.push('/order_success');
+          setCheckoutLoading(false);
         }}>
         Checkout
       </BlackButton>

@@ -3,9 +3,7 @@ import React, { useContext, useEffect, useState } from 'react';
 
 import BackButton from '../components/BackButton';
 import CameraSVG from '../assets/icons/icon_camera';
-import ChevronLeft from '../assets/icons/icon_chevron_left';
 import ChevronRight from '../assets/icons/icon_chevron_right';
-import CloseSVG from '../assets/icons/icon_close';
 import EmptyUpVoteSVG from '../assets/icons/icon_upvote_empty';
 import FilledUpVoteSVG from '../assets/icons/icon_upvote_filled';
 import { FirebaseContext } from '../context/Firebase';
@@ -58,7 +56,6 @@ const CreateCommentsStyles = styled.div`
 
 export const CreateComments = ({ sendComment }) => {
   const [comment, setComment] = useState('');
-  const { dbh } = useContext(FirebaseContext);
 
   return (
     <CreateCommentsStyles>
@@ -162,7 +159,7 @@ const Comment = ({ comment, setSelectedReplies, photoRef, toggleUpvoteComment })
   const [replyCount, setReplyCount] = useState(0);
   const [displayPhoto, setDisplayPhoto] = useState(false);
 
-  const { userLoading, userData } = useContext(FirebaseContext);
+  const { userData } = useContext(FirebaseContext);
 
   useEffect(() => {
     photoRef
@@ -189,7 +186,7 @@ const Comment = ({ comment, setSelectedReplies, photoRef, toggleUpvoteComment })
           {comment.photo && (
             <img
               src={comment.photo}
-              alt={`${comment.user.userName}-photo`}
+              alt={`${comment.user.userName}`}
               onClick={() => {
                 setDisplayPhoto(true);
               }}
@@ -235,7 +232,7 @@ const Comment = ({ comment, setSelectedReplies, photoRef, toggleUpvoteComment })
 const Comments = () => {
   const [uploadPhotoComment, setUploadPhotoComment] = useState(false);
   const [loading, setLoading] = useState(false);
-  const [commentLiked, setCommentLiked] = useState(false);
+
   const [dateSort, setDateSort] = useState(true);
   const [comments, setComments] = useState([]);
   const [hidePhotos, setHidePhotos] = useState(false);
@@ -355,7 +352,7 @@ const Comments = () => {
 
   useEffect(() => {
     setLoading(true);
-    const unsubscribe = checkComments();
+    checkComments();
     return () => {
       checkComments();
       setLoading(false);

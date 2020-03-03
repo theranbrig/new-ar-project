@@ -131,7 +131,7 @@ const StretchedNavStyles = styled.div`
 const NavigationDrawer = ({ children }) => {
   const [open, setOpen] = useState(false);
   const [openBag, setOpenBag] = useState(false);
-  const [openSearch, setOpenSearch] = useState(true);
+  const [openSearch, setOpenSearch] = useState(false);
   const { cart, cartLoading } = useContext(CartContext);
   const { userData } = useContext(FirebaseContext);
 

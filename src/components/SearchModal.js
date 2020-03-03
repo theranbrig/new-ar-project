@@ -1,8 +1,7 @@
 import React, { useEffect } from 'react';
-import styled from 'styled-components';
-import { useHistory, useParams, Link } from 'react-router-dom';
+
 import FirebaseSearch from './FirebaseSearch';
-import { BlackLink } from '../utilities/ReusableStyles';
+import styled from 'styled-components';
 
 export const ModalStyles = styled.div`
   height: ${({ openSearch }) => (openSearch ? '80vh' : '0px')};
@@ -71,8 +70,6 @@ export const ModalStyles = styled.div`
 `;
 
 const SearchModal = ({ openSearch, setOpenSearch }) => {
-  const history = useHistory();
-
   useEffect(() => {}, [openSearch]);
 
   return (

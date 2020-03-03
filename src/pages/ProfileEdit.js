@@ -1,17 +1,11 @@
 import React, { useContext, useEffect, useState } from 'react';
+
+import EditUserInfo from '../components/EditUserInfo';
 import { FirebaseContext } from '../context/Firebase';
+import { Helmet } from 'react-helmet';
+import LoadingSpinner from '../components/LoadingSpinner';
 import styled from 'styled-components';
 import { useHistory } from 'react-router-dom';
-import { Helmet } from 'react-helmet';
-import AddPhotoSVG from '../assets/icons/icon_add_photo';
-import { ModalContext } from '../context/Modal';
-import moment from 'moment';
-import UserPhoto from '../components/UserPhoto';
-import SettingsSVG from '../assets/icons/icon_settings';
-import UserSVG from '../assets/icons/icon_user';
-import UserInfo from '../components/UserInfo';
-import EditUserInfo from '../components/EditUserInfo';
-import LoadingSpinner from '../components/LoadingSpinner';
 
 export const ProfileStyles = styled.div`
   width: 500px;
@@ -31,14 +25,10 @@ export const ProfileStyles = styled.div`
   }
 `;
 
-const Profile = () => {
+const EditProfile = () => {
   const [loading, setLoading] = useState(false);
-  const [photos, setPhotos] = useState([]);
-  const [editProfile, setEditProfile] = useState(false);
-  const [updated, setUpdated] = useState(false);
 
-  const { userData, logoutUser, dbh, myPhotos } = useContext(FirebaseContext);
-  const { setPhotoUploadOpen } = useContext(ModalContext);
+  const { userData } = useContext(FirebaseContext);
 
   const history = useHistory();
 
@@ -68,10 +58,9 @@ const Profile = () => {
         userName={userData.userName}
         userId={userData.id}
         photo={userData.photo ?? ''}
-        setEditProfile={setEditProfile}
       />
     </ProfileStyles>
   );
 };
 
-export default Profile;
+export default EditProfile;

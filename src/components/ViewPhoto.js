@@ -2,12 +2,8 @@ import CameraSVG from '../assets/icons/icon_camera';
 import CloseSVG from '../assets/icons/icon_close';
 import EmptyUpVoteSVG from '../assets/icons/icon_upvote_empty';
 import FilledUpVoteSVG from '../assets/icons/icon_upvote_filled';
-import { FirebaseContext } from '../context/Firebase';
 import { Link } from 'react-router-dom';
-import LoadingSpinner from '../components/LoadingSpinner';
 import React from 'react';
-import TextareaAutosize from 'react-textarea-autosize';
-import UploadPhotoComment from '../components/UploadPhotoComment';
 import moment from 'moment';
 import styled from 'styled-components';
 

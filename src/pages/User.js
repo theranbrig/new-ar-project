@@ -1,14 +1,12 @@
 import React, { useContext, useEffect, useState } from 'react';
+
 import { FirebaseContext } from '../context/Firebase';
-import styled from 'styled-components';
-import { useHistory, useParams } from 'react-router-dom';
 import { Helmet } from 'react-helmet';
-import AddPhotoSVG from '../assets/icons/icon_add_photo';
-import { ModalContext } from '../context/Modal';
-import moment from 'moment';
-import UserPhoto from '../components/UserPhoto';
-import UserInfo from '../components/UserInfo';
 import LoadingSpinner from '../components/LoadingSpinner';
+import UserInfo from '../components/UserInfo';
+import UserPhoto from '../components/UserPhoto';
+import styled from 'styled-components';
+import { useParams } from 'react-router-dom';
 
 export const UserStyles = styled.div`
   width: 500px;
@@ -24,9 +22,8 @@ const User = () => {
   const [loading, setLoading] = useState(false);
   const [photos, setPhotos] = useState([]);
   const [user, setUser] = useState(null);
-  const { logoutUser, dbh, userLoading, userData } = useContext(FirebaseContext);
+  const { dbh, userLoading, userData } = useContext(FirebaseContext);
 
-  const history = useHistory();
   const { id } = useParams();
 
   useEffect(() => {
@@ -51,7 +48,7 @@ const User = () => {
             setLoading(false);
           });
       });
-  }, []);
+  }, [dbh, id]);
 
   if (loading || userLoading)
     return (

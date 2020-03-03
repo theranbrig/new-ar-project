@@ -1,25 +1,21 @@
-import React, { useContext, useState, useCallback } from 'react';
-import styled from 'styled-components';
-import { ModalContext } from '../context/Modal';
-import S3FileUpload from 'react-s3';
-import { uploadFile } from 'react-s3';
-import S3 from 'aws-s3-pro';
-import shortid from 'shortid';
-import CameraSVG from '../assets/icons/icon_photo';
-import LoadingSpinner from './LoadingSpinner';
 import { BlackButtonClick, WhiteButtonClick } from '../utilities/ReusableStyles';
-import { LazyLoadImage } from 'react-lazy-load-image-component';
-import 'react-lazy-load-image-component/src/effects/blur.css';
+import React, { useCallback, useContext, useState } from 'react';
+
+import CameraSVG from '../assets/icons/icon_photo';
+import CloseSVG from '../assets/icons/icon_close';
+import { FirebaseContext } from '../context/Firebase';
+import LoadingSpinner from './LoadingSpinner';
+import { ModalContext } from '../context/Modal';
+import ReactCrop from 'react-image-crop';
+import S3 from 'aws-s3-pro';
 import SavePlusSVG from '../assets/icons/icon_save_plus';
 import SearchSVG from '../assets/icons/icon_search';
-import debounce from 'lodash.debounce';
-import { FirebaseContext } from '../context/Firebase';
-import { formatProductName } from '../utilities/formatting';
-import { useHistory } from 'react-router-dom';
-import ReactCrop from 'react-image-crop';
-import 'react-image-crop/dist/ReactCrop.css';
 import { convertFile } from '../utilities/coverting';
-import CloseSVG from '../assets/icons/icon_close';
+import debounce from 'lodash.debounce';
+import { formatProductName } from '../utilities/formatting';
+import shortid from 'shortid';
+import styled from 'styled-components';
+import { useHistory } from 'react-router-dom';
 
 const UploadStyles = styled.div`
   height: ${({ photoUploadOpen }) => (photoUploadOpen ? '90vh' : '0px')};
@@ -393,7 +389,7 @@ const UploadPhotoModal = () => {
       .then(querySnapshot => {
         querySnapshot.docs.forEach(doc => {
           if (!checkIfTagged(doc.id)) {
-            const { name, price, mainImage, brand } = doc.data();
+            const { name, mainImage, brand } = doc.data();
             tempItems.push({
               id: doc.id,
               name: formatProductName(name),

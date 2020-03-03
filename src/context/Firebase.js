@@ -1,10 +1,13 @@
-import * as firebase from 'firebase/app';
-import React, { useState, useEffect } from 'react';
-import PropTypes from 'prop-types';
 import '@firebase/firestore';
 import '@firebase/storage';
 import '@firebase/analytics';
 import 'firebase/auth';
+
+import * as firebase from 'firebase/app';
+
+import React, { useEffect, useState } from 'react';
+
+import PropTypes from 'prop-types';
 
 const dotenv = require('dotenv');
 
@@ -44,7 +47,6 @@ export const storage = firebase.storage();
 const FirebaseProvider = ({ children }) => {
   const [firebaseError, setFirebaseError] = useState(null);
   const [userLoading, setUserLoading] = useState(true);
-  const [userAuth, setUserAuth] = useState({});
   const [userData, setUserData] = useState({
     id: '',
     loggedIn: false,
@@ -104,7 +106,7 @@ const FirebaseProvider = ({ children }) => {
     setUserLoading(true);
     await firebase.auth().onAuthStateChanged(user => {
       if (user) {
-        const userId = dbh
+        dbh
           .collection('users')
           .doc(user.uid)
           .get()
@@ -138,7 +140,6 @@ const FirebaseProvider = ({ children }) => {
         callback({
           loggedIn: false,
           id: '',
-          loggedIn: false,
           userName: '',
           firstName: '',
           lastName: '',
@@ -154,8 +155,7 @@ const FirebaseProvider = ({ children }) => {
 
   useEffect(() => {
     setUserLoading(true);
-    const unsubscribe = onAuthStateChange(setUserData);
-
+    onAuthStateChange(setUserData);
     return () => {
       onAuthStateChange(setUserData);
     };
@@ -192,7 +192,6 @@ const FirebaseProvider = ({ children }) => {
         firebase,
         storage,
         userLoading,
-        userAuth,
         uploadUserPhoto,
       }}>
       {children}
