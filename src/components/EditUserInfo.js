@@ -11,6 +11,7 @@ import { FirebaseContext } from '../context/Firebase';
 import { LazyLoadImage } from 'react-lazy-load-image-component';
 import PencilSVG from '../assets/icons/icon_pencil';
 import ReactCrop from 'react-image-crop';
+import RefreshSVG from '../assets/icons/icon_refresh';
 import S3 from 'aws-s3-pro';
 import UserSVG from '../assets/icons/icon_user';
 import { convertFile } from '../utilities/coverting';
@@ -250,6 +251,20 @@ export const EditUserStyles = styled.div`
       font-weight: 600 !important;
     }
   }
+  button.refresh {
+    display: block;
+    width: 150px;
+    background: black;
+    color: white;
+    height: 30px;
+    border-radius: 15px;
+    margin: 10px auto;
+    font-size: 14px;
+    svg {
+      height: 16px;
+      vertical-align: middle;
+    }
+  }
 `;
 
 const EditUserInfo = ({ description, photo, userName, userId, setEditProfile }) => {
@@ -391,6 +406,9 @@ const CropperComponent = ({
             ruleOfThirds
             circularCrop
           />
+          <button className='refresh' onClick={() => setUpImg()}>
+            <RefreshSVG fill='#fff' /> Refresh Photo
+          </button>
         </>
       ) : (
         <>
