@@ -3,6 +3,7 @@ import React, { useContext, useEffect, useState } from 'react';
 import { CartContext } from '../context/Cart';
 import { FirebaseContext } from '../context/Firebase';
 import { Link } from 'react-router-dom';
+import LoadingSpinner from './LoadingSpinner';
 import styled from 'styled-components';
 
 export const ItemsStyles = styled.div`
@@ -99,11 +100,12 @@ export const ItemsStyles = styled.div`
 
 const ShoppingBagItems = ({ cartLoading, canEdit, mode, setOpenBag }) => {
   const { cart, removeItemFromCart, editCartItems } = useContext(CartContext);
-  console.log(cart);
-  if (cartLoading)
+  const { userLoading } = useContext(FirebaseContext);
+
+  if (cartLoading || userLoading)
     return (
       <ItemsStyles>
-        <h2>Cart Loading...</h2>
+        <LoadingSpinner color='black' />
       </ItemsStyles>
     );
 
@@ -123,7 +125,7 @@ const ShoppingBagItems = ({ cartLoading, canEdit, mode, setOpenBag }) => {
                   <h2>{item.brand.toUpperCase()}</h2>
                   <h3>{item.name}</h3>
                   <h4>{`$${(item.price / 100).toFixed(2)}`}</h4>
-                  <ItemUpdate item={item} index={index} />
+                  <ItemUpdate item={item} index={index} cart={cart} />
                 </div>
               </div>
               <button
@@ -146,14 +148,25 @@ const ShoppingBagItems = ({ cartLoading, canEdit, mode, setOpenBag }) => {
 
 export default ShoppingBagItems;
 
-const ItemUpdate = ({ item, index }) => {
+const ItemUpdate = ({ item, index, cart }) => {
+  const selectedSizes = cart.map(cartItem => {
+    if (cartItem.productId === item.productId) {
+      return cartItem.selectedSize;
+    }
+  });
+  const remainingSizes = item.sizes.filter(itemSize => {
+    return (
+      !selectedSizes.some(selectedSize => selectedSize === itemSize) ||
+      itemSize === item.selectedSize
+    );
+  });
   const { editCartItem } = useContext(CartContext);
   const [currentSize, setCurrentSize] = useState(item.selectedSize);
   const [currentQuantity, setCurrentQuantity] = useState(item.quantity);
   const quantities = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
   return (
     <div className='change-items'>
-      <div class='selectWrapper'>
+      <div className='selectWrapper'>
         <select
           className='selectBox'
           value={currentSize}
@@ -162,12 +175,12 @@ const ItemUpdate = ({ item, index }) => {
             setCurrentSize(e.target.value);
             editCartItem(item, currentQuantity, e.target.value, index);
           }}>
-          {item.sizes.map(size => (
+          {remainingSizes.map(size => (
             <option key={size}>{size}</option>
           ))}
         </select>
       </div>
-      <div class='selectWrapper'>
+      <div className='selectWrapper'>
         <select
           className='selectBox'
           onChange={e => {
