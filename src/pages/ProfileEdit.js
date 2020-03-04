@@ -32,15 +32,15 @@ const EditProfile = () => {
 
   const history = useHistory();
 
-  useEffect(() => {
-    setLoading(true);
-    window.scrollTo(0, 0);
-    if (userData.loggedIn) {
-      setLoading(false);
-    } else {
-      history.push('/login');
-    }
-  }, [userData]);
+  // useEffect(() => {
+  //   setLoading(true);
+  //   window.scrollTo(0, 0);
+  //   if (userData.loggedIn) {
+  //     setLoading(false);
+  //   } else {
+  //     history.push('/login');
+  //   }
+  // }, [userData]);
 
   if (!userData.loggedIn || loading)
     return (

@@ -2,11 +2,14 @@ import 'react-lazy-load-image-component/src/effects/blur.css';
 import 'react-image-crop/dist/ReactCrop.css';
 
 import { BlackButtonClick, WhiteButtonClick } from '../utilities/ReusableStyles';
-import React, { useCallback, useContext, useState } from 'react';
+import React, { useCallback, useContext, useEffect, useState } from 'react';
 
+import BackButton from '../components/BackButton';
 import CameraSVG from '../assets/icons/icon_photo';
+import ChevronLeft from '../assets/icons/icon_chevron_left';
 import { FirebaseContext } from '../context/Firebase';
 import { LazyLoadImage } from 'react-lazy-load-image-component';
+import PencilSVG from '../assets/icons/icon_pencil';
 import ReactCrop from 'react-image-crop';
 import S3 from 'aws-s3-pro';
 import UserSVG from '../assets/icons/icon_user';
@@ -17,7 +20,7 @@ import { useHistory } from 'react-router-dom';
 
 const UploadStyles = styled.div`
   width: 100%;
-  margin: calc(10vh + 50px) 0 0;
+  margin: 0 0;
   background: ${props => props.theme.colors.white};
   z-index: 600;
   transition: 0.5s;
@@ -131,10 +134,10 @@ export const EditUserStyles = styled.div`
     border-color: ${props => props.theme.colors.lightGrey};
   }
   .user-photo {
+    position: relative;
     height: 100px;
     width: 100px;
-    margin: 0 auto;
-    margin-top: calc(10vh + 50px);
+    margin: 20px auto;
     box-shadow: 0 0 0 3px ${props => props.theme.colors.lightGrey};
     border-radius: 50%;
     border: 3px solid ${props => props.theme.colors.white};
@@ -145,6 +148,19 @@ export const EditUserStyles = styled.div`
       height: 100px;
       width: 100px;
       border-radius: 50%;
+    }
+    .edit-button {
+      border: none;
+      background: ${props => props.theme.colors.white};
+      height: 30px;
+      width: 30px;
+      border-radius: 50%;
+      -webkit-box-shadow: 0px 0px 10px 0px ${props => props.theme.colors.mediumGrey};
+      -moz-box-shadow: 0px 0px 10px 0px ${props => props.theme.colors.mediumGrey};
+      box-shadow: 0px 0px 10px 0px ${props => props.theme.colors.mediumGrey};
+      position: absolute;
+      right: 0px;
+      bottom: 0px;
     }
   }
   h1 {
@@ -163,36 +179,113 @@ export const EditUserStyles = styled.div`
       margin: 0 auto;
     }
   }
+  .top {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+
+    h1 {
+      font-size: 1.8rem;
+      margin: 0;
+    }
+    div {
+      align-self: center !important;
+      width: 50px;
+    }
+    button {
+      background: none;
+      border: none;
+      svg {
+        height: 16px;
+      }
+    }
+  }
+  .edit {
+    h1 {
+      border: 1px solid ${props => props.theme.colors.black};
+      width: 70%;
+      margin: 0 auto;
+      padding: 0 20px;
+      text-align: left;
+      height: 45px;
+      border-radius: 25px;
+      line-height: 45px;
+    }
+    .description {
+      width: 70%;
+      padding: 20px;
+      margin: 20px auto;
+      border: 1px solid ${props => props.theme.colors.black};
+      border-radius: 25px;
+      font-family: ${props => props.theme.fonts.main};
+      p {
+        margin: 0;
+        text-align: left;
+        color: ${props => props.theme.colors.grey};
+      }
+      textarea {
+        margin: 0;
+        padding: 0;
+        width: 100%;
+        border: none;
+        background: ${props => props.theme.colors.white};
+        font-family: ${props => props.theme.fonts.main};
+      }
+    }
+  }
+
+  .save-buttons {
+    text-align: right;
+    width: 80%;
+    margin: 0 auto;
+    button {
+      margin: 0;
+      width: 120px;
+      border-radius: 25px;
+      height: 45px;
+      background: ${props => props.theme.colors.black};
+      color: ${props => props.theme.colors.white};
+      font-size: 1.2rem;
+      font-family: ${props => props.theme.fonts.main};
+      font-weight: 600 !important;
+    }
+  }
 `;
 
 const EditUserInfo = ({ description, photo, userName, userId, setEditProfile }) => {
   const [editPhoto, setEditPhoto] = useState(false);
   const [newUserPhoto, setNewUserPhoto] = useState('');
+  const [status, setStatus] = useState('SAVED');
 
   return (
     <EditUserStyles>
-      {editPhoto ? (
-        <div className='photo-uploader'>
-          <SelectPhoto description={description} userName={userName} setEditPhoto={setEditPhoto} />
+      <div className='top'>
+        <div>
+          {editPhoto && (
+            <button
+              onClick={() => {
+                setEditPhoto(false);
+              }}>
+              <ChevronLeft />
+            </button>
+          )}
         </div>
-      ) : (
-        <>
-          <div
-            className='user-photo'
-            onClick={() => {
-              setEditPhoto(true);
-            }}>
-            {photo || newUserPhoto ? (
-              <LazyLoadImage effect='blur' src={newUserPhoto || photo} />
-            ) : (
-              <UserSVG />
-            )}
-          </div>
-          <p>Click Photo to Edit</p>
-          <h1>@{userName}</h1>
-          <p>{description}</p>
-        </>
-      )}
+        <h1>Edit public profile</h1>
+        <div className='right-content'></div>
+      </div>
+      <div className='photo-uploader'>
+        <SelectPhoto
+          description={description}
+          userName={userName}
+          setEditPhoto={setEditPhoto}
+          photo={photo}
+          newUserPhoto={newUserPhoto}
+          setNewUserPhoto={setNewUserPhoto}
+          editPhoto={editPhoto}
+          status={status}
+          setStatus={setStatus}
+        />
+      </div>
     </EditUserStyles>
   );
 };
@@ -206,6 +299,11 @@ const CropperComponent = ({
   userName,
   description,
   setEditPhoto,
+  editPhoto,
+  photo,
+  newUserPhoto,
+  status,
+  setStatus,
 }) => {
   const [editDescription, setEditDescription] = useState(description);
   const [upImg, setUpImg] = useState();
@@ -262,13 +360,33 @@ const CropperComponent = ({
 
   return (
     <>
-      {upImg ? (
+      {!editPhoto ? (
+        <div className='user-photo'>
+          {photo || newUserPhoto ? (
+            <LazyLoadImage effect='blur' src={newUserPhoto || photo} />
+          ) : (
+            <UserSVG />
+          )}
+          <button
+            onClick={() => {
+              console.log('click');
+              setEditPhoto(true);
+              console.log(editPhoto);
+            }}
+            className='edit-button'>
+            <PencilSVG />
+          </button>
+        </div>
+      ) : upImg ? (
         <>
           <ReactCrop
             src={upImg}
             onImageLoaded={onLoad}
             crop={crop}
-            onChange={c => setCrop(c)}
+            onChange={c => {
+              setCrop(c);
+              setStatus('SAVE');
+            }}
             onComplete={makeClientCrop}
             ruleOfThirds
             circularCrop
@@ -289,40 +407,49 @@ const CropperComponent = ({
           />
         </>
       )}
-      <button
-        className='cancel'
-        onClick={() => {
-          setEditPhoto(false);
-        }}>
-        Cancel Update Photo
-      </button>
-      <h1>@{userName}</h1>
-      <textarea
-        placeholder='Add a description of yourself...'
-        rows='5'
-        max='300'
-        value={editDescription}
-        onChange={e => {
-          setEditDescription(e.target.value);
-        }}
-      />
-      <BlackButtonClick
-        onClick={() => {
-          uploadS3File(editDescription);
-        }}>
-        UPDATE
-      </BlackButtonClick>
-      <WhiteButtonClick
-        onClick={() => {
-          setEditPhoto(false);
-        }}>
-        CANCEL
-      </WhiteButtonClick>
+      <section className='edit'>
+        <h1>@{userName}</h1>
+        <div className='description'>
+          <textarea
+            placeholder='Add a description of yourself...'
+            rows='5'
+            maxLength='150'
+            value={editDescription}
+            onChange={e => {
+              setEditDescription(e.target.value);
+              setStatus('SAVE');
+              console.log(status);
+            }}
+          />
+          <p>{editDescription.length} / 150</p>
+        </div>
+      </section>
+      <section className='save-buttons'>
+        <button
+          disabled={status === 'SAVED'}
+          onClick={() => {
+            uploadS3File(editDescription, setUpImg);
+          }}>
+          {status}
+        </button>
+      </section>
     </>
   );
 };
 
-const SelectPhoto = ({ photoRef, photoId, setUploadPhotoComment, description, setEditPhoto }) => {
+const SelectPhoto = ({
+  photoRef,
+  photoId,
+  setUploadPhotoComment,
+  description,
+  setEditPhoto,
+  editPhoto,
+  photo,
+  status,
+  setStatus,
+  setNewUserPhoto,
+  newUserPhoto,
+}) => {
   const [imageString, setImageString] = useState('');
 
   const [currentPictureUrl, setCurrentPictureUrl] = useState('');
@@ -343,23 +470,33 @@ const SelectPhoto = ({ photoRef, photoId, setUploadPhotoComment, description, se
 
   const newFileName = shortid.generate();
 
-  const uploadS3File = async description => {
-    console.log(convertFile(imageString, newFileName));
-
-    await S3Client.uploadFile(convertFile(imageString, newFileName), newFileName)
-      .then(data => {
-        setCurrentPictureUrl(data.location);
-        dbh
-          .collection('users')
-          .doc(userData.id)
-          .update({ description, photo: data.location })
-          .then(() => {
-            setEditPhoto(false);
-            history.push('/profile');
-            window.location.reload(true);
-          });
-      })
-      .catch(err => console.error(err));
+  const uploadS3File = async (description, callback) => {
+    if (imageString.length) {
+      await S3Client.uploadFile(convertFile(imageString, newFileName), newFileName)
+        .then(data => {
+          setCurrentPictureUrl(data.location);
+          setNewUserPhoto(data.location);
+          dbh
+            .collection('users')
+            .doc(userData.id)
+            .update({ description, photo: data.location })
+            .then(() => {
+              setEditPhoto(false);
+              setStatus('SAVED');
+              callback(null);
+            });
+        })
+        .catch(err => console.error(err));
+    } else {
+      dbh
+        .collection('users')
+        .doc(userData.id)
+        .update({ description })
+        .then(() => {
+          setEditPhoto(false);
+          setStatus('SAVED');
+        });
+    }
   };
 
   return (
@@ -371,12 +508,18 @@ const SelectPhoto = ({ photoRef, photoId, setUploadPhotoComment, description, se
               <div className='selected-photo'>
                 <div className='crop-area'>
                   <CropperComponent
+                    photo={photo}
                     src={currentPictureUrl}
                     setImageString={setImageString}
                     uploadS3File={uploadS3File}
                     description={description}
                     userName={userData.userName}
                     setEditPhoto={setEditPhoto}
+                    editPhoto={editPhoto}
+                    status={status}
+                    setStatus={setStatus}
+                    newUserPhoto={newUserPhoto}
+                    setNewUserPhoto={newUserPhoto}
                   />
                 </div>
               </div>

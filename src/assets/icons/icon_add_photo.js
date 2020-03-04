@@ -1,6 +1,6 @@
 import React from 'react';
 
-const AddPhotoSVG = ({ fill }) => {
+const PencilSVG = ({ fill }) => {
   return (
     <svg
       version='1.1'
@@ -35,4 +35,4 @@ const AddPhotoSVG = ({ fill }) => {
   );
 };
 
-export default AddPhotoSVG;
+export default PencilSVG;
