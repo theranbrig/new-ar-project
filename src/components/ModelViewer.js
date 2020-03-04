@@ -39,6 +39,7 @@ export const ModelStyles = styled.div`
   }
 `;
 
+
 const ModelViewer = ({ glbFile, usdzFile, imageUrl, productId, displayLink }) => {
   const [stateGLB, setStateGLB] = useState('');
   return (

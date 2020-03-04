@@ -1,7 +1,9 @@
-import React, { useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 
+import { CartContext } from '../context/Cart';
 import LoadingSpinner from './LoadingSpinner';
 import ShoppingBagItems from './ShoppingBagItems';
+import { formatPrice } from '../utilities/formatting';
 import styled from 'styled-components';
 import { useHistory } from 'react-router-dom';
 
@@ -22,6 +24,8 @@ export const ModalStyles = styled.div`
     max-width: 95%;
     z-index: 505;
     margin: 0 auto;
+    height: 70vh;
+    overflow-y: scroll;
     font-family: ${props => props.theme.fonts.main};
     color: ${props => props.theme.colors.black};
     h3 {
@@ -35,8 +39,9 @@ export const ModalStyles = styled.div`
     margin: 0 auto;
     position: fixed;
     bottom: 0;
-    height: 15vh;
-
+    height: 20vh;
+    font-family: ${props => props.theme.fonts.main};
+    background: ${props => props.theme.colors.white};
     button,
     a {
       border: 0px;
@@ -59,13 +64,42 @@ export const ModalStyles = styled.div`
       font-size: 1.5rem;
       padding-left: 5px;
     }
+    .total {
+      display: flex;
+      flex-direction: row;
+      justify-content: space-between;
+      border-top: 1px solid ${props => props.theme.colors.lightGrey};
+      border-bottom: 1px solid ${props => props.theme.colors.lightGrey};
+      margin: 5px 0;
+      h2 {
+        text-align: right;
+        font-weight: 300;
+        margin: 5px 0;
+      }
+      .number {
+        font-weight: 500;
+      }
+    }
   }
 `;
 
 const ShoppingBagModal = ({ openBag, shoppingBag, setValue, cartLoading, setOpenBag }) => {
   const [canEdit, setCanEdit] = useState(true);
-
+  const [total, setTotal] = useState(0);
   const history = useHistory();
+
+  const { cart, removeItemFromCart, editCartItems } = useContext(CartContext);
+
+  useEffect(() => {
+    setTotal(
+      formatPrice(
+        shoppingBag.reduce((accum, item) => {
+          console.log('PRICE', item.price);
+          return accum + parseInt(item.price) * item.quantity;
+        }, 0)
+      )
+    );
+  }, [cart]);
 
   return (
     <ModalStyles openBag={openBag}>
@@ -81,6 +115,10 @@ const ShoppingBagModal = ({ openBag, shoppingBag, setValue, cartLoading, setOpen
               setOpenBag={setOpenBag}
             />
             <div className='modal-buttons'>
+              <div className='total'>
+                <h2 className='text'>Total:</h2>
+                <h2 className='number'>{total}</h2>
+              </div>
               <button
                 onClick={() => {
                   setOpenBag(false);

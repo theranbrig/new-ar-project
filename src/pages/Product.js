@@ -214,7 +214,7 @@ const Product = () => {
   return (
     <ProductContainer>
       <Helmet>
-        <title>YZED - {product.name.toUpperCase()}</title>
+        {/* <title>YZED - {product && product.name.toUpperCase()}</title> */}
       </Helmet>
       {isAdded && <AddToCartSuccessModal setIsAdded={setIsAdded} />}
 

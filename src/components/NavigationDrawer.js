@@ -135,8 +135,6 @@ const NavigationDrawer = ({ children }) => {
   const { cart, cartLoading } = useContext(CartContext);
   const { userData } = useContext(FirebaseContext);
 
-  console.log(cartLoading);
-
   const { setPhotoUploadOpen, photoUploadOpen } = useContext(ModalContext);
 
   const node = React.useRef();

@@ -99,6 +99,7 @@ export const ItemsStyles = styled.div`
 
 const ShoppingBagItems = ({ cartLoading, canEdit, mode, setOpenBag }) => {
   const { cart, removeItemFromCart, editCartItems } = useContext(CartContext);
+  console.log(cart);
   if (cartLoading)
     return (
       <ItemsStyles>
@@ -113,7 +114,7 @@ const ShoppingBagItems = ({ cartLoading, canEdit, mode, setOpenBag }) => {
           return (
             <div className='bag-item' key={index}>
               <div className='left-content'>
-                <Link to={`/product/${item.productId}`}>
+                <Link onClick={() => setOpenBag(false)} to={`/product/${item.id}`}>
                   <img src={item.mainImage} alt={item.name} />
                 </Link>
               </div>
@@ -146,7 +147,6 @@ const ShoppingBagItems = ({ cartLoading, canEdit, mode, setOpenBag }) => {
 export default ShoppingBagItems;
 
 const ItemUpdate = ({ item, index }) => {
-  console.log('ITEM', item);
   const { editCartItem } = useContext(CartContext);
   const [currentSize, setCurrentSize] = useState(item.selectedSize);
   const [currentQuantity, setCurrentQuantity] = useState(item.quantity);
@@ -177,9 +177,7 @@ const ItemUpdate = ({ item, index }) => {
           value={currentQuantity}
           name='select quantity'>
           {quantities.map(quantity => (
-            <option key={quantity}>
-              {quantity}
-            </option>
+            <option key={quantity}>{quantity}</option>
           ))}
         </select>
       </div>
