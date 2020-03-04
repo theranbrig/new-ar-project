@@ -169,27 +169,32 @@ const RepliesStyles = styled.div`
     display: grid;
     grid-template-columns: 45px 1fr;
     align-items: center;
-    grid-gap: 5px;
+    grid-gap: 20px;
     p {
       font-weight: 300;
+      font-size: 0.9rem;
     }
     a {
       font-weight: 700;
       color: ${props => props.theme.colors.black};
       text-decoration: none;
     }
-    img {
-      width: 45px;
-      height: 45px;
-      border-radius: 50%;
-    }
+  }
+  .comment-photo {
+    width: 45px;
+  }
+  .profile-photo {
+    width: 45px;
+    height: 45px;
+    border-radius: 50%;
   }
 `;
 
 const Replies = ({ comment, setSelectedReplies, photoRef, sendReply }) => {
   const [loading, setLoading] = useState(false);
   const [replies, setReplies] = useState([]);
-  const { userData, firebase } = useContext(FirebaseContext);
+  const [commentUser, setCommentUser] = useState();
+  const { userData, firebase, dbh } = useContext(FirebaseContext);
 
   const toggleLikeReply = (replyId, liked) => {
     setLoading(true);
@@ -245,6 +250,13 @@ const Replies = ({ comment, setSelectedReplies, photoRef, sendReply }) => {
 
   useEffect(() => {
     setLoading(true);
+    dbh
+      .collection('users')
+      .doc(comment.user.id)
+      .get()
+      .then(doc => {
+        setCommentUser({ ...doc.data() });
+      });
     checkReplies();
     return () => {
       checkReplies();
@@ -261,18 +273,46 @@ const Replies = ({ comment, setSelectedReplies, photoRef, sendReply }) => {
         <ChevronLeft />
       </button>
       <h3>Replying to:</h3>
-      <div className='comment-info'>
-        <img src={comment.user.photo} alt={comment.user.userName} />
-        <p>
-          <Link>@{comment.user.userName}</Link> {comment.comment}
-        </p>
-      </div>
+      {commentUser && (
+        <div className='comment-info'>
+          <img
+            className={comment.photo ? 'comment-photo' : 'profile-photo'}
+            src={comment.photo ? comment.photo : commentUser.photo}
+            alt={commentUser.userName}
+          />
+          <p>
+            <Link>@{commentUser.userName}</Link> {comment.comment}
+          </p>
+        </div>
+      )}
       {replies.length ? <h3>Other replies:</h3> : <h3>Nothing here yet...</h3>}
       {replies.map(reply => (
-        <div className='reply'>
+        <Reply reply={reply} loading={loading} toggleLikeReply={toggleLikeReply} key={reply.id} />
+      ))}
+      {userData.loggedIn && <CreateReplies sendReply={sendReply} commentId={comment.id} />}
+    </RepliesStyles>
+  );
+};
+
+const Reply = ({ reply, loading, toggleLikeReply }) => {
+  const { dbh } = useContext(FirebaseContext);
+  const [user, setUser] = useState();
+
+  useEffect(() => {
+    console.log(reply.user);
+    dbh
+      .collection('users')
+      .doc(reply.user.id)
+      .get()
+      .then(doc => setUser({ ...doc.data() }));
+  }, []);
+  return (
+    <div className='reply'>
+      {user && (
+        <>
           <div className='reply-body'>
             <div className='reply-content'>
-              <img src={reply.user.photo} alt={reply.user.userName} />
+              <img className='profile-photo' src={user.photo} alt={reply.user.userName} />
               <p className='reply-info'>
                 <span>
                   <Link className='user' to={`/user/${reply.user.id}`}>
@@ -304,11 +344,9 @@ const Replies = ({ comment, setSelectedReplies, photoRef, sendReply }) => {
             </button>
             <p>{reply.upVotes.length}</p>
           </div>
-        </div>
-      ))}
-      {userData.loggedIn && <CreateReplies sendReply={sendReply} commentId={comment.id} />}
-    </RepliesStyles>
+        </>
+      )}
+    </div>
   );
 };
-
 export default Replies;

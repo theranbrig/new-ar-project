@@ -105,7 +105,7 @@ const CommentStyles = styled.div`
     }
     margin-bottom: 5px;
     p {
-      font-size: 0.8rem;
+      font-size: 0.9rem;
       margin: 0;
       font-weight: 300;
       span {
