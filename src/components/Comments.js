@@ -1,3 +1,5 @@
+import 'react-lazy-load-image-component/src/effects/blur.css';
+
 import { Link, useParams } from 'react-router-dom';
 import React, { useContext, useEffect, useState } from 'react';
 
@@ -7,6 +9,7 @@ import ChevronRight from '../assets/icons/icon_chevron_right';
 import EmptyUpVoteSVG from '../assets/icons/icon_upvote_empty';
 import FilledUpVoteSVG from '../assets/icons/icon_upvote_filled';
 import { FirebaseContext } from '../context/Firebase';
+import { LazyLoadImage } from 'react-lazy-load-image-component';
 import LoadingSpinner from '../components/LoadingSpinner';
 import PictureSVG from '../assets/icons/icon_picture';
 import Replies from './Replies';
@@ -184,7 +187,8 @@ const Comment = ({ comment, setSelectedReplies, photoRef, toggleUpvoteComment })
         )}
         <div className={comment.photo ? 'comment-photo' : 'comment-no-photo'}>
           {comment.photo && (
-            <img
+            <LazyLoadImage
+              effect='blur'
               src={comment.photo}
               alt={`${comment.user.userName}`}
               onClick={() => {
@@ -425,7 +429,7 @@ const Comments = () => {
           ))}
           {userData.loggedIn && (
             <div className='comment-inputs'>
-              <img src={userData.photo} alt={userData.userName} />
+              <LazyLoadImage src={userData.photo} alt={userData.userName} effect='blur' />
               <button
                 onClick={() => {
                   setUploadPhotoComment(!uploadPhotoComment);

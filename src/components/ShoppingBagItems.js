@@ -108,7 +108,7 @@ const ShoppingBagItems = ({ cartLoading, canEdit, mode, setOpenBag }) => {
         <LoadingSpinner color='black' />
       </ItemsStyles>
     );
-
+  console.log(cart);
   return (
     <ItemsStyles mode={mode}>
       {cart.length ? (
@@ -116,7 +116,7 @@ const ShoppingBagItems = ({ cartLoading, canEdit, mode, setOpenBag }) => {
           return (
             <div className='bag-item' key={index}>
               <div className='left-content'>
-                <Link onClick={() => setOpenBag(false)} to={`/product/${item.id}`}>
+                <Link onClick={() => setOpenBag(false)} to={`/product/${item.productId}`}>
                   <img src={item.mainImage} alt={item.name} />
                 </Link>
               </div>
