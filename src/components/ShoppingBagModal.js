@@ -35,7 +35,7 @@ export const ModalStyles = styled.div`
   }
   .modal-buttons {
     width: 500px;
-    max-width: 95%;
+    max-width: 90%;
     margin: 0 auto;
     position: fixed;
     bottom: 0;
@@ -65,6 +65,7 @@ export const ModalStyles = styled.div`
       padding-left: 5px;
     }
     .total {
+      padding: 0 20px;
       display: flex;
       flex-direction: row;
       justify-content: space-between;

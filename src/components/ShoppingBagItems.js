@@ -73,7 +73,7 @@ export const ItemsStyles = styled.div`
       color: pink;
       font-size: 1.2rem;
     }
-    border-bottom: 1px solid ${props => props.theme.colors.mediumGrey};
+    border-bottom: 1px solid ${props => props.theme.colors.lightGrey};
   }
   .selectWrapper {
     border-radius: 36px;
