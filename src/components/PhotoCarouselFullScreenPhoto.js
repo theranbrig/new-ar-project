@@ -84,12 +84,16 @@ export const FullScreenPhotoStyles = styled.div`
       button {
         width: 40px;
         height: 40px;
+        background: none;
+        border: none;
         svg {
           height: 18px;
         }
       }
       h5 {
         text-align: center;
+        font-size: 1rem;
+        font-weight: 400;
       }
       p,
       h5 {
@@ -100,7 +104,18 @@ export const FullScreenPhotoStyles = styled.div`
       margin: 0;
       font-weight: 300;
     }
-    .bottom-row {
+    .text {
+      a {
+        background: none;
+        border: none;
+        color: ${props => props.theme.colors.white};
+        margin-left: 10px;
+        font-size: 0.9rem;
+        font-weight: 600;
+      }
+      span {
+        margin-right: 10px;
+      }
     }
   }
 `;
@@ -150,7 +165,7 @@ const PhotoCarouselFullScreenPhoto = ({ photo, userData }) => {
     <FullScreenPhotoStyles>
       <>
         <div className='image gradient'>
-          <LazyLoadImage src={photo.url} alt={photo.description} effect='blur' />
+          <img src={photo.url} alt={photo.description} />
         </div>
         {user && (
           <section className='photo-info'>
@@ -162,7 +177,7 @@ const PhotoCarouselFullScreenPhoto = ({ photo, userData }) => {
               <div className='bottom-row'>
                 <h5>
                   <span>{moment.unix(photo.addedOn.seconds).fromNow()}</span> repl
-                  {comments === 1 ? 'y' : 'ies'}(0)<button onClick={() => {}}>reply</button>
+                  {comments === 1 ? 'y' : 'ies'}(0)<Link to={`/comments/${photo.id}`}>reply</Link>
                 </h5>
               </div>
             </div>
