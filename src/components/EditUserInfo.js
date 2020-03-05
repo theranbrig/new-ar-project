@@ -6,7 +6,9 @@ import React, { useCallback, useContext, useEffect, useState } from 'react';
 
 import BackButton from '../components/BackButton';
 import CameraSVG from '../assets/icons/icon_photo';
+import CheckSVG from '../assets/icons/icon_check';
 import ChevronLeft from '../assets/icons/icon_chevron_left';
+import DownloadSVG from '../assets/icons/icon_download';
 import { FirebaseContext } from '../context/Firebase';
 import { LazyLoadImage } from 'react-lazy-load-image-component';
 import PencilSVG from '../assets/icons/icon_pencil';
@@ -249,6 +251,12 @@ export const EditUserStyles = styled.div`
       font-size: 1.2rem;
       font-family: ${props => props.theme.fonts.main};
       font-weight: 600 !important;
+      svg {
+        height: 16px;
+        vertical-align: middle;
+        margin-bottom: 4px;
+        margin-right: 3px;
+      }
     }
   }
   button.refresh {
@@ -448,6 +456,7 @@ const CropperComponent = ({
           onClick={() => {
             uploadS3File(editDescription, setUpImg);
           }}>
+          {status === 'SAVE' ? <DownloadSVG fill='#fff' /> : <CheckSVG fill='#fff' />}
           {status}
         </button>
       </section>
