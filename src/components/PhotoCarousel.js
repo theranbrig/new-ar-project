@@ -156,7 +156,7 @@ const MainPageCarousel = ({ title }) => {
   const [carousel, setCarousel] = useState(null);
   const [photos, setPhotos] = useState([]);
 
-  const { dbh, userData } = useContext(FirebaseContext);
+  const { dbh, userData, firebase } = useContext(FirebaseContext);
 
   const checkPhotos = () => {
     dbh
@@ -170,6 +170,22 @@ const MainPageCarousel = ({ title }) => {
         });
         setPhotos(tempItems);
       });
+  };
+
+  const likePhoto = (photo, liked) => {
+    if (liked) {
+      dbh
+        .collection('userPhotos')
+        .doc(photo.id)
+        .update({ likes: firebase.firestore.FieldValue.arrayRemove(userData.id) })
+        .then(() => checkPhotos());
+    } else {
+      dbh
+        .collection('userPhotos')
+        .doc(photo.id)
+        .update({ likes: firebase.firestore.FieldValue.arrayUnion(userData.id) })
+        .then(() => checkPhotos());
+    }
   };
 
   useEffect(() => {
@@ -255,6 +271,7 @@ const MainPageCarousel = ({ title }) => {
             photos={photos}
             setShowFullScreen={setShowFullScreen}
             userData={userData}
+            likePhoto={likePhoto}
           />
         )}
       </div>
@@ -314,7 +331,7 @@ const FullSliderStyles = styled.div`
   }
 `;
 
-const FullScreenSlider = ({ photos, setShowFullScreen, userData }) => {
+const FullScreenSlider = ({ photos, setShowFullScreen, userData, likePhoto }) => {
   console.log(photos);
   const fullResponsive = {
     superLargeDesktop: {
@@ -361,6 +378,7 @@ const FullScreenSlider = ({ photos, setShowFullScreen, userData }) => {
                 photo={photo}
                 setShowFullScreen={setShowFullScreen}
                 userData={userData}
+                likePhoto={likePhoto}
               />
             ))}
           </Carousel>

@@ -123,27 +123,13 @@ export const FullScreenPhotoStyles = styled.div`
   }
 `;
 
-const PhotoCarouselFullScreenPhoto = ({ photo, userData }) => {
+const PhotoCarouselFullScreenPhoto = ({ photo, userData, likePhoto }) => {
   const [currentPhoto, setCurrentPhoto] = useState(photo);
   const [liked, setLiked] = useState(false);
   const [user, setUser] = useState(null);
   const [comments, setComments] = useState(0);
   const [loading, setLoading] = useState(false);
   const { dbh, firebase } = useContext(FirebaseContext);
-
-  const likePhoto = () => {
-    if (liked) {
-      dbh
-        .collection('userPhotos')
-        .doc(photo.id)
-        .update({ likes: firebase.firestore.FieldValue.arrayRemove(userData.id) });
-    } else {
-      dbh
-        .collection('userPhotos')
-        .doc(photo.id)
-        .update({ likes: firebase.firestore.FieldValue.arrayUnion(userData.id) });
-    }
-  };
 
   useEffect(() => {
     setLoading(true);
@@ -167,7 +153,7 @@ const PhotoCarouselFullScreenPhoto = ({ photo, userData }) => {
             setLoading(false);
           });
       });
-  }, []);
+  }, [likePhoto]);
 
   if (loading) {
     return (
@@ -201,7 +187,7 @@ const PhotoCarouselFullScreenPhoto = ({ photo, userData }) => {
               <button
                 onClick={() => {
                   // toggleUpvoteComment(photo.id, photo.liked);
-                  likePhoto();
+                  likePhoto(photo, liked);
                 }}>
                 {liked ? <FilledUpVoteSVG fill='#fff' /> : <EmptyUpVoteSVG fill='#fff' />}
               </button>
