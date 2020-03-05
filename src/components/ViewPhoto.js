@@ -119,7 +119,7 @@ const ViewPhoto = ({
           </button>
         </section>
         <img src={comment.photo} alt={comment.comment} />
-        <div className='photo-info'>
+        <section className='photo-info'>
           <p className='comment'>
             <CameraSVG fill='#fff' />
             <Link to={`/user/${comment.user.id}`}>@{comment.user.userName}</Link>
@@ -147,7 +147,7 @@ const ViewPhoto = ({
               <h5>{comment.upVotes.length}</h5>
             </div>
           </div>
-        </div>
+        </section>
       </div>
     </ViewPhotoStyles>
   );

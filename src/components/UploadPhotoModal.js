@@ -243,8 +243,7 @@ const UploadStyles = styled.div`
   }
   .ReactCrop {
     max-width: 90%;
-    width: 225px;
-    height: 340px;
+
   }
 `;
 

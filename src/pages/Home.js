@@ -8,7 +8,7 @@ import { FirebaseContext } from '../context/Firebase';
 import { Helmet } from 'react-helmet';
 import { Link } from 'react-router-dom';
 import LoadingSpinner from '../components/LoadingSpinner';
-import MainPageCarousel from '../components/UserCarousel';
+import MainPageCarousel from '../components/PhotoCarousel';
 import MediaViewer from '../components/ModelViewer';
 import ProductThumbs from '../components/ProductThumbs';
 import { formatPrice } from '../utilities/formatting';
@@ -230,7 +230,10 @@ const Home = () => {
 
       <section className='product-buttons'>
         <div className='square-area'></div>
-        <RoundARButton onClick={() => document.querySelector('model-viewer').activateAR()}>
+        <RoundARButton
+          onClick={() => {
+            document.querySelector('model-viewer').activateAR();
+          }}>
           AR
         </RoundARButton>
         <Link to={mainProduct ? `/product/${mainProduct.id}` : '/shop'}>View Product</Link>
@@ -256,7 +259,8 @@ const Home = () => {
           <h3>
             <strong>Today's</strong> timeline
           </h3>
-          <MainPageCarousel />
+          <MainPageCarousel title='Trenchcoat' />
+          {/* <MainPageCarousel title='Chunky Jacket  ' /> */}
         </div>
       </section>
       <footer>
