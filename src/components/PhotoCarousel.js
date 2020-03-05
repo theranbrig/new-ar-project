@@ -72,11 +72,11 @@ const SliderStyles = styled.div`
       height: 188px;
       @media (min-width: 480px) {
         width: 180px;
-        height: 230px;
+        height: 280px;
       }
     }
     @media (min-width: 480px) {
-      height: 230px;
+      height: 280px;
     }
   }
 
@@ -158,7 +158,7 @@ const MainPageCarousel = ({ title }) => {
 
   const { dbh, userData } = useContext(FirebaseContext);
 
-  useEffect(() => {
+  const checkPhotos = () => {
     dbh
       .collection('userPhotos')
       .limit(6)
@@ -170,6 +170,13 @@ const MainPageCarousel = ({ title }) => {
         });
         setPhotos(tempItems);
       });
+  };
+
+  useEffect(() => {
+    checkPhotos();
+    return () => {
+      checkPhotos();
+    };
   }, []);
 
   return (
@@ -239,7 +246,7 @@ const MainPageCarousel = ({ title }) => {
               onClick={() => {
                 setShowFullScreen(photo.id);
               }}>
-              <LazyLoadImage src={photo.url} alt={photo.id} effect='blur' />
+              <img src={photo.url} alt={photo.id} />
             </div>
           ))}
         </Carousel>

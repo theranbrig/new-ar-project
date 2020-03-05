@@ -72,7 +72,7 @@ export const FullScreenPhotoStyles = styled.div`
     }
   }
   .photo-info {
-    width: 90%;
+    width: 325px;
     margin: 20px auto 0;
     display: grid;
     grid-template-columns: 1fr 40px;
@@ -116,16 +116,34 @@ export const FullScreenPhotoStyles = styled.div`
       span {
         margin-right: 10px;
       }
+      p.comment a {
+        margin-left: 0;
+      }
     }
   }
 `;
 
 const PhotoCarouselFullScreenPhoto = ({ photo, userData }) => {
   const [currentPhoto, setCurrentPhoto] = useState(photo);
+  const [liked, setLiked] = useState(false);
   const [user, setUser] = useState(null);
   const [comments, setComments] = useState(0);
   const [loading, setLoading] = useState(false);
-  const { dbh } = useContext(FirebaseContext);
+  const { dbh, firebase } = useContext(FirebaseContext);
+
+  const likePhoto = () => {
+    if (liked) {
+      dbh
+        .collection('userPhotos')
+        .doc(photo.id)
+        .update({ likes: firebase.firestore.FieldValue.arrayRemove(userData.id) });
+    } else {
+      dbh
+        .collection('userPhotos')
+        .doc(photo.id)
+        .update({ likes: firebase.firestore.FieldValue.arrayUnion(userData.id) });
+    }
+  };
 
   useEffect(() => {
     setLoading(true);
@@ -136,8 +154,7 @@ const PhotoCarouselFullScreenPhoto = ({ photo, userData }) => {
       .then(doc => {
         let liked = false;
         if (userData.loggedIn) {
-          liked = photo.likes.some(like => like === userData.id);
-          setCurrentPhoto({ ...photo, liked });
+          setLiked(photo.likes.some(like => like === userData.id));
         }
         setUser({ id: doc.id, ...doc.data() });
         dbh
@@ -148,7 +165,6 @@ const PhotoCarouselFullScreenPhoto = ({ photo, userData }) => {
           .then(querySnapshot => {
             setComments(querySnapshot.docs.length);
             setLoading(false);
-            console.log(currentPhoto);
           });
       });
   }, []);
@@ -185,8 +201,9 @@ const PhotoCarouselFullScreenPhoto = ({ photo, userData }) => {
               <button
                 onClick={() => {
                   // toggleUpvoteComment(photo.id, photo.liked);
+                  likePhoto();
                 }}>
-                {photo.liked ? <FilledUpVoteSVG fill='#fff' /> : <EmptyUpVoteSVG fill='#fff' />}
+                {liked ? <FilledUpVoteSVG fill='#fff' /> : <EmptyUpVoteSVG fill='#fff' />}
               </button>
               <h5>{photo.likes.length}</h5>
             </div>
