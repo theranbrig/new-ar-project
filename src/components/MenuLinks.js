@@ -14,7 +14,7 @@ export const StyledMenu = styled.nav`
   min-width: ${({ open }) => (open ? '350px' : '0')};
   height: 100vh;
   text-align: left;
-  position: ${({ open }) => (open ? 'fixed' : 'absolute')};
+  position: ${({ open }) => (open ? 'fixed' : 'fixed')};
   top: 0;
   left: 0;
   z-index: 520;
@@ -64,11 +64,11 @@ export const StyledMenu = styled.nav`
     position: absolute;
     width: 100%;
     height: 5rem;
-    margin-top: 10vh;
     line-height: 2rem;
     display: flex;
     flex-direction: row;
     justify-content: space-around;
+    margin-top: 10vh;
     button {
       align-self: center;
       padding: 0 0 5px 0;
