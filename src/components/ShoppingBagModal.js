@@ -86,7 +86,7 @@ export const ModalStyles = styled.div`
 
 const ShoppingBagModal = ({ openBag, setValue, setOpenBag, setBodyScroll }) => {
   const [canEdit, setCanEdit] = useState(true);
-  const [total, setTotal] = useState(0);
+  const [total, setTotal] = useState(10);
   const history = useHistory();
 
   const { cart, removeItemFromCart, editCartItems, cartLoading } = useContext(CartContext);
@@ -94,11 +94,9 @@ const ShoppingBagModal = ({ openBag, setValue, setOpenBag, setBodyScroll }) => {
   useEffect(() => {
     if (cart.length) {
       setTotal(
-        formatPrice(
-          cart.reduce((accum, item) => {
-            return accum + parseInt(item.price) * item.quantity;
-          }, 0)
-        )
+        cart.reduce((accum, item) => {
+          return accum + parseInt(item.price) * item.quantity;
+        }, 0)
       );
     }
   }, [cart]);
@@ -118,7 +116,7 @@ const ShoppingBagModal = ({ openBag, setValue, setOpenBag, setBodyScroll }) => {
             <div className='modal-buttons'>
               <div className='total'>
                 <h2 className='text'>Total:</h2>
-                <h2 className='number'>{total}</h2>
+                <h2 className='number'>{formatPrice(total)}</h2>
               </div>
               <button
                 onClick={() => {
