@@ -105,13 +105,6 @@ const ShoppingBagItems = ({ canEdit, mode, setOpenBag, setBodyScroll }) => {
   const { cart, removeItemFromCart, editCartItems, cartLoading } = useContext(CartContext);
   const { userLoading } = useContext(FirebaseContext);
 
-  if (cartLoading || userLoading)
-    return (
-      <ItemsStyles>
-        <LoadingSpinner color='black' />
-      </ItemsStyles>
-    );
-
   return (
     <ItemsStyles mode={mode}>
       {cart.length ? (

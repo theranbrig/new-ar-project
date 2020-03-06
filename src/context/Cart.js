@@ -28,9 +28,7 @@ const CartProvider = ({ children }) => {
         price: product.price,
         sizes: product.sizes,
       })
-      .then(async () => {
-        const newCart = await getFirebaseCart(userData);
-        setCart(newCart);
+      .then(() => {
         setCartLoading(false);
       });
   };
@@ -42,32 +40,25 @@ const CartProvider = ({ children }) => {
       .where('selectedSize', '==', selectedSize)
       .where('productId', '==', product.id)
       .get()
-      .then(async function(querySnapshot) {
+      .then(function(querySnapshot) {
         if (!querySnapshot.docs.length) {
-          await addToFirebaseCart(userData.id, product, selectedSize, parseInt(quantity));
+          addToFirebaseCart(userData.id, product, selectedSize, parseInt(quantity));
         } else {
           querySnapshot.forEach(function(doc) {
             const cartItem = dbh.collection('cartItems').doc(doc.id);
             cartItem.get().then(async doc => {
               const oldQuantity = doc.data().quantity;
               await cartItem.update({ quantity: parseInt(oldQuantity) + parseInt(quantity) });
-              const newCart = getFirebaseCart(userData);
-              setCart(newCart);
-              setCartLoading(false);
             });
           });
-          setCartLoading(false);
         }
       })
       .catch(err => console.log(err));
-    setCartLoading(false);
   };
 
   const addItemToCart = async (product, selectedSize, quantity) => {
-    setCartLoading(true);
     if (userData.loggedIn) {
-      await checkFirebaseItemExists(product, selectedSize, quantity);
-      setCartLoading(false);
+      checkFirebaseItemExists(product, selectedSize, quantity);
     } else {
       const cartItem = { ...product, selectedSize, quantity: parseInt(quantity) };
       const cart = JSON.parse(localStorage.getItem('shoppingCart'));
@@ -78,7 +69,6 @@ const CartProvider = ({ children }) => {
         if (!cartCheckItem.length) {
           await localStorage.setItem('shoppingCart', JSON.stringify([cartItem, ...cart]));
           setCart([...JSON.parse(localStorage.getItem('shoppingCart'))]);
-          setCartLoading(false);
         } else {
           cartCheckItem[0] = {
             ...product,
@@ -95,12 +85,10 @@ const CartProvider = ({ children }) => {
           cart.push(cartCheckItem[0]);
           await localStorage.setItem('shoppingCart', JSON.stringify([...cart]));
           setCart([...JSON.parse(localStorage.getItem('shoppingCart'))]);
-          setCartLoading(false);
         }
       } else {
         await localStorage.setItem('shoppingCart', JSON.stringify([cartItem]));
         setCart([...JSON.parse(localStorage.getItem('shoppingCart'))]);
-        setCartLoading(false);
       }
     }
   };
@@ -108,23 +96,16 @@ const CartProvider = ({ children }) => {
   const removeItemFromCart = async (index, cartItemId) => {
     if (window.confirm('Delete the item from your cart?')) {
       if (!userData.loggedIn) {
-        setCartLoading(true);
         const cartData = await JSON.parse(localStorage.getItem('shoppingCart'));
         await cartData.splice(index, 1);
         await localStorage.setItem('shoppingCart', JSON.stringify([...cartData]));
         setCart(JSON.parse(localStorage.getItem('shoppingCart')));
-        setCartLoading(false);
       } else {
-        setCartLoading(true);
         dbh
           .collection('cartItems')
           .doc(cartItemId)
           .delete()
-          .then(async () => {
-            const newCart = await getFirebaseCart(userData);
-            setCart(newCart);
-            setCartLoading(false);
-          })
+          .then(async () => {})
           .catch(err => console.log(err));
       }
     }
@@ -140,12 +121,7 @@ const CartProvider = ({ children }) => {
       dbh
         .collection('cartItems')
         .doc(product.cartItemId)
-        .update({ quantity, selectedSize })
-        .then(async () => {
-          const cartItems = await getFirebaseCart(userData);
-          setCart(cartItems);
-          setCartLoading(false);
-        });
+        .update({ quantity, selectedSize });
     } else {
       const cartItems = await JSON.parse(localStorage.getItem('shoppingCart'));
       console.log(cartItems);
@@ -155,46 +131,28 @@ const CartProvider = ({ children }) => {
       console.log(item);
       localStorage.setItem('shoppingCart', JSON.stringify(cartItems));
       setCart(JSON.parse(localStorage.getItem('shoppingCart')));
-      setCartLoading(false);
     }
   };
 
-  const getFirebaseCart = async userData => {
-    setCartLoading(true);
-    let tempCart = [];
-    await dbh
-      .collection('cartItems')
-      .where('userId', '==', userData.id)
-      .get()
-      .then(async querySnapshot => {
-        await querySnapshot.forEach(function(doc) {
-          tempCart.push({ cartItemId: doc.ref.id, ...doc.data() });
-        });
-      });
-
-    setCart(tempCart);
-    return tempCart;
-  };
-
   const watchCart = () => {
-    setCartLoading(true);
-    let cartItems = [];
-    if (userData.loggedIn) {
+    if (userData.loggedIn && !userLoading) {
       dbh
         .collection('cartItems')
         .where('userId', '==', userData.id)
-        .get()
-        .then(querySnapshot => {
-          querySnapshot.forEach(function(doc) {
+        .onSnapshot(querySnapshot => {
+          let cartItems = [];
+          querySnapshot.forEach(doc => {
+            console.log(doc.data());
             cartItems.push({ cartItemId: doc.ref.id, ...doc.data() });
           });
           setCart(cartItems);
-          setCartLoading(false);
         });
-    } else {
+    } else if (!userData.loggedIn && !userLoading) {
+      let cartItems = [];
       cartItems = JSON.parse(localStorage.getItem('shoppingCart')) || [];
       setCart(cartItems);
-      setCartLoading(false);
+    } else {
+      setCart([]);
     }
   };
 
@@ -203,7 +161,7 @@ const CartProvider = ({ children }) => {
     return () => {
       watchCart();
     };
-  }, [setCart, userLoading, userData]);
+  }, [userLoading, userData]);
 
   return (
     <CartContext.Provider

@@ -116,6 +116,7 @@ const FeaturedProducts = () => {
         {products.map(product => (
           <div className='product' key={product.id}>
             <button
+              disabled={!userData.loggedIn}
               className='favorite'
               onClick={() => {
                 likeProduct(product.id, product.liked);

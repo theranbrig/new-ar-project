@@ -130,10 +130,12 @@ const StretchedNavStyles = styled.div`
 
 const NavigationDrawer = ({ children }) => {
   const [open, setOpen] = useState(false);
-  const [openBag, setOpenBag] = useState(false);
+  const [openBag, setOpenBag] = useState(true);
   const [openSearch, setOpenSearch] = useState(false);
-  const { cart, cartLoading } = useContext(CartContext);
+
   const { userData } = useContext(FirebaseContext);
+
+  const { cart } = useContext(CartContext);
 
   const { setPhotoUploadOpen, photoUploadOpen } = useContext(ModalContext);
 
@@ -193,9 +195,7 @@ const NavigationDrawer = ({ children }) => {
       </StretchedNavStyles>
       <ShoppingBagModal
         openBag={openBag}
-        shoppingBag={cart}
         setOpenSearch={setOpenSearch}
-        cartLoading={cartLoading}
         setOpenBag={setOpenBag}
         setPhotoUploadOpen={setPhotoUploadOpen}
         setBodyScroll={setBodyScroll}

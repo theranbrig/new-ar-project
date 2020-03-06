@@ -84,7 +84,7 @@ export const ModalStyles = styled.div`
   }
 `;
 
-const ShoppingBagModal = ({ openBag, shoppingBag, setValue, setOpenBag, setBodyScroll }) => {
+const ShoppingBagModal = ({ openBag, setValue, setOpenBag, setBodyScroll }) => {
   const [canEdit, setCanEdit] = useState(true);
   const [total, setTotal] = useState(0);
   const history = useHistory();
@@ -92,24 +92,25 @@ const ShoppingBagModal = ({ openBag, shoppingBag, setValue, setOpenBag, setBodyS
   const { cart, removeItemFromCart, editCartItems, cartLoading } = useContext(CartContext);
 
   useEffect(() => {
-    setTotal(
-      formatPrice(
-        shoppingBag.reduce((accum, item) => {
-          return accum + parseInt(item.price) * item.quantity;
-        }, 0)
-      )
-    );
+    if (cart.length) {
+      setTotal(
+        formatPrice(
+          cart.reduce((accum, item) => {
+            return accum + parseInt(item.price) * item.quantity;
+          }, 0)
+        )
+      );
+    }
   }, [cart]);
 
   return (
     <ModalStyles openBag={openBag}>
       <div className='modal-content'>
         {cartLoading ? (
-          <LoadingSpinner />
+          <LoadingSpinner color='black' />
         ) : (
           <>
             <ShoppingBagItems
-              items={shoppingBag}
               canEdit={canEdit}
               setOpenBag={setOpenBag}
               setBodyScroll={setBodyScroll}

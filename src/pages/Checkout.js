@@ -6,6 +6,7 @@ import { FirebaseContext } from '../context/Firebase';
 import { Helmet } from 'react-helmet';
 import LoadingSpinner from '../components/LoadingSpinner';
 import ShoppingBagItems from '../components/ShoppingBagItems';
+import { formatPrice } from '../utilities/formatting';
 import styled from 'styled-components';
 import { useHistory } from 'react-router-dom';
 
@@ -63,7 +64,8 @@ const Checkout = () => {
     const total = cart.reduce((accum, item) => {
       return accum + parseInt(item.price) * item.quantity;
     }, 0);
-    setCartTotal(total);
+    setCartTotal(formatPrice(total));
+    console.log(cart);
   }, [cart]);
 
   if ((cartLoading && !userData) || checkoutLoading || userLoading) {
@@ -82,7 +84,7 @@ const Checkout = () => {
       <BackButton />
       <ShoppingBagItems canEdit={true} cartLoading={cartLoading} mode='light' />
       <div className='cart-details'>
-        <h2>Total: {`$${(cartTotal / 100).toFixed(2)}`}</h2>
+        <h2>Total: {cartTotal}</h2>
       </div>
       <BlackButton
         disabled={!cart.length}
