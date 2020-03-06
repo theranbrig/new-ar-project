@@ -258,12 +258,13 @@ const MainPageCarousel = ({ title }) => {
             //   setUser(users[5]);
             // }
           }}>
-          {photos.map(photo => (
+          {photos.map((photo, index) => (
             <div
               className='slider-cell-content'
               key={photo.id}
               onClick={() => {
-                setShowFullScreen(photo.id);
+                console.log(index);
+                setShowFullScreen(index);
                 document.body.style.overflow = 'hidden';
               }}>
               <img src={photo.url} alt={photo.id} />
@@ -276,6 +277,7 @@ const MainPageCarousel = ({ title }) => {
             setShowFullScreen={setShowFullScreen}
             userData={userData}
             likePhoto={likePhoto}
+            showFullScreen={showFullScreen}
           />
         )}
       </div>
@@ -335,8 +337,9 @@ const FullSliderStyles = styled.div`
   }
 `;
 
-const FullScreenSlider = ({ photos, setShowFullScreen, userData, likePhoto }) => {
+const FullScreenSlider = ({ photos, setShowFullScreen, userData, likePhoto, showFullScreen }) => {
   console.log(photos);
+  const fullScreenRef = useRef();
   const fullResponsive = {
     superLargeDesktop: {
       breakpoint: { max: 4000, min: 3000 },
@@ -355,7 +358,14 @@ const FullScreenSlider = ({ photos, setShowFullScreen, userData, likePhoto }) =>
       items: 1,
     },
   };
-  const fullScreenRef = useRef();
+
+  useEffect(() => {
+    if (fullScreenRef) {
+      console.log(fullScreenRef.current);
+      fullScreenRef.current.goToSlide(showFullScreen);
+    }
+  }, [fullScreenRef]);
+
   return (
     <FullSliderStyles>
       <div className='carousel'>
