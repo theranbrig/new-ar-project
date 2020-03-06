@@ -69,7 +69,7 @@ export const ModalStyles = styled.div`
   }
 `;
 
-const SearchModal = ({ openSearch, setOpenSearch }) => {
+const SearchModal = ({ openSearch, setOpenSearch, setBodyScroll }) => {
   useEffect(() => {}, [openSearch]);
 
   return (
@@ -80,12 +80,17 @@ const SearchModal = ({ openSearch, setOpenSearch }) => {
             <h3>TOP RESULTS ON YZED</h3>
             <button
               onClick={() => {
+                setBodyScroll(false);
                 setOpenSearch(false);
               }}>
               <i className='fa fa-close' aria-hidden='true'></i>
             </button>
           </div>
-          <FirebaseSearch setOpenSearch={setOpenSearch} openSearch={openSearch} />
+          <FirebaseSearch
+            setOpenSearch={setOpenSearch}
+            openSearch={openSearch}
+            setBodyScroll={setBodyScroll}
+          />
         </div>
       </ModalStyles>
     </>

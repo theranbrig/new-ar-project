@@ -25,7 +25,7 @@ const UploadStyles = styled.div`
   top: 10vh;
   height: 90vh;
   background: ${props => props.theme.colors.white};
-  z-index: 600;
+  z-index: 1001;
   transition: 0.5s;
   font-family: ${props => props.theme.fonts.main};
   .upload-content {
@@ -445,7 +445,12 @@ const UploadPhotoModal = () => {
                 <div className='left-content'></div>
                 <h1>Select Picture</h1>
                 <div className='right-content'>
-                  <button aria-label='close' onClick={() => setPhotoUploadOpen(false)}>
+                  <button
+                    aria-label='close'
+                    onClick={() => {
+                      setPhotoUploadOpen(false);
+                      document.body.style.overflow = 'unset';
+                    }}>
                     <CloseSVG />
                   </button>
                 </div>

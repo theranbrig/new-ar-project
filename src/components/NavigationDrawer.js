@@ -139,6 +139,14 @@ const NavigationDrawer = ({ children }) => {
 
   const node = React.useRef();
 
+  const setBodyScroll = state => {
+    if (!state) {
+      document.body.style.overflow = 'unset';
+    } else {
+      document.body.style.overflow = 'hidden';
+    }
+  };
+
   return (
     <>
       <StretchedNavStyles className='main-stretched-nav' open={open}>
@@ -149,6 +157,7 @@ const NavigationDrawer = ({ children }) => {
               setOpenBag(false);
               setOpenSearch(!openSearch);
               setPhotoUploadOpen(false);
+              setBodyScroll(!openSearch);
             }}
             aria-label='Open Search'>
             <SearchSVG />
@@ -163,6 +172,7 @@ const NavigationDrawer = ({ children }) => {
               aria-label='Open Upload Photo'
               onClick={() => {
                 setPhotoUploadOpen(!photoUploadOpen);
+                setBodyScroll(!photoUploadOpen);
               }}>
               <AddPhotoSVG />
             </button>
@@ -173,6 +183,7 @@ const NavigationDrawer = ({ children }) => {
               setOpen(false);
               setOpenSearch(false);
               setPhotoUploadOpen(false);
+              setBodyScroll(!openBag);
             }}
             aria-label='Toggle Cart'
             id='cart-button'>
@@ -187,9 +198,14 @@ const NavigationDrawer = ({ children }) => {
         cartLoading={cartLoading}
         setOpenBag={setOpenBag}
         setPhotoUploadOpen={setPhotoUploadOpen}
+        setBodyScroll={setBodyScroll}
       />
       <UploadPhoto />
-      <SearchModal openSearch={openSearch} setOpenSearch={setOpenSearch} />
+      <SearchModal
+        openSearch={openSearch}
+        setOpenSearch={setOpenSearch}
+        setBodyScroll={setBodyScroll}
+      />
       <div>{children}</div>
       <div ref={node}>
         <Burger

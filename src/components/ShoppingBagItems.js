@@ -98,7 +98,7 @@ export const ItemsStyles = styled.div`
   }
 `;
 
-const ShoppingBagItems = ({ cartLoading, canEdit, mode, setOpenBag }) => {
+const ShoppingBagItems = ({ cartLoading, canEdit, mode, setOpenBag, setBodyScroll }) => {
   const { cart, removeItemFromCart, editCartItems } = useContext(CartContext);
   const { userLoading } = useContext(FirebaseContext);
 
@@ -116,7 +116,12 @@ const ShoppingBagItems = ({ cartLoading, canEdit, mode, setOpenBag }) => {
           return (
             <div className='bag-item' key={index}>
               <div className='left-content'>
-                <Link onClick={() => setOpenBag(false)} to={`/product/${item.productId}`}>
+                <Link
+                  onClick={() => {
+                    setBodyScroll(false);
+                    setOpenBag(false);
+                  }}
+                  to={`/product/${item.productId}`}>
                   <img src={item.mainImage} alt={item.name} />
                 </Link>
               </div>

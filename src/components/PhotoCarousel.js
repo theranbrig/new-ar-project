@@ -243,7 +243,7 @@ const MainPageCarousel = ({ title }) => {
         <Carousel
           ref={carouselRef}
           responsive={responsive}
-          removeArrowOnDeviceType={['tablet', 'mobile']}
+          // removeArrowOnDeviceType={['tablet', 'mobile']}
           partialVisible
           swipeable
           afterChange={async (previousSlide, { currentSlide, onMove }) => {
@@ -264,6 +264,7 @@ const MainPageCarousel = ({ title }) => {
               key={photo.id}
               onClick={() => {
                 setShowFullScreen(photo.id);
+                document.body.style.overflow = 'hidden';
               }}>
               <img src={photo.url} alt={photo.id} />
             </div>
@@ -366,6 +367,7 @@ const FullScreenSlider = ({ photos, setShowFullScreen, userData, likePhoto }) =>
           <button
             onClick={() => {
               setShowFullScreen('');
+              document.body.style.overflow = 'unset';
             }}>
             <CloseSVG fill='#fff' />
           </button>

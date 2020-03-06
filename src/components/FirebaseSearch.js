@@ -8,7 +8,7 @@ import SearchSVG from '../assets/icons/icon_search';
 import debounce from 'lodash.debounce';
 import styled from 'styled-components';
 
-const FirebaseSearch = ({ setOpenSearch }) => {
+const FirebaseSearch = ({ setOpenSearch, setBodyScroll }) => {
   const history = useHistory();
   const [searchQuery, setSearchQuery] = useState('');
   const [products, setProducts] = useState([]);
@@ -65,6 +65,7 @@ const FirebaseSearch = ({ setOpenSearch }) => {
                   setOpenSearch(false);
                   setSearchQuery('');
                   setProducts([]);
+                  setBodyScroll(false);
                   history.push(`/product/${product.id}`);
                 }}>
                 <Highlighter
@@ -103,6 +104,7 @@ const FirebaseSearch = ({ setOpenSearch }) => {
           to={`/search/${searchQuery}`}
           onClick={() => {
             setOpenSearch(false);
+            setBodyScroll(false);
             setSearchQuery('');
             setProducts([]);
           }}>

@@ -1,9 +1,8 @@
-import React from 'react';
-import { useHistory } from 'react-router-dom';
-import styled from 'styled-components';
-
 import ChevronLeft from '../assets/icons/icon_chevron_left';
 import ChevronRight from '../assets/icons/icon_chevron_right';
+import React from 'react';
+import styled from 'styled-components';
+import { useHistory } from 'react-router-dom';
 
 export const BackButtonStyles = styled.div`
   text-align: left;
@@ -23,7 +22,12 @@ const BackButton = () => {
   const history = useHistory();
   return (
     <BackButtonStyles>
-      <button onClick={() => history.goBack()} aria-label='Back Button'>
+      <button
+        onClick={() => {
+          document.body.style.overflow = 'unset';
+          history.goBack();
+        }}
+        aria-label='Back Button'>
         <ChevronLeft />
       </button>
     </BackButtonStyles>

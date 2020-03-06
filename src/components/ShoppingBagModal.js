@@ -18,7 +18,7 @@ export const ModalStyles = styled.div`
   position: fixed;
   top: 10vh;
   width: 100%;
-  z-index: 501;
+  z-index: 1001;
   .modal-content {
     width: 500px;
     max-width: 95%;
@@ -84,7 +84,14 @@ export const ModalStyles = styled.div`
   }
 `;
 
-const ShoppingBagModal = ({ openBag, shoppingBag, setValue, cartLoading, setOpenBag }) => {
+const ShoppingBagModal = ({
+  openBag,
+  shoppingBag,
+  setValue,
+  cartLoading,
+  setOpenBag,
+  setBodyScroll,
+}) => {
   const [canEdit, setCanEdit] = useState(true);
   const [total, setTotal] = useState(0);
   const history = useHistory();
@@ -114,6 +121,7 @@ const ShoppingBagModal = ({ openBag, shoppingBag, setValue, cartLoading, setOpen
               cartLoading={cartLoading}
               canEdit={canEdit}
               setOpenBag={setOpenBag}
+              setBodyScroll={setBodyScroll}
             />
             <div className='modal-buttons'>
               <div className='total'>
@@ -123,6 +131,7 @@ const ShoppingBagModal = ({ openBag, shoppingBag, setValue, cartLoading, setOpen
               <button
                 onClick={() => {
                   setOpenBag(false);
+                  setBodyScroll(false);
                   history.push('/checkout');
                 }}>
                 PROCEED TO CHECKOUT
