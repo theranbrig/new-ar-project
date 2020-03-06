@@ -282,7 +282,6 @@ const EditUserInfo = ({
   userId,
   setEditProfile,
   updateProfilePicture,
-
 }) => {
   const [editPhoto, setEditPhoto] = useState(false);
   const [newUserPhoto, setNewUserPhoto] = useState('');
@@ -297,7 +296,7 @@ const EditUserInfo = ({
               if (editPhoto) {
                 setEditPhoto(false);
               } else {
-                window.location.reload();
+                setEditProfile(false);
               }
             }}>
             <ChevronLeft />

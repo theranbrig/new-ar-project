@@ -120,10 +120,11 @@ const Profile = () => {
     window.scrollTo(0, 0);
     setLoading(true);
     checkPhotos();
+    console.log(userData);
     return () => {
       checkPhotos();
     };
-  }, [userData, dbh, userLoading]);
+  }, [userData, userLoading]);
 
   if (!userData || loading || userLoading)
     return (
@@ -152,7 +153,7 @@ const Profile = () => {
             <UserPhoto
               photo={photo}
               userName={userData.userName}
-              key={photo.imageUrl}
+              key={photo.id}
               userData={userData}
             />
           ))}

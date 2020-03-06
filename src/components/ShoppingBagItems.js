@@ -108,7 +108,7 @@ const ShoppingBagItems = ({ cartLoading, canEdit, mode, setOpenBag, setBodyScrol
         <LoadingSpinner color='black' />
       </ItemsStyles>
     );
-  console.log(cart);
+
   return (
     <ItemsStyles mode={mode}>
       {cart.length ? (

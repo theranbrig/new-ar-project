@@ -102,7 +102,6 @@ const ShoppingBagModal = ({
     setTotal(
       formatPrice(
         shoppingBag.reduce((accum, item) => {
-          console.log('PRICE', item.price);
           return accum + parseInt(item.price) * item.quantity;
         }, 0)
       )

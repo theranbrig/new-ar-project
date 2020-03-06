@@ -109,8 +109,7 @@ const FirebaseProvider = ({ children }) => {
         dbh
           .collection('users')
           .doc(user.uid)
-          .get()
-          .then(doc => {
+          .onSnapshot(doc => {
             if (doc.exists) {
               const {
                 userName,
@@ -156,6 +155,7 @@ const FirebaseProvider = ({ children }) => {
   useEffect(() => {
     setUserLoading(true);
     onAuthStateChange(setUserData);
+    console.log(userData);
     return () => {
       onAuthStateChange(setUserData);
     };
