@@ -99,6 +99,7 @@ const Profile = () => {
   const checkPhotos = () => {
     if (!userLoading) {
       if (userData.loggedIn) {
+        setPhotos([]);
         let tempPhotos = [];
         dbh
           .collection('userPhotos')
