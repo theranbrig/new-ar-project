@@ -101,11 +101,11 @@ const MenuLinks = ({ open, setOpen }) => {
           onClick={() => setShowHome(true)}>
           YZED
         </button>
-        <button
+        {/* <button
           className={!showHome ? 'top-link-active' : 'top-link'}
           onClick={() => setShowHome(false)}>
           SHOP
-        </button>
+        </button> */}
       </div>
       <div className='side-links'>
         {showHome ? (
@@ -113,8 +113,8 @@ const MenuLinks = ({ open, setOpen }) => {
             <NavLink to='/' exact activeClassName='active-link' onClick={() => setOpen(false)}>
               Home
             </NavLink>
-            <NavLink to='/shop' activeClassName='active-link' onClick={() => setOpen(false)}>
-              Shop
+            <NavLink to='/featured' activeClassName='active-link' onClick={() => setOpen(false)}>
+              Featured
             </NavLink>
             <NavLink to='/checkout' activeClassName='active-link' onClick={() => setOpen(false)}>
               My Bag

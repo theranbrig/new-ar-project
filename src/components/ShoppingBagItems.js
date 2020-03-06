@@ -96,10 +96,13 @@ export const ItemsStyles = styled.div`
     font-size: 1rem;
     font-family: ${props => props.theme.fonts.main};
   }
+  h2 {
+    text-align: center;
+  }
 `;
 
-const ShoppingBagItems = ({ cartLoading, canEdit, mode, setOpenBag, setBodyScroll }) => {
-  const { cart, removeItemFromCart, editCartItems } = useContext(CartContext);
+const ShoppingBagItems = ({ canEdit, mode, setOpenBag, setBodyScroll }) => {
+  const { cart, removeItemFromCart, editCartItems, cartLoading } = useContext(CartContext);
   const { userLoading } = useContext(FirebaseContext);
 
   if (cartLoading || userLoading)

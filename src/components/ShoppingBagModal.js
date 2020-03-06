@@ -84,19 +84,12 @@ export const ModalStyles = styled.div`
   }
 `;
 
-const ShoppingBagModal = ({
-  openBag,
-  shoppingBag,
-  setValue,
-  cartLoading,
-  setOpenBag,
-  setBodyScroll,
-}) => {
+const ShoppingBagModal = ({ openBag, shoppingBag, setValue, setOpenBag, setBodyScroll }) => {
   const [canEdit, setCanEdit] = useState(true);
   const [total, setTotal] = useState(0);
   const history = useHistory();
 
-  const { cart, removeItemFromCart, editCartItems } = useContext(CartContext);
+  const { cart, removeItemFromCart, editCartItems, cartLoading } = useContext(CartContext);
 
   useEffect(() => {
     setTotal(
@@ -117,7 +110,6 @@ const ShoppingBagModal = ({
           <>
             <ShoppingBagItems
               items={shoppingBag}
-              cartLoading={cartLoading}
               canEdit={canEdit}
               setOpenBag={setOpenBag}
               setBodyScroll={setBodyScroll}

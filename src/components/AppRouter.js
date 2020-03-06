@@ -6,6 +6,7 @@ import Checkout from '../pages/Checkout';
 import Comments from '../pages/Comments';
 import CreateProduct from '../pages/CreateProduct';
 import EditProduct from '../pages/EditProduct';
+import FeaturedProducts from '../pages/FeaturedProducts';
 import Home from '../pages/Home';
 import Login from '../pages/Login';
 import MainSearchPage from '../pages/Search';
@@ -81,6 +82,9 @@ export default function App() {
           </Route>
           <Route exact path='/comments/:photoId'>
             <Comments />
+          </Route>
+          <Route path='/featured'>
+            <FeaturedProducts />
           </Route>
           <Route path='/'>
             <Home />

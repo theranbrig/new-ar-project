@@ -7,7 +7,7 @@ export const formatProductName = name => {
 };
 
 export const formatPrice = price => {
-  return `$${(price / 100).toFixed(2)}`;
+  return `$${formatNumberWithCommas((price / 100).toFixed(2))}`;
 };
 
 export const formatNumberWithCommas = num => {

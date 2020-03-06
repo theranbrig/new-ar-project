@@ -80,7 +80,6 @@ const Checkout = () => {
         <title>YZED - MY BAG ({`${cart.length}`})</title>
       </Helmet>
       <BackButton />
-      {userData && !cart.length && <h1>No Items in Bag...</h1>}
       <ShoppingBagItems canEdit={true} cartLoading={cartLoading} mode='light' />
       <div className='cart-details'>
         <h2>Total: {`$${(cartTotal / 100).toFixed(2)}`}</h2>

@@ -57,6 +57,7 @@ const FirebaseProvider = ({ children }) => {
     description: '',
     photo: [],
     followers: [],
+    favoriteProducts: [],
   });
 
   firebase.analytics().logEvent('notification_received');
@@ -69,7 +70,15 @@ const FirebaseProvider = ({ children }) => {
         dbh
           .collection('users')
           .doc(firebase.auth().currentUser.uid)
-          .set({ userName, firstName, lastName, role: 'USER', photoLikes: [], followers: [] })
+          .set({
+            userName,
+            firstName,
+            lastName,
+            role: 'USER',
+            photoLikes: [],
+            followers: [],
+            favoriteProducts: [],
+          })
           .then(() => {
             dbh
               .collection('newsletterSubscriptions')
@@ -119,6 +128,7 @@ const FirebaseProvider = ({ children }) => {
                 description,
                 photo,
                 followers,
+                favoriteProducts,
               } = doc.data();
               const userDetails = {
                 id: user.uid,
@@ -130,6 +140,7 @@ const FirebaseProvider = ({ children }) => {
                 description,
                 photo,
                 followers,
+                favoriteProducts,
               };
               callback({ loggedIn: true, id: user.uid, ...userDetails });
               setUserLoading(false);
