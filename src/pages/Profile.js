@@ -87,17 +87,14 @@ const Profile = () => {
 
   console.log(userData);
 
-  useEffect(() => {
-    window.scrollTo(0, 0);
-    setLoading(true);
+  const checkPhotos = () => {
     if (!userLoading) {
       if (userData.loggedIn) {
         let tempPhotos = [];
         dbh
           .collection('userPhotos')
           .where('userId', '==', userData.id)
-          .get()
-          .then(querySnapshot => {
+          .onSnapshot(querySnapshot => {
             querySnapshot.forEach(doc => {
               tempPhotos.push({ id: doc.id, ...doc.data() });
               setLoading(false);
@@ -108,6 +105,15 @@ const Profile = () => {
         history.push('/login');
       }
     }
+  };
+
+  useEffect(() => {
+    window.scrollTo(0, 0);
+    setLoading(true);
+    checkPhotos();
+    return () => {
+      checkPhotos();
+    };
   }, [userData, dbh, userLoading]);
 
   if (!userData || loading || userLoading)

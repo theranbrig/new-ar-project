@@ -151,7 +151,7 @@ const SliderStyles = styled.div`
 const MainPageCarousel = ({ title }) => {
   const carouselRef = useRef();
   const [currentIndex, setCurrentIndex] = useState(0);
-  const [showFullScreen, setShowFullScreen] = useState('kjhkj');
+  const [showFullScreen, setShowFullScreen] = useState('');
 
   const [carousel, setCarousel] = useState(null);
   const [photos, setPhotos] = useState([]);

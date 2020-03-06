@@ -39,38 +39,13 @@ export const FullScreenPhotoStyles = styled.div`
   }
 
   .gradient {
-    animation-duration: 9s;
-    animation-fill-mode: forwards;
-    animation-iteration-count: infinite;
-    animation-name: placeHolderShimmer;
-    animation-timing-function: linear;
-    background: ${props => props.theme.colors.mediumGrey};
-    background: -webkit-linear-gradient(
-      to right,
-      ${props => props.theme.colors.lightGrey},
-      ${props => props.theme.colors.mediumGrey},
-      ${props => props.theme.colors.lightGrey}
-    );
-    background: linear-gradient(
-      to right,
-      ${props => props.theme.colors.lightGrey},
-      ${props => props.theme.colors.mediumGrey},
-      ${props => props.theme.colors.lightGrey}
-    );
-
+    background: #7f7fd5;
+    background: -webkit-linear-gradient(to top, #91eae4, #86a8e7, #7f7fd5);
+    background: linear-gradient(to top, #91eae4, #86a8e7, #7f7fd5);
     background-size: 100% 100%;
-
     position: relative;
   }
 
-  @keyframes placeHolderShimmer {
-    0% {
-      background-position: -280px 0;
-    }
-    100% {
-      background-position: 280px 0;
-    }
-  }
   .photo-info {
     width: 325px;
     margin: 20px auto 0;

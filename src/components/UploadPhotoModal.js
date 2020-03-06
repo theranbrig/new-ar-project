@@ -47,7 +47,7 @@ const UploadStyles = styled.div`
         display: flex;
         flex-direction: row;
         justify-content: space-between;
-        height: 5vh;
+        height: 3vh;
         .left-content {
           width: 60px;
         }
@@ -89,7 +89,7 @@ const UploadStyles = styled.div`
         overflow: hidden;
         width: 100%;
         max-width: 225px;
-        margin: 20px auto 60px;
+        margin: 0px auto;
         svg {
           height: 100px;
         }
@@ -107,14 +107,13 @@ const UploadStyles = styled.div`
         top: 0;
         opacity: 0;
         font-size: 100px;
-        width: 500px;
+        width: 225px;
         height: 100%;
       }
     }
   }
   .selected-photo img {
-    height: 350px;
-    width: 100%;
+    height: 340px;
   }
   .bottom-content {
     margin-top: 10px;
@@ -242,8 +241,7 @@ const UploadStyles = styled.div`
     background: none;
   }
   .ReactCrop {
-    max-width: 90%;
-
+    margin-bottom: 10px;
   }
 `;
 
@@ -303,7 +301,7 @@ const CropperComponent = ({ src, setImageString, uploadS3File }) => {
   };
 
   return (
-    <div className='App'>
+    <>
       {upImg ? (
         <>
           <ReactCrop
@@ -334,7 +332,7 @@ const CropperComponent = ({ src, setImageString, uploadS3File }) => {
           <input type='file' name='file upload' accept='image/*' onChange={onSelectFile} />
         </>
       )}
-    </div>
+    </>
   );
 };
 
