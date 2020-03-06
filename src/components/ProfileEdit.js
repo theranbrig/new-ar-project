@@ -25,7 +25,7 @@ export const ProfileStyles = styled.div`
   }
 `;
 
-const EditProfile = ({ setEditProfile, setUpdatedProfilePicture }) => {
+const EditProfile = ({ setEditProfile }) => {
   const [loading, setLoading] = useState(false);
 
   const { userData } = useContext(FirebaseContext);
@@ -49,7 +49,6 @@ const EditProfile = ({ setEditProfile, setUpdatedProfilePicture }) => {
         userId={userData.id}
         photo={userData.photo ?? ''}
         setEditProfile={setEditProfile}
-        setUpdatedProfilePicture={setUpdatedProfilePicture}
       />
     </ProfileStyles>
   );

@@ -282,7 +282,7 @@ const EditUserInfo = ({
   userId,
   setEditProfile,
   updateProfilePicture,
-  setUpdatedProfilePicture,
+
 }) => {
   const [editPhoto, setEditPhoto] = useState(false);
   const [newUserPhoto, setNewUserPhoto] = useState('');
@@ -297,7 +297,7 @@ const EditUserInfo = ({
               if (editPhoto) {
                 setEditPhoto(false);
               } else {
-                setEditProfile(false);
+                window.location.reload();
               }
             }}>
             <ChevronLeft />
@@ -317,7 +317,6 @@ const EditUserInfo = ({
           editPhoto={editPhoto}
           status={status}
           setStatus={setStatus}
-          setUpdatedProfilePicture={setUpdatedProfilePicture}
         />
       </div>
     </EditUserStyles>
@@ -517,7 +516,6 @@ const SelectPhoto = ({
             .doc(userData.id)
             .update({ description, photo: data.location })
             .then(() => {
-              setUpdatedProfilePicture(data.location);
               setEditPhoto(false);
               setStatus('SAVED');
               callback(null);

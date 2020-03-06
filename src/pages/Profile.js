@@ -88,7 +88,6 @@ const Profile = () => {
   const [loading, setLoading] = useState(false);
   const [photos, setPhotos] = useState([]);
   const [editProfile, setEditProfile] = useState(false);
-  const [updatedProfilePicture, setUpdatedProfilePicture] = useState(null);
 
   const { userData, logoutUser, dbh, userLoading } = useContext(FirebaseContext);
 
@@ -140,11 +139,7 @@ const Profile = () => {
       </Helmet>
       {!editProfile ? (
         <>
-          <UserInfo
-            userData={userData}
-            photos={photos}
-            updatedProfilePicture={updatedProfilePicture}
-          />
+          <UserInfo userData={userData} photos={photos} />
           <section className='buttons'>
             <AddPhotoButton
               onClick={() => {
@@ -175,10 +170,7 @@ const Profile = () => {
           </WhiteLogoutButton>
         </>
       ) : (
-        <EditProfile
-          setEditProfile={setEditProfile}
-          setUpdatedProfilePicture={setUpdatedProfilePicture}
-        />
+        <EditProfile setEditProfile={setEditProfile} />
       )}
     </ProfileStyles>
   );

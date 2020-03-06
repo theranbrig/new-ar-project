@@ -52,11 +52,7 @@ const UserInfo = ({ userData, photos, updatedProfilePicture }) => {
     <UserInfoStyles>
       <section className='user-info'>
         <div className='user-photo'>
-          {userData.photo || updatedProfilePicture ? (
-            <img src={updatedProfilePicture ?? userData.photo} alt={userData.userName} />
-          ) : (
-            <UserSVG />
-          )}
+          {userData.photo ? <img src={userData.photo} alt={userData.userName} /> : <UserSVG />}
         </div>
         <h1>@{userData.userName}</h1>
         {userData.description && <p>{userData.description}</p>}
