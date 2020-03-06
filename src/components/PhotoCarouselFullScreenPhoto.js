@@ -138,10 +138,6 @@ const PhotoCarouselFullScreenPhoto = ({ photo, userData, likePhoto }) => {
       .doc(photo.userId)
       .get()
       .then(doc => {
-        let liked = false;
-        if (userData.loggedIn) {
-          setLiked(photo.likes.some(like => like === userData.id));
-        }
         setUser({ id: doc.id, ...doc.data() });
         dbh
           .collection('userPhotos')
@@ -153,7 +149,7 @@ const PhotoCarouselFullScreenPhoto = ({ photo, userData, likePhoto }) => {
             setLoading(false);
           });
       });
-  }, [likePhoto]);
+  }, []);
 
   if (loading) {
     return (
@@ -165,38 +161,50 @@ const PhotoCarouselFullScreenPhoto = ({ photo, userData, likePhoto }) => {
 
   return (
     <FullScreenPhotoStyles>
-      <>
-        <div className='image gradient'>
-          <img src={photo.url} alt={photo.description} />
-        </div>
-        {user && (
-          <section className='photo-info'>
-            <div className='text'>
-              <p className='comment'>
-                <Link to={`/user/${user.id}`}>@{user.userName}</Link>
-                {photo.description}
-              </p>
-              <div className='bottom-row'>
-                <h5>
-                  <span>{moment.unix(photo.addedOn.seconds).fromNow()}</span> repl
-                  {comments === 1 ? 'y' : 'ies'}(0)<Link to={`/comments/${photo.id}`}>reply</Link>
-                </h5>
-              </div>
+      <div className='image gradient'>
+        <img src={photo.url} alt={photo.description} />
+      </div>
+      {user && (
+        <section className='photo-info'>
+          <div className='text'>
+            <p className='comment'>
+              <Link to={`/user/${user.id}`}>@{user.userName}</Link>
+              {photo.description}
+            </p>
+            <div className='bottom-row'>
+              <h5>
+                <span>{moment.unix(photo.addedOn.seconds).fromNow()}</span> repl
+                {comments === 1 ? 'y' : 'ies'}(0)<Link to={`/comments/${photo.id}`}>reply</Link>
+              </h5>
             </div>
-            <div className='likes'>
-              <button
-                onClick={() => {
-                  // toggleUpvoteComment(photo.id, photo.liked);
-                  likePhoto(photo, liked);
-                }}>
-                {liked ? <FilledUpVoteSVG fill='#fff' /> : <EmptyUpVoteSVG fill='#fff' />}
-              </button>
-              <h5>{photo.likes.length}</h5>
-            </div>
-          </section>
-        )}
-      </>
+          </div>
+          <PhotoLikes photo={photo} likePhoto={likePhoto} userData={userData} />
+        </section>
+      )}
     </FullScreenPhotoStyles>
+  );
+};
+
+const PhotoLikes = ({ photo, likePhoto, userData }) => {
+  const [liked, setLiked] = useState(false);
+
+  useEffect(() => {
+    let liked = false;
+    if (userData.loggedIn) {
+      setLiked(photo.likes.some(like => like === userData.id));
+    }
+  }, [photo]);
+
+  return (
+    <div className='likes'>
+      <button
+        onClick={() => {
+          likePhoto(photo, liked);
+        }}>
+        {liked ? <FilledUpVoteSVG fill='#fff' /> : <EmptyUpVoteSVG fill='#fff' />}
+      </button>
+      <h5>{photo.likes.length}</h5>
+    </div>
   );
 };
 

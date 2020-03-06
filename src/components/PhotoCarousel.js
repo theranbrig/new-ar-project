@@ -158,34 +158,37 @@ const MainPageCarousel = ({ title }) => {
 
   const { dbh, userData, firebase } = useContext(FirebaseContext);
 
-  const checkPhotos = () => {
-    dbh
-      .collection('userPhotos')
-      .limit(6)
-      .get()
-      .then(querySnapshot => {
-        let tempItems = [];
-        querySnapshot.docs.forEach(doc => {
-          tempItems.push({ id: doc.id, ...doc.data() });
-        });
-        setPhotos(tempItems);
-      });
-  };
-
   const likePhoto = (photo, liked) => {
     if (liked) {
       dbh
         .collection('userPhotos')
         .doc(photo.id)
         .update({ likes: firebase.firestore.FieldValue.arrayRemove(userData.id) })
-        .then(() => checkPhotos());
+        .then(() => {
+          checkPhotos();
+        });
     } else {
       dbh
         .collection('userPhotos')
         .doc(photo.id)
         .update({ likes: firebase.firestore.FieldValue.arrayUnion(userData.id) })
-        .then(() => checkPhotos());
+        .then(() => {
+          checkPhotos();
+        });
     }
+  };
+
+  const checkPhotos = () => {
+    dbh
+      .collection('userPhotos')
+      .limit(6)
+      .onSnapshot(querySnapshot => {
+        let tempItems = [];
+        querySnapshot.docs.forEach(doc => {
+          tempItems.push({ id: doc.id, ...doc.data() });
+        });
+        setPhotos(tempItems);
+      });
   };
 
   useEffect(() => {
@@ -313,7 +316,7 @@ const FullSliderStyles = styled.div`
         margin-bottom: 10px;
       }
       h2 {
-        font-size: 1.2rem;
+        font-size: 1.1rem;
         font-weight: 300;
       }
       button {
