@@ -240,24 +240,7 @@ const MainPageCarousel = ({ title }) => {
           <TagFilledSVG />
           {title}
         </h2>
-        <Carousel
-          ref={carouselRef}
-          responsive={responsive}
-          // removeArrowOnDeviceType={['tablet', 'mobile']}
-          partialVisible
-          swipeable
-          afterChange={async (previousSlide, { currentSlide, onMove }) => {
-            console.log(carouselRef.current.props.children);
-            const { slidesToShow } = carouselRef.current.state;
-            console.log(currentSlide, slidesToShow);
-            // if (currentSlide >= 2 && currentSlide <= 7) {
-            //   setUser(users[currentSlide - 2]);
-            // } else if (currentSlide > 7) {
-            //   setUser(users[currentSlide - 8]);
-            // } else {
-            //   setUser(users[5]);
-            // }
-          }}>
+        <Carousel ref={carouselRef} responsive={responsive} partialVisible swipeable>
           {photos.map((photo, index) => (
             <div
               className='slider-cell-content'
@@ -383,11 +366,7 @@ const FullScreenSlider = ({ photos, setShowFullScreen, userData, likePhoto, show
           </button>
         </section>
         <section className='main-carousel'>
-          <Carousel
-            ref={fullScreenRef}
-            responsive={fullResponsive}
-            removeArrowOnDeviceType={['tablet', 'mobile']}
-            swipeable>
+          <Carousel ref={fullScreenRef} responsive={fullResponsive} swipeable>
             {photos.map(photo => (
               <PhotoCarouselFullScreenPhoto
                 photo={photo}
