@@ -18,7 +18,7 @@ import InstaSVG from '../assets/icons/icon_instagram';
 import { LazyLoadImage } from 'react-lazy-load-image-component';
 import { Link } from 'react-router-dom';
 import PhotoCarouselFullScreenPhoto from './PhotoCarouselFullScreenPhoto';
-import TagSVG from '../assets/icons/icon_tag';
+import TagFilledSVG from '../assets/icons/icon_tag_filled';
 import moment from 'moment';
 import styled from 'styled-components';
 import { users } from '../data';
@@ -237,7 +237,7 @@ const MainPageCarousel = ({ title }) => {
         {/* <div className='break-1'></div>
         <div className='break-2'></div> */}
         <h2>
-          <TagSVG />
+          <TagFilledSVG />
           {title}
         </h2>
         <Carousel

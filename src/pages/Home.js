@@ -260,7 +260,7 @@ const Home = () => {
             <strong>Today's</strong> timeline
           </h3>
           <MainPageCarousel title='Trenchcoat' />
-          {/* <MainPageCarousel title='Chunky Jacket  ' /> */}
+          <MainPageCarousel title='Chunky Jacket  ' />
         </div>
       </section>
       <footer>
