@@ -5,7 +5,7 @@ import PropTypes from 'prop-types';
 export const ModalContext = React.createContext();
 
 const ModalProvider = ({ children }) => {
-  const [photoUploadOpen, setPhotoUploadOpen] = useState(true);
+  const [photoUploadOpen, setPhotoUploadOpen] = useState(false);
   return (
     <ModalContext.Provider
       value={{

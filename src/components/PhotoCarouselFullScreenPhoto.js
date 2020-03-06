@@ -173,6 +173,7 @@ const PhotoLikes = ({ photo, likePhoto, userData }) => {
   return (
     <div className='likes'>
       <button
+        disabled={!userData.loggedIn}
         onClick={() => {
           likePhoto(photo, liked);
         }}>
