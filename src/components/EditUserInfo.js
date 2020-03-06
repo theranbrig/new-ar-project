@@ -275,7 +275,15 @@ export const EditUserStyles = styled.div`
   }
 `;
 
-const EditUserInfo = ({ description, photo, userName, userId, setEditProfile }) => {
+const EditUserInfo = ({
+  description,
+  photo,
+  userName,
+  userId,
+  setEditProfile,
+  updateProfilePicture,
+  setUpdatedProfilePicture,
+}) => {
   const [editPhoto, setEditPhoto] = useState(false);
   const [newUserPhoto, setNewUserPhoto] = useState('');
   const [status, setStatus] = useState('SAVED');
@@ -283,15 +291,17 @@ const EditUserInfo = ({ description, photo, userName, userId, setEditProfile }) 
   return (
     <EditUserStyles>
       <div className='top'>
-        <div>
-          {editPhoto && (
-            <button
-              onClick={() => {
+        <div className='back'>
+          <button
+            onClick={() => {
+              if (editPhoto) {
                 setEditPhoto(false);
-              }}>
-              <ChevronLeft />
-            </button>
-          )}
+              } else {
+                setEditProfile(false);
+              }
+            }}>
+            <ChevronLeft />
+          </button>
         </div>
         <h1>Edit public profile</h1>
         <div className='right-content'></div>
@@ -307,6 +317,7 @@ const EditUserInfo = ({ description, photo, userName, userId, setEditProfile }) 
           editPhoto={editPhoto}
           status={status}
           setStatus={setStatus}
+          setUpdatedProfilePicture={setUpdatedProfilePicture}
         />
       </div>
     </EditUserStyles>
@@ -392,9 +403,7 @@ const CropperComponent = ({
           )}
           <button
             onClick={() => {
-              console.log('click');
               setEditPhoto(true);
-              console.log(editPhoto);
             }}
             className='edit-button'>
             <PencilSVG />
@@ -444,7 +453,6 @@ const CropperComponent = ({
             onChange={e => {
               setEditDescription(e.target.value);
               setStatus('SAVE');
-              console.log(status);
             }}
           />
           <p>{editDescription.length} / 150</p>
@@ -476,6 +484,7 @@ const SelectPhoto = ({
   setStatus,
   setNewUserPhoto,
   newUserPhoto,
+  setUpdatedProfilePicture,
 }) => {
   const [imageString, setImageString] = useState('');
 
@@ -508,6 +517,7 @@ const SelectPhoto = ({
             .doc(userData.id)
             .update({ description, photo: data.location })
             .then(() => {
+              setUpdatedProfilePicture(data.location);
               setEditPhoto(false);
               setStatus('SAVED');
               callback(null);

@@ -1,6 +1,7 @@
 import React, { useContext, useEffect, useState } from 'react';
 
 import AddPhotoSVG from '../assets/icons/icon_add_photo';
+import EditProfile from '../components/ProfileEdit';
 import { FirebaseContext } from '../context/Firebase';
 import { Helmet } from 'react-helmet';
 import LoadingSpinner from '../components/LoadingSpinner';
@@ -87,6 +88,7 @@ const Profile = () => {
   const [loading, setLoading] = useState(false);
   const [photos, setPhotos] = useState([]);
   const [editProfile, setEditProfile] = useState(false);
+  const [updatedProfilePicture, setUpdatedProfilePicture] = useState(null);
 
   const { userData, logoutUser, dbh, userLoading } = useContext(FirebaseContext);
 
@@ -135,36 +137,48 @@ const Profile = () => {
       <Helmet>
         <title>YZED - {userData.userName.toUpperCase()}</title>
       </Helmet>
-      <UserInfo userData={userData} photos={photos} />
-      {editProfile ? <h1></h1> : <h1></h1>}
-      <section className='buttons'>
-        <AddPhotoButton
-          onClick={() => {
-            history.push('/profile/edit');
-          }}>
-          <PencilSVG /> EDIT PROFILE
-        </AddPhotoButton>
-      </section>
-      {photos.map(photo => (
-        <UserPhoto
-          photo={photo}
-          userName={userData.userName}
-          key={photo.imageUrl}
-          userData={userData}
+      {!editProfile ? (
+        <>
+          <UserInfo
+            userData={userData}
+            photos={photos}
+            updatedProfilePicture={updatedProfilePicture}
+          />
+          <section className='buttons'>
+            <AddPhotoButton
+              onClick={() => {
+                setEditProfile(true);
+              }}>
+              <PencilSVG /> EDIT PROFILE
+            </AddPhotoButton>
+          </section>
+          {photos.map(photo => (
+            <UserPhoto
+              photo={photo}
+              userName={userData.userName}
+              key={photo.imageUrl}
+              userData={userData}
+            />
+          ))}
+          {userData.role === 'ADMIN' && (
+            <BlackButton>
+              <a href='/admin'>ADMIN</a>
+            </BlackButton>
+          )}
+          <WhiteLogoutButton
+            onClick={() => {
+              logoutUser();
+              history.push('/');
+            }}>
+            SIGN OUT
+          </WhiteLogoutButton>
+        </>
+      ) : (
+        <EditProfile
+          setEditProfile={setEditProfile}
+          setUpdatedProfilePicture={setUpdatedProfilePicture}
         />
-      ))}
-      {userData.role === 'ADMIN' && (
-        <BlackButton>
-          <a href='/admin'>ADMIN</a>
-        </BlackButton>
       )}
-      <WhiteLogoutButton
-        onClick={() => {
-          logoutUser();
-          history.push('/');
-        }}>
-        SIGN OUT
-      </WhiteLogoutButton>
     </ProfileStyles>
   );
 };

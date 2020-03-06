@@ -1,26 +1,26 @@
-import React from 'react';
-import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
-import NavigationDrawer from './NavigationDrawer';
+import { Route, BrowserRouter as Router, Switch } from 'react-router-dom';
+
+import Admin from '../pages/Admin';
+import Brand from '../pages/Brand';
+import Checkout from '../pages/Checkout';
+import Comments from '../pages/Comments';
+import CreateProduct from '../pages/CreateProduct';
+import EditProduct from '../pages/EditProduct';
 import Home from '../pages/Home';
+import Login from '../pages/Login';
+import MainSearchPage from '../pages/Search';
+import NavigationDrawer from './NavigationDrawer';
+import OrderSuccess from '../pages/OrderSuccess';
+import Product from '../pages/Product';
+import Profile from '../pages/Profile';
+import React from 'react';
+import Register from '../pages/Register';
+import Sale from '../pages/Sale';
+import Shop from '../pages/Shop';
+import ShopCategory from '../pages/ShopCategory';
 import Subscribe from '../pages/Subscribe';
 import Success from '../pages/SubscribeSuccess';
-import Product from '../pages/Product';
-import Login from '../pages/Login';
-import Register from '../pages/Register';
-import Checkout from '../pages/Checkout';
-import OrderSuccess from '../pages/OrderSuccess';
-import Profile from '../pages/Profile';
-import Shop from '../pages/Shop';
-import MainSearchPage from '../pages/Search';
-import ShopCategory from '../pages/ShopCategory';
-import Brand from '../pages/Brand';
-import Sale from '../pages/Sale';
-import CreateProduct from '../pages/CreateProduct';
-import Admin from '../pages/Admin';
-import EditProduct from '../pages/EditProduct';
 import User from '../pages/User';
-import ProfileEdit from '../pages/ProfileEdit';
-import Comments from '../pages/Comments';
 
 export default function App() {
   return (
@@ -63,9 +63,6 @@ export default function App() {
           </Route>
           <Route path='/search/:query'>
             <MainSearchPage />
-          </Route>
-          <Route exact path='/profile/edit'>
-            <ProfileEdit />
           </Route>
           <Route path='/profile'>
             <Profile />

@@ -1,9 +1,9 @@
 import React, { useContext, useEffect, useState } from 'react';
 
-import EditUserInfo from '../components/EditUserInfo';
+import EditUserInfo from './EditUserInfo';
 import { FirebaseContext } from '../context/Firebase';
 import { Helmet } from 'react-helmet';
-import LoadingSpinner from '../components/LoadingSpinner';
+import LoadingSpinner from './LoadingSpinner';
 import styled from 'styled-components';
 import { useHistory } from 'react-router-dom';
 
@@ -25,22 +25,12 @@ export const ProfileStyles = styled.div`
   }
 `;
 
-const EditProfile = () => {
+const EditProfile = ({ setEditProfile, setUpdatedProfilePicture }) => {
   const [loading, setLoading] = useState(false);
 
   const { userData } = useContext(FirebaseContext);
 
   const history = useHistory();
-
-  // useEffect(() => {
-  //   setLoading(true);
-  //   window.scrollTo(0, 0);
-  //   if (userData.loggedIn) {
-  //     setLoading(false);
-  //   } else {
-  //     history.push('/login');
-  //   }
-  // }, [userData]);
 
   if (!userData.loggedIn || loading)
     return (
@@ -58,6 +48,8 @@ const EditProfile = () => {
         userName={userData.userName}
         userId={userData.id}
         photo={userData.photo ?? ''}
+        setEditProfile={setEditProfile}
+        setUpdatedProfilePicture={setUpdatedProfilePicture}
       />
     </ProfileStyles>
   );

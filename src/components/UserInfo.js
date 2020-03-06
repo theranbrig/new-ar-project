@@ -1,4 +1,5 @@
-import React from 'react';
+import React, { useContext, useEffect, useState } from 'react';
+
 import UserSVG from '../assets/icons/icon_user';
 import styled from 'styled-components';
 
@@ -46,12 +47,16 @@ export const UserInfoStyles = styled.div`
   }
 `;
 
-const UserInfo = ({ userData, photos }) => {
+const UserInfo = ({ userData, photos, updatedProfilePicture }) => {
   return (
     <UserInfoStyles>
       <section className='user-info'>
         <div className='user-photo'>
-          {userData.photo ? <img src={userData.photo} alt={userData.userName} /> : <UserSVG />}
+          {userData.photo || updatedProfilePicture ? (
+            <img src={updatedProfilePicture ?? userData.photo} alt={userData.userName} />
+          ) : (
+            <UserSVG />
+          )}
         </div>
         <h1>@{userData.userName}</h1>
         {userData.description && <p>{userData.description}</p>}
