@@ -130,7 +130,7 @@ const StretchedNavStyles = styled.div`
 
 const NavigationDrawer = ({ children }) => {
   const [open, setOpen] = useState(false);
-  const [openBag, setOpenBag] = useState(true);
+  const [openBag, setOpenBag] = useState(false);
   const [openSearch, setOpenSearch] = useState(false);
 
   const { userData } = useContext(FirebaseContext);
@@ -200,7 +200,7 @@ const NavigationDrawer = ({ children }) => {
         setPhotoUploadOpen={setPhotoUploadOpen}
         setBodyScroll={setBodyScroll}
       />
-      <UploadPhoto />
+      <UploadPhoto setBodyScroll={setBodyScroll} />
       <SearchModal
         openSearch={openSearch}
         setOpenSearch={setOpenSearch}

@@ -336,7 +336,7 @@ const CropperComponent = ({ src, setImageString, uploadS3File }) => {
   );
 };
 
-const UploadPhotoModal = () => {
+const UploadPhotoModal = ({ setBodyScroll }) => {
   const [uploadState, setUploadState] = useState(1);
   const [imageString, setImageString] = useState('');
   const [loading, setLoading] = useState(false);
@@ -415,6 +415,7 @@ const UploadPhotoModal = () => {
       setTaggedProducts([]);
       setDescription('');
       setCurrentPictureUrl('');
+      setBodyScroll(false);
       history.push('/profile');
     }
     if (!description.length) {

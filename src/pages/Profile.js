@@ -98,12 +98,11 @@ const Profile = () => {
   const checkPhotos = () => {
     if (!userLoading) {
       if (userData.loggedIn) {
-        setPhotos([]);
-        let tempPhotos = [];
         dbh
           .collection('userPhotos')
           .where('userId', '==', userData.id)
           .onSnapshot(querySnapshot => {
+            let tempPhotos = [];
             querySnapshot.forEach(doc => {
               tempPhotos.push({ id: doc.id, ...doc.data() });
               setLoading(false);
@@ -117,10 +116,8 @@ const Profile = () => {
   };
 
   useEffect(() => {
-    window.scrollTo(0, 0);
     setLoading(true);
     checkPhotos();
-    console.log(userData);
     return () => {
       checkPhotos();
     };
