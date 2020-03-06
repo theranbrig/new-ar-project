@@ -5,6 +5,7 @@ import { FirebaseContext } from '../context/Firebase';
 import { Helmet } from 'react-helmet';
 import LoadingSpinner from '../components/LoadingSpinner';
 import { ModalContext } from '../context/Modal';
+import PencilSVG from '../assets/icons/icon_pencil';
 import SettingsSVG from '../assets/icons/icon_settings';
 import UserInfo from '../components/UserInfo';
 import UserPhoto from '../components/UserPhoto';
@@ -66,22 +67,28 @@ const WhiteLogoutButton = styled.button`
 `;
 
 const AddPhotoButton = styled.button`
-  height: 45px;
-  width: 100px;
-  background: ${props => props.theme.colors.black};
+  width: 40%;
+  background: ${props => props.theme.colors.white};
+  color: ${props => props.theme.colors.black};
+  font-size: 1rem;
+  line-height: 45px;
   border-radius: 25px;
   margin-bottom: 20px;
+  border: 1px solid ${props => props.theme.colors.lightGrey} !important;
+  font-family: ${props => props.theme.fonts.main};
+  font-weight: 600;
   svg {
     height: 80%;
+    margin-right: 5px;
   }
 `;
 
 const Profile = () => {
   const [loading, setLoading] = useState(false);
   const [photos, setPhotos] = useState([]);
+  const [editProfile, setEditProfile] = useState(false);
 
   const { userData, logoutUser, dbh, userLoading } = useContext(FirebaseContext);
-  const { setPhotoUploadOpen } = useContext(ModalContext);
 
   const history = useHistory();
 
@@ -129,15 +136,13 @@ const Profile = () => {
         <title>YZED - {userData.userName.toUpperCase()}</title>
       </Helmet>
       <UserInfo userData={userData} photos={photos} />
+      {editProfile ? <h1></h1> : <h1></h1>}
       <section className='buttons'>
         <AddPhotoButton
           onClick={() => {
             history.push('/profile/edit');
           }}>
-          <SettingsSVG />
-        </AddPhotoButton>
-        <AddPhotoButton onClick={() => setPhotoUploadOpen(true)} aria-label='add photo'>
-          <AddPhotoSVG fill='#fff' />
+          <PencilSVG /> EDIT PROFILE
         </AddPhotoButton>
       </section>
       {photos.map(photo => (

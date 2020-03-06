@@ -66,6 +66,8 @@ const ProductContainer = styled.div`
       position: absolute;
       top: 0;
       left: 0;
+      -webkit-filter: drop-shadow(0px 0px 4px rgba(255, 255, 255, 0.80));
+      filter: drop-shadow(0px 0px 4px rgba(255, 255, 255, 0.80));
     }
   }
   .picture-thumbs {
@@ -213,9 +215,7 @@ const Product = () => {
 
   return (
     <ProductContainer>
-      <Helmet>
-        {/* <title>YZED - {product && product.name.toUpperCase()}</title> */}
-      </Helmet>
+      <Helmet>{/* <title>YZED - {product && product.name.toUpperCase()}</title> */}</Helmet>
       {isAdded && <AddToCartSuccessModal setIsAdded={setIsAdded} />}
 
       <section className='product-top'>
@@ -250,7 +250,7 @@ const Product = () => {
               alt={product.mainImage}
               className={mainDisplay === 'model' && 'selected-photo'}
             />
-            <ThreeDSVG setMainDisplay={setMainDisplay} />
+            <ThreeDSVG setMainDisplay={setMainDisplay} fill='#272727' />
           </div>
           {product.pictures.map(image => (
             <LazyLoadImage

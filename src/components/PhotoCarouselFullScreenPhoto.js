@@ -19,8 +19,8 @@ export const FullScreenPhotoStyles = styled.div`
     margin: 0 auto;
     position: relative;
     img {
-      width: 280px;
-      height: 448px;
+      width: 282px;
+      height: 450px;
       margin: 0 auto;
     }
   }
