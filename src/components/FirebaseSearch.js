@@ -147,7 +147,7 @@ const SearchStyles = styled.div`
   a.search-link {
     background: transparent;
     color: ${props => props.theme.colors.white};
-    width: 100%;
+    width: 95%;
     font-family: ${props => props.theme.fonts.main};
     font-size: 1.4rem;
     border: none;
@@ -164,14 +164,16 @@ const SearchStyles = styled.div`
     }
   }
   .products-list {
-    width: 100%;
+    width: 500px;
+    max-width: 100%;
+    margin: 0 auto;
     background: ${props => props.theme.colors.white};
     height: 100%;
     a.display-link {
       width: 500px;
       max-width: 95%;
-      margin: 0 auto;
-      padding: 10px 20px;
+      margin: 20px auto;
+
       display: grid;
       grid-template-columns: 100px 3fr 1fr;
       grid-gap: 10px;

@@ -44,6 +44,7 @@ export const ModalStyles = styled.div`
     display: grid;
     grid-template-columns: 6fr 1fr;
     width: 500px;
+    max-width: 90%;
     margin: 0 auto 20px;
     grid-gap: 10px;
     align-items: center;
