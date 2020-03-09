@@ -1,4 +1,5 @@
 import React, { useContext, useState } from 'react';
+import { clearAllBodyScrollLocks, disableBodyScroll, enableBodyScroll } from 'body-scroll-lock';
 
 import AddPhotoSVG from '../assets/icons/icon_add_photo';
 import { CartContext } from '../context/Cart';
@@ -149,12 +150,17 @@ const NavigationDrawer = ({ children }) => {
 
   const node = React.useRef();
 
+  const body = document.querySelector('body');
+  console.log(body);
+
   const setBodyScroll = state => {
     if (!state) {
-      document.body.style.overflow = 'unset';
-      document.body.style.position = 'relative';
+      // document.body.style.overflow = 'unset';
+      // document.body.style.position = 'relative';
+      clearAllBodyScrollLocks();
     } else {
-      document.body.style.overflow = 'hidden';
+      disableBodyScroll(body);
+      // document.body.style.overflow = 'hidden';
     }
   };
 

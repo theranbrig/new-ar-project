@@ -2,6 +2,7 @@ import 'react-multi-carousel/lib/styles.css';
 import 'react-lazy-load-image-component/src/effects/blur.css';
 
 import React, { useContext, useEffect, useRef, useState } from 'react';
+import { clearAllBodyScrollLocks, disableBodyScroll, enableBodyScroll } from 'body-scroll-lock';
 import {
   getOriginalCounterPart,
   getOriginalIndexLookupTableByClones,
@@ -22,6 +23,8 @@ import TagFilledSVG from '../assets/icons/icon_tag_filled';
 import moment from 'moment';
 import styled from 'styled-components';
 import { users } from '../data';
+
+const body = document.querySelector('body');
 
 const responsive = {
   superLargeDesktop: {
@@ -239,8 +242,7 @@ const MainPageCarousel = ({ title }) => {
               className='slider-cell-content'
               key={photo.id}
               onClick={() => {
-                document.body.style.position = 'fixed';
-                document.body.style.overflow = 'hidden';
+                disableBodyScroll(body);
                 setShowFullScreen(index);
               }}>
               <img src={photo.url} alt={photo.id} />
@@ -354,8 +356,7 @@ const FullScreenSlider = ({ photos, setShowFullScreen, userData, likePhoto, show
           <button
             onClick={() => {
               setShowFullScreen('');
-              document.body.style.overflow = 'unset';
-              document.body.style.position = 'relative';
+              enableBodyScroll(body);
             }}>
             <CloseSVG fill='#fff' />
           </button>
