@@ -15,7 +15,7 @@ export const ModalStyles = styled.div`
   top: 10vh;
   width: 100%;
   overflow-y: scroll;
-  z-index: 501;
+  z-index: 1005;
   .modal-bottom {
     height: ${({ openSearch }) => (openSearch ? 'calc(10vh)' : '5px')};
     background: ${props => props.theme.colors.white};

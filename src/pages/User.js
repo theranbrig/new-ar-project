@@ -11,11 +11,11 @@ import { useParams } from 'react-router-dom';
 export const UserStyles = styled.div`
   width: 500px;
   max-width: 95%;
-  margin: 0 auto;
+  margin: -10vh auto 0;
   margin-top: calc(10vh + 50px);
   font-family: Montserrat, sans-serif;
   text-align: center;
-  min-height: 90vh;
+  min-height: 100vh;
 `;
 
 const User = () => {

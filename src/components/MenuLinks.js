@@ -17,7 +17,7 @@ export const StyledMenu = styled.nav`
   position: ${({ open }) => (open ? 'fixed' : 'fixed')};
   top: 0;
   left: 0;
-  z-index: 520;
+  z-index: 1001git ;
   transition: transform 0.3s ease-in-out;
   font-family: ${props => props.theme.fonts.main};
   overflow-y: scroll;
