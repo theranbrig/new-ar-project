@@ -72,27 +72,25 @@ export const ModalStyles = styled.div`
 
 const SearchModal = ({ openSearch, setOpenSearch, setBodyScroll }) => {
   return (
-    <>
-      <ModalStyles openSearch={openSearch}>
-        <div className='modal-content'>
-          <div className='modal-top'>
-            <h3>TOP RESULTS ON YZED</h3>
-            <button
-              onClick={() => {
-                setBodyScroll(false);
-                setOpenSearch(false);
-              }}>
-              <i className='fa fa-close' aria-hidden='true'></i>
-            </button>
-          </div>
-          <FirebaseSearch
-            setOpenSearch={setOpenSearch}
-            openSearch={openSearch}
-            setBodyScroll={setBodyScroll}
-          />
+    <ModalStyles openSearch={openSearch}>
+      <div className='modal-content'>
+        <div className='modal-top'>
+          <h3>TOP RESULTS ON YZED</h3>
+          <button
+            onClick={() => {
+              setBodyScroll(false);
+              setOpenSearch(false);
+            }}>
+            <i className='fa fa-close' aria-hidden='true'></i>
+          </button>
         </div>
-      </ModalStyles>
-    </>
+        <FirebaseSearch
+          setOpenSearch={setOpenSearch}
+          openSearch={openSearch}
+          setBodyScroll={setBodyScroll}
+        />
+      </div>
+    </ModalStyles>
   );
 };
 

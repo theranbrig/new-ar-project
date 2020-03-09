@@ -355,8 +355,8 @@ const FullScreenSlider = ({ photos, setShowFullScreen, userData, likePhoto, show
           </div>
           <button
             onClick={() => {
-              setShowFullScreen('');
               enableBodyScroll(body);
+              setShowFullScreen('');
             }}>
             <CloseSVG fill='#fff' />
           </button>

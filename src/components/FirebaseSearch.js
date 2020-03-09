@@ -1,5 +1,6 @@
 import { Link, useHistory } from 'react-router-dom';
-import React, { useContext, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
+import { disableBodyScroll, enableBodyScroll } from 'body-scroll-lock';
 import { formatPrice, formatProductName } from '../utilities/formatting';
 
 import { FirebaseContext } from '../context/Firebase';
@@ -171,11 +172,11 @@ const SearchStyles = styled.div`
     background: ${props => props.theme.colors.white};
     height: 100%;
     padding-bottom: 100px;
+    overflow-y: scroll !important;
     a.display-link {
       width: 500px;
       max-width: 95%;
       margin: 20px auto;
-
       display: grid;
       grid-template-columns: 100px 3fr 1fr;
       grid-gap: 10px;
