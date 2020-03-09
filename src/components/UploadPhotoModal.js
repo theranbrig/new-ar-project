@@ -445,10 +445,10 @@ const UploadPhotoModal = ({ setBodyScroll }) => {
                   <button
                     aria-label='close'
                     onClick={() => {
-                      setUploadState(1);
-                      setPhotoUploadOpen(false);
                       document.body.style.overflow = 'unset';
                       document.body.style.position = 'relative';
+                      setUploadState(1);
+                      setPhotoUploadOpen(false);
                     }}>
                     <CloseSVG />
                   </button>

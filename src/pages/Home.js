@@ -236,7 +236,7 @@ const Home = () => {
           }}>
           AR
         </RoundARButton>
-        <Link to={mainProduct ? `/product/${mainProduct.id}` : '/shop'}>View Product</Link>
+        <Link to={mainProduct ? `/product/${mainProduct.id}` : '/featured'}>View Product</Link>
       </section>
       <section className='discover-box'>
         <h3>Discover YZED.</h3>
@@ -272,7 +272,7 @@ const Home = () => {
             Select Objects and place them anywhere in real life with the power of augmented reality.
           </p>
           <BlackButton>
-            <Link to='/shop'>EXPLORE AR</Link>
+            <Link to='/featured'>EXPLORE AR</Link>
           </BlackButton>
         </div>
       </footer>

@@ -15,7 +15,8 @@ import shortid from 'shortid';
 import styled from 'styled-components';
 
 const UploadStyles = styled.div`
-  width: 100%;
+  width: 500px;
+  max-width: 95%;
   margin: 10vh 0 0;
   height: 90vh;
   background: ${props => props.theme.colors.white};
@@ -103,20 +104,8 @@ const UploadStyles = styled.div`
       }
     }
   }
-  .selected-photo img {
-    height: 350px;
-    width: 100%;
-  }
   .selected {
     border: 1px solid ${props => props.theme.colors.black};
-  }
-  .ReactCrop {
-    width: 350px;
-    height: 450px;
-  }
-  img.ReactCrop__image {
-    display: block;
-    min-height: 500px;
   }
   p {
     margin-top: 20px;
@@ -160,8 +149,7 @@ const CropperComponent = ({ src, setImageString, uploadS3File, comment, setComme
   const [imgRef, setImgRef] = useState(null);
   const [crop, setCrop] = useState({
     unit: '%',
-    width: 400,
-
+    width: 50,
     aspect: 10 / 16,
   });
   const [result, setResult] = useState();

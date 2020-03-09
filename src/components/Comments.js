@@ -430,11 +430,7 @@ const Comments = () => {
           ))}
           {userData.loggedIn && (
             <div className='comment-inputs'>
-              {userData.photo ? (
-                <LazyLoadImage src={userData.photo} alt={userData.userName} effect='blur' />
-              ) : (
-                <UserSVG fill='#272727' />
-              )}
+              <LazyLoadImage src={userData.photo} alt={userData.userName} effect='blur' />
               <button
                 onClick={() => {
                   setUploadPhotoComment(!uploadPhotoComment);

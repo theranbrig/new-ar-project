@@ -14,7 +14,7 @@ const ViewPhotoStyles = styled.div`
   background: #272727f8;
   width: 100%;
   height: 100vh;
-  z-index: 800;
+  z-index: 1005;
   color: ${props => props.theme.colors.white};
   font-family: ${props => props.theme.fonts.main};
   .photo-modal {
