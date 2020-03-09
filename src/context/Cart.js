@@ -105,7 +105,6 @@ const CartProvider = ({ children }) => {
           .collection('cartItems')
           .doc(cartItemId)
           .delete()
-          .then(async () => {})
           .catch(err => console.log(err));
       }
     }

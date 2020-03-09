@@ -86,7 +86,7 @@ export const ModalStyles = styled.div`
 
 const ShoppingBagModal = ({ openBag, setValue, setOpenBag, setBodyScroll }) => {
   const [canEdit, setCanEdit] = useState(true);
-  const [total, setTotal] = useState(10);
+  const [total, setTotal] = useState(0);
   const history = useHistory();
 
   const { cart, removeItemFromCart, editCartItems, cartLoading } = useContext(CartContext);
@@ -99,7 +99,7 @@ const ShoppingBagModal = ({ openBag, setValue, setOpenBag, setBodyScroll }) => {
         }, 0)
       );
     }
-  }, [cart]);
+  }, [cart, cart.length]);
 
   return (
     <ModalStyles openBag={openBag}>

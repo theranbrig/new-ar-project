@@ -206,7 +206,7 @@ export const EditUserStyles = styled.div`
   .edit {
     h1 {
       border: 1px solid ${props => props.theme.colors.black};
-      width: 70%;
+      width: 80%;
       margin: 0 auto;
       padding: 0 20px;
       text-align: left;
@@ -215,7 +215,7 @@ export const EditUserStyles = styled.div`
       line-height: 45px;
     }
     .description {
-      width: 70%;
+      width: 80%;
       padding: 20px;
       margin: 20px auto;
       border: 1px solid ${props => props.theme.colors.black};
@@ -239,11 +239,11 @@ export const EditUserStyles = styled.div`
 
   .save-buttons {
     text-align: right;
-    width: 80%;
+    width: 90%;
     margin: 0 auto;
     button {
       margin: 0;
-      width: 120px;
+      width: 150px;
       border-radius: 25px;
       height: 45px;
       background: ${props => props.theme.colors.black};

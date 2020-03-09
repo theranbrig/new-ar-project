@@ -68,7 +68,7 @@ const WhiteLogoutButton = styled.button`
 `;
 
 const AddPhotoButton = styled.button`
-  width: 40%;
+  width: 200px;
   background: ${props => props.theme.colors.white};
   color: ${props => props.theme.colors.black};
   font-size: 1rem;

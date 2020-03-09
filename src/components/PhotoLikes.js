@@ -28,7 +28,7 @@ const LikeStyles = styled.div`
       height: 25px;
       position: absolute;
       left: 0;
-      top: -25px;
+      top: -27px;
     }
   }
   h4 {

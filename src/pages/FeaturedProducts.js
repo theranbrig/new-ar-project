@@ -58,6 +58,9 @@ export const FeaturedStyles = styled.div`
         svg {
           height: 18px;
           margin-top: 4px;
+          @media (max-width: 480px) {
+            margin-left: -2px;
+          }
         }
       }
     }

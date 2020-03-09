@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+
 import { NavLink } from 'react-router-dom';
 import styled from 'styled-components';
 
@@ -49,7 +50,7 @@ export const StoreMenuStyles = styled.div`
   }
 `;
 
-const StoreMenuLinks = ({ title, categories }) => {
+const StoreMenuLinks = ({ title, categories, setModals }) => {
   const [expand, setExpand] = useState(false);
   return (
     <StoreMenuStyles>
@@ -61,6 +62,7 @@ const StoreMenuLinks = ({ title, categories }) => {
         <div className='sub-links'>
           {categories.map(category => (
             <NavLink
+              onClick={() => setModals()}
               activeClassName='sub-active-link'
               to={`/shop/${title}-${category}`}
               className='store-subcategory'>

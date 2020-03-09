@@ -56,7 +56,14 @@ const StyledBurger = styled.button`
   }
 `;
 
-const Burger = ({ open, setOpen, setOpenBag, setOpenSearch, setPhotoUploadOpen }) => {
+const Burger = ({
+  open,
+  setOpen,
+  setOpenBag,
+  setOpenSearch,
+  setPhotoUploadOpen,
+  setBodyScroll,
+}) => {
   return (
     <StyledBurger
       open={open}
@@ -65,6 +72,7 @@ const Burger = ({ open, setOpen, setOpenBag, setOpenSearch, setPhotoUploadOpen }
         setOpenBag(false);
         setOpenSearch(false);
         setPhotoUploadOpen(false);
+        setBodyScroll(!open);
       }}
       aria-label='Toggle Menu'>
       <div />
@@ -214,8 +222,9 @@ const NavigationDrawer = ({ children }) => {
           setOpenBag={setOpenBag}
           setOpenSearch={setOpenSearch}
           setPhotoUploadOpen={setPhotoUploadOpen}
+          setBodyScroll={setBodyScroll}
         />
-        <MenuLinks open={open} setOpen={setOpen} />
+        <MenuLinks open={open} setOpen={setOpen} setBodyScroll={setBodyScroll} />
       </div>
     </>
   );

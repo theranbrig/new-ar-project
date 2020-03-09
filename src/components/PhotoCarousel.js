@@ -65,18 +65,11 @@ const SliderStyles = styled.div`
     }
   }
   .slider-cell-content {
-    height: 224px;
+
     img {
       background: ${props => props.theme.colors.lightGrey};
-      width: 140px;
-      height: 224px;
-      @media (min-width: 480px) {
-        width: 180px;
-        height: 280px;
-      }
-    }
-    @media (min-width: 480px) {
-      height: 280px;
+      width: 90%;
+      margin: 0 auto;
     }
   }
 
@@ -246,9 +239,9 @@ const MainPageCarousel = ({ title }) => {
               className='slider-cell-content'
               key={photo.id}
               onClick={() => {
-                console.log(index);
-                setShowFullScreen(index);
+                document.body.style.position = 'fixed';
                 document.body.style.overflow = 'hidden';
+                setShowFullScreen(index);
               }}>
               <img src={photo.url} alt={photo.id} />
             </div>
@@ -281,6 +274,7 @@ const FullSliderStyles = styled.div`
     width: 500px;
     max-width: 95%;
     height: 100vh;
+    position: relative;
     margin: 0 auto;
     background: none;
     border: none;
@@ -288,7 +282,7 @@ const FullSliderStyles = styled.div`
       color: ${props => props.theme.colors.white};
       text-align: left;
       width: 325px;
-      margin: 40px auto 20px;
+      margin: 10px auto 20px;
       display: grid;
       grid-template-columns: 1fr 40px;
       align-items: center;
@@ -361,6 +355,7 @@ const FullScreenSlider = ({ photos, setShowFullScreen, userData, likePhoto, show
             onClick={() => {
               setShowFullScreen('');
               document.body.style.overflow = 'unset';
+              document.body.style.position = 'relative';
             }}>
             <CloseSVG fill='#fff' />
           </button>

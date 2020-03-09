@@ -89,9 +89,14 @@ export const StyledMenu = styled.nav`
   }
 `;
 
-const MenuLinks = ({ open, setOpen }) => {
+const MenuLinks = ({ open, setOpen, setBodyScroll }) => {
   const [showHome, setShowHome] = useState(true);
   const { userData } = useContext(FirebaseContext);
+
+  const setModals = () => {
+    setOpen(false);
+    setBodyScroll(false);
+  };
 
   return (
     <StyledMenu open={open}>
@@ -110,26 +115,57 @@ const MenuLinks = ({ open, setOpen }) => {
       <div className='side-links'>
         {showHome ? (
           <>
-            <NavLink to='/' exact activeClassName='active-link' onClick={() => setOpen(false)}>
+            <NavLink
+              to='/'
+              exact
+              activeClassName='active-link'
+              onClick={() => {
+                setModals();
+              }}>
               Home
             </NavLink>
-            <NavLink to='/featured' activeClassName='active-link' onClick={() => setOpen(false)}>
+            <NavLink
+              to='/featured'
+              activeClassName='active-link'
+              onClick={() => {
+                setModals();
+              }}>
               Featured
             </NavLink>
-            <NavLink to='/checkout' activeClassName='active-link' onClick={() => setOpen(false)}>
+            <NavLink
+              to='/checkout'
+              activeClassName='active-link'
+              onClick={() => {
+                setModals();
+              }}>
               My Bag
             </NavLink>
             {!userData && (
-              <NavLink to='/subscribe' activeClassName='active-link' onClick={() => setOpen(false)}>
+              <NavLink
+                to='/subscribe'
+                activeClassName='active-link'
+                onClick={() => {
+                  setModals();
+                }}>
                 Subscribe
               </NavLink>
             )}
             {!userData.loggedIn ? (
-              <NavLink to='/login' activeClassName='active-link' onClick={() => setOpen(false)}>
+              <NavLink
+                to='/login'
+                activeClassName='active-link'
+                onClick={() => {
+                  setModals();
+                }}>
                 Login
               </NavLink>
             ) : (
-              <NavLink to='/profile' activeClassName='active-link' onClick={() => setOpen(false)}>
+              <NavLink
+                to='/profile'
+                activeClassName='active-link'
+                onClick={() => {
+                  setModals();
+                }}>
                 Profile
                 <br />
                 <span>{userData.userName}</span>
@@ -138,11 +174,17 @@ const MenuLinks = ({ open, setOpen }) => {
           </>
         ) : (
           <>
-            <NavLink to='/shop/new' activeClassName='active-link' onClick={() => setOpen(false)}>
+            <NavLink
+              to='/shop/new'
+              activeClassName='active-link'
+              onClick={() => {
+                setModals();
+              }}>
               NEW IN
             </NavLink>
             <StoreMenuLinks
               title='women'
+              setModals={setModals}
               categories={[
                 'jackets',
                 'dresses',
@@ -156,6 +198,7 @@ const MenuLinks = ({ open, setOpen }) => {
               ]}
             />
             <StoreMenuLinks
+              setModals={setModals}
               title='men'
               categories={[
                 'jackets',
@@ -169,10 +212,16 @@ const MenuLinks = ({ open, setOpen }) => {
               ]}
             />
             <StoreMenuLinks
+              setModals={setModals}
               title='unisex'
               categories={['jackets', 'tops', 'knitwear', 'shoes', 'bags']}
             />
-            <NavLink to='/shop/sale' activeClassName='active-link' onClick={() => setOpen(false)}>
+            <NavLink
+              to='/shop/sale'
+              activeClassName='active-link'
+              onClick={() => {
+                setModals();
+              }}>
               SALE
             </NavLink>
           </>
