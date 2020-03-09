@@ -92,14 +92,12 @@ const ShoppingBagModal = ({ openBag, setValue, setOpenBag, setBodyScroll }) => {
   const { cart, removeItemFromCart, editCartItems, cartLoading } = useContext(CartContext);
 
   useEffect(() => {
-    if (cart.length) {
-      setTotal(
-        cart.reduce((accum, item) => {
-          return accum + parseInt(item.price) * item.quantity;
-        }, 0)
-      );
-    }
-  }, [cart, cart.length]);
+    setTotal(
+      cart.reduce((accum, item) => {
+        return accum + parseInt(item.price) * item.quantity;
+      }, 0)
+    );
+  }, [cart]);
 
   return (
     <ModalStyles openBag={openBag}>
