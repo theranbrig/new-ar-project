@@ -71,8 +71,6 @@ export const ModalStyles = styled.div`
 `;
 
 const SearchModal = ({ openSearch, setOpenSearch, setBodyScroll }) => {
-  useEffect(() => {}, [openSearch]);
-
   return (
     <>
       <ModalStyles openSearch={openSearch}>

@@ -138,7 +138,7 @@ const StretchedNavStyles = styled.div`
 
 const NavigationDrawer = ({ children }) => {
   const [open, setOpen] = useState(false);
-  const [openBag, setOpenBag] = useState(false);
+  const [openBag, setOpenBag] = useState(true);
   const [openSearch, setOpenSearch] = useState(false);
 
   const { userData } = useContext(FirebaseContext);
@@ -152,8 +152,10 @@ const NavigationDrawer = ({ children }) => {
   const setBodyScroll = state => {
     if (!state) {
       document.body.style.overflow = 'unset';
+      document.body.style.position = 'relative';
     } else {
       document.body.style.overflow = 'hidden';
+      document.body.style.position = 'fixed';
     }
   };
 

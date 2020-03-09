@@ -35,7 +35,7 @@ export const ModalStyles = styled.div`
   }
   .modal-buttons {
     width: 500px;
-    max-width: 90%;
+    max-width: 95%;
     margin: 0 auto;
     position: fixed;
     bottom: 0;

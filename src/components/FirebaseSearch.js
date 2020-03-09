@@ -136,6 +136,7 @@ const SearchStyles = styled.div`
       font-size: 1.2rem;
       font-family: ${props => props.theme.fonts.main};
       padding: 3px;
+      -webkit-border-radius: 0px;
     }
     svg {
       height: 25px;

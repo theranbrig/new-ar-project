@@ -13,6 +13,7 @@ export const ItemsStyles = styled.div`
   margin: 0 auto;
   overflow-y: scroll;
   margin: 30px auto;
+  padding-bottom: 100px;
   h2 {
     font-size: 1.4rem;
     margin-bottom: 0px;
@@ -25,7 +26,7 @@ export const ItemsStyles = styled.div`
   }
   .bag-item {
     display: grid;
-    grid-template-columns: 111px 1fr 30px;
+    grid-template-columns: 111px 1fr;
     grid-gap: 20px;
     align-items: center;
     padding: 20px 10px;
@@ -35,15 +36,18 @@ export const ItemsStyles = styled.div`
       border: 1px solid ${props => props.theme.colors.lightGrey};
     }
     .item-info {
-      display: flex;
-      flex-direction: row;
-      justify-content: space-between;
+      display: grid;
+      grid-template-rows: 1fr 50px;
       font-family: ${props => props.theme.fonts.main};
       width: 100%;
       .contents {
+        text-align: left;
         width: 100%;
+        display: grid;
+        grid-template-columns: 1fr 30px;
         h2 {
           font-weight: 700;
+          text-align: left;
           margin: 0;
         }
         h4 {
@@ -67,12 +71,14 @@ export const ItemsStyles = styled.div`
           }
         }
       }
-    }
-    button.delete-item-button {
-      background: transparent;
-      border: none;
-      color: pink;
-      font-size: 1.2rem;
+      button.delete-item-button {
+        background: transparent;
+        border: none;
+        color: pink;
+        width: 30px;
+        height: 30px;
+        font-size: 1.2rem;
+      }
     }
     border-bottom: 1px solid ${props => props.theme.colors.lightGrey};
   }
@@ -83,11 +89,11 @@ export const ItemsStyles = styled.div`
     background: ${props => props.theme.colors.white};
     border: 1px solid ${props => props.theme.colors.black};
     box-shadow: ${props => props.theme.boxShadows.allAround};
-    margin: 20px 10px 0px 0px;
+    margin: 5px 10px 0px 0px;
     padding-left: 4px;
   }
   .selectBox {
-    width: 100px;
+    width: 60px;
     height: 40px;
     border: 0px;
     outline: none;
@@ -95,6 +101,8 @@ export const ItemsStyles = styled.div`
     box-shadow: none;
     font-size: 1rem;
     font-family: ${props => props.theme.fonts.main};
+
+    text-indent: 10px;
   }
   h2 {
     text-align: center;
@@ -123,20 +131,22 @@ const ShoppingBagItems = ({ canEdit, mode, setOpenBag, setBodyScroll }) => {
               </div>
               <div className='item-info'>
                 <div className='contents'>
-                  <h2>{item.brand.toUpperCase()}</h2>
-                  <h3>{item.name}</h3>
-                  <h4>{`$${(item.price / 100).toFixed(2)}`}</h4>
-                  <ItemUpdate item={item} index={index} cart={cart} />
+                  <div className='text'>
+                    <h2>{item.brand.toUpperCase()}</h2>
+                    <h3>{item.name}</h3>
+                    <h4>{`$${(item.price / 100).toFixed(2)}`}</h4>
+                  </div>
+                  <button
+                    onClick={() => {
+                      removeItemFromCart(index, item.cartItemId, item.selectedSize);
+                    }}
+                    className='delete-item-button'
+                    aria-label='delete-item'>
+                    <i className='fa fa-times-circle' aria-hidden='true'></i>
+                  </button>
                 </div>
+                <ItemUpdate item={item} index={index} cart={cart} />
               </div>
-              <button
-                onClick={() => {
-                  removeItemFromCart(index, item.cartItemId, item.selectedSize);
-                }}
-                className='delete-item-button'
-                aria-label='delete-item'>
-                <i className='fa fa-times-circle' aria-hidden='true'></i>
-              </button>
             </div>
           );
         })
