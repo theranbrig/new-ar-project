@@ -155,7 +155,6 @@ const NavigationDrawer = ({ children }) => {
       document.body.style.position = 'relative';
     } else {
       document.body.style.overflow = 'hidden';
-      document.body.style.position = 'fixed';
     }
   };
 
