@@ -78,6 +78,7 @@ const FirebaseProvider = ({ children }) => {
             photoLikes: [],
             followers: [],
             favoriteProducts: [],
+            photo: 'https://oneoone-resource.s3.ap-northeast-2.amazonaws.com/yzed/icon_user.png',
           })
           .then(() => {
             dbh

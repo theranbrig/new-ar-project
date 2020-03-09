@@ -53,7 +53,8 @@ const CreateCommentsStyles = styled.div`
     svg {
       align-self: center;
       height: 16px !important;
-    }
+    }import UserSVG from '../assets/icons/icon_user';
+
   }
 `;
 
@@ -282,7 +283,7 @@ const Comments = () => {
       .set({
         comment,
         photoId,
-        user: { id: userData.id, userName: userData.userName, photo: userData.photo },
+        user: { id: userData.id, userName: userData.userName, photo: userData.photo || '' },
         addedOn: new Date(),
         upVotes: [],
         photo: '',
@@ -298,7 +299,7 @@ const Comments = () => {
       .set({
         reply,
         commentId,
-        user: { id: userData.id, userName: userData.userName, photo: userData.photo },
+        user: { id: userData.id, userName: userData.userName, photo: userData.photo || '' },
         addedOn: new Date(),
         upVotes: [],
       });
@@ -429,7 +430,11 @@ const Comments = () => {
           ))}
           {userData.loggedIn && (
             <div className='comment-inputs'>
-              <LazyLoadImage src={userData.photo} alt={userData.userName} effect='blur' />
+              {userData.photo ? (
+                <LazyLoadImage src={userData.photo} alt={userData.userName} effect='blur' />
+              ) : (
+                <UserSVG fill='#272727' />
+              )}
               <button
                 onClick={() => {
                   setUploadPhotoComment(!uploadPhotoComment);

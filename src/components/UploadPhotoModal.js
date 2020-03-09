@@ -245,7 +245,7 @@ const UploadStyles = styled.div`
   }
 `;
 
-const CropperComponent = ({ src, setImageString, uploadS3File }) => {
+const CropperComponent = ({ src, setImageString, setUploadState }) => {
   const [upImg, setUpImg] = useState();
   const [imgRef, setImgRef] = useState(null);
   const [crop, setCrop] = useState({
@@ -315,7 +315,7 @@ const CropperComponent = ({ src, setImageString, uploadS3File }) => {
           {result ? (
             <BlackButtonClick
               onClick={() => {
-                uploadS3File();
+                setUploadState(2);
               }}>
               Select Photo
             </BlackButtonClick>
@@ -371,6 +371,7 @@ const UploadPhotoModal = ({ setBodyScroll }) => {
       .then(data => {
         console.log(data);
         setCurrentPictureUrl(data.location);
+        uploadPhoto(data.location);
         setLoading(false);
         setUploadState(2);
       })
@@ -399,16 +400,11 @@ const UploadPhotoModal = ({ setBodyScroll }) => {
       });
   }, 150);
 
-  const uploadPhoto = async () => {
+  const uploadPhoto = async photoUrl => {
     setError('');
     setLoading(true);
-    if (
-      currentPictureUrl.length &&
-      userData.loggedIn &&
-      description.length &&
-      taggedProducts.length
-    ) {
-      await uploadUserPhoto(currentPictureUrl, description, taggedProducts);
+    if (photoUrl.length && userData.loggedIn && description.length && taggedProducts.length) {
+      await uploadUserPhoto(photoUrl, description, taggedProducts);
       setPhotoUploadOpen(false);
       setLoading(false);
       setUploadState(1);
@@ -449,8 +445,10 @@ const UploadPhotoModal = ({ setBodyScroll }) => {
                   <button
                     aria-label='close'
                     onClick={() => {
+                      setUploadState(1);
                       setPhotoUploadOpen(false);
                       document.body.style.overflow = 'unset';
+                      document.body.style.position = 'relative';
                     }}>
                     <CloseSVG />
                   </button>
@@ -464,7 +462,7 @@ const UploadPhotoModal = ({ setBodyScroll }) => {
                         src={currentPictureUrl}
                         setImageString={setImageString}
                         uploadS3File={uploadS3File}
-                        setUploadState={2}
+                        setUploadState={setUploadState}
                       />
                     </div>
                   </div>
@@ -580,16 +578,13 @@ const UploadPhotoModal = ({ setBodyScroll }) => {
                 <WhiteButtonClick onClick={() => setUploadState(1)}>
                   Previous Step (2/2)
                 </WhiteButtonClick>
-                {description.length && taggedProducts.length && currentPictureUrl.length ? (
-                  <BlackButtonClick
-                    onClick={() => {
-                      if (description.length && taggedProducts.length && currentPictureUrl.length) {
-                        uploadPhoto();
-                      }
-                    }}>
-                    Upload Picture
-                  </BlackButtonClick>
-                ) : null}
+
+                <BlackButtonClick
+                  onClick={async () => {
+                    uploadS3File();
+                  }}>
+                  Upload Picture
+                </BlackButtonClick>
               </>
             )}
           </div>
