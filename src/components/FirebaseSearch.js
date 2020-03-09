@@ -170,6 +170,7 @@ const SearchStyles = styled.div`
     margin: 0 auto;
     background: ${props => props.theme.colors.white};
     height: 100%;
+    padding-bottom: 100px;
     a.display-link {
       width: 500px;
       max-width: 95%;
