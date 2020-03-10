@@ -120,7 +120,6 @@ const UploadStyles = styled.div`
     margin-top: 20px;
     button {
       width: 80%;
-
     }
   }
   .tags {
@@ -335,7 +334,7 @@ const CropperComponent = ({
               onClick={() => {
                 setUploadState(2);
               }}>
-              Select Photo
+              Next Step (1/2)
             </BlackButtonClick>
           ) : (
             <p>Please select the photo area.</p>
@@ -477,6 +476,8 @@ const UploadPhotoModal = ({ setBodyScroll }) => {
                     onClick={() => {
                       document.body.style.overflow = 'unset';
                       document.body.style.position = 'relative';
+                      setUpImg();
+                      setImgRef(null);
                       setUploadState(1);
                       setPhotoUploadOpen(false);
                     }}>

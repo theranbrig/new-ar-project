@@ -79,7 +79,6 @@ const SearchModal = ({ openSearch, setOpenSearch, setBodyScroll, clearSearch }) 
   return (
     <ModalStyles openSearch={openSearch}>
       <div className='modal-content'>
-     
         <FirebaseSearch
           setOpenSearch={setOpenSearch}
           openSearch={openSearch}
