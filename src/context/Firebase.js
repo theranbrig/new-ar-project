@@ -51,8 +51,6 @@ const FirebaseProvider = ({ children }) => {
     id: '',
     loggedIn: false,
     userName: '',
-    firstName: '',
-    lastName: '',
     role: '',
     description: '',
     photo: [],
@@ -62,7 +60,7 @@ const FirebaseProvider = ({ children }) => {
 
   firebase.analytics().logEvent('notification_received');
 
-  const registerUser = (email, password, userName, firstName, lastName) => {
+  const registerUser = (email, password, userName) => {
     firebase
       .auth()
       .createUserWithEmailAndPassword(email, password)
@@ -72,8 +70,6 @@ const FirebaseProvider = ({ children }) => {
           .doc(firebase.auth().currentUser.uid)
           .set({
             userName,
-            firstName,
-            lastName,
             role: 'USER',
             photoLikes: [],
             followers: [],
@@ -84,7 +80,7 @@ const FirebaseProvider = ({ children }) => {
             dbh
               .collection('newsletterSubscriptions')
               .doc()
-              .set({ age: null, name: `${firstName} ${lastName}`, email, gender: '' });
+              .set({ age: null, name: userName, email, gender: '' });
           });
       })
       .catch(function(error) {
@@ -123,8 +119,7 @@ const FirebaseProvider = ({ children }) => {
             if (doc.exists) {
               const {
                 userName,
-                firstName,
-                lastName,
+
                 role,
                 description,
                 photo,
@@ -135,8 +130,6 @@ const FirebaseProvider = ({ children }) => {
                 id: user.uid,
                 email: user.email,
                 userName,
-                firstName,
-                lastName,
                 role,
                 description,
                 photo,
@@ -152,8 +145,6 @@ const FirebaseProvider = ({ children }) => {
           loggedIn: false,
           id: '',
           userName: '',
-          firstName: '',
-          lastName: '',
           role: '',
           description: '',
           photo: [],
@@ -167,7 +158,6 @@ const FirebaseProvider = ({ children }) => {
   useEffect(() => {
     setUserLoading(true);
     onAuthStateChange(setUserData);
-    console.log(userData);
     return () => {
       onAuthStateChange(setUserData);
     };

@@ -1,84 +1,24 @@
-import React, { useState, useContext, useEffect } from 'react';
-import styled from 'styled-components';
+import React, { useContext, useEffect, useState } from 'react';
+
+import BackButton from '../components/BackButton';
 import { FirebaseContext } from '../context/Firebase';
-import { useHistory } from 'react-router-dom';
 import { Helmet } from 'react-helmet';
 import LoadingSpinner from '../components/LoadingSpinner';
-
-export const LoginStyles = styled.div`
-  width: 500px;
-  max-width: 95%;
-  margin: 0 auto;
-  min-height: calc(90vh - 50px);
-  margin-top: calc(10vh + 50px);
-  .register-form {
-    border: 1px solid black;
-    padding: 30px 20px;
-    margin-top: 50px;
-    font-family: Montserrat, sans-serif;
-    h1 {
-      text-align: center;
-    }
-  }
-  input,
-  select {
-    flex: 2;
-    margin: 0 5px;
-    border: none;
-    border-radius: 0px !important;
-    border-bottom: 1px solid #c7c7c7;
-    background: white;
-    box-shadow: none;
-    height: 25px;
-    font-size: 1.1rem;
-    -webkit-appearance: none;
-    -webkit-border-radius: 0px;
-    margin-left: 10px;
-  }
-  label {
-    height: 25px;
-    line-height: 25px;
-    font-size: 1.1rem;
-  }
-  .form-input {
-    display: flex;
-    margin: 20px 0;
-    input,
-    select {
-      flex: 2;
-      margin: 0 5px;
-      border: none;
-      border-radius: 0px !important;
-      border-bottom: 1px solid #c7c7c7;
-      background: white;
-      box-shadow: none;
-      height: 25px;
-      font-size: 1.1rem;
-      -webkit-appearance: none;
-      -webkit-border-radius: 0px;
-      margin-left: 10px;
-    }
-    label {
-      height: 25px;
-      line-height: 25px;
-      font-size: 1.1rem;
-    }
-  }
-`;
+import { LoginStyles } from './Login';
+import styled from 'styled-components';
+import { useHistory } from 'react-router-dom';
 
 const BlackButton = styled.button`
-  border: 2px solid black;
-  border-radius: 0px;
-  height: 52px;
-  display: block;
+  font-family: ${props => props.theme.fonts.main};
+  font-weight: 500;
+  background: ${props => props.theme.colors.black};
+  color: ${props => props.theme.colors.white};
+  width: 90%;
   margin: 0 auto;
-  font-size: 1.2rem;
-  padding: 5px 80px;
-  font-family: Montserrat, sans-serif;
-  background: black;
-  color: white;
-  min-width: 284px;
-  margin-bottom: 10px;
+  display: block;
+  height: 45px;
+  border-radius: 25px;
+  font-size: 1.1rem;
 `;
 
 const BottomWhiteButton = styled.div`
@@ -103,11 +43,11 @@ const BottomWhiteButton = styled.div`
 const Register = () => {
   const [loading, setLoading] = useState('');
   const [email, setEmail] = useState('');
-  const [firstName, setFirstName] = useState('');
-  const [lastName, setLastName] = useState('');
   const [userName, setUserName] = useState('');
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
+  const [passwordValid, setPasswordValid] = useState(false);
+  const [error, setError] = useState('');
 
   const history = useHistory();
 
@@ -119,92 +59,115 @@ const Register = () => {
     }
   }, [userData, history]);
 
+  const checkForm = () => {
+    const check = /^\S+$/.test(userName);
+    if (!check) {
+      setError('No spaces allowed in usernames');
+    }
+    return check;
+  };
+
+  const checkPassword = value => {
+    const strongRegex = new RegExp('^(?=.*[a-z])(?=.*[0-9])(?=.*[!@#$%^&*])(?=.{8,})');
+    const check = strongRegex.test(value);
+    if (check) {
+      setPasswordValid(true);
+    } else {
+      setPasswordValid(false);
+    }
+    return check;
+  };
+
   return (
     <LoginStyles>
       <Helmet>
         <title>YZED - REGISTER</title>
       </Helmet>
-      <div className='register-form'>
+      <div className='top'>
+        <BackButton />
         <h1>Register Today</h1>
-        <div className='form-input'>
-          <label htmlFor='email'>Email</label>
+        <div className='right'></div>
+      </div>
+      <form
+        className='register-form'
+        onSubmit={async e => {
+          setLoading(true);
+          e.preventDefault();
+          checkForm();
+          if (checkForm() && checkPassword()) {
+            console.log('Good To Go');
+            // await registerUser(email, password, userName);
+          }
+          setLoading(false);
+        }}>
+        {/* <div className='form-input'>
           <input
-            name='email'
-            type='email'
-            value={email}
-            required
-            onChange={e => setEmail(e.target.value)}
-          />
-        </div>
-        <div className='form-input'>
-          <label htmlFor='userName'>Username</label>
-          <input
+            placeholder='Username'
             name='userName'
             type='text'
             value={userName}
             required
+            minLength='5'
+            maxLength='18'
+            aria-label='username'
             onChange={e => setUserName(e.target.value)}
           />
         </div>
         <div className='form-input'>
-          <label htmlFor='firstName'>First Name</label>
           <input
-            name='firstName'
-            type='text'
-            value={firstName}
+            placeholder='Email Address'
+            name='email'
+            type='email'
+            value={email}
             required
-            onChange={e => setFirstName(e.target.value)}
+            aria-label='email'
+            onChange={e => setEmail(e.target.value)}
           />
-        </div>
-        <div className='form-input'>
-          <label htmlFor='lastName'>Last Name</label>
+        </div> */}
+        <div className={passwordValid ? 'form-input valid' : 'form-input invalid'}>
           <input
-            name='lastName'
-            type='text'
-            value={lastName}
-            required
-            onChange={e => setLastName(e.target.value)}
-          />
-        </div>
-        <div className='form-input'>
-          <label htmlFor='password'>Password</label>
-          <input
+            placeholder='Password'
             name='password'
             type='password'
             required
-            onChange={e => setPassword(e.target.value)}
+            minLength='8'
+            maxLength='32'
+            aria-label='password'
+            onChange={e => {
+              checkPassword(e.target.value);
+              setPassword(e.target.value);
+            }}
           />
         </div>
-        <div className='form-input'>
-          <label htmlFor='confirmPassword'>Confirm Password</label>
+        <div className={password === confirmPassword ? 'form-input valid' : 'form-input invalid'}>
           <input
-            name='confirmPassword'
+            placeholder='Confirm Password'
+            name='Confirm Password'
             type='password'
             required
+            minLength='8'
+            maxLength='32'
+            aria-label='confirm password'
             onChange={e => setConfirmPassword(e.target.value)}
           />
         </div>
-        <BlackButton
-          disabled={password !== confirmPassword}
-          onClick={async () => {
-            setLoading(true);
-            await registerUser(email, password, userName, firstName, lastName);
-            history.push('/profile');
-            setLoading(false);
-          }}>
-          {loading ? 'Submitting...' : 'Submit'}
+        <BlackButton disabled={password !== confirmPassword} type='submit'>
+          {loading ? 'BECOMING A YZER' : 'BECOME A YZER'}
         </BlackButton>
-      </div>
-      {firebaseError && (
-        <div>
-          <h3>{firebaseError}</h3>
-        </div>
-      )}
+      </form>
+      {firebaseError ||
+        (error && (
+          <div className='error'>
+            <h3>{firebaseError || error}</h3>
+          </div>
+        ))}
       {loading && <LoadingSpinner color='black' />}
-      <BottomWhiteButton onClick={() => history.push('/login')}>
-        Already A Member?
-      </BottomWhiteButton>
-      <BottomWhiteButton onClick={() => history.push('/')}>Back To Home</BottomWhiteButton>
+      <div className='bottom'>
+        <p>
+          If you join our platform and becaome a YZER you accept our terms of use and privacy
+          policy.
+        </p>
+      </div>
     </LoginStyles>
   );
 };

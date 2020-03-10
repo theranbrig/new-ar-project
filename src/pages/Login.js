@@ -1,103 +1,122 @@
-import React, { useState, useContext, useEffect } from 'react';
-import styled from 'styled-components';
+import { Link, useHistory } from 'react-router-dom';
+import React, { useContext, useEffect, useState } from 'react';
+
+import BackButton from '../components/BackButton';
 import { FirebaseContext } from '../context/Firebase';
-import { useHistory } from 'react-router-dom';
 import { Helmet } from 'react-helmet';
+import styled from 'styled-components';
 
 export const LoginStyles = styled.div`
   width: 500px;
   max-width: 95%;
   margin: 0 auto;
   min-height: calc(90vh - 50px);
-  margin-top: calc(10vh + 50px);
-  .user-form {
-    border: 1px solid black;
-    padding: 30px 20px;
-    margin-top: 50px;
-    font-family: Montserrat, sans-serif;
-    h1 {
+  margin-top: calc(10vh);
+  font-family: ${props => props.theme.fonts.main};
+  form {
+    width: 90%;
+    margin: 0 auto;
+    input {
+      font-family: ${props => props.theme.fonts.main};
+      display: block;
+      width: calc(90% - 20px);
+      height: 40px;
+      border-radius: 20px;
+      box-shadow: none;
+      border: 1px solid ${props => props.theme.colors.black};
+      font-size: 1.1rem;
+      margin: 10px auto;
+      padding: 0 10px;
+      background: ${props => props.theme.colors.white};
+    }
+    .invalid input {
+      color: tomato;
+    }
+    .valid input {
+      color: mediumSeaGreen;
+    }
+    ::placeholder {
+      color: ${props => props.theme.colors.lightGrey};
+      font-weight: 300;
+    }
+  }
+  .error {
+    width: 90%;
+    margin: 0 auto;
+    h3 {
+      color: tomato;
+      font-family: ${props => props.theme.fonts.main};
+      font-weight: 300;
+      font-size: 0.9rem;
       text-align: center;
     }
   }
-  input,
-  select {
-    flex: 2;
-    margin: 0 5px;
-    border: none;
-    border-radius: 0px !important;
-    border-bottom: 1px solid #c7c7c7;
-    background: white;
-    box-shadow: none;
-    height: 25px;
-    font-size: 1.1rem;
-    -webkit-appearance: none;
-    -webkit-border-radius: 0px;
-    margin-left: 10px;
-  }
-  label {
-    height: 25px;
-    line-height: 25px;
-    font-size: 1.1rem;
-  }
-  .form-input {
+  .top {
     display: flex;
-    margin: 20px 0;
-    input,
-    select {
-      flex: 2;
-      margin: 0 5px;
-      border: none;
-      border-radius: 0px !important;
-      border-bottom: 1px solid #c7c7c7;
-      background: white;
-      box-shadow: none;
-      height: 25px;
-      font-size: 1.1rem;
-      -webkit-appearance: none;
-      -webkit-border-radius: 0px;
-      margin-left: 10px;
+    flex-direction: row;
+    justify-content: space-between;
+    button {
+      align-self: center;
     }
-    label {
-      height: 25px;
-      line-height: 25px;
-      font-size: 1.1rem;
+    .right {
+      width: 16px;
+    }
+    div {
+      align-self: center;
+    }
+  }
+  .forgot {
+    text-align: center;
+    margin-top: 30px;
+    a {
+      text-decoration: none;
+      border-bottom: 1px solid ${props => props.theme.colors.grey};
+      margin: 0 auto;
+      text-align: center;
+      padding: 0 0 5px 0;
+      color: ${props => props.theme.colors.grey};
+    }
+  }
+  .bottom {
+    position: fixed;
+    bottom: 0;
+    width: 500px;
+    max-width: 95%;
+    border-top: 1px solid ${props => props.theme.colors.lightGrey};
+    min-height: 15vh;
+    padding: 10px 0;
+    text-align: center;
+    a {
+      text-decoration: none;
+      border-bottom: 1px solid ${props => props.theme.colors.grey};
+      margin: 0 auto;
+      text-align: center;
+      padding: 0 0 5px 0;
+      color: ${props => props.theme.colors.grey};
+    }
+    p {
+      text-align: center;
+      font-weight: 300;
+      max-width: 90%;
+      margin: 10px auto;
     }
   }
 `;
 
 const BlackButton = styled.button`
-  border: 2px solid black;
-  border-radius: 0px;
-  height: 52px;
-  display: block;
+  font-family: ${props => props.theme.fonts.main};
+  font-weight: 500;
+  background: ${props => props.theme.colors.black};
+  color: ${props => props.theme.colors.white};
+  width: 90%;
   margin: 0 auto;
-  font-size: 1.2rem;
-  padding: 5px 80px;
-  font-family: Montserrat, sans-serif;
-  background: black;
-  color: white;
-  min-width: 284px;
-  margin-bottom: 10px;
+  display: block;
+  height: 45px;
+  border-radius: 25px;
+  font-size: 1.1rem;
 `;
 
-const BottomWhiteButton = styled.div`
-  width: 200px;
-  border: 2px solid black;
-  border-radius: 0px;
-  height: 50px;
-  line-height: 50px;
-  display: block;
-  margin: 0 auto;
-  font-size: 1.2rem;
-  padding: 0px 40px;
-  font-family: Montserrat, sans-serif;
-  margin: 50px auto 50px;
-  text-align: center;
-  a {
-    color: black;
-    text-decoration: none;
-  }
-`;
+const BottomWhiteButton = styled.div``;
 
 const Login = () => {
   const [email, setEmail] = useState('');
@@ -119,11 +138,20 @@ const Login = () => {
       <Helmet>
         <title>YZED - LOGIN</title>
       </Helmet>
-      <div className='user-form'>
-        <h1>Sign In Today</h1>
+      <div className='top'>
+        <BackButton />
+        <h1>Sign In</h1>
+        <div className='right'></div>
+      </div>
+      <form
+        className='user-form'
+        onSubmit={e => {
+          e.preventDefault();
+          loginUser(email, password);
+        }}>
         <div className='form-input'>
-          <label htmlFor='email'>Email</label>
           <input
+            aria-label='email'
             name='email'
             type='email'
             value={email}
@@ -132,30 +160,28 @@ const Login = () => {
           />
         </div>
         <div className='form-input'>
-          <label htmlFor='password'>Password</label>
           <input
+            aria-label='password'
             name='password'
             type='password'
             required
             onChange={e => setPassword(e.target.value)}
           />
         </div>
-        <BlackButton
-          onClick={() => {
-            loginUser(email, password);
-          }}>
-          Submit
-        </BlackButton>
+        <BlackButton type='submit'>SIGN IN</BlackButton>
+      </form>
+      <div className='forgot'>
+        <Link to='/reset'>I forgot my password.</Link>
       </div>
       {firebaseError && (
-        <div>
+        <div className='error'>
           <h3>{firebaseError}</h3>
         </div>
       )}
-      <BottomWhiteButton onClick={() => history.push('/register')}>
-        Not Yet A Member?
-      </BottomWhiteButton>
-      <BottomWhiteButton onClick={() => history.push('/')}>Back To Home</BottomWhiteButton>
+      <div className='bottom'>
+        <p>Want to become a YZER?</p>
+        <Link to='/register'>Sign Up Now</Link>
+      </div>
     </LoginStyles>
   );
 };
