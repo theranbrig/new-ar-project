@@ -3,6 +3,7 @@ import React, { useContext, useEffect, useState } from 'react';
 import { disableBodyScroll, enableBodyScroll } from 'body-scroll-lock';
 import { formatPrice, formatProductName } from '../utilities/formatting';
 
+import CloseSVG from '../assets/icons/icon_close';
 import { FirebaseContext } from '../context/Firebase';
 import Highlighter from 'react-highlight-words';
 import SearchSVG from '../assets/icons/icon_search';
@@ -39,6 +40,18 @@ const FirebaseSearch = ({ setOpenSearch, setBodyScroll }) => {
 
   return (
     <>
+      <div className='modal-top'>
+        <h3>TOP RESULTS ON YZED</h3>
+        <button
+          onClick={() => {
+            setBodyScroll(false);
+            setOpenSearch(false);
+            setSearchQuery('');
+            setProducts([]);
+          }}>
+          <CloseSVG />
+        </button>
+      </div>
       <SearchStyles>
         <div className='search-box'>
           <input
@@ -79,26 +92,28 @@ const FirebaseSearch = ({ setOpenSearch, setBodyScroll }) => {
             );
           })}
         </div>
-        <div className='products-list'>
-          {products.slice(0, 5).map(product => (
-            <Link
-              to={`/product/${product.id}`}
-              className='display-link'
-              onClick={() => {
-                setOpenSearch(false);
-                setSearchQuery('');
-                setProducts([]);
-                history.push(`/product/${product.id}`);
-              }}>
-              <img src={product.mainImage} alt={product.name} height='100px' width='100px' />
-              <div className='link-info'>
-                <h3>{product.brand}</h3>
-                <h4>{product.name}</h4>
-              </div>
-              <h5>{formatPrice(product.price)}</h5>
-            </Link>
-          ))}
-        </div>
+        <section className='products-area'>
+          <div className='products-list'>
+            {products.slice(0, 5).map(product => (
+              <Link
+                to={`/product/${product.id}`}
+                className='display-link'
+                onClick={() => {
+                  setOpenSearch(false);
+                  setSearchQuery('');
+                  setProducts([]);
+                  history.push(`/product/${product.id}`);
+                }}>
+                <img src={product.mainImage} alt={product.name} height='100px' width='100px' />
+                <div className='link-info'>
+                  <h3>{product.brand}</h3>
+                  <h4>{product.name}</h4>
+                </div>
+                <h5>{formatPrice(product.price)}</h5>
+              </Link>
+            ))}
+          </div>
+        </section>
       </SearchStyles>
       <SearchLinkStyles>
         <Link
@@ -166,13 +181,8 @@ const SearchStyles = styled.div`
     }
   }
   .products-list {
-    width: 500px;
-    max-width: 100%;
-    margin: 0 auto;
+    width: 100%;
     background: ${props => props.theme.colors.white};
-    height: 100%;
-    padding-bottom: 100px;
-    overflow-y: scroll !important;
     a.display-link {
       width: 500px;
       max-width: 95%;
@@ -203,6 +213,15 @@ const SearchStyles = styled.div`
       h5 {
         font-size: 1.2rem;
       }
+    }
+    .products-list {
+      width: 500px;
+      max-width: 100%;
+      margin: 0 auto;
+      background: ${props => props.theme.colors.white};
+      height: 100%;
+      padding-bottom: 10vh;
+      overflow-y: scroll !important;
     }
   }
 `;

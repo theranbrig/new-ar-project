@@ -158,6 +158,11 @@ const NavigationDrawer = ({ children }) => {
     }
   };
 
+  const clearSearch = clearSearchField => {
+    setOpenSearch(false);
+    clearSearchField('');
+  };
+
   return (
     <>
       <StretchedNavStyles className='main-stretched-nav' open={open}>
@@ -214,6 +219,7 @@ const NavigationDrawer = ({ children }) => {
         openSearch={openSearch}
         setOpenSearch={setOpenSearch}
         setBodyScroll={setBodyScroll}
+        clearSearch={clearSearch}
       />
       <div>{children}</div>
       <div ref={node}>

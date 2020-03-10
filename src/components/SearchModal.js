@@ -1,5 +1,6 @@
-import React, { useEffect } from 'react';
+import React, { useState } from 'react';
 
+import CloseSVG from '../assets/icons/icon_close';
 import FirebaseSearch from './FirebaseSearch';
 import styled from 'styled-components';
 
@@ -62,6 +63,9 @@ export const ModalStyles = styled.div`
       text-decoration: none;
       color: black;
       justify-self: right;
+      svg {
+        margin-top: 6px;
+      }
     }
     .edit-button {
       font-size: 1.5rem;
@@ -70,24 +74,17 @@ export const ModalStyles = styled.div`
   }
 `;
 
-const SearchModal = ({ openSearch, setOpenSearch, setBodyScroll }) => {
+const SearchModal = ({ openSearch, setOpenSearch, setBodyScroll, clearSearch }) => {
+  const [query, setQuery] = useState('');
   return (
     <ModalStyles openSearch={openSearch}>
       <div className='modal-content'>
-        <div className='modal-top'>
-          <h3>TOP RESULTS ON YZED</h3>
-          <button
-            onClick={() => {
-              setBodyScroll(false);
-              setOpenSearch(false);
-            }}>
-            <i className='fa fa-close' aria-hidden='true'></i>
-          </button>
-        </div>
+     
         <FirebaseSearch
           setOpenSearch={setOpenSearch}
           openSearch={openSearch}
           setBodyScroll={setBodyScroll}
+          query={query}
         />
       </div>
     </ModalStyles>
