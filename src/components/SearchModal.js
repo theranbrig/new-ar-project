@@ -1,7 +1,8 @@
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
 
 import CloseSVG from '../assets/icons/icon_close';
 import FirebaseSearch from './FirebaseSearch';
+import { ModalContext } from '../context/Modal';
 import styled from 'styled-components';
 
 export const ModalStyles = styled.div`
@@ -74,17 +75,13 @@ export const ModalStyles = styled.div`
   }
 `;
 
-const SearchModal = ({ openSearch, setOpenSearch, setBodyScroll, clearSearch }) => {
-  const [query, setQuery] = useState('');
+const SearchModal = ({ clearSearch }) => {
+  const { openSearch } = useContext(ModalContext);
+
   return (
     <ModalStyles openSearch={openSearch}>
       <div className='modal-content'>
-        <FirebaseSearch
-          setOpenSearch={setOpenSearch}
-          openSearch={openSearch}
-          setBodyScroll={setBodyScroll}
-          query={query}
-        />
+        <FirebaseSearch />
       </div>
     </ModalStyles>
   );

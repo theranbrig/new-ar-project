@@ -6,16 +6,23 @@ import { formatPrice, formatProductName } from '../utilities/formatting';
 import CloseSVG from '../assets/icons/icon_close';
 import { FirebaseContext } from '../context/Firebase';
 import Highlighter from 'react-highlight-words';
+import { ModalContext } from '../context/Modal';
 import SearchSVG from '../assets/icons/icon_search';
 import debounce from 'lodash.debounce';
 import styled from 'styled-components';
 
-const FirebaseSearch = ({ setOpenSearch, setBodyScroll }) => {
+const FirebaseSearch = () => {
   const history = useHistory();
   const [searchQuery, setSearchQuery] = useState('');
   const [products, setProducts] = useState([]);
 
+  const { setOpenSearch, setBodyScroll, closeSearchAndClear } = useContext(ModalContext);
+
   const { dbh } = useContext(FirebaseContext);
+
+  const clearSearch = () => {
+    setSearchQuery('');
+  };
 
   const searchForProduct = debounce(query => {
     let tempItems = [];
@@ -44,9 +51,7 @@ const FirebaseSearch = ({ setOpenSearch, setBodyScroll }) => {
         <h3>TOP RESULTS ON YZED</h3>
         <button
           onClick={() => {
-            setBodyScroll(false);
-            setOpenSearch(false);
-            setSearchQuery('');
+            closeSearchAndClear(clearSearch);
             setProducts([]);
           }}>
           <CloseSVG />
@@ -76,10 +81,8 @@ const FirebaseSearch = ({ setOpenSearch, setBodyScroll }) => {
                 name={product.name}
                 id={product.id}
                 onClick={() => {
-                  setOpenSearch(false);
-                  setSearchQuery('');
+                  closeSearchAndClear(clearSearch);
                   setProducts([]);
-                  setBodyScroll(false);
                   history.push(`/product/${product.id}`);
                 }}>
                 <Highlighter
@@ -99,8 +102,7 @@ const FirebaseSearch = ({ setOpenSearch, setBodyScroll }) => {
                 to={`/product/${product.id}`}
                 className='display-link'
                 onClick={() => {
-                  setOpenSearch(false);
-                  setSearchQuery('');
+                  closeSearchAndClear(clearSearch);
                   setProducts([]);
                   history.push(`/product/${product.id}`);
                 }}>
@@ -119,9 +121,7 @@ const FirebaseSearch = ({ setOpenSearch, setBodyScroll }) => {
         <Link
           to={`/search/${searchQuery}`}
           onClick={() => {
-            setOpenSearch(false);
-            setBodyScroll(false);
-            setSearchQuery('');
+            closeSearchAndClear(clearSearch);
             setProducts([]);
           }}>
           SEE ALL RESULTS ({`${products.length}`})

@@ -56,23 +56,25 @@ const StyledBurger = styled.button`
   }
 `;
 
-const Burger = ({
-  open,
-  setOpen,
-  setOpenBag,
-  setOpenSearch,
-  setPhotoUploadOpen,
-  setBodyScroll,
-}) => {
+const Burger = () => {
+  const {
+    openMenu,
+    setOpenMenu,
+    setOpenSearch,
+    setOpenBag,
+    setOpenPhotoUpload,
+    setBodyScroll,
+  } = useContext(ModalContext);
+
   return (
     <StyledBurger
-      open={open}
+      open={openMenu}
       onClick={() => {
-        setOpen(!open);
+        setOpenMenu(!openMenu);
         setOpenBag(false);
         setOpenSearch(false);
-        setPhotoUploadOpen(false);
-        setBodyScroll(!open);
+        setOpenPhotoUpload(false);
+        setBodyScroll(!openMenu);
       }}
       aria-label='Toggle Menu'>
       <div />
@@ -137,43 +139,35 @@ const StretchedNavStyles = styled.div`
 `;
 
 const NavigationDrawer = ({ children }) => {
-  const [open, setOpen] = useState(false);
-  const [openBag, setOpenBag] = useState(false);
-  const [openSearch, setOpenSearch] = useState(false);
+  const {
+    openMenu,
+    setOpenMenu,
+    openSearch,
+    setOpenSearch,
+    openBag,
+    setOpenBag,
+    openPhotoUpload,
+    setOpenPhotoUpload,
+    setBodyScroll,
+  } = useContext(ModalContext);
 
   const { userData } = useContext(FirebaseContext);
 
   const { cart } = useContext(CartContext);
 
-  const { setPhotoUploadOpen, photoUploadOpen } = useContext(ModalContext);
-
   const node = React.useRef();
-
-  const setBodyScroll = state => {
-    if (!state) {
-      document.body.style.overflow = 'unset';
-      document.body.style.position = 'relative';
-    } else {
-      document.body.style.overflow = 'hidden';
-    }
-  };
-
-  const clearSearch = clearSearchField => {
-    setOpenSearch(false);
-    clearSearchField('');
-  };
 
   return (
     <>
-      <StretchedNavStyles className='main-stretched-nav' open={open}>
+      <StretchedNavStyles className='main-stretched-nav' open={openMenu}>
         <div className='left-icons'>
           <button
             onClick={() => {
-              setOpen(false);
+              setOpenMenu(false);
               setOpenBag(false);
               setOpenSearch(!openSearch);
-              setPhotoUploadOpen(false);
-              setBodyScroll(!openSearch);
+              setOpenPhotoUpload(false);
+              // setBodyScroll(!openSearch);
             }}
             aria-label='Open Search'>
             <SearchSVG />
@@ -187,8 +181,8 @@ const NavigationDrawer = ({ children }) => {
             <button
               aria-label='Open Upload Photo'
               onClick={() => {
-                setPhotoUploadOpen(!photoUploadOpen);
-                setBodyScroll(!photoUploadOpen);
+                setOpenPhotoUpload(!openPhotoUpload);
+                setBodyScroll(!openPhotoUpload);
               }}>
               <AddPhotoSVG />
             </button>
@@ -196,9 +190,9 @@ const NavigationDrawer = ({ children }) => {
           <button
             onClick={() => {
               setOpenBag(!openBag);
-              setOpen(false);
+              setOpenMenu(false);
               setOpenSearch(false);
-              setPhotoUploadOpen(false);
+              setOpenPhotoUpload(false);
               setBodyScroll(!openBag);
             }}
             aria-label='Toggle Cart'
@@ -207,31 +201,13 @@ const NavigationDrawer = ({ children }) => {
           </button>
         </div>
       </StretchedNavStyles>
-      <ShoppingBagModal
-        openBag={openBag}
-        setOpenSearch={setOpenSearch}
-        setOpenBag={setOpenBag}
-        setPhotoUploadOpen={setPhotoUploadOpen}
-        setBodyScroll={setBodyScroll}
-      />
-      <UploadPhoto setBodyScroll={setBodyScroll} />
-      <SearchModal
-        openSearch={openSearch}
-        setOpenSearch={setOpenSearch}
-        setBodyScroll={setBodyScroll}
-        clearSearch={clearSearch}
-      />
+      <ShoppingBagModal />
+      <UploadPhoto />
+      <SearchModal />
       <div>{children}</div>
       <div ref={node}>
-        <Burger
-          open={open}
-          setOpen={setOpen}
-          setOpenBag={setOpenBag}
-          setOpenSearch={setOpenSearch}
-          setPhotoUploadOpen={setPhotoUploadOpen}
-          setBodyScroll={setBodyScroll}
-        />
-        <MenuLinks open={open} setOpen={setOpen} setBodyScroll={setBodyScroll} />
+        <Burger />
+        <MenuLinks />
       </div>
     </>
   );

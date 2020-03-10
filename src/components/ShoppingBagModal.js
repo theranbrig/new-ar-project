@@ -2,6 +2,7 @@ import React, { useContext, useEffect, useState } from 'react';
 
 import { CartContext } from '../context/Cart';
 import LoadingSpinner from './LoadingSpinner';
+import { ModalContext } from '../context/Modal';
 import ShoppingBagItems from './ShoppingBagItems';
 import { formatPrice } from '../utilities/formatting';
 import styled from 'styled-components';
@@ -84,12 +85,13 @@ export const ModalStyles = styled.div`
   }
 `;
 
-const ShoppingBagModal = ({ openBag, setValue, setOpenBag, setBodyScroll }) => {
+const ShoppingBagModal = () => {
   const [canEdit, setCanEdit] = useState(true);
   const [total, setTotal] = useState(0);
   const history = useHistory();
 
   const { cart, removeItemFromCart, editCartItems, cartLoading } = useContext(CartContext);
+  const { openBag, setOpenBag, setBodyScroll } = useContext(ModalContext);
 
   useEffect(() => {
     setTotal(

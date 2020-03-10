@@ -1,6 +1,7 @@
 import React, { useContext, useState } from 'react';
 
 import { FirebaseContext } from '../context/Firebase';
+import { ModalContext } from '../context/Modal';
 import { NavLink } from 'react-router-dom';
 import StoreMenuLinks from './StoreMenuLinks';
 import styled from 'styled-components';
@@ -89,17 +90,23 @@ export const StyledMenu = styled.nav`
   }
 `;
 
-const MenuLinks = ({ open, setOpen, setBodyScroll }) => {
+const MenuLinks = () => {
   const [showHome, setShowHome] = useState(true);
   const { userData } = useContext(FirebaseContext);
 
+  const {
+    openMenu,
+    setOpenMenu,
+    setBodyScroll,
+  } = useContext(ModalContext);
+
   const setModals = () => {
-    setOpen(false);
+    setOpenMenu(false);
     setBodyScroll(false);
   };
 
   return (
-    <StyledMenu open={open}>
+    <StyledMenu open={openMenu}>
       <div className='top-links'>
         <button
           className={showHome ? 'top-link-active' : 'top-link'}

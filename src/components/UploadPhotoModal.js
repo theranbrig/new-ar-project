@@ -374,7 +374,7 @@ const UploadPhotoModal = ({ setBodyScroll }) => {
     aspect: 10 / 16,
   });
 
-  const { photoUploadOpen, setPhotoUploadOpen } = useContext(ModalContext);
+  const { openPhotoUpload, setOpenPhotoUpload } = useContext(ModalContext);
   const { dbh, userData, uploadUserPhoto } = useContext(FirebaseContext);
 
   const commentLimit = 200;
@@ -433,7 +433,7 @@ const UploadPhotoModal = ({ setBodyScroll }) => {
     setLoading(true);
     if (photoUrl.length && userData.loggedIn && description.length && taggedProducts.length) {
       await uploadUserPhoto(photoUrl, description, taggedProducts);
-      setPhotoUploadOpen(false);
+      setOpenPhotoUpload(false);
       setLoading(false);
       setUploadState(1);
       setTaggedProducts([]);
@@ -460,7 +460,7 @@ const UploadPhotoModal = ({ setBodyScroll }) => {
   };
 
   return (
-    <UploadStyles photoUploadOpen={photoUploadOpen}>
+    <UploadStyles photoUploadOpen={openPhotoUpload}>
       {loading ? (
         <LoadingSpinner color='black' />
       ) : (
@@ -479,7 +479,7 @@ const UploadPhotoModal = ({ setBodyScroll }) => {
                       setUpImg();
                       setImgRef(null);
                       setUploadState(1);
-                      setPhotoUploadOpen(false);
+                      setOpenPhotoUpload(false);
                     }}>
                     <CloseSVG />
                   </button>
@@ -631,23 +631,6 @@ const UploadPhotoModal = ({ setBodyScroll }) => {
               </section>
             </div>
           )}
-          {/* <div className='bottom-content'>
-            {uploadState === 2 && (
-              <>
-                {error && <p>{error}</p>}
-                <WhiteButtonClick onClick={() => setUploadState(1)}>
-                  Previous Step (2/2)
-                </WhiteButtonClick>
-
-                <BlackButtonClick
-                  onClick={async () => {
-                    uploadS3File();
-                  }}>
-                  Upload Picture
-                </BlackButtonClick>
-              </>
-            )}
-          </div> */}
         </div>
       )}
     </UploadStyles>
