@@ -34,7 +34,7 @@ export const BlackButtonClick = styled.button`
   padding: 0px 40px;
   font-weight: 600;
   font-family: ${props => props.theme.fonts.main};
-  margin: 0 auto 30px;
+  margin: 10px auto;
   color: ${props => props.theme.colors.white};
 `;
 
@@ -51,7 +51,7 @@ export const WhiteButtonClick = styled.button`
   padding: 0px 40px;
   font-weight: 600;
   font-family: ${props => props.theme.fonts.main};
-  margin: 0 auto 30px;
+  margin: 10px auto;
   color: ${props => props.theme.colors.black};
 `;
 

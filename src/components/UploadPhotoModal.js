@@ -10,6 +10,7 @@ import ReactCrop from 'react-image-crop';
 import S3 from 'aws-s3-pro';
 import SavePlusSVG from '../assets/icons/icon_save_plus';
 import SearchSVG from '../assets/icons/icon_search';
+import TextareaAutosize from 'react-textarea-autosize';
 import { convertFile } from '../utilities/coverting';
 import debounce from 'lodash.debounce';
 import { formatProductName } from '../utilities/formatting';
@@ -116,15 +117,16 @@ const UploadStyles = styled.div`
     height: 340px;
   }
   .bottom-content {
-    margin-top: 10px;
+    margin-top: 20px;
     button {
       width: 80%;
+
     }
   }
   .tags {
     .add-tags {
       margin: 0 auto;
-      width: 80%;
+      width: 85%;
       display: grid;
       grid-template-columns: 100px 1fr;
       align-items: center;
@@ -134,6 +136,9 @@ const UploadStyles = styled.div`
       .plus-icon {
         background: ${props => props.theme.colors.black};
         height: 100px;
+      }
+      h4 {
+        margin: 0;
       }
     }
     h3 {
@@ -153,17 +158,31 @@ const UploadStyles = styled.div`
       color: ${props => props.theme.colors.black};
       font-weight: 700;
     }
-    textarea {
-      margin-top: 30px;
+    .description-input {
+      border: 1px solid ${props => props.theme.colors.lightGrey};
+      border-radius: 25px;
+      background: green;
+      width: 85%;
       padding: 10px;
-      width: 80%;
       margin: 0 auto;
-      display: block;
-      border-color: ${props => props.theme.colors.lightGrey};
-      resize: none;
       background: ${props => props.theme.colors.white};
-      font-family: ${props => props.theme.fonts.main};
-      font-size: 1rem;
+      p {
+        width: 90%;
+        margin: 0 auto;
+        color: ${props => props.theme.colors.grey};
+      }
+      textarea {
+        margin-top: 30px;
+        padding: 5px;
+        width: 90%;
+        margin: 0 auto;
+        display: block;
+        resize: none;
+        border: none;
+        background: ${props => props.theme.colors.white};
+        font-family: ${props => props.theme.fonts.main};
+        font-size: 1rem;
+      }
     }
   }
   .search-bar {
@@ -245,19 +264,18 @@ const UploadStyles = styled.div`
   }
 `;
 
-const CropperComponent = ({ src, setImageString, setUploadState }) => {
-  const [upImg, setUpImg] = useState();
-  const [imgRef, setImgRef] = useState(null);
-  const [crop, setCrop] = useState({
-    unit: '%',
-    width: 50,
-    height: 50,
-    x: 25,
-    y: 15,
-    aspect: 10 / 16,
-  });
+const CropperComponent = ({
+  src,
+  setImageString,
+  setUploadState,
+  upImg,
+  imgRef,
+  setUpImg,
+  setImgRef,
+  crop,
+  setCrop,
+}) => {
   const [result, setResult] = useState();
-
   const onSelectFile = e => {
     if (e.target.files && e.target.files.length > 0) {
       const reader = new FileReader();
@@ -302,7 +320,7 @@ const CropperComponent = ({ src, setImageString, setUploadState }) => {
 
   return (
     <>
-      {upImg ? (
+      {upImg || imgRef ? (
         <>
           <ReactCrop
             src={upImg}
@@ -337,6 +355,8 @@ const CropperComponent = ({ src, setImageString, setUploadState }) => {
 };
 
 const UploadPhotoModal = ({ setBodyScroll }) => {
+  const [upImg, setUpImg] = useState();
+  const [imgRef, setImgRef] = useState(null);
   const [uploadState, setUploadState] = useState(1);
   const [imageString, setImageString] = useState('');
   const [loading, setLoading] = useState(false);
@@ -346,9 +366,19 @@ const UploadPhotoModal = ({ setBodyScroll }) => {
   const [searchProducts, setSearchProducts] = useState([]);
   const [currentPictureUrl, setCurrentPictureUrl] = useState('');
   const [error, setError] = useState('');
+  const [crop, setCrop] = useState({
+    unit: '%',
+    width: 50,
+    height: 50,
+    x: 25,
+    y: 15,
+    aspect: 10 / 16,
+  });
 
   const { photoUploadOpen, setPhotoUploadOpen } = useContext(ModalContext);
   const { dbh, userData, uploadUserPhoto } = useContext(FirebaseContext);
+
+  const commentLimit = 200;
 
   const config = {
     bucketName: 'oneoone-resource',
@@ -365,7 +395,6 @@ const UploadPhotoModal = ({ setBodyScroll }) => {
   const newFileName = shortid.generate();
 
   const uploadS3File = () => {
-    console.log(convertFile(imageString, newFileName));
     setLoading(true);
     S3Client.uploadFile(convertFile(imageString, newFileName), newFileName)
       .then(data => {
@@ -412,6 +441,7 @@ const UploadPhotoModal = ({ setBodyScroll }) => {
       setDescription('');
       setCurrentPictureUrl('');
       setBodyScroll(false);
+
       history.push('/profile');
     }
     if (!description.length) {
@@ -463,6 +493,12 @@ const UploadPhotoModal = ({ setBodyScroll }) => {
                         setImageString={setImageString}
                         uploadS3File={uploadS3File}
                         setUploadState={setUploadState}
+                        upImg={upImg}
+                        imgRef={imgRef}
+                        setUpImg={setUpImg}
+                        setImgRef={setImgRef}
+                        crop={crop}
+                        setCrop={setCrop}
                       />
                     </div>
                   </div>
@@ -479,16 +515,23 @@ const UploadPhotoModal = ({ setBodyScroll }) => {
               </div>
               <section className='description'>
                 <label>Description</label>
-                <textarea
-                  rows='4'
-                  name='description'
-                  value={description}
-                  onChange={e => setDescription(e.target.value)}
-                  required
-                />
+                <div className='description-input'>
+                  <TextareaAutosize
+                    minRows='3'
+                    maxRows='5'
+                    name='description'
+                    value={description}
+                    onChange={e => setDescription(e.target.value)}
+                    required
+                    maxLength={commentLimit}
+                  />
+                  <p>
+                    {description.length}/{commentLimit}
+                  </p>
+                </div>
               </section>
               <section className='tags'>
-                <h3>Products in this picture</h3>
+                <h3>Product in this picture</h3>
                 {taggedProducts.length ? (
                   <>
                     <div className='tagged-products'>
@@ -526,6 +569,22 @@ const UploadPhotoModal = ({ setBodyScroll }) => {
                   </div>
                 )}
               </section>
+              <div className='bottom-content'>
+                {uploadState === 2 && (
+                  <>
+                    {error && <p>{error}</p>}
+                    <WhiteButtonClick onClick={() => setUploadState(1)}>
+                      Previous Step (2/2)
+                    </WhiteButtonClick>
+                    <BlackButtonClick
+                      onClick={async () => {
+                        uploadS3File();
+                      }}>
+                      Upload Picture
+                    </BlackButtonClick>
+                  </>
+                )}
+              </div>
             </div>
           )}
           {uploadState === 3 && (
@@ -571,7 +630,7 @@ const UploadPhotoModal = ({ setBodyScroll }) => {
               </section>
             </div>
           )}
-          <div className='bottom-content'>
+          {/* <div className='bottom-content'>
             {uploadState === 2 && (
               <>
                 {error && <p>{error}</p>}
@@ -587,7 +646,7 @@ const UploadPhotoModal = ({ setBodyScroll }) => {
                 </BlackButtonClick>
               </>
             )}
-          </div>
+          </div> */}
         </div>
       )}
     </UploadStyles>
