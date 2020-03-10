@@ -1,11 +1,9 @@
 import React, { useContext, useEffect, useState } from 'react';
 
-import AddPhotoSVG from '../assets/icons/icon_add_photo';
 import EditProfile from '../components/ProfileEdit';
 import { FirebaseContext } from '../context/Firebase';
 import { Helmet } from 'react-helmet';
 import LoadingSpinner from '../components/LoadingSpinner';
-import { ModalContext } from '../context/Modal';
 import PencilSVG from '../assets/icons/icon_pencil';
 import SettingsSVG from '../assets/icons/icon_settings';
 import UserInfo from '../components/UserInfo';

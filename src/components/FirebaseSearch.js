@@ -1,6 +1,5 @@
 import { Link, useHistory } from 'react-router-dom';
-import React, { useContext, useEffect, useState } from 'react';
-import { disableBodyScroll, enableBodyScroll } from 'body-scroll-lock';
+import React, { useContext, useState } from 'react';
 import { formatPrice, formatProductName } from '../utilities/formatting';
 
 import CloseSVG from '../assets/icons/icon_close';

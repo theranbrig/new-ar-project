@@ -1,5 +1,4 @@
-import React, { useContext, useEffect, useState } from 'react';
-
+import React from 'react';
 import UserSVG from '../assets/icons/icon_user';
 import styled from 'styled-components';
 

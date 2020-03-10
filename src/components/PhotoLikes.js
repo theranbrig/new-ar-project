@@ -39,7 +39,7 @@ const LikeStyles = styled.div`
 
 const PhotoLikes = ({ photo, toggleLike, isLiked, loading, userData }) => {
   return (
-    <LikeStyles isLiked={isLiked} loading={loading}>
+    <LikeStyles isLiked={isLiked} loading={loading ? 1 : 0}>
       <button disabled={loading || !userData.loggedIn} onClick={() => toggleLike()}>
         <div className='liked'>
           <LikeFilledSVG />

@@ -1,4 +1,4 @@
-import React, { useContext, useState } from 'react';
+import React, { useContext } from 'react';
 
 import AddPhotoSVG from '../assets/icons/icon_add_photo';
 import { CartContext } from '../context/Cart';

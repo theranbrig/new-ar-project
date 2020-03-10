@@ -1,6 +1,5 @@
-import React, { useContext, useState } from 'react';
+import React, { useContext } from 'react';
 
-import CloseSVG from '../assets/icons/icon_close';
 import FirebaseSearch from './FirebaseSearch';
 import { ModalContext } from '../context/Modal';
 import styled from 'styled-components';

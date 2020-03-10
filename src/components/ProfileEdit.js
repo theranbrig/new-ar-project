@@ -1,11 +1,10 @@
-import React, { useContext, useEffect, useState } from 'react';
+import React, { useContext, useState } from 'react';
 
 import EditUserInfo from './EditUserInfo';
 import { FirebaseContext } from '../context/Firebase';
 import { Helmet } from 'react-helmet';
 import LoadingSpinner from './LoadingSpinner';
 import styled from 'styled-components';
-import { useHistory } from 'react-router-dom';
 
 export const ProfileStyles = styled.div`
   width: 500px;
@@ -29,8 +28,6 @@ const EditProfile = ({ setEditProfile }) => {
   const [loading, setLoading] = useState(false);
 
   const { userData } = useContext(FirebaseContext);
-
-  const history = useHistory();
 
   if (!userData.loggedIn || loading)
     return (

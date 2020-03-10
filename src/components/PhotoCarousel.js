@@ -1,28 +1,14 @@
 import 'react-multi-carousel/lib/styles.css';
-import 'react-lazy-load-image-component/src/effects/blur.css';
 
 import React, { useContext, useEffect, useRef, useState } from 'react';
-import { clearAllBodyScrollLocks, disableBodyScroll, enableBodyScroll } from 'body-scroll-lock';
-import {
-  getOriginalCounterPart,
-  getOriginalIndexLookupTableByClones,
-} from 'react-multi-carousel/lib/utils';
+import { disableBodyScroll, enableBodyScroll } from 'body-scroll-lock';
 
 import Carousel from 'react-multi-carousel';
 import CloseSVG from '../assets/icons/icon_close';
-import EmptyUpVoteSVG from '../assets/icons/icon_upvote_empty';
-import FilledUpVoteSVG from '../assets/icons/icon_upvote_filled';
 import { FirebaseContext } from '../context/Firebase';
-import FollowerSVG from '../assets/icons/icon_followers';
-import ImpressionSVG from '../assets/icons/icon_impressions';
-import InstaSVG from '../assets/icons/icon_instagram';
-import { LazyLoadImage } from 'react-lazy-load-image-component';
-import { Link } from 'react-router-dom';
 import PhotoCarouselFullScreenPhoto from './PhotoCarouselFullScreenPhoto';
 import TagFilledSVG from '../assets/icons/icon_tag_filled';
-import moment from 'moment';
 import styled from 'styled-components';
-import { users } from '../data';
 
 const body = document.querySelector('body');
 
@@ -146,10 +132,8 @@ const SliderStyles = styled.div`
 
 const MainPageCarousel = ({ title }) => {
   const carouselRef = useRef();
-  const [currentIndex, setCurrentIndex] = useState(0);
+  
   const [showFullScreen, setShowFullScreen] = useState('');
-
-  const [carousel, setCarousel] = useState(null);
   const [photos, setPhotos] = useState([]);
 
   const { dbh, userData, firebase } = useContext(FirebaseContext);
@@ -270,7 +254,7 @@ const FullSliderStyles = styled.div`
   z-index: 1005;
   background: ${props => props.theme.colors.black};
   height: 100vh;
-  width: 100vw;
+  width: 100%;
   font-family: ${props => props.theme.fonts.main};
   .carousel {
     width: 500px;
@@ -340,7 +324,6 @@ const FullScreenSlider = ({ photos, setShowFullScreen, userData, likePhoto, show
 
   useEffect(() => {
     if (fullScreenRef) {
-      console.log(fullScreenRef.current);
       fullScreenRef.current.goToSlide(showFullScreen);
     }
   }, [fullScreenRef]);
@@ -365,6 +348,7 @@ const FullScreenSlider = ({ photos, setShowFullScreen, userData, likePhoto, show
           <Carousel ref={fullScreenRef} responsive={fullResponsive} swipeable>
             {photos.map(photo => (
               <PhotoCarouselFullScreenPhoto
+                key={photo.id}
                 photo={photo}
                 setShowFullScreen={setShowFullScreen}
                 userData={userData}
