@@ -123,13 +123,7 @@ const UserPhoto = ({ photo, userName, userData }) => {
             <TagSVG />
           </ShowTagButton>
         )}
-        <LazyLoadImage
-          src={currentPhoto.url}
-          alt={currentPhoto.description}
-          effect='blur'
-          height='340px'
-          width='225px;'
-        />
+        <LazyLoadImage src={currentPhoto.url} alt={currentPhoto.description} effect='blur' />
         {showTags && <Tag tag={currentPhoto.tags[0]} setShowTags={setShowTags} />}
       </div>
       <div className='likes-and-time'>
@@ -218,6 +212,10 @@ export const PhotoStyles = styled.div`
       #86a8e7,
       #7f7fd5
     ); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+  }
+  img {
+    width: 225px;
+    height: 340px;
   }
   a {
     color: ${props => props.theme.colors.grey};

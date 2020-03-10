@@ -23,7 +23,6 @@ const ModalProvider = ({ children }) => {
   };
 
   const setBodyScroll = state => {
-    console.log('HI');
     if (!state) {
       document.body.style.overflow = 'unset';
       document.body.style.position = 'relative';

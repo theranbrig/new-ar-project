@@ -353,7 +353,16 @@ const CropperComponent = ({
   );
 };
 
-const UploadPhotoModal = ({ setBodyScroll }) => {
+const UploadPhotoModal = () => {
+  const initialCrop = {
+    unit: '%',
+    width: 50,
+    height: 50,
+    x: 25,
+    y: 15,
+    aspect: 10 / 16,
+  };
+
   const [upImg, setUpImg] = useState();
   const [imgRef, setImgRef] = useState(null);
   const [uploadState, setUploadState] = useState(1);
@@ -365,16 +374,23 @@ const UploadPhotoModal = ({ setBodyScroll }) => {
   const [searchProducts, setSearchProducts] = useState([]);
   const [currentPictureUrl, setCurrentPictureUrl] = useState('');
   const [error, setError] = useState('');
-  const [crop, setCrop] = useState({
-    unit: '%',
-    width: 50,
-    height: 50,
-    x: 25,
-    y: 15,
-    aspect: 10 / 16,
-  });
+  const [crop, setCrop] = useState(initialCrop);
 
-  const { openPhotoUpload, setOpenPhotoUpload } = useContext(ModalContext);
+  const clearState = () => {
+    setOpenPhotoUpload(false);
+    setLoading(false);
+    setUploadState(1);
+    setTaggedProducts([]);
+    setDescription('');
+    setCurrentPictureUrl('');
+    setBodyScroll(false);
+    setCrop(initialCrop);
+    setUpImg();
+    setImgRef(null);
+    setImageString('');
+  };
+
+  const { openPhotoUpload, setOpenPhotoUpload, setBodyScroll } = useContext(ModalContext);
   const { dbh, userData, uploadUserPhoto } = useContext(FirebaseContext);
 
   const commentLimit = 200;
@@ -433,15 +449,8 @@ const UploadPhotoModal = ({ setBodyScroll }) => {
     setLoading(true);
     if (photoUrl.length && userData.loggedIn && description.length && taggedProducts.length) {
       await uploadUserPhoto(photoUrl, description, taggedProducts);
-      setOpenPhotoUpload(false);
-      setLoading(false);
-      setUploadState(1);
-      setTaggedProducts([]);
-      setDescription('');
-      setCurrentPictureUrl('');
+      clearState();
       setBodyScroll(false);
-
-      history.push('/profile');
     }
     if (!description.length) {
       setError('Please enter a description.');
@@ -474,12 +483,8 @@ const UploadPhotoModal = ({ setBodyScroll }) => {
                   <button
                     aria-label='close'
                     onClick={() => {
-                      document.body.style.overflow = 'unset';
-                      document.body.style.position = 'relative';
-                      setUpImg();
-                      setImgRef(null);
-                      setUploadState(1);
-                      setOpenPhotoUpload(false);
+                      clearState();
+                      setBodyScroll(false);
                     }}>
                     <CloseSVG />
                   </button>
@@ -518,8 +523,8 @@ const UploadPhotoModal = ({ setBodyScroll }) => {
                 <label>Description</label>
                 <div className='description-input'>
                   <TextareaAutosize
-                    minRows='3'
-                    maxRows='5'
+                    minRows={3}
+                    maxRows={5}
                     name='description'
                     value={description}
                     onChange={e => setDescription(e.target.value)}
@@ -577,12 +582,14 @@ const UploadPhotoModal = ({ setBodyScroll }) => {
                     <WhiteButtonClick onClick={() => setUploadState(1)}>
                       Previous Step (2/2)
                     </WhiteButtonClick>
-                    <BlackButtonClick
-                      onClick={async () => {
-                        uploadS3File();
-                      }}>
-                      Upload Picture
-                    </BlackButtonClick>
+                    {imageString.length > 0 && description.length > 0 && taggedProducts.length > 0 && (
+                      <BlackButtonClick
+                        onClick={async () => {
+                          uploadS3File();
+                        }}>
+                        Upload Picture
+                      </BlackButtonClick>
+                    )}
                   </>
                 )}
               </div>

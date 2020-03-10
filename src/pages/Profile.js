@@ -93,8 +93,6 @@ const Profile = () => {
 
   const history = useHistory();
 
-  console.log(userData);
-
   const checkPhotos = () => {
     if (!userLoading) {
       if (userData.loggedIn) {
