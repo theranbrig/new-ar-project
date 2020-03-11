@@ -21,13 +21,14 @@ import { useHistory } from 'react-router-dom';
 const UploadStyles = styled.div`
   height: ${({ photoUploadOpen }) => (photoUploadOpen ? '90vh' : '0px')};
   transform: ${({ photoUploadOpen }) => (photoUploadOpen ? 'scaleY(100%)' : 'scaleY(0)')};
+  transition: all 0.5s ease-in-out;
+  transform-origin: left top;
   width: 100%;
   position: fixed;
   top: 10vh;
   height: 90vh;
   background: ${props => props.theme.colors.white};
   z-index: 1001;
-  transition: 0.5s;
   font-family: ${props => props.theme.fonts.main};
   .upload-content {
     width: 500px;

@@ -167,7 +167,7 @@ const NavigationDrawer = ({ children }) => {
               setOpenBag(false);
               setOpenSearch(!openSearch);
               setOpenPhotoUpload(false);
-              // setBodyScroll(!openSearch);
+              setBodyScroll(!openSearch);
             }}
             aria-label='Open Search'>
             <SearchSVG />

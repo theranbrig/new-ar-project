@@ -10,7 +10,8 @@ export const ModalStyles = styled.div`
   -webkit-box-shadow: 0px 10px 0px 0px rgba(0, 0, 3, 0.28);
   -moz-box-shadow: 0px 10px 0px 0px rgba(0, 0, 3, 0.28);
   box-shadow: 0px 10px 0px 0px rgba(0, 0, 3, 0.28);
-  transition: 0.5s;
+  transition: all 0.5s ease-in-out;
+  transform-origin: left top;
   background: ${props => props.theme.colors.white};
   position: fixed;
   top: 10vh;
