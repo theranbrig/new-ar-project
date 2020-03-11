@@ -183,6 +183,9 @@ const NavigationDrawer = ({ children }) => {
               onClick={() => {
                 setOpenPhotoUpload(!openPhotoUpload);
                 setBodyScroll(!openPhotoUpload);
+                setOpenSearch(false);
+                setOpenMenu(false);
+                setOpenBag(false);
               }}>
               <AddPhotoSVG />
             </button>
