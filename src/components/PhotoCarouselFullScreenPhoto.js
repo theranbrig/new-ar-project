@@ -6,8 +6,11 @@ import { FirebaseContext } from '../context/Firebase';
 import { Link } from 'react-router-dom';
 import LoadingSpinner from './LoadingSpinner';
 import PictureSVG from '../assets/icons/icon_picture';
+import { enableBodyScroll } from 'body-scroll-lock';
 import moment from 'moment';
 import styled from 'styled-components';
+
+const body = document.querySelector('body');
 
 export const FullScreenPhotoStyles = styled.div`
   .image {
@@ -140,13 +143,22 @@ const PhotoCarouselFullScreenPhoto = ({ photo, userData, likePhoto }) => {
         <section className='photo-info'>
           <div className='text'>
             <p className='comment'>
-              <Link to={`/user/${user.id}`}>@{user.userName}</Link>
+              <Link
+                onClick={() => {
+                  enableBodyScroll(body);
+                }}
+                to={`/user/${user.id}`}>
+                @{user.userName}
+              </Link>
               {photo.description}
             </p>
             <div className='bottom-row'>
               <h5>
                 <span>{moment.unix(photo.addedOn.seconds).fromNow()}</span> repl
-                {comments === 1 ? 'y' : 'ies'}(0)<Link to={`/comments/${photo.id}`}>reply</Link>
+                {comments === 1 ? 'y' : 'ies'}(0)
+                <Link onClick={() => enableBodyScroll(body)} to={`/comments/${photo.id}`}>
+                  reply
+                </Link>
               </h5>
             </div>
           </div>

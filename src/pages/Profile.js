@@ -8,6 +8,7 @@ import PencilSVG from '../assets/icons/icon_pencil';
 import SettingsSVG from '../assets/icons/icon_settings';
 import UserInfo from '../components/UserInfo';
 import UserPhoto from '../components/UserPhoto';
+import { WhiteButtonClick } from '../utilities/ReusableStyles';
 import styled from 'styled-components';
 import { useHistory } from 'react-router-dom';
 
@@ -75,6 +76,7 @@ const AddPhotoButton = styled.button`
   margin-bottom: 20px;
   border: 1px solid ${props => props.theme.colors.lightGrey} !important;
   font-family: ${props => props.theme.fonts.main};
+
   font-weight: 600;
   svg {
     height: 80%;
@@ -155,13 +157,13 @@ const Profile = () => {
               <a href='/admin'>ADMIN</a>
             </BlackButton>
           )}
-          <WhiteLogoutButton
+          <WhiteButtonClick
             onClick={() => {
               logoutUser();
               history.push('/');
             }}>
             SIGN OUT
-          </WhiteLogoutButton>
+          </WhiteButtonClick>
         </>
       ) : (
         <EditProfile setEditProfile={setEditProfile} />

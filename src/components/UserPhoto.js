@@ -9,6 +9,7 @@ import { Link } from 'react-router-dom';
 import LoadingSpinner from '../components/LoadingSpinner';
 import PhotoLikes from '../components/PhotoLikes';
 import TagSVG from '../assets/icons/icon_tag';
+import ThreeDotsSVG from '../assets/icons/icon_threedots';
 import moment from 'moment';
 import styled from 'styled-components';
 
@@ -40,11 +41,22 @@ const UserPhoto = ({ photo, userName, userData }) => {
   const [showTags, setShowTags] = useState(false);
   const [isLiked, setIsLiked] = useState(false);
   const [loading, setLoading] = useState(false);
+  const [owner, setOwner] = useState(false);
+  const [showMore, setShowMore] = useState(false);
   const [commentNumber, setCommentNumber] = useState(0);
   const [likeLoading, setLikeLoading] = useState(false);
   const [currentPhoto, setCurrentPhoto] = useState(null);
 
   const { dbh, firebase, userLoading } = useContext(FirebaseContext);
+
+  const removePhoto = () => {
+    if (window.confirm('Are you sure you want to remove this photo?')) {
+      dbh
+        .collection('userPhotos')
+        .doc(photo.id)
+        .delete();
+    }
+  };
 
   const toggleLike = () => {
     setLikeLoading(true);
@@ -83,15 +95,16 @@ const UserPhoto = ({ photo, userName, userData }) => {
           .get()
           .then(doc => setCommentNumber(doc.docs.length));
         setCurrentPhoto({ id: doc.id, ...doc.data() });
-
-        if (userData.loggedIn) {
+        if (userData.loggedIn && doc.data()) {
+          if (userData.id === doc.data().userId) {
+            setOwner(true);
+          }
           if (doc.data().likes.some(like => like === userData.id)) {
             setIsLiked(true);
           } else {
             setIsLiked(false);
           }
         }
-
         setLikeLoading(false);
         setLoading(false);
       });
@@ -113,6 +126,24 @@ const UserPhoto = ({ photo, userName, userData }) => {
 
   return (
     <PhotoStyles>
+      {owner && (
+        <>
+          <button className='more' onClick={() => setShowMore(!showMore)}>
+            <ThreeDotsSVG />
+          </button>
+          {showMore && (
+            <div className='options'>
+              <button
+                className='remove'
+                onClick={() => {
+                  removePhoto();
+                }}>
+                <CloseSVG fill='tomato' /> Remove Picture
+              </button>
+            </div>
+          )}
+        </>
+      )}
       <div className='image'>
         {!showTags && (
           <ShowTagButton
@@ -158,6 +189,7 @@ export const PhotoStyles = styled.div`
   min-height: 480px;
   border: 1px solid ${props => props.theme.colors.lightGrey};
   border-radius: 3px;
+  position: relative;
   img {
     border: 1px solid ${props => props.theme.colors.lightGrey};
     border-radius: 3px;
@@ -221,6 +253,36 @@ export const PhotoStyles = styled.div`
     color: ${props => props.theme.colors.grey};
     font-weight: 300;
     text-decoration: none;
+  }
+  .more {
+    position: absolute;
+    right: 10px;
+    top: 10px;
+    background: none;
+    border: none;
+    svg {
+      height: 20px;
+    }
+  }
+  .options {
+    position: absolute;
+    right: 10px;
+    top: 35px;
+    width: 200px;
+    height: 30px;
+    z-index: 10;
+    border-radius: 25px;
+    background: ${props => props.theme.colors.white};
+    border: 1px solid ${props => props.theme.colors.black};
+    box-shadow: ${props => props.theme.boxShadows.allAround};
+    button {
+      border: none;
+      font-size: 1.2rem;
+      height: 100%;
+      svg {
+        height: 12px;
+      }
+    }
   }
 `;
 

@@ -132,7 +132,7 @@ const SliderStyles = styled.div`
 
 const MainPageCarousel = ({ title }) => {
   const carouselRef = useRef();
-  
+
   const [showFullScreen, setShowFullScreen] = useState('');
   const [photos, setPhotos] = useState([]);
 
@@ -301,7 +301,6 @@ const FullSliderStyles = styled.div`
 `;
 
 const FullScreenSlider = ({ photos, setShowFullScreen, userData, likePhoto, showFullScreen }) => {
-  console.log(photos);
   const fullScreenRef = useRef();
   const fullResponsive = {
     superLargeDesktop: {
