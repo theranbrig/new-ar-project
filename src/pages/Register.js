@@ -19,6 +19,9 @@ const BlackButton = styled.button`
   height: 45px;
   border-radius: 25px;
   font-size: 1.1rem;
+  &:disabled {
+    color: ${props => props.theme.colors.grey};
+  }
 `;
 
 const BottomWhiteButton = styled.div`
@@ -37,6 +40,21 @@ const BottomWhiteButton = styled.div`
   a {
     color: black;
     text-decoration: none;
+  }
+`;
+
+const PasswordBox = styled.div`
+  width: 90%;
+  margin: 0 auto;
+  div {
+    padding: 0;
+    list-style-type: none;
+    p {
+      font-family: ${props => props.theme.fonts.main};
+      color: ${props => props.theme.colors.grey};
+      font-size: 0.75rem;
+      text-align: center;
+    }
   }
 `;
 
@@ -93,14 +111,12 @@ const Register = () => {
         onSubmit={async e => {
           setLoading(true);
           e.preventDefault();
-          checkForm();
-          if (checkForm() && checkPassword()) {
-            console.log('Good To Go');
-            // await registerUser(email, password, userName);
+          if (checkForm() && passwordValid) {
+            await registerUser(email, password, userName);
           }
           setLoading(false);
         }}>
-        {/* <div className='form-input'>
+        <div className='form-input'>
           <input
             placeholder='Username'
             name='userName'
@@ -123,7 +139,7 @@ const Register = () => {
             aria-label='email'
             onChange={e => setEmail(e.target.value)}
           />
-        </div> */}
+        </div>
         <div className={passwordValid ? 'form-input valid' : 'form-input invalid'}>
           <input
             placeholder='Password'
@@ -150,8 +166,16 @@ const Register = () => {
             aria-label='confirm password'
             onChange={e => setConfirmPassword(e.target.value)}
           />
+          <PasswordBox>
+            <div className='password-info'>
+              <p>
+                Password must be between 8 and 32 characters, and contain at least one number and
+                one special character.
+              </p>
+            </div>
+          </PasswordBox>
         </div>
-        <BlackButton disabled={password !== confirmPassword} type='submit'>
+        <BlackButton disabled={password !== confirmPassword || !passwordValid} type='submit'>
           {loading ? 'BECOMING A YZER' : 'BECOME A YZER'}
         </BlackButton>
       </form>

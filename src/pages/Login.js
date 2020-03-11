@@ -64,6 +64,11 @@ export const LoginStyles = styled.div`
     div {
       align-self: center;
     }
+    h1 {
+      font-size: 1.4rem;
+      font-family: ${props => props.theme.fonts.main};
+      font-weight: 500;
+    }
   }
   .forgot {
     text-align: center;
@@ -86,6 +91,7 @@ export const LoginStyles = styled.div`
     min-height: 15vh;
     padding: 10px 0;
     text-align: center;
+    background: ${props => props.theme.colors.white};
     a {
       text-decoration: none;
       border-bottom: 1px solid ${props => props.theme.colors.grey};
@@ -114,6 +120,9 @@ const BlackButton = styled.button`
   height: 45px;
   border-radius: 25px;
   font-size: 1.1rem;
+  &:disabled {
+    color: ${props => props.theme.colors.grey};
+  }
 `;
 
 const BottomWhiteButton = styled.div``;
