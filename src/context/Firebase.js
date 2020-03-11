@@ -108,6 +108,24 @@ const FirebaseProvider = ({ children }) => {
     }
   };
 
+  const forgotEmail = (email, callback) => {
+    var actionCodeSettings = {
+      // After password reset, the user will be give the ability to go back
+      // to this page.
+      url: 'http://localhost:3000/login',
+      handleCodeInApp: true,
+    };
+    firebase
+      .auth()
+      .sendPasswordResetEmail(email, actionCodeSettings)
+      .then(function() {
+        callback(true);
+      })
+      .catch(function(error) {
+        setFirebaseError(error.message);
+      });
+  };
+
   const onAuthStateChange = async callback => {
     setUserLoading(true);
     await firebase.auth().onAuthStateChanged(user => {
@@ -195,6 +213,7 @@ const FirebaseProvider = ({ children }) => {
         storage,
         userLoading,
         uploadUserPhoto,
+        forgotEmail,
       }}>
       {children}
     </FirebaseContext.Provider>

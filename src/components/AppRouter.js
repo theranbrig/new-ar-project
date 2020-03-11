@@ -16,6 +16,7 @@ import Product from '../pages/Product';
 import Profile from '../pages/Profile';
 import React from 'react';
 import Register from '../pages/Register';
+import Reset from '../pages/Reset';
 import Sale from '../pages/Sale';
 import Shop from '../pages/Shop';
 import ShopCategory from '../pages/ShopCategory';
@@ -85,6 +86,9 @@ export default function App() {
           </Route>
           <Route path='/featured'>
             <FeaturedProducts />
+          </Route>
+          <Route path='/reset'>
+            <Reset />
           </Route>
           <Route path='/'>
             <Home />

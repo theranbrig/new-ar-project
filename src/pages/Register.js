@@ -1,3 +1,4 @@
+import { Link, useHistory } from 'react-router-dom';
 import React, { useContext, useEffect, useState } from 'react';
 
 import BackButton from '../components/BackButton';
@@ -6,7 +7,6 @@ import { Helmet } from 'react-helmet';
 import LoadingSpinner from '../components/LoadingSpinner';
 import { LoginStyles } from './Login';
 import styled from 'styled-components';
-import { useHistory } from 'react-router-dom';
 
 const BlackButton = styled.button`
   font-family: ${props => props.theme.fonts.main};
@@ -179,6 +179,7 @@ const Register = () => {
           {loading ? 'BECOMING A YZER' : 'BECOME A YZER'}
         </BlackButton>
       </form>
+
       {firebaseError ||
         (error && (
           <div className='error'>
@@ -186,6 +187,9 @@ const Register = () => {
           </div>
         ))}
       {loading && <LoadingSpinner color='black' />}
+      <div className='forgot'>
+        <Link to='/login'>Already a member?</Link>
+      </div>
       <div className='bottom'>
         <p>
           If you join our platform and becaome a YZER you accept our terms of use and privacy

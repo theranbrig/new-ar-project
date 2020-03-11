@@ -101,9 +101,9 @@ const Profile = () => {
             let tempPhotos = [];
             querySnapshot.forEach(doc => {
               tempPhotos.push({ id: doc.id, ...doc.data() });
-              setLoading(false);
             });
             setPhotos(tempPhotos.sort((a, b) => b.addedOn.seconds - a.addedOn.seconds));
+            setLoading(false);
           });
       } else {
         history.push('/login');
@@ -119,7 +119,7 @@ const Profile = () => {
     };
   }, [userData, userLoading]);
 
-  if (!userData || loading || userLoading)
+  if (loading || userLoading)
     return (
       <ProfileStyles>
         <LoadingSpinner color='black' />
