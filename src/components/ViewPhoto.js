@@ -127,7 +127,14 @@ const ViewPhoto = ({
           <p className='comment'>
             <CameraSVG fill='#fff' />
             <Link to={`/user/${comment.user.id}`}>@{comment.user.userName}</Link>
-            {comment.comment}
+            {comment.comment.split('\n').map((item, key) => {
+              return (
+                <span key={key}>
+                  {item}
+                  <br />
+                </span>
+              );
+            })}
           </p>
           <div className='bottom-row'>
             <h5>

@@ -125,8 +125,6 @@ const BlackButton = styled.button`
   }
 `;
 
-const BottomWhiteButton = styled.div``;
-
 const Login = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');

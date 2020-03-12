@@ -170,7 +170,16 @@ const UserPhoto = ({ photo, userName, userData }) => {
       </div>
       <div className='description'>
         <h4>@{userName}</h4>
-        <p>{currentPhoto.description}</p>
+        <p>
+          {currentPhoto.description.split('\n').map((item, key) => {
+            return (
+              <span key={key}>
+                {item}
+                <br />
+              </span>
+            );
+          })}
+        </p>
         <Link to={`/comments/${currentPhoto.id}`}>
           Read {commentNumber > 1 && 'all'} {commentNumber} comment{commentNumber !== 1 && 's'}...
         </Link>

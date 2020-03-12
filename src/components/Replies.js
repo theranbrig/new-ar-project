@@ -283,7 +283,15 @@ const Replies = ({ comment, setSelectedReplies, photoRef, sendReply }) => {
             alt={commentUser.userName}
           />
           <p>
-            <Link>@{commentUser.userName}</Link> {comment.comment}
+            <Link>@{commentUser.userName}</Link>
+            {comment.comment.split('\n').map((item, key) => {
+              return (
+                <span key={key}>
+                  {item}
+                  <br />
+                </span>
+              );
+            })}
           </p>
         </div>
       )}
@@ -320,7 +328,14 @@ const Reply = ({ reply, loading, toggleLikeReply }) => {
                   <Link className='user' to={`/user/${reply.user.id}`}>
                     @{reply.user.userName}
                   </Link>{' '}
-                  {reply.reply}
+                  {reply.reply.split('\n').map((item, key) => {
+                    return (
+                      <span key={key}>
+                        {item}
+                        <br />
+                      </span>
+                    );
+                  })}
                 </span>
               </p>
             </div>

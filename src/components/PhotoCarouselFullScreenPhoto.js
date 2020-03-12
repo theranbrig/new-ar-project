@@ -150,7 +150,14 @@ const PhotoCarouselFullScreenPhoto = ({ photo, userData, likePhoto }) => {
                 to={`/user/${user.id}`}>
                 @{user.userName}
               </Link>
-              {photo.description}
+              {photo.description.split('\n').map((item, key) => {
+                return (
+                  <span key={key}>
+                    {item}
+                    <br />
+                  </span>
+                );
+              })}
             </p>
             <div className='bottom-row'>
               <h5>

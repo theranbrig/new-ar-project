@@ -54,7 +54,18 @@ const UserInfo = ({ userData, photos, updatedProfilePicture }) => {
           {userData.photo ? <img src={userData.photo} alt={userData.userName} /> : <UserSVG />}
         </div>
         <h1>@{userData.userName}</h1>
-        {userData.description && <p>{userData.description}</p>}
+        {userData.description && (
+          <p>
+            {userData.description.split('\n').map((item, key) => {
+              return (
+                <span key={key}>
+                  {item}
+                  <br />
+                </span>
+              );
+            })}
+          </p>
+        )}
         <section className='user-stats'>
           <div className='stats-item'>
             <h5>{photos.length}</h5>

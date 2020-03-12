@@ -38,6 +38,7 @@ const CreateCommentsStyles = styled.div`
     background: transparent;
     font-family: ${props => props.theme.fonts.main};
     font-weight: 300;
+    white-space: pre-line;
   }
   button {
     font-family: ${props => props.theme.fonts.main};
@@ -178,6 +179,8 @@ const Comment = ({ comment, setSelectedReplies, photoRef, toggleUpvoteComment })
 
   const { setBodyScroll } = useContext(ModalContext);
 
+  console.log(comment.comment.replace(/(?:\r\n|\r|\n)/g, '<br />'));
+
   useEffect(() => {
     photoRef
       .collection('comments')
@@ -220,7 +223,14 @@ const Comment = ({ comment, setSelectedReplies, photoRef, toggleUpvoteComment })
             <Link className='user' to={`/user/${comment.user.id}`}>
               @{comment.user.userName}
             </Link>{' '}
-            {comment.comment}
+            {comment.comment.split('\n').map((item, key) => {
+              return (
+                <span key={key}>
+                  {item}
+                  <br />
+                </span>
+              );
+            })}
           </p>
         </div>
         <div className='comment-actions'>
