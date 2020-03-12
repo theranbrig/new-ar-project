@@ -290,7 +290,7 @@ const Comments = () => {
     }
   };
 
-  const sendComment = comment => {
+  const sendComment = (comment, callback) => {
     photoRef
       .collection('comments')
       .doc()
@@ -374,7 +374,6 @@ const Comments = () => {
     checkComments();
     return () => {
       checkComments();
-      setLoading(false);
     };
   }, [userLoading]);
 

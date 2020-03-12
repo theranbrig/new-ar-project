@@ -288,9 +288,13 @@ const SelectPhoto = ({ photoRef, photoId, setUploadPhotoComment }) => {
             addedOn: new Date(),
             upVotes: [],
             photo: data.location,
+          })
+          .then(() => {
+            setComment('');
+            setImageString('');
+            setLoading(false);
+            setUploadPhotoComment(false);
           });
-        setLoading(false);
-        setUploadPhotoComment(false);
       })
       .catch(err => console.error(err));
   };
