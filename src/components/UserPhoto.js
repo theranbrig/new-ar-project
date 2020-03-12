@@ -7,6 +7,8 @@ import { FirebaseContext } from '../context/Firebase';
 import { LazyLoadImage } from 'react-lazy-load-image-component';
 import { Link } from 'react-router-dom';
 import LoadingSpinner from '../components/LoadingSpinner';
+import { ModalContext } from '../context/Modal';
+import OptionsModal from './OptionsModal';
 import PhotoLikes from '../components/PhotoLikes';
 import TagSVG from '../assets/icons/icon_tag';
 import ThreeDotsSVG from '../assets/icons/icon_threedots';
@@ -42,21 +44,13 @@ const UserPhoto = ({ photo, userName, userData }) => {
   const [isLiked, setIsLiked] = useState(false);
   const [loading, setLoading] = useState(false);
   const [owner, setOwner] = useState(false);
-  const [showMore, setShowMore] = useState(false);
   const [commentNumber, setCommentNumber] = useState(0);
   const [likeLoading, setLikeLoading] = useState(false);
   const [currentPhoto, setCurrentPhoto] = useState(null);
 
-  const { dbh, firebase, userLoading } = useContext(FirebaseContext);
+  const { setOpenOptions, openOptions, setBodyScroll } = useContext(ModalContext);
 
-  const removePhoto = () => {
-    if (window.confirm('Are you sure you want to remove this photo?')) {
-      dbh
-        .collection('userPhotos')
-        .doc(photo.id)
-        .delete();
-    }
-  };
+  const { dbh, firebase, userLoading } = useContext(FirebaseContext);
 
   const toggleLike = () => {
     setLikeLoading(true);
@@ -110,6 +104,19 @@ const UserPhoto = ({ photo, userName, userData }) => {
       });
   };
 
+  const removePhoto = photoId => {
+    if (window.confirm('Are you sure you want to remove this photo?')) {
+      dbh
+        .collection('userPhotos')
+        .doc(photoId)
+        .delete()
+        .then(() => {
+          setOpenOptions(!openOptions);
+          setBodyScroll(!openOptions);
+        });
+    }
+  };
+
   useEffect(() => {
     getPhotoData();
     return () => {
@@ -128,20 +135,14 @@ const UserPhoto = ({ photo, userName, userData }) => {
     <PhotoStyles>
       {owner && (
         <>
-          <button className='more' onClick={() => setShowMore(!showMore)}>
+          <button
+            className='more'
+            onClick={() => {
+              setOpenOptions(!openOptions);
+              setBodyScroll(!openOptions);
+            }}>
             <ThreeDotsSVG />
           </button>
-          {showMore && (
-            <div className='options'>
-              <button
-                className='remove'
-                onClick={() => {
-                  removePhoto();
-                }}>
-                <CloseSVG fill='tomato' /> Remove Picture
-              </button>
-            </div>
-          )}
         </>
       )}
       <div className='image'>
@@ -184,6 +185,7 @@ const UserPhoto = ({ photo, userName, userData }) => {
           Read {commentNumber > 1 && 'all'} {commentNumber} comment{commentNumber !== 1 && 's'}...
         </Link>
       </div>
+      <OptionsModal photoId={photo.id} removePhoto={removePhoto} />
     </PhotoStyles>
   );
 };

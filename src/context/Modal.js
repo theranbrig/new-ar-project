@@ -9,6 +9,7 @@ const ModalProvider = ({ children }) => {
   const [openBag, setOpenBag] = useState(false);
   const [openSearch, setOpenSearch] = useState(false);
   const [openPhotoUpload, setOpenPhotoUpload] = useState(false);
+  const [openOptions, setOpenOptions] = useState(false);
 
   const closeSearchAndClear = callback => {
     setBodyScroll(false);
@@ -45,6 +46,8 @@ const ModalProvider = ({ children }) => {
         closeSearchAndClear,
         closePhotoUploadAndClear,
         setBodyScroll,
+        openOptions,
+        setOpenOptions,
       }}>
       {children}
     </ModalContext.Provider>
