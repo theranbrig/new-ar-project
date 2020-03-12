@@ -226,7 +226,7 @@ export const PhotoStyles = styled.div`
       margin-top: 3px;
       margin-bottom: 3px;
       overflow: hidden;
-      text-overflow: ellipse;
+      text-overflow: ellipsis;
     }
   }
   .image {

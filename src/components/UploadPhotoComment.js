@@ -142,9 +142,12 @@ const UploadStyles = styled.div`
       }
     }
   }
+  .ReactCrop {
+    width: 250px;
+  }
 `;
 
-const CropperComponent = ({ src, setImageString, uploadS3File, comment, setComment }) => {
+const CropperComponent = ({ src, setImageString, uploadS3File, comment, setComment, loading }) => {
   const [upImg, setUpImg] = useState();
   const [imgRef, setImgRef] = useState(null);
   const [crop, setCrop] = useState({
@@ -152,6 +155,7 @@ const CropperComponent = ({ src, setImageString, uploadS3File, comment, setComme
     width: 50,
     aspect: 10 / 16,
   });
+
   const [result, setResult] = useState();
 
   const onSelectFile = e => {
@@ -223,12 +227,12 @@ const CropperComponent = ({ src, setImageString, uploadS3File, comment, setComme
             />
             {comment && result && (
               <button
-                disabled={!comment || !result}
+                disabled={!comment || !result || loading}
                 onClick={() => {
                   uploadS3File();
                 }}>
                 Add Photo...
-                <ChevronRight />
+                <ChevronRight fill={!comment || !result || (loading && '#7c7c7c')} />
               </button>
             )}
           </div>
@@ -247,6 +251,7 @@ const CropperComponent = ({ src, setImageString, uploadS3File, comment, setComme
 };
 
 const SelectPhoto = ({ photoRef, photoId, setUploadPhotoComment }) => {
+  const [loading, setLoading] = useState(false);
   const [comment, setComment] = useState('');
 
   const [imageString, setImageString] = useState('');
@@ -268,7 +273,7 @@ const SelectPhoto = ({ photoRef, photoId, setUploadPhotoComment }) => {
   const newFileName = shortid.generate();
 
   const uploadS3File = async () => {
-    console.log(convertFile(imageString, newFileName));
+    setLoading(true);
     await S3Client.uploadFile(convertFile(imageString, newFileName), newFileName)
       .then(data => {
         console.log(data);
@@ -284,6 +289,7 @@ const SelectPhoto = ({ photoRef, photoId, setUploadPhotoComment }) => {
             upVotes: [],
             photo: data.location,
           });
+        setLoading(false);
         setUploadPhotoComment(false);
       })
       .catch(err => console.error(err));
@@ -316,6 +322,7 @@ const SelectPhoto = ({ photoRef, photoId, setUploadPhotoComment }) => {
                     uploadS3File={uploadS3File}
                     comment={comment}
                     setComment={setComment}
+                    loading={loading}
                   />
                 </div>
               </div>

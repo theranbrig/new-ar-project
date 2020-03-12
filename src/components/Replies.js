@@ -53,9 +53,11 @@ const CreateReplies = ({ commentId, sendReply }) => {
   return (
     <CreateRepliesStyles>
       <TextareaAutosize
-        type='text'
         name='reply'
+        aria-label='reply'
         value={reply}
+        minRows='1'
+        maxRows='2'
         placeholder='Tap to write...'
         onChange={e => {
           setReply(e.target.value);

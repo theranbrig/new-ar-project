@@ -11,11 +11,13 @@ import FilledUpVoteSVG from '../assets/icons/icon_upvote_filled';
 import { FirebaseContext } from '../context/Firebase';
 import { LazyLoadImage } from 'react-lazy-load-image-component';
 import LoadingSpinner from '../components/LoadingSpinner';
+import { ModalContext } from '../context/Modal';
 import PictureSVG from '../assets/icons/icon_picture';
 import Replies from './Replies';
 import TextSVG from '../assets/icons/icon_text';
 import TextareaAutosize from 'react-textarea-autosize';
 import UploadPhotoComment from '../components/UploadPhotoComment';
+import UserSVG from '../assets/icons/icon_user';
 import ViewPhoto from './ViewPhoto';
 import moment from 'moment';
 import styled from 'styled-components';
@@ -53,8 +55,7 @@ const CreateCommentsStyles = styled.div`
     svg {
       align-self: center;
       height: 16px !important;
-    }import UserSVG from '../assets/icons/icon_user';
-
+    }
   }
 `;
 
@@ -65,7 +66,8 @@ export const CreateComments = ({ sendComment }) => {
     <CreateCommentsStyles>
       <TextareaAutosize
         minRows='1'
-        maxRows='5'
+        maxRows='2'
+        aria-label='comment'
         placeholder='Tap to write...'
         name='comment'
         value={comment}
@@ -91,14 +93,16 @@ export const CreateComments = ({ sendComment }) => {
 };
 
 const CommentStyles = styled.div`
-  display: flex;
-  flex-direction: row;
+  display: grid;
+  grid-template-columns: 1fr 40px;
   align-items: center;
   justify-content: space-between;
   font-family: ${props => props.theme.fonts.main};
-  margin: 30px 0;
+  margin: 30px auto;
+  width: 500px;
+  max-width: 95%;
   .comment-body {
-    width: 100%;
+    max-width: 350px;
     .user {
       color: ${props => props.theme.colors.black};
       text-decoration: none;
@@ -132,6 +136,7 @@ const CommentStyles = styled.div`
   }
   .upVotes {
     align-self: center;
+    justify-self: center;
     text-align: center;
     width: 80px;
     button {
@@ -156,6 +161,12 @@ const CommentStyles = styled.div`
   .comment-photo,
   .comment-no-photo {
     margin-bottom: 8px;
+    /* white-space: nowrap; */
+  }
+  p.comment-paragraph {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    width: 100%;
   }
 `;
 
@@ -164,6 +175,8 @@ const Comment = ({ comment, setSelectedReplies, photoRef, toggleUpvoteComment })
   const [displayPhoto, setDisplayPhoto] = useState(false);
 
   const { userData } = useContext(FirebaseContext);
+
+  const { setBodyScroll } = useContext(ModalContext);
 
   useEffect(() => {
     photoRef
@@ -194,10 +207,11 @@ const Comment = ({ comment, setSelectedReplies, photoRef, toggleUpvoteComment })
               alt={`${comment.user.userName}`}
               onClick={() => {
                 setDisplayPhoto(true);
+                setBodyScroll(false);
               }}
             />
           )}
-          <p>
+          <p className='comment-paragraph'>
             {comment.photo && (
               <span>
                 <CameraSVG fill='#272727' />
@@ -429,17 +443,19 @@ const Comments = () => {
             />
           ))}
           {userData.loggedIn && (
-            <div className='comment-inputs'>
-              <LazyLoadImage src={userData.photo} alt={userData.userName} effect='blur' />
-              <button
-                onClick={() => {
-                  setUploadPhotoComment(!uploadPhotoComment);
-                  console.log(uploadPhotoComment);
-                }}>
-                <CameraSVG fill='white' />
-              </button>
-              <CreateComments sendComment={sendComment} />
-            </div>
+            <section className='bottom'>
+              <div className='comment-inputs'>
+                <LazyLoadImage src={userData.photo} alt={userData.userName} effect='blur' />
+                <button
+                  onClick={() => {
+                    setUploadPhotoComment(!uploadPhotoComment);
+                    console.log(uploadPhotoComment);
+                  }}>
+                  <CameraSVG fill='white' />
+                </button>
+                <CreateComments sendComment={sendComment} />
+              </div>
+            </section>
           )}
         </>
       )}
@@ -452,25 +468,38 @@ const CommentsStyles = styled.div`
   width: 500px;
   max-width: 95%;
   margin: 12vh auto 0;
-  min-height: 88vh;
+  height: 75vh;
   padding: 0 10px;
-  .comment-inputs {
-    display: grid;
-    grid-template-columns: 45px 45px 1fr;
-    grid-gap: 10px;
-    img {
-      height: 45px;
-      width: 45px;
-      border-radius: 50%;
-    }
-    button {
-      background: ${props => props.theme.colors.black};
-      border: none;
-      height: 45px;
-      width: 45px;
-      border-radius: 50%;
-      svg {
-        height: 20px;
+  background: ${props => props.theme.colors.white};
+  .bottom {
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 15vh;
+    position: fixed;
+    background: ${props => props.theme.colors.white};
+    .comment-inputs {
+      display: grid;
+      grid-template-columns: 45px 45px 1fr;
+      grid-gap: 10px;
+      width: 500px;
+      max-width: 90%;
+      margin: 0 auto;
+      padding-top: 20px;
+      img {
+        height: 45px;
+        width: 45px;
+        border-radius: 50%;
+      }
+      button {
+        background: ${props => props.theme.colors.black};
+        border: none;
+        height: 45px;
+        width: 45px;
+        border-radius: 50%;
+        svg {
+          height: 20px;
+        }
       }
     }
   }
