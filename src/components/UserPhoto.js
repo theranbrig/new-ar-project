@@ -221,9 +221,12 @@ export const PhotoStyles = styled.div`
       margin: 0;
     }
     p {
+      width: 100%;
       font-weight: 300;
       margin-top: 3px;
       margin-bottom: 3px;
+      overflow: hidden;
+      text-overflow: ellipse;
     }
   }
   .image {
@@ -311,6 +314,8 @@ const TagStyles = styled.div`
   }
   img {
     margin-top: 10px;
+    width: 100px;
+    height: 100px;
   }
 `;
 
