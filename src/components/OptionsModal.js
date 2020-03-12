@@ -31,13 +31,13 @@ export const ModalStyles = styled.div`
     left: 0;
     bottom: 0;
     .buttons {
-
-      width: 500px;
+        width: 500px;
       max-width: 90%;
       margin: 0 auto;
       display: block;
       height: 60px;
       button {
+      background: ${props => props.theme.colors.white};
         width: 80%;
         height: 45px;
         border-radius: 25px;
@@ -49,6 +49,11 @@ export const ModalStyles = styled.div`
       }
         .delete {
           color: tomato;
+
+        }
+        .close {
+          color: ${props => props.theme.colors.white};
+          background:  ${props => props.theme.colors.black};
         }
     }
   }

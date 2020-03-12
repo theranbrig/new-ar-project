@@ -153,9 +153,7 @@ const Profile = () => {
             />
           ))}
           {userData.role === 'ADMIN' && (
-            <BlackButton>
-              <a href='/admin'>ADMIN</a>
-            </BlackButton>
+            <WhiteButtonClick onClick={() => history.push('/admin')}>ADMIN</WhiteButtonClick>
           )}
           <WhiteButtonClick
             onClick={() => {
