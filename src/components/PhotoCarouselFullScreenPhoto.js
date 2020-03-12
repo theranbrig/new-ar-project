@@ -120,6 +120,7 @@ const PhotoCarouselFullScreenPhoto = ({ photo, userData, likePhoto }) => {
           .collection('comments')
           .get()
           .then(querySnapshot => {
+            console.log(querySnapshot);
             setComments(querySnapshot.docs.length);
             setLoading(false);
           });
@@ -162,7 +163,7 @@ const PhotoCarouselFullScreenPhoto = ({ photo, userData, likePhoto }) => {
             <div className='bottom-row'>
               <h5>
                 <span>{moment.unix(photo.addedOn.seconds).fromNow()}</span> repl
-                {comments === 1 ? 'y' : 'ies'}(0)
+                {comments === 1 ? 'y' : 'ies'}({comments})
                 <Link onClick={() => enableBodyScroll(body)} to={`/comments/${photo.id}`}>
                   reply
                 </Link>

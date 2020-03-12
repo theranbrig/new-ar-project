@@ -302,6 +302,7 @@ const FullSliderStyles = styled.div`
 
 const FullScreenSlider = ({ photos, setShowFullScreen, userData, likePhoto, showFullScreen }) => {
   const fullScreenRef = useRef();
+  
   const fullResponsive = {
     superLargeDesktop: {
       breakpoint: { max: 4000, min: 3000 },
