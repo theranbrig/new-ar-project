@@ -214,7 +214,6 @@ const Home = () => {
           <div className='main-product-title'>
             <div className='date-and-price'>
               <h3>{displayDate}</h3>
-              <h4>{formatPrice(mainProduct.price)}</h4>
             </div>
             <h3>
               <strong>{mainProduct.brand}</strong> {mainProduct.name}

@@ -36,6 +36,7 @@ export const StyledMenu = styled.nav`
     color: white;
     -webkit-text-stroke-width: 1px;
     -webkit-text-stroke-color: ${props => props.theme.colors.black};
+    -webkit-text-stroke: 1px ${props => props.theme.colors.black};
     text-decoration: none;
     transition: color 0.3s linear;
     color: ${props => props.theme.colors.white};
@@ -135,14 +136,14 @@ const MenuLinks = () => {
               }}>
               Featured
             </NavLink>
-            <NavLink
+            {/* <NavLink
               to='/checkout'
               activeClassName='active-link'
               onClick={() => {
                 setModals();
               }}>
               My Bag
-            </NavLink>
+            </NavLink> */}
             {!userData && (
               <NavLink
                 to='/subscribe'

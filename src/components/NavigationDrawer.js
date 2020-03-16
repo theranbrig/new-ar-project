@@ -74,7 +74,7 @@ const Burger = () => {
         setOpenBag(false);
         setOpenSearch(false);
         setOpenPhotoUpload(false);
-        setBodyScroll(!openMenu);
+        // setBodyScroll(!openMenu);
       }}
       aria-label='Toggle Menu'>
       <div />
@@ -190,7 +190,7 @@ const NavigationDrawer = ({ children }) => {
               <AddPhotoSVG />
             </button>
           )}
-          <button
+          {/* <button
             onClick={() => {
               setOpenBag(!openBag);
               setOpenMenu(false);
@@ -201,7 +201,7 @@ const NavigationDrawer = ({ children }) => {
             aria-label='Toggle Cart'
             id='cart-button'>
             {cart.length ? <FullShopBagSVG /> : <ShopBagSVG />}
-          </button>
+          </button> */}
         </div>
       </StretchedNavStyles>
       <ShoppingBagModal />
