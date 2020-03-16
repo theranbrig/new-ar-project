@@ -21,19 +21,21 @@ const LoadingContainer = styled.div`
   width: 500px;
   max-width: 100%;
   margin: 0 auto;
-  margin-top: calc(10vh + 25px);
+  margin-top: calc(10vh);
   background: ${props => props.theme.colors.white};
   position: relative;
 `;
 
 const ProductContainer = styled.div`
-  min-height: 100vh;
+  min-height: 90vh;
   width: 500px;
   max-width: 100%;
   margin: 0 auto;
-  margin-top: calc(10vh + 25px);
+  margin-top: calc(10vh);
   font-family: ${props => props.theme.fonts.main};
-  background: ${props => props.theme.colors.lightGrey};
+  /* NEEDS TO BE CHANGED BACK TO GREY WHEN ADDING IN SELECT SIZE STYLES */
+  /* background: ${props => props.theme.colors.lightGrey}; */
+  background: ${props => props.theme.colors.white};
   position: relative;
   model-viewer {
     width: 95%;
@@ -97,6 +99,7 @@ const ProductContainer = styled.div`
     display: flex;
     flex-direction: row;
     justify-content: space-between;
+    padding-top: 25px;
     .title-name {
       width: 100%;
       @media (max-width: 480px) {
@@ -159,13 +162,14 @@ const ProductContainer = styled.div`
     }
   }
   .product-top {
-    padding-bottom: 40px;
-    margin-bottom: 50px;
+    /* FOR ROUNDED BORDERS WITH ADD TO CART */
+    /* padding-bottom: 40px; */
+    /* margin-bottom: 50px;
     border-bottom-right-radius: 50px;
-    border-bottom-left-radius: 50px;
+    border-bottom-left-radius: 50px; */
     margin-top: 0;
     background: ${props => props.theme.colors.white};
-    box-shadow: 0 6px 6px -6px ${props => props.theme.colors.grey};
+    /* box-shadow: 0 6px 6px -6px ${props => props.theme.colors.grey}; */
   }
   .order-details {
     margin-top: -90px;
@@ -225,7 +229,7 @@ const Product = () => {
             <h1>{product.name}</h1>
           </div>
           <div className='title-price'>
-            <h2>{`$${(product.price / 100).toFixed(2)}`}</h2>
+            {/* <h2>{`$${(product.price / 100).toFixed(2)}`}</h2> */}
           </div>
         </div>
         <div className='main-content-box'>
@@ -267,7 +271,8 @@ const Product = () => {
           AR
         </RoundARButton>
       </section>
-      <section className='order-details '>
+      {/* REMOVED FOR NOW TO SIMPLIFY PAGE */}
+      {/* <section className='order-details '>
         <AddToCart sizes={product.sizes} product={product} setIsAdded={setIsAdded} />
       </section>
       <div className='accordions'>
@@ -287,8 +292,8 @@ const Product = () => {
             effect='blur'
           />
         </Accordion>
-      </div>
-      <ProductBrand brandId={product.brandId} />
+      </div> */}
+      {/* <ProductBrand brandId={product.brandId} /> */}
     </ProductContainer>
   );
 };

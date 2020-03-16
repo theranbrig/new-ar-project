@@ -178,7 +178,7 @@ const Login = () => {
         <BlackButton type='submit'>SIGN IN</BlackButton>
       </form>
       <div className='forgot'>
-        <Link to='/reset'>I forgot my password.</Link>
+        <Link to='/request_reset'>I forgot my password.</Link>
       </div>
       {firebaseError && (
         <div className='error'>

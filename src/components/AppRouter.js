@@ -16,10 +16,11 @@ import Product from '../pages/Product';
 import Profile from '../pages/Profile';
 import React from 'react';
 import Register from '../pages/Register';
-import Reset from '../pages/Reset';
+import RequestReset from '../pages/ResetRequest';
 import Sale from '../pages/Sale';
 import Shop from '../pages/Shop';
 import ShopCategory from '../pages/ShopCategory';
+import SubmitReset from '../pages/SubmitReset';
 import Subscribe from '../pages/Subscribe';
 import Success from '../pages/SubscribeSuccess';
 import User from '../pages/User';
@@ -87,8 +88,11 @@ export default function App() {
           <Route path='/featured'>
             <FeaturedProducts />
           </Route>
-          <Route path='/reset'>
-            <Reset />
+          <Route path='/request_reset'>
+            <RequestReset />
+          </Route>
+          <Route path='/reset_password'>
+            <SubmitReset />
           </Route>
           <Route path='/'>
             <Home />
