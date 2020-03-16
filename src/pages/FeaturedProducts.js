@@ -130,7 +130,7 @@ const FeaturedProducts = () => {
               <img src={product.mainImage} alt={product.name} />
               <h2>{product.brand}</h2>
               <h3>{product.name}</h3>
-              <h4>{formatPrice(product.price)}</h4>
+              {/* <h4>{formatPrice(product.price)}</h4> */}
             </Link>
           </div>
         ))}
