@@ -81,7 +81,7 @@ const ProductContainer = styled.div`
     grid-gap: 10px;
     img {
       width: 100px;
-      height: 100px;
+
       max-width: 100%;
       border: 1px solid ${props => props.theme.colors.lightGrey};
     }
@@ -91,8 +91,9 @@ const ProductContainer = styled.div`
   }
   .main-content-box {
     text-align: center;
+    height: 400px;
     img {
-      max-width: 90%;
+      height: 400px;
     }
   }
   .title-section {

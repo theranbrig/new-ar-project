@@ -34,12 +34,22 @@ export const StyledMenu = styled.nav`
     font-weight: bold;
     letter-spacing: 0.5rem;
     color: white;
-    -webkit-text-stroke-width: 1px;
+    /* -webkit-text-stroke-width: 3px;
     -webkit-text-stroke-color: ${props => props.theme.colors.black};
-    -webkit-text-stroke: 1px ${props => props.theme.colors.black};
+    -webkit-text-stroke: 1px ${props => props.theme.colors.black}; */
+    text-shadow:
+    -1px -1px 0 ${props => props.theme.colors.black},
+     0   -1px 0 ${props => props.theme.colors.black},
+     1px -1px 0 ${props => props.theme.colors.black},
+     1px  0   0 ${props => props.theme.colors.black},
+     1px  1px 0 ${props => props.theme.colors.black},
+     0    1px 0 ${props => props.theme.colors.black},
+    -1px  1px 0 ${props => props.theme.colors.black},
+    -1px  0   0 ${props => props.theme.colors.black};
     text-decoration: none;
     transition: color 0.3s linear;
     color: ${props => props.theme.colors.white};
+    font-family: ${props => props.theme.fonts.main};
     &:hover {
       color: ${props => props.theme.colors.black};
     }
@@ -47,6 +57,7 @@ export const StyledMenu = styled.nav`
       font-size: 0.8rem;
       color: ${props => props.theme.colors.black};
       font-weight: 300;
+      text-shadow: none;
       -webkit-text-stroke-width: 0px;
     }
   }
