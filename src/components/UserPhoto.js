@@ -16,6 +16,19 @@ import moment from 'moment';
 import styled from 'styled-components';
 
 const Tag = ({ tag, setShowTags }) => {
+  const [taggedProduct, setTaggedProduct] = useState({});
+  const { dbh } = useContext(FirebaseContext);
+  useEffect(() => {
+    dbh
+      .collection('products')
+      .doc(tag)
+      .get()
+      .then(doc => {
+        console.log(doc);
+        setTaggedProduct({ id: doc.id, ...doc.data() });
+        console.log(doc.data());
+      });
+  }, []);
   return (
     <TagStyles>
       <HideTagButton
@@ -24,16 +37,10 @@ const Tag = ({ tag, setShowTags }) => {
         }}>
         <CloseSVG fill='white' />
       </HideTagButton>
-      <Link to={`/products/${tag.id}`}>
-        <h3>{tag.brand}</h3>
-        <h4>{tag.name}</h4>
-        <LazyLoadImage
-          src={tag.mainImage}
-          alt={tag.name}
-          effect='blur'
-          height='100px'
-          width='100px;'
-        />
+      <Link to={`/product/${taggedProduct.id}`}>
+        <h3>{taggedProduct.brand}</h3>
+        <h4>{taggedProduct.name}</h4>
+        <LazyLoadImage src={taggedProduct.mainImage} alt={taggedProduct.name} effect='blur' />
       </Link>
     </TagStyles>
   );
@@ -156,7 +163,7 @@ const UserPhoto = ({ photo, userName, userData }) => {
           </ShowTagButton>
         )}
         <LazyLoadImage src={currentPhoto.url} alt={currentPhoto.description} effect='blur' />
-        {showTags && <Tag tag={currentPhoto.tags[0]} setShowTags={setShowTags} />}
+        {showTags && <Tag tag={currentPhoto.tag} setShowTags={setShowTags} />}
       </div>
       <div className='likes-and-time'>
         <PhotoLikes
@@ -325,7 +332,7 @@ const TagStyles = styled.div`
   }
   img {
     margin-top: 10px;
-    width: 100px;
+    width: 65px;
     height: 100px;
   }
 `;
