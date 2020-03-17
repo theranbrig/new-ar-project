@@ -88,10 +88,15 @@ export const LoginStyles = styled.div`
     width: 500px;
     max-width: 95%;
     border-top: 1px solid ${props => props.theme.colors.lightGrey};
-    min-height: 15vh;
-    padding: 10px 0;
+    min-height: 20vh;
     text-align: center;
     background: ${props => props.theme.colors.white};
+    display: grid;
+    grid-template-rows: 1fr;
+    grid-template-columns: 1fr;
+    justify-content: center;
+    align-items: center;
+
     a {
       text-decoration: none;
       border-bottom: 1px solid ${props => props.theme.colors.grey};
@@ -104,7 +109,8 @@ export const LoginStyles = styled.div`
       text-align: center;
       font-weight: 300;
       max-width: 90%;
-      margin: 10px auto;
+      margin: 0 auto;
+      margin-bottom: 20px;
     }
   }
 `;
@@ -119,6 +125,8 @@ const BlackButton = styled.button`
   display: block;
   height: 45px;
   border-radius: 25px;
+  font-weight: 700;
+  letter-spacing: 0.1rem;
   font-size: 1.1rem;
   &:disabled {
     color: ${props => props.theme.colors.grey};
@@ -162,7 +170,7 @@ const Login = () => {
             name='email'
             type='email'
             value={email}
-            placeholder="Enter Email"
+            placeholder='Enter Email'
             required
             onChange={e => setEmail(e.target.value)}
           />
@@ -172,7 +180,7 @@ const Login = () => {
             aria-label='password'
             name='password'
             type='password'
-            placeholder="Enter Password"
+            placeholder='Enter Password'
             required
             onChange={e => setPassword(e.target.value)}
           />
@@ -188,8 +196,10 @@ const Login = () => {
         </div>
       )}
       <div className='bottom'>
-        <p>Want to become a YZER?</p>
-        <Link to='/register'>Sign Up Now</Link>
+        <div className='bottom-content'>
+          <p>Want to become a YZER?</p>
+          <Link to='/register'>Sign Up Now</Link>
+        </div>
       </div>
     </LoginStyles>
   );

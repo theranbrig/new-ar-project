@@ -62,15 +62,20 @@ const ProductContainer = styled.div`
       border: 1px solid ${props => props.theme.colors.lightGrey};
     }
     svg {
-      width: 80%;
-      height: 76%;
-      padding: 7% 5%;
+      height: 70px;
+      width: 70px;
+      display: block;
+      margin: 0 auto;
       position: absolute;
-      top: 0;
-      left: 0;
+      top: calc(50% - 40px);
+      left: calc(50% - 35px);
       -webkit-filter: drop-shadow(0px 0px 4px rgba(255, 255, 255, 0.80));
       filter: drop-shadow(0px 0px 4px rgba(255, 255, 255, 0.80));
     }
+  }
+  button {
+    display: block;
+    margin: 40px auto;
   }
   .picture-thumbs {
     width: 95%;
@@ -81,7 +86,6 @@ const ProductContainer = styled.div`
     grid-gap: 10px;
     img {
       width: 100px;
-
       max-width: 100%;
       border: 1px solid ${props => props.theme.colors.lightGrey};
     }

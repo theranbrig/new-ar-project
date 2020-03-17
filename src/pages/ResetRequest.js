@@ -118,7 +118,7 @@ const LoginStyles = styled.div`
       svg {
         display: block;
         margin: 0 auto;
-        height: 100px;
+        height: 80px;
       }
     }
   }
@@ -130,10 +130,12 @@ const BlackButton = styled.button`
   background: ${props => props.theme.colors.black};
   color: ${props => props.theme.colors.white};
   width: 90%;
-  margin: 20px auto;
+  margin: 0 auto;
   display: block;
   height: 45px;
   border-radius: 25px;
+  font-weight: 700;
+  letter-spacing: 0.1rem;
   font-size: 1.1rem;
   &:disabled {
     color: ${props => props.theme.colors.grey};
@@ -165,14 +167,14 @@ const Reset = () => {
       {submitted ? (
         <div className='success'>
           <div className='top'>
-            <BackButton />
+            <BackButton onClick={() => setError('')} />
             <h1>Link Sent</h1>
             <div className='right'></div>
           </div>
           <div className='check'>
             <p>
-              If any account is connected to the email address name@provider.com, then there will be
-              an email with a magic link in your inbox within 24 hours.
+              If any account is connected to the email address {email}, then there will be an email
+              with a magic link in your inbox within 24 hours.
             </p>
             <CheckSVG />
           </div>
@@ -180,7 +182,7 @@ const Reset = () => {
       ) : (
         <>
           <div className='top'>
-            <BackButton />
+            <BackButton onClick={() => setError('')} />
             <h1>Forgot Password</h1>
             <div className='right'></div>
           </div>

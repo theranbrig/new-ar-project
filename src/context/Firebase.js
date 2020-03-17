@@ -204,6 +204,7 @@ const FirebaseProvider = ({ children }) => {
     <FirebaseContext.Provider
       value={{
         firebaseError,
+        setFirebaseError,
         registerUser,
         userData,
         loginUser,

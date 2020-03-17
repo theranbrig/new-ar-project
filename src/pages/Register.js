@@ -18,6 +18,8 @@ const BlackButton = styled.button`
   display: block;
   height: 45px;
   border-radius: 25px;
+  font-weight: 700;
+  letter-spacing: 0.1rem;
   font-size: 1.1rem;
   &:disabled {
     color: ${props => props.theme.colors.grey};
