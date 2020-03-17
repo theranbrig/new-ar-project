@@ -57,7 +57,7 @@ const FirebaseSearch = () => {
         </button>
       </div>
       <SearchStyles>
-        <div className='search-box'>
+        <section className='search-box'>
           <input
             aria-label='search input'
             value={searchQuery}
@@ -93,7 +93,7 @@ const FirebaseSearch = () => {
               </Link>
             );
           })}
-        </div>
+        </section>
         <section className='products-area'>
           <div className='products-list'>
             {products.slice(0, 5).map(product => (
@@ -182,6 +182,7 @@ const SearchStyles = styled.div`
   .products-list {
     width: 100%;
     background: ${props => props.theme.colors.white};
+    padding-top: 10px;
     a.display-link {
       width: 500px;
       max-width: 95%;
@@ -211,6 +212,9 @@ const SearchStyles = styled.div`
       }
       h5 {
         font-size: 1.2rem;
+      }
+      img {
+        width: 65%;
       }
     }
     .products-list {
