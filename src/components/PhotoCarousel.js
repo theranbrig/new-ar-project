@@ -130,7 +130,7 @@ const SliderStyles = styled.div`
   }
 `;
 
-const MainPageCarousel = ({ title }) => {
+const MainPageCarousel = ({ title, product }) => {
   const carouselRef = useRef();
 
   const [showFullScreen, setShowFullScreen] = useState('');
@@ -159,10 +159,12 @@ const MainPageCarousel = ({ title }) => {
   };
 
   const checkPhotos = () => {
+    console.log(product);
     dbh
       .collection('userPhotos')
-      .limit(6)
-      .onSnapshot(querySnapshot => {
+      .where('tag', '==', product)
+      .get()
+      .then(querySnapshot => {
         let tempItems = [];
         querySnapshot.docs.forEach(doc => {
           tempItems.push({ id: doc.id, ...doc.data() });
@@ -173,49 +175,11 @@ const MainPageCarousel = ({ title }) => {
 
   useEffect(() => {
     checkPhotos();
-    return () => {
-      checkPhotos();
-    };
   }, []);
 
   return (
     <SliderStyles>
-      {/* <Link to='/user/gZctMW4ASGNvAcrwVvAP80NlAa32'>
-        <div className='selected-user'>
-          <LazyLoadImage
-            src={user.profile_image_url}
-            alt={user.name}
-            effect='blur'
-            height='300px'
-          />
-          <div className='user-information'>
-            <div className='user-data'>
-              <InstaSVG />
-              <div className='user-data-content'>
-                <h4>{user.handle}</h4>
-                <h5>{user.name}</h5>
-              </div>
-            </div>
-            <div className='user-data'>
-              <FollowerSVG />
-              <div className='user-data-content'>
-                <h4>{user.followers}</h4>
-                <h5>New Followers</h5>
-              </div>
-            </div>
-            <div className='user-data'>
-              <ImpressionSVG />
-              <div className='user-data-content'>
-                <h4>{user.impressions}</h4>
-                <h5>New Impressions</h5>
-              </div>
-            </div>
-          </div>
-        </div>
-      </Link> */}
       <div className='carousel-section'>
-        {/* <div className='break-1'></div>
-        <div className='break-2'></div> */}
         <h2>
           <TagFilledSVG />
           {title}
@@ -302,7 +266,7 @@ const FullSliderStyles = styled.div`
 
 const FullScreenSlider = ({ photos, setShowFullScreen, userData, likePhoto, showFullScreen }) => {
   const fullScreenRef = useRef();
-  
+
   const fullResponsive = {
     superLargeDesktop: {
       breakpoint: { max: 4000, min: 3000 },

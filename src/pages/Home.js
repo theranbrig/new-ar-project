@@ -258,8 +258,11 @@ const Home = () => {
           <h3>
             <strong>Today's</strong> timeline
           </h3>
-          <MainPageCarousel title='Trenchcoat' />
-          <MainPageCarousel title='Chunky Jacket  ' />
+          <MainPageCarousel title='BODY SUIT AND FOLD SKIRT' product='q9qdq22KRhtOBUnqUCSf' />
+          <MainPageCarousel
+            title='VINYL TRENCH COAT & LATEX DRESS'
+            product='rxvt0XOGtaCl9n4Px9gp'
+          />
         </div>
       </section>
       <footer>

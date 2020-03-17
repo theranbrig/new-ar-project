@@ -26,6 +26,9 @@ export const LoginStyles = styled.div`
       }
     }
   }
+  h2 {
+    text-align: center;
+  }
   a.create {
     background: ${props => props.theme.colors.black};
     color: ${props => props.theme.colors.white};
@@ -93,9 +96,9 @@ const Admin = () => {
         <title>YZED - CREATE</title>
       </Helmet>
       <Link to='/create' className='create'>
-        Create New Product
+        CREATE NEW PRODUCT
       </Link>
-      <h2>Choose a product to edit</h2>
+      <h2>CHOOSE A PRODUCT TO EDIT</h2>
       <ul>
         {products.map(product => (
           <li key={product.id}>

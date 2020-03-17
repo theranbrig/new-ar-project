@@ -189,7 +189,7 @@ const FirebaseProvider = ({ children }) => {
         .set({
           url: currentPictureUrl,
           userId: userData.id,
-          tags: taggedProducts,
+          tag: taggedProducts[0].id,
           description,
           likes: [],
           addedOn: new Date(),
