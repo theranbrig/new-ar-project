@@ -1,5 +1,6 @@
 import React, { useContext, useState } from 'react';
 
+import ChevronRight from '../assets/icons/icon_chevron_right';
 import { FirebaseContext } from '../context/Firebase';
 import { ModalContext } from '../context/Modal';
 import { NavLink } from 'react-router-dom';
@@ -16,12 +17,14 @@ export const StyledMenu = styled.nav`
   height: 100vh;
   text-align: left;
   position: ${({ open }) => (open ? 'fixed' : 'fixed')};
+  margin-top: 10vh;
   top: 0;
   left: 0;
   z-index: 1001;
   transition: transform 0.3s ease-in-out;
   font-family: ${props => props.theme.fonts.main};
   overflow-y: scroll;
+
   @media (max-width: 576px) {
     width: 100%;
     padding: 0;
@@ -30,7 +33,7 @@ export const StyledMenu = styled.nav`
   i {
     font-size: 2rem;
     text-transform: uppercase;
-    padding: 2rem;
+    padding: 1rem 2rem;
     font-weight: bold;
     letter-spacing: 0.5rem;
     color: white;
@@ -65,8 +68,9 @@ export const StyledMenu = styled.nav`
     color: ${props => props.theme.colors.black};
   }
   .side-links {
-    top: 20vh;
+    top: 15vh;
     position: relative;
+    background: ${props => props.theme.colors.white};
     a {
       display: block;
     }
@@ -81,7 +85,7 @@ export const StyledMenu = styled.nav`
     display: flex;
     flex-direction: row;
     justify-content: space-around;
-    margin-top: 10vh;
+
     button {
       align-self: center;
       padding: 0 0 5px 0;
@@ -99,12 +103,44 @@ export const StyledMenu = styled.nav`
     button.top-link-active {
       border-bottom: 2px solid ${props => props.theme.colors.white} !important;
     }
+
+  }
+  .main-links {
+    height: 50vh;
+  }
+  .bottom-links {
+      border-top: 1px solid ${props => props.theme.colors.grey};
+      width: 90%;
+      margin: 0 auto;
+    a {
+      text-align: left;
+      font-size: 1.4rem;
+      font-weight: 300;
+      text-shadow: none;
+      text-transform: none;
+      letter-spacing: 0.05rem;
+      padding-left: 10px;
+      color: ${props => props.theme.colors.black};
+    }
+    button {
+      display: flex;
+      flex-direction: row;
+      justify-content: space-between;
+      font-size:1.2rem;
+      width: 100%;
+      font-weight: 300;
+      margin-top: 10px;
+      color: ${props => props.theme.colors.black};
+      svg {
+        height: 1rem;
+      }
+    }
   }
 `;
 
 const MenuLinks = () => {
   const [showHome, setShowHome] = useState(true);
-  const { userData } = useContext(FirebaseContext);
+  const { userData, logoutUser } = useContext(FirebaseContext);
 
   const { openMenu, setOpenMenu, setBodyScroll } = useContext(ModalContext);
 
@@ -127,27 +163,28 @@ const MenuLinks = () => {
           SHOP
         </button> */}
       </div>
-      <div className='side-links'>
+      <section className='side-links'>
         {showHome ? (
           <>
-            <NavLink
-              to='/'
-              exact
-              activeClassName='active-link'
-              onClick={() => {
-                setModals();
-              }}>
-              Home
-            </NavLink>
-            <NavLink
-              to='/featured'
-              activeClassName='active-link'
-              onClick={() => {
-                setModals();
-              }}>
-              Featured
-            </NavLink>
-            {/* <NavLink
+            <div className='main-links'>
+              <NavLink
+                to='/'
+                exact
+                activeClassName='active-link'
+                onClick={() => {
+                  setModals();
+                }}>
+                Home
+              </NavLink>
+              <NavLink
+                to='/featured'
+                activeClassName='active-link'
+                onClick={() => {
+                  setModals();
+                }}>
+                Featured
+              </NavLink>
+              {/* <NavLink
               to='/checkout'
               activeClassName='active-link'
               onClick={() => {
@@ -155,37 +192,48 @@ const MenuLinks = () => {
               }}>
               My Bag
             </NavLink> */}
-            {!userData && (
-              <NavLink
-                to='/subscribe'
-                activeClassName='active-link'
-                onClick={() => {
-                  setModals();
-                }}>
-                Subscribe
-              </NavLink>
-            )}
-            {!userData.loggedIn ? (
-              <NavLink
-                to='/login'
-                activeClassName='active-link'
-                onClick={() => {
-                  setModals();
-                }}>
-                Login
-              </NavLink>
-            ) : (
-              <NavLink
-                to='/profile'
-                activeClassName='active-link'
-                onClick={() => {
-                  setModals();
-                }}>
-                Profile
-                <br />
-                <span>{userData.userName}</span>
-              </NavLink>
-            )}
+              {!userData.loggedIn && (
+                <NavLink
+                  to='/subscribe'
+                  activeClassName='active-link'
+                  onClick={() => {
+                    setModals();
+                  }}>
+                  Subscribe
+                </NavLink>
+              )}
+            </div>
+            <div className='bottom-links'>
+              {!userData.loggedIn ? (
+                <NavLink
+                  to='/login'
+                  activeClassName='active-link'
+                  onClick={() => {
+                    setModals();
+                  }}>
+                  Sign in
+                </NavLink>
+              ) : (
+                <>
+                  <NavLink
+                    to='/profile'
+                    activeClassName='active-link'
+                    onClick={() => {
+                      setModals();
+                    }}>
+                    My profile
+                  </NavLink>
+                  <button
+                    onClick={() => {
+                      logoutUser();
+                      setBodyScroll(false);
+                    }}>
+                    Logout
+                    <ChevronRight />
+                  </button>
+                </>
+              )}
+            </div>
           </>
         ) : (
           <>
@@ -241,7 +289,7 @@ const MenuLinks = () => {
             </NavLink>
           </>
         )}
-      </div>
+      </section>
     </StyledMenu>
   );
 };

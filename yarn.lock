@@ -9538,6 +9538,11 @@ react-multi-carousel@^2.5.0:
   resolved "https://registry.yarnpkg.com/react-multi-carousel/-/react-multi-carousel-2.5.0.tgz#6a69cf6d7b0e2bd384170021b30d943be2f3aa9b"
   integrity sha512-Z/iCrFaWbwedqyGCMaTG7OlwdMkchv0WiKGXSDXRqAfKwdoz8lRzToJCsap2F7N1qjPpRn0txq/9d0hE9xWBxw==
 
+react-render-to-json@0.0.6:
+  version "0.0.6"
+  resolved "https://registry.yarnpkg.com/react-render-to-json/-/react-render-to-json-0.0.6.tgz#3d04ad156d58d64390089102554b8030f3c2a4fa"
+  integrity sha512-fMfqnDjO2HHeg3k4dVierDxVQUymaTfWlsL9pfkSNHpXhGey1J/T8CDsVhN+xjswFYSM30zL0dLBiGHqGoAWWg==
+
 react-resize-image@^1.0.4:
   version "1.0.4"
   resolved "https://registry.yarnpkg.com/react-resize-image/-/react-resize-image-1.0.4.tgz#e09958d0d7c757513d102295350abf40072a754c"
@@ -9648,6 +9653,15 @@ react-side-effect@^1.1.0:
   integrity sha512-v1ht1aHg5k/thv56DRcjw+WtojuuDHFUgGfc+bFHOWsF4ZK6C2V57DO0Or0GPsg6+LSTE0M6Ry/gfzhzSwbc5w==
   dependencies:
     shallowequal "^1.0.1"
+
+react-svg-morph@^0.2.1:
+  version "0.2.1"
+  resolved "https://registry.yarnpkg.com/react-svg-morph/-/react-svg-morph-0.2.1.tgz#fdcb8a53d646cd8166e60b5ceb8f60d585d8c724"
+  integrity sha512-Z4TBpO0tXbfnligZiEQlHwU+XRe0HkJjQAmrNEENFgAlF58dKN5Pit5NOWp3JqYB7PmZ3tnnTul7T/cW9dH14g==
+  dependencies:
+    prop-types "^15.6.0"
+    react-render-to-json "0.0.6"
+    svgpath "^2.1.0"
 
 react-textarea-autosize@^7.1.2:
   version "7.1.2"
@@ -10954,6 +10968,11 @@ svgo@^1.0.0, svgo@^1.2.2:
     stable "^0.1.8"
     unquote "~1.1.1"
     util.promisify "~1.0.0"
+
+svgpath@^2.1.0:
+  version "2.2.3"
+  resolved "https://registry.yarnpkg.com/svgpath/-/svgpath-2.2.3.tgz#749c673899f92c3a4fc2d5415cf85dec349d9512"
+  integrity sha512-xA0glXYpJ9SYT4JeMp3c0psbqdZsG1c0ywGvdJUPY2FKEgwJV7NgkeYuuQiOxMp+XsK9nCqjm3KDw0LkM1YLXw==
 
 symbol-tree@^3.2.2:
   version "3.2.4"

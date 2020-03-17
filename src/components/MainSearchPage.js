@@ -1,8 +1,10 @@
-import React, { useEffect, useState, useContext } from 'react';
+import { BlackButton, BlackLink } from '../utilities/ReusableStyles';
+import { Link, useHistory, useParams } from 'react-router-dom';
+import React, { useContext, useEffect, useState } from 'react';
+
 import Downshift from 'downshift';
-import { useHistory, Link, useParams } from 'react-router-dom';
-import styled from 'styled-components';
 import { FirebaseContext } from '../context/Firebase';
+import styled from 'styled-components';
 
 export const SearchStyles = styled.div`
   font-family: Montserrat, sans-serif;
@@ -14,21 +16,31 @@ export const SearchStyles = styled.div`
   min-height: calc(90vh - 50px);
   margin-top: calc(10vh + 50px);
   li {
-    padding: 5px;
+    padding: 10px;
     list-style: none;
     background: transparent;
-    display: flex;
-    flex-direction: row;
-    justify-content: space-between;
+    display: grid;
+    grid-template-columns: 65px 1fr;
     align-items: center;
+    justify-content: center;
     width: 90%:
     margin: 0 auto;
+    grid-gap: 10px;
     img {
-      height: 50px;
+      width: 65px;
+      height: 100px;
+      display: block;
+
     }
     h3 {
       font-size: 1.2rem;
-      color: black;
+      color:${props => props.theme.colors.black};
+      font-weight: 300;
+      text-align: left;
+      margin: 0;
+      span {
+        font-weight: 700;
+      }
     }
   }
   ul {
@@ -50,35 +62,17 @@ export const SearchStyles = styled.div`
       outline: 0;
     }
   }
-   a {
-     background: black;
-     color: black;
-     min-width: 300px;
-     width: 90%;
-     margin: 0 auto;
-     padding: 5px 40px;
-     text-decoration: none;
-     text-align: center;
-     font-size: 1.2rem;
-   }
-`;
-
-const WhiteButton = styled.div`
-  width: 500px;
-  max-width: 90%;
-  a {
-    border: 2px solid black;
-    border-radius: 0px;
-    height: 52px;
-    display: block;
-    margin: 70px auto 20px;
-    font-size: 1.2rem;
-    line-height: 52px;
-    font-family: Montserrat, sans-serif;
-    background: white;
-    color: black;
-    width: 95%;
-    min-width: 284px;
+  .browse {
+    margin: 30px auto;
+    width: 250px !important;
+    a {
+      margin: 0 auto;
+      text-decoration: none;
+      text-align: center;
+      font-size: 1.2rem;
+      letter-spacing: 0.1rem;
+      font-weight: 700;
+    }
   }
 `;
 
@@ -161,15 +155,17 @@ const DownshiftScreenSearch = ({ setOpenSearch }) => {
                       })}>
                       <img src={item.mainImage} alt={item.name} />
                       <h3>
-                        {item.brand} - {item.name}
+                        <span>{item.brand}</span> - {item.name}
                       </h3>
                     </li>
                   ))
               : null}
           </ul>
-          <WhiteButton>
-            <Link to='/shop'>BROWSE MORE</Link>
-          </WhiteButton>
+          <div className='browse'>
+            <BlackLink>
+              <Link to='/featured'>BROWSE MORE</Link>
+            </BlackLink>
+          </div>
         </SearchStyles>
       )}
     </Downshift>

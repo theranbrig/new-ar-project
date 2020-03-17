@@ -46,7 +46,7 @@ const FirebaseSearch = () => {
 
   return (
     <>
-      <div className='modal-top'>
+      {/* <div className='modal-top'>
         <h3>TOP RESULTS ON YZED</h3>
         <button
           onClick={() => {
@@ -55,7 +55,7 @@ const FirebaseSearch = () => {
           }}>
           <CloseSVG />
         </button>
-      </div>
+      </div> */}
       <SearchStyles>
         <section className='search-box'>
           <input
@@ -94,37 +94,39 @@ const FirebaseSearch = () => {
             );
           })}
         </section>
-        <section className='products-area'>
-          <div className='products-list'>
-            {products.slice(0, 5).map(product => (
-              <Link
-                to={`/product/${product.id}`}
-                className='display-link'
-                onClick={() => {
-                  closeSearchAndClear(clearSearch);
-                  setProducts([]);
-                  history.push(`/product/${product.id}`);
-                }}>
-                <img src={product.mainImage} alt={product.name} height='100px' width='100px' />
-                <div className='link-info'>
-                  <h3>{product.brand}</h3>
-                  <h4>{product.name}</h4>
-                </div>
-                <h5>{formatPrice(product.price)}</h5>
-              </Link>
-            ))}
-          </div>
+
+        <section className='products-list'>
+          {products.slice(0, 5).map(product => (
+            <Link
+              to={`/product/${product.id}`}
+              className='display-link'
+              onClick={() => {
+                closeSearchAndClear(clearSearch);
+                setProducts([]);
+                history.push(`/product/${product.id}`);
+              }}>
+              <img src={product.mainImage} alt={product.name} height='100px' width='100px' />
+              <div className='link-info'>
+                <h3>{product.brand}</h3>
+                <h4>{product.name}</h4>
+              </div>
+              {/* PUT BACK IN WHEN PRICE IS NEEDED */}
+              {/* <h5>{formatPrice(product.price)}</h5> */}
+            </Link>
+          ))}
         </section>
       </SearchStyles>
       <SearchLinkStyles>
-        <Link
-          to={`/search/${searchQuery}`}
-          onClick={() => {
-            closeSearchAndClear(clearSearch);
-            setProducts([]);
-          }}>
-          SEE ALL RESULTS ({`${products.length}`})
-        </Link>
+        {products.length > 0 && (
+          <Link
+            to={`/search/${searchQuery}`}
+            onClick={() => {
+              closeSearchAndClear(clearSearch);
+              setProducts([]);
+            }}>
+            SEE ALL RESULTS ({`${products.length}`})
+          </Link>
+        )}
       </SearchLinkStyles>
     </>
   );
@@ -133,6 +135,7 @@ const FirebaseSearch = () => {
 export default FirebaseSearch;
 
 const SearchStyles = styled.div`
+  padding-top: 30px;
   .search-box {
     width: 500px;
     margin: 0 auto;
@@ -182,17 +185,21 @@ const SearchStyles = styled.div`
   .products-list {
     width: 100%;
     background: ${props => props.theme.colors.white};
-    padding-top: 10px;
+    padding: 10px 0 50px;
     a.display-link {
       width: 500px;
       max-width: 95%;
-      margin: 20px auto;
+      margin: 0 auto;
       display: grid;
-      grid-template-columns: 100px 3fr 1fr;
+      /* FOR WHEN PRICE IS USED */
+      /* grid-template-columns: 100px 3fr 1fr; */
+      grid-template-columns: 100px 1fr;
       grid-gap: 10px;
       align-items: center;
+      padding: 10px 0;
       background: ${props => props.theme.colors.white};
       text-decoration: none;
+      border-bottom: 1px solid ${props => props.theme.colors.lightGrey};
       h3,
       h4,
       h5 {
@@ -233,7 +240,7 @@ const SearchLinkStyles = styled.div`
   position: fixed;
   bottom: 0;
   left: 0;
-  height: 10vh;
+  height: 15vh;
   width: 100%;
   text-align: center;
   display: grid;
@@ -241,8 +248,9 @@ const SearchLinkStyles = styled.div`
   align-items: center;
   justify-content: center;
   a {
-    padding: 0px 20px;
-    line-height: 50px;
+    height: 45px;
+    width: 250px;
+    line-height: 45px;
     margin: 20px auto;
     text-align: center;
     border-radius: 25px;
@@ -250,5 +258,7 @@ const SearchLinkStyles = styled.div`
     color: ${props => props.theme.colors.white};
     text-decoration: none;
     font-family: ${props => props.theme.fonts.main};
+    font-weight: 700;
+    letter-spacing: 0.075rem;
   }
 `;

@@ -2,6 +2,7 @@ import React, { useContext } from 'react';
 
 import AddPhotoSVG from '../assets/icons/icon_add_photo';
 import { CartContext } from '../context/Cart';
+import CloseSVG from '../assets/icons/icon_close';
 import { FirebaseContext } from '../context/Firebase';
 import FullShopBagSVG from '../assets/icons/icon_shoppingbag_full';
 import { Link } from 'react-router-dom';
@@ -132,7 +133,6 @@ const StretchedNavStyles = styled.div`
   .logo-link svg {
     height: 25px;
     @media (max-width: 480px) {
-      display: ${({ open }) => (open ? 'none' : '')};
       height: 20px;
     }
     @media (min-width: 500px) {
@@ -173,7 +173,7 @@ const NavigationDrawer = ({ children }) => {
               setBodyScroll(!openSearch);
             }}
             aria-label='Open Search'>
-            <SearchSVG />
+            {openSearch ? <CloseSVG /> : <SearchSVG />}
           </button>
         </div>
         <Link to='/' className='logo-link'>

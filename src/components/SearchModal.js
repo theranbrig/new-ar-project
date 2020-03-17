@@ -7,9 +7,6 @@ import styled from 'styled-components';
 export const ModalStyles = styled.div`
   height: ${({ openSearch }) => (openSearch ? '80vh' : '0px')};
   transform: ${({ openSearch }) => (openSearch ? 'scaleY(100%)' : 'scaleY(0)')};
-  -webkit-box-shadow: 0px 10px 0px 0px rgba(0, 0, 3, 0.28);
-  -moz-box-shadow: 0px 10px 0px 0px rgba(0, 0, 3, 0.28);
-  box-shadow: 0px 10px 0px 0px rgba(0, 0, 3, 0.28);
   transition: all 0.5s ease-in-out;
   transform-origin: left top;
   background: ${props => props.theme.colors.white};
@@ -32,7 +29,6 @@ export const ModalStyles = styled.div`
   }
   .modal-content {
     width: 100%;
-
     margin: 0 auto;
     font-family: ${props => props.theme.fonts.main};
     background: ${props => props.theme.colors.black};
