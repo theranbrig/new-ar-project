@@ -1,7 +1,8 @@
+import CloseSVG from '../assets/icons/icon_close';
 import React from 'react';
 import S3 from 'aws-s3-pro';
-import styled from 'styled-components';
 import shortid from 'shortid';
+import styled from 'styled-components';
 
 export const FileInputStyles = styled.div`
   display: flex;
@@ -41,6 +42,11 @@ export const FileInputStyles = styled.div`
     font-size: 0.8rem;
     align-self: center;
     text-align: right;
+  }
+  button {
+    svg {
+      height: 12px;
+    }
   }
 `;
 
@@ -93,14 +99,14 @@ const FileUpload = ({ name, setFileUploading, state, setStateFunction, isImage }
         <>
           <img src={state} alt={`${name} Preview`} height='100px' width='100px' />
           <button className='remove-button' onClick={() => removeS3File()}>
-            <i className='fa fa-times-circle'></i>
+            <CloseSVG fill='tomato' />
           </button>
         </>
       ) : (
         <>
           <p>{state}</p>
           <button className='remove-button' onClick={() => removeS3File()}>
-            <i className='fa fa-times-circle'></i>
+            <CloseSVG fill='tomato' />
           </button>
         </>
       )}

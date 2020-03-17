@@ -1,6 +1,6 @@
 import React from 'react';
 
-const SavePlusSVG = ({ setMainDisplay }) => {
+const SavePlusSVG = ({ fill }) => {
   return (
     <svg
       version='1.1'
@@ -9,7 +9,7 @@ const SavePlusSVG = ({ setMainDisplay }) => {
       x='0px'
       y='0px'
       viewBox='0 0 100 100'
-      fill='white'>
+      fill={fill ?? 'white'}>
       <g>
         <path
           d='M3.6,95.5l0.3,0.3C7,99,12,99,15.1,95.9L43,68l0.8,0.4c8.3,4.9,18.1,6.3,27.5,3.9C80.6,70,88.5,64,93.5,55.7

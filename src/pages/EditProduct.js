@@ -1,11 +1,14 @@
-import React, { useState, useContext, useEffect } from 'react';
-import styled from 'styled-components';
-import { FirebaseContext } from '../context/Firebase';
-import { useParams } from 'react-router-dom';
-import { Helmet } from 'react-helmet';
-import { ProductContext } from '../context/Product';
-import LoadingSpinner from '../components/LoadingSpinner';
+import React, { useContext, useEffect, useState } from 'react';
+import { useHistory, useParams } from 'react-router-dom';
+
+import CheckSVG from '../assets/icons/icon_success_check';
+import CloseSVG from '../assets/icons/icon_close';
 import FileUpload from '../components/EditFileUpload';
+import { FirebaseContext } from '../context/Firebase';
+import { Helmet } from 'react-helmet';
+import LoadingSpinner from '../components/LoadingSpinner';
+import { ProductContext } from '../context/Product';
+import styled from 'styled-components';
 
 const EditProduct = () => {
   const [name, setName] = useState('');
@@ -29,6 +32,8 @@ const EditProduct = () => {
   const { userData, dbh, userLoading, firebaseError } = useContext(FirebaseContext);
 
   const { editProduct } = useContext(ProductContext);
+
+  const history = useHistory();
 
   useEffect(() => {
     dbh
@@ -150,7 +155,6 @@ const EditProduct = () => {
               onChange={e => setPrice(e.target.value)}
             />
           </div>
-
           <div className='form-input'>
             <label htmlFor='feature'>FEATURES: </label>
             <textarea
@@ -167,7 +171,7 @@ const EditProduct = () => {
               onClick={() => {
                 if (allFeatures.length < 5) {
                   if (!feature) {
-                    setError('Oops. You must enter something first.');
+                    setError('Oops. You must enter something that is at least 5 characters first.');
                   } else {
                     setAllFeatures([...allFeatures, feature]);
                     setFeature('');
@@ -176,7 +180,7 @@ const EditProduct = () => {
                   setError('Oops. You can only have five features at this time.');
                 }
               }}>
-              <i className='fa fa-plus-circle'></i>
+              <CheckSVG fill='#272727' />
             </button>
           </div>
           {!allFeatures.length && <p className='hint'>Be sure to add at least one feature.</p>}
@@ -191,7 +195,7 @@ const EditProduct = () => {
                     const removed = tempArr.splice(index, 1);
                     setAllFeatures(tempArr);
                   }}>
-                  <i className='fa fa-times-circle'></i>
+                  <CloseSVG fill='tomato' />
                 </button>
               </li>
             ))}
@@ -263,7 +267,7 @@ const EditProduct = () => {
                     usdzFile,
                     [picture1, picture2, picture3],
                     allFeatures
-                  );
+                  ).then(() => history.push('/admin'));
                 } else {
                   setError('Ooops. Needs at least one feature.');
                 }
@@ -355,6 +359,9 @@ const EditProductStyles = styled.div`
     background: transparent;
     border: none;
     font-size: 1.5rem;
+    svg {
+      height: 16px;
+    }
   }
   .features-list {
     li {

@@ -1,8 +1,11 @@
-import React, { useContext } from 'react';
-import PropTypes from 'prop-types';
 import '@firebase/firestore';
 import 'firebase/auth';
+
+import React, { useContext } from 'react';
+
 import { FirebaseContext } from './Firebase';
+import PropTypes from 'prop-types';
+import { useHistory } from 'react-router-dom';
 
 export const ProductContext = React.createContext();
 

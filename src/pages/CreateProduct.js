@@ -1,11 +1,14 @@
-import React, { useState, useContext, useEffect } from 'react';
-import styled from 'styled-components';
-import { FirebaseContext } from '../context/Firebase';
-import { useHistory } from 'react-router-dom';
-import { Helmet } from 'react-helmet';
-import { ProductContext } from '../context/Product';
-import LoadingSpinner from '../components/LoadingSpinner';
+import React, { useContext, useEffect, useState } from 'react';
+
+import CheckSVG from '../assets/icons/icon_success_check';
+import CloseSVG from '../assets/icons/icon_close';
 import FileUpload from '../components/FileUpload';
+import { FirebaseContext } from '../context/Firebase';
+import { Helmet } from 'react-helmet';
+import LoadingSpinner from '../components/LoadingSpinner';
+import { ProductContext } from '../context/Product';
+import styled from 'styled-components';
+import { useHistory } from 'react-router-dom';
 
 const CreateProduct = () => {
   const [name, setName] = useState('');
@@ -145,7 +148,7 @@ const CreateProduct = () => {
                 setError('Oops. You can only have five features at this time.');
               }
             }}>
-            <i className='fa fa-plus-circle'></i>
+            <CheckSVG fill='#272727' />
           </button>
         </div>
         {!allFeatures.length && <p className='hint'>Be sure to add at least one feature.</p>}
@@ -160,7 +163,7 @@ const CreateProduct = () => {
                   const removed = tempArr.splice(index, 1);
                   setAllFeatures(tempArr);
                 }}>
-                <i className='fa fa-times-circle'></i>
+                <CloseSVG />
               </button>
             </li>
           ))}
@@ -230,7 +233,7 @@ const CreateProduct = () => {
                   usdzFile,
                   [picture1, picture2, picture3],
                   allFeatures
-                );
+                ).then(() => useHistory.push('/admin'));
               } else {
                 setError('Ooops. Needs at least one feature.');
               }
@@ -290,8 +293,7 @@ export const LoginStyles = styled.div`
       margin: 0 5px;
       border: none;
       border-radius: 0px !important;
-      border-bottom: 1px simport { LoginStyles } from './EditProduct';
-olid ${props => props.theme.colors.lightGrey};
+      border-bottom: 1px solid ${props => props.theme.colors.lightGrey};
       background: white;
       box-shadow: none;
       height: 25px;
@@ -320,6 +322,9 @@ olid ${props => props.theme.colors.lightGrey};
     background: transparent;
     border: none;
     font-size: 1.5rem;
+    svg {
+      height: 16px;
+    }
   }
   .features-list {
     li {

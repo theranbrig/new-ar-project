@@ -1,11 +1,12 @@
-import React, { useState, useContext, useEffect } from 'react';
-import styled from 'styled-components';
-import { FirebaseContext } from '../context/Firebase';
-import { useHistory, Link } from 'react-router-dom';
-import { Helmet } from 'react-helmet';
-import { ProductContext } from '../context/Product';
-import LoadingSpinner from '../components/LoadingSpinner';
+import { Link, useHistory } from 'react-router-dom';
+import React, { useContext, useEffect, useState } from 'react';
+
 import FileUpload from '../components/FileUpload';
+import { FirebaseContext } from '../context/Firebase';
+import { Helmet } from 'react-helmet';
+import LoadingSpinner from '../components/LoadingSpinner';
+import { ProductContext } from '../context/Product';
+import styled from 'styled-components';
 
 export const LoginStyles = styled.div`
   width: 500px;
@@ -24,6 +25,18 @@ export const LoginStyles = styled.div`
         font-size: 1.5rem;
       }
     }
+  }
+  a.create {
+    background: ${props => props.theme.colors.black};
+    color: ${props => props.theme.colors.white};
+    text-decoration: none;
+    width: 250px;
+    height: 45px;
+    display: block;
+    margin: 0 auto;
+    text-align: center;
+    line-height: 45px;
+    border-radius: 25px;
   }
 `;
 
@@ -55,16 +68,13 @@ const Admin = () => {
         history.push('/');
       } else {
         let tempProducts = [];
-        dbh
-          .collection('products')
-          .get()
-          .then(function(querySnapshot) {
-            querySnapshot.forEach(function(doc) {
-              tempProducts.push({ id: doc.id, ...doc.data() });
-            });
-            setProducts(tempProducts);
-            setLoading(false);
+        dbh.collection('products').onSnapshot(function(querySnapshot) {
+          querySnapshot.forEach(function(doc) {
+            tempProducts.push({ id: doc.id, ...doc.data() });
           });
+          setProducts(tempProducts);
+          setLoading(false);
+        });
       }
     }
   }, [userLoading]);
@@ -82,7 +92,9 @@ const Admin = () => {
       <Helmet>
         <title>YZED - CREATE</title>
       </Helmet>
-      <Link to='/create'>Create New Product</Link>
+      <Link to='/create' className='create'>
+        Create New Product
+      </Link>
       <h2>Choose a product to edit</h2>
       <ul>
         {products.map(product => (
