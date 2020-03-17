@@ -33,7 +33,7 @@ const StyledBurger = styled.button`
     outline: none;
   }
   @media (max-width: 576px) {
-    top: 20px;
+    top: 3vh;
     left: 15px;
   }
   div {
@@ -113,16 +113,19 @@ const StretchedNavStyles = styled.div`
       width: 50px;
       svg {
         height: 35px;
+        vertical-align: middle;
       }
     }
   }
   .right-icons {
     width: 100px;
+    text-align: right;
     button {
       height: 50px;
       width: 50px;
       svg {
-        height: 35px;
+        margin-top: 3px;
+        vertical-align: middle;
       }
     }
   }

@@ -85,31 +85,53 @@ const HomeStyles = styled.div`
   .product-buttons {
     padding: 10px 0;
     width: 95%;
-    margin: 0 2.5%;
+    margin: 20px 2.5% 0;
     display: flex;
     flex-direction: row;
     justify-content: space-between;
-    a {
-      color: ${props => props.theme.colors.grey};
-      height: 16px;
-      text-decoration: none;
-      border-bottom: 1px solid ${props => props.theme.colors.mediumGrey};
-      height: 1rem;
-      font-size: 0.9rem;
-      line-height: 1rem;
-      align-self: center;
-      min-width: 100px;
+    align-content: center;
+    .product-link {
+      position: relative;
+      width: 100px;
+      height: 25px;
+        align-self: center;
+      a {
+        color: ${props => props.theme.colors.grey};
+        height: 16px;
+        text-decoration: none;
+        /* border-bottom: 1px solid ${props => props.theme.colors.mediumGrey}; */
+        height: 1rem;
+        font-size: 0.9rem;
+        line-height: 1rem;
+        padding: 3px 0;
+        &:after {
+          content: '';
+          position: absolute;
+          bottom: 0;
+          left: 5%;
+
+          height: 1px;
+          background: ${props => props.theme.colors.mediumGrey};
+          display: block;
+          width: 90px;
+        }
+      }
     }
     .square-area {
       width: 100px;
     }
+    button {
+      align-self: center;
+    }
   }
   .connected-content {
     .join-section {
+      width: 80%:
       font-family: ${props => props.theme.fonts.main};
       background: url('https://oneoone-resource.s3.ap-northeast-2.amazonaws.com/yzed/bg_home_1.jpg');
-      background-size: cover;
-      padding: 20px 30px 100px;
+      /* background-size: cover; */
+      padding-top: 50px;
+      padding-bottom: 80px;
       color: ${props => props.theme.colors.black};
       h3 {
         margin-top: 30px;
@@ -120,7 +142,8 @@ const HomeStyles = styled.div`
         }
       }
       p {
-        font-size: 1rem;
+        font-weight: 300;
+        font-size: 1.1rem;
         padding: 0 20px;
       }
     }
@@ -132,7 +155,7 @@ const HomeStyles = styled.div`
       border-radius: 50px;
       padding-bottom: 20px;
       background-color: ${props => props.theme.colors.white};
-      box-shadow: ${props => props.theme.boxShadows.topAndBottom};
+      box-shadow: 0 0 6px #27272722;
       h3 {
         padding-top: 30px;
         font-size: 1.5rem;
@@ -153,11 +176,12 @@ const HomeStyles = styled.div`
     margin-bottom: 20px;
   }
   footer {
+
     .footer-content {
       font-family: ${props => props.theme.fonts.main};
       background: url('https://oneoone-resource.s3.ap-northeast-2.amazonaws.com/yzed/bg_home_2.jpg');
-      background-size: cover;
-      padding: 20px 30px 20px;
+
+      padding: 20px 0 20px;
       color: ${props => props.theme.colors.black};
       h3 {
         margin-top: 80px;
@@ -165,11 +189,14 @@ const HomeStyles = styled.div`
         font-weight: 300;
         strong {
           font-weight: 700;
+
         }
       }
       p {
-        font-size: 1rem;
-        padding: 0 20px;
+        width: 80%
+        font-size: 1.1rem;
+        padding: 0 7.5%;
+          font-weight: 300;
       }
     }
   }
@@ -235,7 +262,9 @@ const Home = () => {
           }}>
           AR
         </RoundARButton>
-        <Link to={mainProduct ? `/product/${mainProduct.id}` : '/featured'}>View Product</Link>
+        <div className='product-link'>
+          <Link to={mainProduct ? `/product/${mainProduct.id}` : '/featured'}>View product</Link>
+        </div>
       </section>
       <section className='discover-box'>
         <h3>Discover YZED.</h3>
@@ -244,23 +273,28 @@ const Home = () => {
       <section className='connected-content'>
         <div className='join-section'>
           <h3>
-            <strong>YZED</strong> Show it first
+            <strong>Explore</strong> AR
           </h3>
           <p>
-            YZED is a platform for creative consumers to engage with their favourite brands through
-            cutting edge technology.
+            Select objects from our wide catalogue and place them anywhere in real life with the
+            power of augmented reality.
           </p>
           <BlackButton>
-            <Link to='/register'>BECOME A YZER</Link>
+            <Link to='/featured'>EXPLORE AR</Link>
           </BlackButton>
         </div>
         <div className='timeline'>
           <h3>
             <strong>Today's</strong> timeline
           </h3>
-          <MainPageCarousel title='BODY SUIT AND FOLD SKIRT' product='q9qdq22KRhtOBUnqUCSf' />
           <MainPageCarousel
-            title='VINYL TRENCH COAT & LATEX DRESS'
+            brand='YZED'
+            title='BODY SUIT AND SKIRT'
+            product='q9qdq22KRhtOBUnqUCSf'
+          />
+          <MainPageCarousel
+            brand='YZED'
+            title='VINYL TRENCH & LATEX DRESS'
             product='rxvt0XOGtaCl9n4Px9gp'
           />
         </div>
@@ -268,13 +302,15 @@ const Home = () => {
       <footer>
         <div className='footer-content'>
           <h3>
-            <strong>Explore</strong> AR
+            <strong>YZED</strong> Show it first
           </h3>
           <p>
-            Select Objects and place them anywhere in real life with the power of augmented reality.
+            YZED is a platform for creative consumers to engage with their favourite brands through
+            cutting edge technology.
           </p>
+
           <BlackButton>
-            <Link to='/featured'>EXPLORE AR</Link>
+            <Link to='/login'>BECOME A YZER</Link>
           </BlackButton>
         </div>
       </footer>

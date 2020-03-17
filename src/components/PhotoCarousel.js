@@ -51,41 +51,21 @@ const SliderStyles = styled.div`
         vertical-align: middle;
         margin-right: 10px;
       }
+      span {
+        font-weight: 700;
+      }
     }
   }
   .slider-cell-content {
-
     img {
       background: ${props => props.theme.colors.lightGrey};
-      width: 90%;
+      width: 92%;
       margin: 0 auto;
     }
   }
-
-  /* .break-1 {
-    background: ${props => props.theme.colors.white};
-    height: 220px;
-    width: 20px;
-    position: absolute;
-    top: 600px;
-    z-index: 10;
-    left: 22%;
-    @media (min-width: 480px) {
-      height: 300px;
-    }
+  ul.react-multi-carousel-track {
+    margin-left: 15px;
   }
-  .break-2 {
-    background: ${props => props.theme.colors.white};
-    height: 220px;
-    width: 20px;
-    position: absolute;
-    top: 600px;
-    z-index: 10;
-    right: 22%;
-    @media (min-width: 480px) {
-      height: 300px;
-    }
-  } */
   .selected-user {
     border-bottom-left-radius: 25px;
     border-bottom-right-radius: 25px;
@@ -130,7 +110,7 @@ const SliderStyles = styled.div`
   }
 `;
 
-const MainPageCarousel = ({ title, product }) => {
+const MainPageCarousel = ({ title, product, brand }) => {
   const carouselRef = useRef();
 
   const [showFullScreen, setShowFullScreen] = useState('');
@@ -182,7 +162,7 @@ const MainPageCarousel = ({ title, product }) => {
       <div className='carousel-section'>
         <h2>
           <TagFilledSVG />
-          {title}
+          <span>{brand}</span> {title}
         </h2>
         <Carousel ref={carouselRef} responsive={responsive} partialVisible swipeable>
           {photos.map((photo, index) => (

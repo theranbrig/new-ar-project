@@ -162,6 +162,7 @@ const Login = () => {
             name='email'
             type='email'
             value={email}
+            placeholder="Enter Email"
             required
             onChange={e => setEmail(e.target.value)}
           />
@@ -171,6 +172,7 @@ const Login = () => {
             aria-label='password'
             name='password'
             type='password'
+            placeholder="Enter Password"
             required
             onChange={e => setPassword(e.target.value)}
           />
