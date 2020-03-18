@@ -70,8 +70,6 @@ export const RoundARButton = styled.button`
   display: block;
   font-size: 1.2rem;
   font-weight: 600;
-  letter-spacing: 3px;
-  padding-right: 3px;
   border-radius: 50%;
   text-align: center;
   font-family: ${props => props.theme.fonts.main};

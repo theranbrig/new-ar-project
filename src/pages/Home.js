@@ -256,10 +256,11 @@ const Home = () => {
       <section className='product-buttons'>
         <div className='square-area'></div>
         <RoundARButton
+          aria-label='Start AR'
           onClick={() => {
             document.querySelector('model-viewer').activateAR();
           }}>
-          AR
+          A R
         </RoundARButton>
         <div className='product-link'>
           <Link to={mainProduct ? `/product/${mainProduct.id}` : '/featured'}>View product</Link>

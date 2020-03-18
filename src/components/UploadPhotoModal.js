@@ -39,7 +39,7 @@ const UploadStyles = styled.div`
     .top-content {
       width: 500px;
       max-width: 100%;
-      height: 65vh;
+      height: 75vh;
       margin: 0 auto;
       background: ${props => props.theme.colors.white};
       border-bottom-left-radius: 50px;
@@ -50,6 +50,7 @@ const UploadStyles = styled.div`
         flex-direction: row;
         justify-content: space-between;
         height: 3vh;
+        margin: 10px 0;
         .left-content {
           width: 60px;
         }
@@ -93,13 +94,14 @@ const UploadStyles = styled.div`
         max-width: 225px;
         margin: 0px auto;
         svg {
-          height: 100px;
+          height: 50px;
         }
         p {
-          width: 50%;
+          width: 80%;
           margin: 0 auto;
           font-weight: 300;
           color: #b9b9b9;
+          font-size: 1rem;
         }
       }
       .upload-btn-wrapper input[type='file'] {
@@ -118,12 +120,13 @@ const UploadStyles = styled.div`
     height: 340px;
   }
   .bottom-content {
-    margin-top: 20px;
+    margin-top: 10px;
     button {
       width: 80%;
     }
   }
   .tags {
+    padding: 10px 0 20px;
     .add-tags {
       margin: 0 auto;
       width: 85%;
@@ -150,6 +153,7 @@ const UploadStyles = styled.div`
     }
   }
   .description {
+    padding: 20px 0 10px;
     label {
       margin-left: calc(10% - 10px);
       display: block;
@@ -205,6 +209,8 @@ const UploadStyles = styled.div`
       padding: 5px 10px 5px 50px;
       border-radius: 25px;
       box-shadow: none;
+      -webkit-appearance: none;
+      background: ${props => props.theme.colors.white};
       border: 1px solid ${props => props.theme.colors.lightGrey};
       @media (max-width: 480px) {
         padding-left: 40px;
@@ -261,6 +267,9 @@ const UploadStyles = styled.div`
   }
   .ReactCrop {
     margin-bottom: 10px;
+  }
+  .next button {
+    font-size: 1rem !important;
   }
 `;
 
@@ -331,12 +340,14 @@ const CropperComponent = ({
             ruleOfThirds
           />
           {result ? (
-            <BlackButtonClick
-              onClick={() => {
-                setUploadState(2);
-              }}>
-              Next Step (1/2)
-            </BlackButtonClick>
+            <div className='next'>
+              <BlackButtonClick
+                onClick={() => {
+                  setUploadState(2);
+                }}>
+                {`NEXT STEP (1/2)`}
+              </BlackButtonClick>
+            </div>
           ) : (
             <p>Please select the photo area.</p>
           )}
@@ -366,7 +377,7 @@ const UploadPhotoModal = () => {
 
   const [upImg, setUpImg] = useState();
   const [imgRef, setImgRef] = useState(null);
-  const [uploadState, setUploadState] = useState(1);
+  const [uploadState, setUploadState] = useState(2);
   const [imageString, setImageString] = useState('');
   const [loading, setLoading] = useState(false);
   const [taggedProducts, setTaggedProducts] = useState([]);

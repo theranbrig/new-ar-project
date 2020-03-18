@@ -37,11 +37,11 @@ export const FeaturedStyles = styled.div`
         font-weight: 300;
       }
       h2 {
-        font-size: 1.3rem;
+        font-size: 1.1rem;
         font-weight: 600;
       }
       h3 {
-        font-size: 1.1rem;
+        font-size: 1rem;
       }
       h4 {
         margin-top: 10px;
@@ -53,16 +53,26 @@ export const FeaturedStyles = styled.div`
         border-radius: 50%;
         background: ${props => props.theme.colors.white};
         position: absolute;
+        border: none;
+        box-shadow: 0 0 6px #27272727;
         top: 5px;
         right: 5px;
         svg {
+          position: absolute;
           height: 18px;
           margin-top: 4px;
           @media (max-width: 480px) {
-            margin-left: -2px;
+            top: 8px;
+            left: 10px;
           }
         }
       }
+    }
+  }
+  .title {
+    padding-top: 10px;
+    h1 {
+      font-size: 1.5rem;
     }
   }
 `;

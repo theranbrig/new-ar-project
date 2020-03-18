@@ -56,13 +56,14 @@ const UploadStyles = styled.div`
         max-width: 225px;
         margin: 10px auto;
         svg {
-          height: 100px;
+          height: 50px;
         }
         p {
-          width: 50%;
+          width: 80%;
           margin: 0 auto;
           font-weight: 300;
           color: #b9b9b9;
+          font-size: 0.9rem;
         }
       }
       .upload-btn-wrapper input[type='file'] {
@@ -86,41 +87,6 @@ const UploadStyles = styled.div`
   }
   p {
     margin-top: 20px;
-  }
-  .comment-input {
-    border: 1px solid ${props => props.theme.colors.lightGrey};
-    padding: 5px;
-    border-radius: 25px;
-    textarea {
-      display: block;
-      margin: 0 auto;
-      font-size: 16px;
-      width: 90%;
-      resize: none;
-      border: none;
-      padding: 5px;
-      background: transparent;
-    }
-    button {
-      background: transparent !important;
-      margin: 10px 5%;
-      font-weight: 700;
-      width: 90% !important;
-      text-align: left;
-      padding: 0;
-      font-size: 16px;
-      display: flex;
-      flex-direction: row;
-      justify-content: space-between;
-      border: none;
-      svg {
-        align-self: center;
-        height: 12px;
-      }
-    }
-  }
-  input.select-file {
-    max-height: 340px;
   }
 `;
 
