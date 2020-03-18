@@ -63,9 +63,9 @@ const SliderStyles = styled.div`
       margin: 0 auto;
     }
   }
-  ul.react-multi-carousel-track {
+  /* ul.react-multi-carousel-track {
     margin-left: 15px;
-  }
+  } */
   .selected-user {
     border-bottom-left-radius: 25px;
     border-bottom-right-radius: 25px;
