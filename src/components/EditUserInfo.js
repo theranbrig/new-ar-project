@@ -155,15 +155,23 @@ export const EditUserStyles = styled.div`
     .edit-button {
       border: none;
       background: ${props => props.theme.colors.white};
-      height: 30px;
-      width: 30px;
+      height: 40px;
+      width: 40px;
       border-radius: 50%;
-      -webkit-box-shadow: 0px 0px 10px 0px ${props => props.theme.colors.mediumGrey};
-      -moz-box-shadow: 0px 0px 10px 0px ${props => props.theme.colors.mediumGrey};
-      box-shadow: 0px 0px 10px 0px ${props => props.theme.colors.mediumGrey};
+      -webkit-box-shadow: 0px 0px 6px 0px #27272727;
+      -moz-box-shadow: 0px 0px 6px 0px #27272727;
+      box-shadow: 0px 0px 6px 0px #27272727;
       position: absolute;
       right: 0px;
       bottom: 0px;
+      line-height: 30px;
+      text-align: center;
+      i {
+        position: absolute;
+        font-size: 24px;
+        top: calc(8px);
+        left: calc(12px);
+      }
     }
   }
   h1 {
@@ -236,7 +244,6 @@ export const EditUserStyles = styled.div`
       }
     }
   }
-
   .save-buttons {
     text-align: right;
     width: 90%;
@@ -404,7 +411,7 @@ const CropperComponent = ({
               setEditPhoto(true);
             }}
             className='edit-button'>
-            <PencilSVG />
+            <i className='fa fa-pencil'></i>
           </button>
         </div>
       ) : upImg ? (

@@ -129,7 +129,7 @@ const HomeStyles = styled.div`
       width: 80%:
       font-family: ${props => props.theme.fonts.main};
       background: url('https://oneoone-resource.s3.ap-northeast-2.amazonaws.com/yzed/bg_home_1.jpg');
-      /* background-size: cover; */
+      background-size: cover;
       padding-top: 50px;
       padding-bottom: 80px;
       color: ${props => props.theme.colors.black};
@@ -176,11 +176,10 @@ const HomeStyles = styled.div`
     margin-bottom: 20px;
   }
   footer {
-
     .footer-content {
       font-family: ${props => props.theme.fonts.main};
       background: url('https://oneoone-resource.s3.ap-northeast-2.amazonaws.com/yzed/bg_home_2.jpg');
-
+      background-size: cover;
       padding: 20px 0 20px;
       color: ${props => props.theme.colors.black};
       h3 {

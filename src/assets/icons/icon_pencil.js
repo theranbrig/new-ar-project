@@ -4,6 +4,7 @@ const PencilSVG = ({ fill }) => {
   return (
     <svg
       xmlns='http://www.w3.org/2000/svg'
+      version='1.1'
       width='15.033'
       height='14.959'
       viewBox='0 0 15.033 14.959'>

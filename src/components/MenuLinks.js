@@ -131,6 +131,8 @@ export const StyledMenu = styled.nav`
       font-weight: 300;
       margin-top: 10px;
       color: ${props => props.theme.colors.black};
+      border: none;
+      background: transparent;
       svg {
         height: 1rem;
       }
