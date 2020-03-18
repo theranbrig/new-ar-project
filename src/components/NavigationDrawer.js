@@ -113,7 +113,7 @@ const StretchedNavStyles = styled.div`
       height: 50px;
       width: 50px;
       svg {
-        height: 35px;
+        height: 2rem;
         vertical-align: middle;
       }
     }
@@ -125,7 +125,7 @@ const StretchedNavStyles = styled.div`
       height: 50px;
       width: 50px;
       svg {
-        margin-top: 3px;
+        height: 2rem;
         vertical-align: middle;
       }
     }

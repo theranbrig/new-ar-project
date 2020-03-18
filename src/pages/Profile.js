@@ -15,11 +15,10 @@ import { useHistory } from 'react-router-dom';
 export const ProfileStyles = styled.div`
   width: 500px;
   max-width: 95%;
-  margin: 0 auto;
-  margin-top: calc(10vh + 50px);
+  margin: 10vh auto 0;
   font-family: Montserrat, sans-serif;
   text-align: center;
-  min-height: 90vh;
+  min-height: 80vh;
   .buttons {
     width: 90%;
     margin: 0 auto;

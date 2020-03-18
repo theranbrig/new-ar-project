@@ -4,6 +4,7 @@ import styled from 'styled-components';
 
 export const UserInfoStyles = styled.div`
   font-family: ${props => props.theme.fonts.main};
+  padding: 30px 0;
   p {
     width: 70%;
     margin: 0 auto;

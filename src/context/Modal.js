@@ -8,7 +8,7 @@ const ModalProvider = ({ children }) => {
   const [openMenu, setOpenMenu] = useState(false);
   const [openBag, setOpenBag] = useState(false);
   const [openSearch, setOpenSearch] = useState(false);
-  const [openPhotoUpload, setOpenPhotoUpload] = useState(true);
+  const [openPhotoUpload, setOpenPhotoUpload] = useState(false);
   const [openOptions, setOpenOptions] = useState(false);
 
   const closeSearchAndClear = callback => {

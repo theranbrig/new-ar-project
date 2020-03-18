@@ -160,9 +160,9 @@ export const EditUserStyles = styled.div`
     display: flex;
     flex-direction: row;
     justify-content: space-between;
-
+    padding: 20px 0;
     h1 {
-      font-size: 1.8rem;
+      font-size: 1.5rem;
       margin: 0;
     }
     div {
@@ -189,7 +189,7 @@ export const EditUserStyles = styled.div`
       line-height: 45px;
       font-size: 1.1rem;
       span {
-        color: ${props => props.theme.colors.grey};
+        color: ${props => props.theme.colors.mediumGrey};
       }
     }
     .description {
@@ -220,7 +220,7 @@ export const EditUserStyles = styled.div`
     margin: 0 auto;
     button {
       margin: 0;
-      width: 150px;
+      width: 170px;
       border-radius: 25px;
       height: 45px;
       background: ${props => props.theme.colors.black};
@@ -228,7 +228,7 @@ export const EditUserStyles = styled.div`
       font-size: 1.1rem;
       font-family: ${props => props.theme.fonts.main};
       font-weight: 700 !important;
-      letter-spacing: 0.1rem;
+      letter-spacing: 0.15rem;
       svg {
         height: 16px;
         vertical-align: middle;

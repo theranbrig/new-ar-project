@@ -10,11 +10,9 @@ export const ProfileStyles = styled.div`
   width: 500px;
   max-width: 95%;
   margin: 0 auto;
-  margin-top: 10vh;
-  font-family: Montserrat, sans-serif;
+  font-family: ${props => props.theme.fonts.main};
   text-align: center;
-  min-height: 90vh;
-
+  min-height: 80vh;
   .buttons {
     width: 90%;
     margin: 0 auto;
