@@ -128,20 +128,26 @@ const UploadStyles = styled.div`
   .tags {
     padding: 10px 0 20px;
     .add-tags {
-      margin: 0 auto;
+      margin: 20px auto;
       width: 85%;
       display: grid;
-      grid-template-columns: 100px 1fr;
+      grid-template-columns: 60px 1fr;
       align-items: center;
+      font-family: ${props => props.theme.fonts.main};
       border: 1px solid ${props => props.theme.colors.lightGrey};
       padding: 10px;
       grid-gap: 10px;
       .plus-icon {
         background: ${props => props.theme.colors.black};
-        height: 100px;
+        height: 60px;
       }
       h4 {
         margin: 0;
+        font-weight: 600;
+      }
+      p {
+        margin: 0;
+        font-weight: 300;
       }
     }
     h3 {
@@ -220,7 +226,7 @@ const UploadStyles = styled.div`
   .product-list {
     background: ${props => props.theme.colors.white};
     overflow-y: scroll;
-    height: 70vh;
+    height: 50vh;
   }
   .product-item {
     display: grid;
@@ -591,9 +597,11 @@ const UploadPhotoModal = () => {
                 {uploadState === 2 && (
                   <>
                     {error && <p>{error}</p>}
-                    <WhiteButtonClick onClick={() => setUploadState(1)}>
-                      Previous Step (2/2)
-                    </WhiteButtonClick>
+                    <div className='next'>
+                      <WhiteButtonClick onClick={() => setUploadState(1)}>
+                        PREVIOUS STEP (1/2)
+                      </WhiteButtonClick>
+                    </div>
                     {imageString.length > 0 && description.length > 0 && taggedProducts.length > 0 && (
                       <BlackButtonClick
                         onClick={async () => {
