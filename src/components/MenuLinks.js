@@ -130,6 +130,8 @@ export const StyledMenu = styled.nav`
       width: 100%;
       font-weight: 300;
       margin-top: 10px;
+      letter-spacing: 0.05rem;
+      padding: 0.5rem 1rem 0.5rem 10px;
       color: ${props => props.theme.colors.black};
       border: none;
       background: transparent;

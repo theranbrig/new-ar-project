@@ -221,6 +221,10 @@ export const EditUserStyles = styled.div`
       height: 45px;
       border-radius: 25px;
       line-height: 45px;
+      font-size: 1.1rem;
+      span {
+        color: ${props => props.theme.colors.grey};
+      }
     }
     .description {
       width: 80%;
@@ -255,14 +259,15 @@ export const EditUserStyles = styled.div`
       height: 45px;
       background: ${props => props.theme.colors.black};
       color: ${props => props.theme.colors.white};
-      font-size: 1.2rem;
+      font-size: 1.1rem;
       font-family: ${props => props.theme.fonts.main};
-      font-weight: 600 !important;
+      font-weight: 700 !important;
+      letter-spacing: 0.1rem;
       svg {
         height: 16px;
         vertical-align: middle;
         margin-bottom: 4px;
-        margin-right: 3px;
+        margin-right: 10px;
       }
     }
   }
@@ -448,7 +453,9 @@ const CropperComponent = ({
         </>
       )}
       <section className='edit'>
-        <h1>@{userName}</h1>
+        <h1>
+          @<span>{userName}</span>
+        </h1>
         <div className='description'>
           <textarea
             placeholder='Add a description of yourself...'
