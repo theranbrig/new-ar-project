@@ -61,10 +61,8 @@ export const FeaturedStyles = styled.div`
           position: absolute;
           height: 18px;
           margin-top: 4px;
-          @media (max-width: 480px) {
-            top: 8px;
-            left: 10px;
-          }
+          top: 8px;
+          left: 10px;
         }
       }
     }
