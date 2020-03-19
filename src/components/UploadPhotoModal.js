@@ -383,7 +383,7 @@ const UploadPhotoModal = () => {
 
   const [upImg, setUpImg] = useState();
   const [imgRef, setImgRef] = useState(null);
-  const [uploadState, setUploadState] = useState(2);
+  const [uploadState, setUploadState] = useState(1);
   const [imageString, setImageString] = useState('');
   const [loading, setLoading] = useState(false);
   const [taggedProducts, setTaggedProducts] = useState([]);

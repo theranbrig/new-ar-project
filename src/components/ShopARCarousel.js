@@ -1,16 +1,12 @@
-import React, { useState, useEffect, useContext } from 'react';
-import AwesomeSlider from 'react-awesome-slider';
-import 'react-awesome-slider/dist/styles.css';
-import styled from 'styled-components';
-import { LazyLoadImage } from 'react-lazy-load-image-component';
 import 'react-lazy-load-image-component/src/effects/blur.css';
-import MediaViewer from './ModelViewer';
-import AwesomeSliderStyles from 'react-awesome-slider/src/styled/cube-animation';
-import withAutoplay from 'react-awesome-slider/dist/autoplay';
-import { FirebaseContext } from '../context/Firebase';
-import LoadingSpinner from '../components/LoadingSpinner';
 
-const AutoplaySlider = withAutoplay(AwesomeSlider);
+import React, { useContext, useEffect, useState } from 'react';
+
+import { FirebaseContext } from '../context/Firebase';
+import { LazyLoadImage } from 'react-lazy-load-image-component';
+import LoadingSpinner from '../components/LoadingSpinner';
+import MediaViewer from './ModelViewer';
+import styled from 'styled-components';
 
 const SliderStyles = styled.div`
   margin-top: 30px;
@@ -92,27 +88,6 @@ const ShopPageProductCarousel = () => {
       ) : (
         <h1>Click items below to view more AR content</h1>
       )}
-      <AutoplaySlider
-        animation='cubeAnimation'
-        cssModule={AwesomeSliderStyles}
-        play={true}
-        interval={3000}
-        infinite={true}
-        bullets={false}>
-        {products.map(product => (
-          <div className='slider-cell content' key={product.id}>
-            <div className='product-info'>
-              <LazyLoadImage
-                src={product.mainImage}
-                alt={product.name}
-                effect='blur'
-                onClick={() => setCurrentARModel(product)}
-              />
-              <h4>{product.name}</h4>
-            </div>
-          </div>
-        ))}
-      </AutoplaySlider>
     </SliderStyles>
   );
 };

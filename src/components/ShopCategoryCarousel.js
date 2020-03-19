@@ -1,16 +1,12 @@
-import React, { useContext, useEffect, useState } from 'react';
-import AwesomeSlider from 'react-awesome-slider';
-import 'react-awesome-slider/dist/styles.css';
-import styled from 'styled-components';
-import { LazyLoadImage } from 'react-lazy-load-image-component';
 import 'react-lazy-load-image-component/src/effects/blur.css';
-import AwesomeSliderStyles from 'react-awesome-slider/src/styled/cube-animation';
-import withAutoplay from 'react-awesome-slider/dist/autoplay';
+
+import React, { useContext, useEffect, useState } from 'react';
+
 import { FirebaseContext } from '../context/Firebase';
+import { LazyLoadImage } from 'react-lazy-load-image-component';
 import { Link } from 'react-router-dom';
 import LoadingSpinner from './LoadingSpinner';
-
-const AutoplaySlider = withAutoplay(AwesomeSlider);
+import styled from 'styled-components';
 
 const SliderStyles = styled.div`
   .awssld__wrapper {
@@ -84,26 +80,6 @@ const ShopCategoryCarousel = () => {
   return (
     <SliderStyles>
       <h4>Featured Products</h4>
-      {products.length && (
-        <AutoplaySlider
-          animation='cubeAnimation'
-          cssModule={AwesomeSliderStyles}
-          play={true}
-          interval={3000}
-          infinite={true}
-          bullets={false}>
-          {products.map(product => (
-            <div className='slider-cell content' key={product.id}>
-              <Link to={`/product/${product.id}`}>
-                <div className='product-info'>
-                  <LazyLoadImage src={product.mainImage} alt={product.name} effect='blur' />
-                  <h4>{product.name}</h4>
-                </div>
-              </Link>
-            </div>
-          ))}
-        </AutoplaySlider>
-      )}
     </SliderStyles>
   );
 };
