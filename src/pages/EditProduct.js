@@ -35,6 +35,10 @@ const EditProduct = () => {
 
   const history = useHistory();
 
+  const goBack = () => {
+    history.goBack();
+  };
+
   useEffect(() => {
     dbh
       .collection('products')
@@ -266,8 +270,8 @@ const EditProduct = () => {
                     glbFile,
                     usdzFile,
                     [picture1, picture2, picture3],
-                    allFeatures
-                  ).then(() => history.push('/admin'));
+                    allFeatures.goBack
+                  );
                 } else {
                   setError('Ooops. Needs at least one feature.');
                 }

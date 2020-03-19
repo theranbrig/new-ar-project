@@ -62,7 +62,8 @@ const ProductProvider = ({ children }) => {
     glbFile,
     usdzFile,
     pictures,
-    features
+    features,
+    callback
   ) => {
     const keywords = await generateKeywords(brand, name);
     dbh
@@ -81,6 +82,7 @@ const ProductProvider = ({ children }) => {
         features,
         keywords,
       })
+      .then(() => callback())
       .catch(err => setFirebaseError(err));
   };
 
@@ -95,7 +97,8 @@ const ProductProvider = ({ children }) => {
     glbFile,
     usdzFile,
     pictures,
-    features
+    features,
+    callback
   ) => {
     const keywords = await generateKeywords(brand, name);
     dbh
@@ -114,6 +117,7 @@ const ProductProvider = ({ children }) => {
         features,
         keywords,
       })
+      .then(() => callback())
       .catch(err => setFirebaseError(err));
   };
 

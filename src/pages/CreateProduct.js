@@ -52,6 +52,10 @@ const CreateProduct = () => {
     return isValid;
   };
 
+  const goBack = () => {
+    history.goBack();
+  };
+
   useEffect(() => {
     setLoading(true);
     if (!userLoading) {
@@ -158,7 +162,6 @@ const CreateProduct = () => {
               <p>{feature}</p>
               <button
                 onClick={() => {
-                  console.log(index);
                   const tempArr = allFeatures.map(feature => feature);
                   const removed = tempArr.splice(index, 1);
                   setAllFeatures(tempArr);
@@ -232,8 +235,9 @@ const CreateProduct = () => {
                   glbFile,
                   usdzFile,
                   [picture1, picture2, picture3],
-                  allFeatures
-                ).then(() => useHistory.push('/admin'));
+                  allFeatures,
+                  goBack
+                );
               } else {
                 setError('Ooops. Needs at least one feature.');
               }
@@ -374,4 +378,7 @@ const BlackButton = styled.button`
   color: white;
   min-width: 284px;
   margin-bottom: 10px;
+  &:disabled {
+    color: ${props => props.theme.colors.grey};
+  }
 `;
