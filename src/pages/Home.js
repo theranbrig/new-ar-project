@@ -86,9 +86,10 @@ const HomeStyles = styled.div`
     padding: 10px 0;
     width: 95%;
     margin: 20px 2.5% 0;
-    display: flex;
-    flex-direction: row;
-    justify-content: space-between;
+    display: grid;
+    grid-template-columns: 100px 1fr 100px;
+    justify-items: center;
+
     align-content: center;
     .product-link {
       position: relative;

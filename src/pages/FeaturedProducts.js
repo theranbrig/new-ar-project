@@ -68,7 +68,7 @@ export const FeaturedStyles = styled.div`
     }
   }
   .title {
-    padding-top: 10px;
+    padding-top: 20px;
     h1 {
       font-size: 1.5rem;
     }
