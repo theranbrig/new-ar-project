@@ -1,10 +1,12 @@
-import React, { useEffect, useContext, useState } from 'react';
-import styled from 'styled-components';
-import { LazyLoadImage } from 'react-lazy-load-image-component';
 import 'react-lazy-load-image-component/src/effects/blur.css';
-import { Link } from 'react-router-dom';
+
+import React, { useContext, useEffect, useState } from 'react';
+
 import { FirebaseContext } from '../context/Firebase';
+import { LazyLoadImage } from 'react-lazy-load-image-component';
+import { Link } from 'react-router-dom';
 import LoadingSpinner from './LoadingSpinner';
+import styled from 'styled-components';
 
 export const ProductThumbsStyles = styled.div`
   display: grid;

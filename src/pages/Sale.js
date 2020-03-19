@@ -1,10 +1,10 @@
-import React from 'react';
-import { useParams, Link } from 'react-router-dom';
-import ProductsPageSearch from '../components/ProductsPageSearch';
-import ShopThumbs from '../components/ShopThumbs';
-import styled from 'styled-components';
+import { Link, useParams } from 'react-router-dom';
+
 import BackButton from '../components/BackButton';
 import { Helmet } from 'react-helmet';
+import React from 'react';
+import ShopThumbs from '../components/ShopThumbs';
+import styled from 'styled-components';
 
 export const ShopCategoryStyles = styled.div`
   width: 500px;
@@ -59,9 +59,7 @@ const Sale = () => {
       <div className='all-link'>
         <Link to={`/shop`}>BROWSE ALL PRODUCTS</Link>
       </div>
-      <ProductsPageSearch>
-        <ShopThumbs />
-      </ProductsPageSearch>
+
     </ShopCategoryStyles>
   );
 };

@@ -1,13 +1,13 @@
-import React, { useEffect, useContext, useState } from 'react';
-import { useParams, Link } from 'react-router-dom';
-import ProductsPageSearch from '../components/ProductsPageSearch';
+import { Link, useParams } from 'react-router-dom';
+import React, { useContext, useEffect, useState } from 'react';
+
+import BackButton from '../components/BackButton';
+import { FirebaseContext } from '../context/Firebase';
+import { Helmet } from 'react-helmet';
+import LoadingSpinner from '../components/LoadingSpinner';
+import LogoYSVG from '../assets/icons/yzed_y_logo';
 import ShopThumbs from '../components/ShopThumbs';
 import styled from 'styled-components';
-import BackButton from '../components/BackButton';
-import { Helmet } from 'react-helmet';
-import { FirebaseContext } from '../context/Firebase';
-import LogoYSVG from '../assets/icons/yzed_y_logo';
-import LoadingSpinner from '../components/LoadingSpinner';
 
 export const ShopCategoryStyles = styled.div`
   width: 500px;

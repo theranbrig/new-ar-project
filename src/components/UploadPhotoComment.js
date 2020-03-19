@@ -123,7 +123,7 @@ const UploadStyles = styled.div`
       border: none;
       padding: 5px;
       background: transparent;
-      
+
     }
     button {
       background: transparent !important;

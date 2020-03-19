@@ -37,27 +37,27 @@ export default function App() {
           <Route path='/success'>
             <Success />
           </Route>
-          <Route path='/order_success'>
+          {/* <Route path='/order_success'>
             <OrderSuccess />
-          </Route>
+          </Route> */}
           <Route path='/product/:id'>
             <Product />
           </Route>
-          <Route path='/checkout'>
+          {/* <Route path='/checkout'>
             <Checkout />
-          </Route>
-          <Route exact path='/shop'>
+          </Route> */}
+          {/* <Route exact path='/shop'>
             <Shop />
-          </Route>
-          <Route exact path='/brand/:name'>
+          </Route> */}
+          {/* <Route exact path='/brand/:name'>
             <Brand />
-          </Route>
-          <Route exact path='/shop/:category'>
+          </Route> */}
+          {/* <Route exact path='/shop/:category'>
             <ShopCategory />
-          </Route>
-          <Route exact path='/sale/:value'>
+          </Route> */}
+          {/* <Route exact path='/sale/:value'>
             <Sale />
-          </Route>
+          </Route> */}
           <Route path='/login'>
             <Login />
           </Route>

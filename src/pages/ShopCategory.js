@@ -1,10 +1,10 @@
-import React from 'react';
-import { useParams, Link } from 'react-router-dom';
-import ProductsPageSearch from '../components/ProductsPageSearch';
-import ShopThumbs from '../components/ShopThumbs';
-import styled from 'styled-components';
+import { Link, useParams } from 'react-router-dom';
+
 import BackButton from '../components/BackButton';
 import { Helmet } from 'react-helmet';
+import React from 'react';
+import ShopThumbs from '../components/ShopThumbs';
+import styled from 'styled-components';
 
 export const ShopCategoryStyles = styled.div`
   width: 500px;
@@ -52,21 +52,6 @@ const ShopCategory = () => {
         <title>{`YZED - SHOP ${title.toUpperCase()}`}</title>
       </Helmet>
       <BackButton />
-      <ProductsPageSearch>
-        <h1>{formatedCategory}</h1>
-        <div className='category-buttons'>
-          <Link to={`/shop/${title}-tops`}>TOPS</Link>
-          <Link to={`/shop/${title}-bottoms`}>BOTTOMS</Link>
-          <Link to={`/shop/${title}-hats`}>HATS</Link>
-          <Link to={`/shop/${title}-bags`}>BAGS</Link>
-          <Link to={`/shop/${title}-accessories`}>ACCESSORIES</Link>
-          <Link to={`/shop/${title}-outerwear`}>OUTERWEAR</Link>
-        </div>
-        <div className='all-link'>
-          <Link to={`/shop`}>BROWSE ALL PRODUCTS</Link>
-        </div>
-        <ShopThumbs />
-      </ProductsPageSearch>
     </ShopCategoryStyles>
   );
 };

@@ -1,13 +1,13 @@
 import React, { useEffect } from 'react';
-import styled from 'styled-components';
-import ProductsPageSearch from '../components/ProductsPageSearch';
-import ShopPageProductCarousel from '../components/ShopARCarousel';
+
 import Accordion from '../components/Accordion';
-import ShopCategoryAccordionContent from '../components/ShopCategoryAccordionContent';
-import ShopThumbs from '../components/ShopThumbs';
 import BrandAccordionContent from '../components/BrandAccordionContent';
-import SaleAccordionContent from '../components/SaleAccordionContent';
 import { Helmet } from 'react-helmet';
+import SaleAccordionContent from '../components/SaleAccordionContent';
+import ShopCategoryAccordionContent from '../components/ShopCategoryAccordionContent';
+import ShopPageProductCarousel from '../components/ShopARCarousel';
+import ShopThumbs from '../components/ShopThumbs';
+import styled from 'styled-components';
 
 export const ShopStyles = styled.div`
   width: 500px;
@@ -34,7 +34,7 @@ const Shop = () => {
         <title>YZED - SHOP</title>
       </Helmet>
       <h1>SHOP YZED</h1>
-      <ProductsPageSearch />
+
       <Accordion title='Women'>
         <ShopCategoryAccordionContent title='women' />
       </Accordion>
