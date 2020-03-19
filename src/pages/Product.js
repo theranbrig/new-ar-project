@@ -12,6 +12,8 @@ import LoadingSpinner from '../components/LoadingSpinner';
 import MediaViewer from '../components/ModelViewer';
 import ProductBrand from '../components/ProductBrand';
 import { RoundARButton } from '../utilities/ReusableStyles';
+import Share from '../components/Share';
+import ShareSVG from '../assets/icons/icon_share';
 import ThreeDSVG from '../assets/icons/icon_ar_toggle';
 import styled from 'styled-components';
 import { useParams } from 'react-router-dom';
@@ -93,6 +95,7 @@ const ProductContainer = styled.div`
   .selected-photo {
     border: 1px solid ${props => props.theme.colors.black} !important;
   }
+
   .main-content-box {
     text-align: center;
     height: 400px;
@@ -182,12 +185,40 @@ const ProductContainer = styled.div`
     z-index: 10;
     position: relative;
   }
+  .buttons {
+    display: grid;
+    grid-template-columns: 1fr 2fr 1fr;
+    justify-content: center;
+    align-items: center;
+    .left, .right {
+      width: 50px;
+    }
+    .right {
+      button {
+        border: 1px solid ${props => props.theme.colors.lightGrey};
+        background: none;
+        height: 45px;
+        width: 45px;
+        border-radius: 50%;
+        margin: 0 0 5px;
+        svg {
+          height: 20px;
+          vertical-align: middle;
+        }
+      }
+      p {
+        font-size: 0.8rem;
+        margin: 0;
+      }
+    }
+  }
 `;
 
 const Product = () => {
   const [product, setProduct] = useState(null);
   const [loading, setLoading] = useState(false);
   const [isAdded, setIsAdded] = useState(false);
+  const [showShare, setShowShare] = useState(true);
   const [mainDisplay, setMainDisplay] = useState('model');
 
   const { id } = useParams();
@@ -227,6 +258,7 @@ const Product = () => {
       <Helmet>{/* <title>YZED - {product && product.name.toUpperCase()}</title> */}</Helmet>
       {isAdded && <AddToCartSuccessModal setIsAdded={setIsAdded} />}
 
+      {showShare && <Share setShowShare={setShowShare} product={product} />}
       <section className='product-top'>
         <div className='title-section'>
           <div className='title-name'>
@@ -272,9 +304,22 @@ const Product = () => {
             />
           ))}
         </div>
-        <RoundARButton onClick={() => document.querySelector('model-viewer').activateAR()}>
-          AR
-        </RoundARButton>
+        <div className='buttons'>
+          <div className='left' />
+          <RoundARButton onClick={() => document.querySelector('model-viewer').activateAR()}>
+            AR
+          </RoundARButton>
+          <div className='right'>
+            <button
+              aria-label='Share'
+              onClick={() => {
+                setShowShare(true);
+              }}>
+              <ShareSVG />
+            </button>
+            <p>SHARE</p>
+          </div>
+        </div>
       </section>
       {/* REMOVED FOR NOW TO SIMPLIFY PAGE */}
       {/* <section className='order-details '>
