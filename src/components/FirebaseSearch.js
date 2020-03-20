@@ -185,7 +185,7 @@ const SearchStyles = styled.div`
   .products-list {
     width: 100%;
     background: ${props => props.theme.colors.white};
-    padding: 10px 0 50px;
+    padding: 10px 0 22vh;
     a.display-link {
       width: 500px;
       max-width: 95%;

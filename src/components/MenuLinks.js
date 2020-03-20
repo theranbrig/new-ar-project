@@ -106,7 +106,7 @@ export const StyledMenu = styled.nav`
 
   }
   .main-links {
-    height: 50vh;
+    height: 40vh;
   }
   .bottom-links {
       border-top: 1px solid ${props => props.theme.colors.grey};
@@ -126,7 +126,7 @@ export const StyledMenu = styled.nav`
       display: flex;
       flex-direction: row;
       justify-content: space-between;
-      font-size:1.2rem;
+      font-size: 1.2rem;
       width: 100%;
       font-weight: 300;
       margin-top: 10px;

@@ -26,6 +26,12 @@ export const ProfileStyles = styled.div`
     flex-direction: row;
     justify-content: space-around;
   }
+  .bottom-buttons {
+    padding-bottom: 50px;
+    button {
+      width: 200px;
+    }
+  }
 `;
 
 const BlackButton = styled.div`
@@ -85,7 +91,7 @@ const AddPhotoButton = styled.button`
 const Profile = () => {
   const [loading, setLoading] = useState(false);
   const [photos, setPhotos] = useState([]);
-  const [editProfile, setEditProfile] = useState(true);
+  const [editProfile, setEditProfile] = useState(false);
 
   const { userData, logoutUser, dbh, userLoading } = useContext(FirebaseContext);
 
@@ -150,16 +156,18 @@ const Profile = () => {
               userData={userData}
             />
           ))}
-          {userData.role === 'ADMIN' && (
-            <WhiteButtonClick onClick={() => history.push('/admin')}>ADMIN</WhiteButtonClick>
-          )}
-          <WhiteButtonClick
-            onClick={() => {
-              logoutUser();
-              history.push('/');
-            }}>
-            SIGN OUT
-          </WhiteButtonClick>
+          <section className='bottom-buttons'>
+            {userData.role === 'ADMIN' && (
+              <WhiteButtonClick onClick={() => history.push('/admin')}>ADMIN</WhiteButtonClick>
+            )}
+            <WhiteButtonClick
+              onClick={() => {
+                logoutUser();
+                history.push('/');
+              }}>
+              SIGN OUT
+            </WhiteButtonClick>
+          </section>
         </>
       ) : (
         <EditProfile setEditProfile={setEditProfile} />

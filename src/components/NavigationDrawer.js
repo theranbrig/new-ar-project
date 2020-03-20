@@ -75,7 +75,9 @@ const Burger = () => {
         setOpenBag(false);
         setOpenSearch(false);
         setOpenPhotoUpload(false);
-        // setBodyScroll(!openMenu);
+        if (window.innerWidth < 576) {
+          setBodyScroll(!openMenu);
+        }
       }}
       aria-label='Toggle Menu'>
       <div />
