@@ -90,18 +90,21 @@ export const ShareStyles = styled.div`
       .facebook {
         background: #4267b2;
         svg {
-          margin-left: -2px;
+          margin-left: 0px;
           margin-top: -3px;
         }
       }
       .twitter {
         background: #00acee;
+        svg {
+          margin-left: 2px;
+        }
       }
       .whatsapp {
         background: #25d366;
         svg {
-          margin-left: 2px;
-          margin-top: -3px;
+          margin-left: 0px;
+          margin-top: -5px;
         }
       }
       .telegram {
@@ -155,23 +158,26 @@ const Share = ({ product, setShareOpen }) => {
         <div className='links'>
           <a
             className='facebook'
-            href={`https://www.facebook.com/sharer/sharer.php?u=http://${link}&hashtag=%23YZED#`}
+            href={`https://www.facebook.com/sharer/sharer.php?u=http://${link}&text=Check%20out%20this%20look%20on%20YZED.%0A%0A&hashtag=%23YZED#`}
             target='_blank'>
             <FacebookSVG fill={'#fff'} />
           </a>
-
           <a
             className='twitter'
-            href={`http://twitter.com/share?text=Check out YZED.me&url=${link}&hashtags=YZED,YZEDAR`}
+            href={`http://twitter.com/share?text=Check%20out%20this%20look%20on%20YZED.%0A%0A&url=${link}&hashtags=YZED,YZEDAR`}
             target='_blank'>
             <TwitterSVG fill={'#fff'} />
           </a>
-          <a className='whatsapp' href={`https://wa.me/?text=Check out YZED.me https://${link}`}>
+          <a
+            className='whatsapp'
+            href={`https://wa.me/?text=Check%20out%20this%20look%20on%20YZED.%0A%0Ahttps://${link}&source=&data=`}
+            target='_blank'>
             <WhatsAppSVG fill={'#fff'} />
           </a>
           <a
             className='telegram'
-            href={`https://telegram.me/share/url?url=${link}&text=Check out YZED.me`}>
+            href={`https://telegram.me/share/url?url=${link}&text=Check%20out%20this%20look%20on%20YZED.%0A%0A`}
+            target='_blank'>
             <TelegramSVG fill={'#fff'} />
           </a>
         </div>
