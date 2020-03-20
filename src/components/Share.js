@@ -2,6 +2,10 @@ import React, { useContext, useEffect, useState } from 'react';
 
 import CopyLinkSVG from '../assets/icons/icon_copy_link';
 import { CopyToClipboard } from 'react-copy-to-clipboard';
+import FacebookSVG from '../assets/icons/icon_facebook';
+import TelegramSVG from '../assets/icons/icon_telegram';
+import TwitterSVG from '../assets/icons/icon_twitter';
+import WhatsAppSVG from '../assets/icons/icon_whatsapp';
 import styled from 'styled-components';
 
 export const ShareStyles = styled.div`
@@ -16,10 +20,10 @@ export const ShareStyles = styled.div`
   .content {
     /* transform: translate(-50%, -50%); */
     width: 400px;
-    max-width: 95%;
-    height: 45vh;
+    max-width: 90%;
     background: ${props => props.theme.colors.white};
-    margin: 20% auto;
+    margin: 0 auto;
+    margin-top: calc(50%);
     border-radius: 25px;
     h1 {
       text-transform: none;
@@ -69,13 +73,41 @@ export const ShareStyles = styled.div`
       align-items: center;
       margin: 0 auto;
       grid-gap: 5px;
+      padding-bottom: 30px;
       a {
         height: 45px;
         width: 45px;
         border-radius: 50%;
-        border: 1px solid black;
         text-align: center;
         line-height: 45px;
+        svg {
+          margin-top: -2px;
+          height: 24px;
+          vertical-align: middle;
+        }
+      }
+      .facebook {
+        background: #4267b2;
+        svg {
+          margin-left: -2px;
+          margin-top: -3px;
+        }
+      }
+      .twitter {
+        background: #00acee;
+      }
+      .whatsapp {
+        background: #25d366;
+        svg {
+          margin-left: 2px;
+          margin-top: -3px;
+        }
+      }
+      .telegram {
+        background: #0088cc;
+        svg {
+          margin-left: -2px;
+        }
       }
     }
     p.copied,
@@ -114,22 +146,27 @@ const Share = ({ product }) => {
         {copied ? <p className='copied'>Link copied to clipboard.</p> : <p className='nothing'></p>}
         <p className='share'>Or share on social media...</p>
         <div className='links'>
-          <a href={`https://www.facebook.com/sharer/sharer.php?u=http://${link}#`} target='_blank'>
-            F
+          <a
+            className='facebook'
+            href={`https://www.facebook.com/sharer/sharer.php?u=http://${link}&hashtag=%23YZED#`}
+            target='_blank'>
+            <FacebookSVG fill={'#fff'} />
           </a>
 
-          <a href='https://facebook.com/page' class='large-screen'>
-            Clicky
+          <a
+            className='twitter'
+            href={`http://twitter.com/share?text=Check out YZED.me&url=${link}&hashtags=YZED,YZEDAR`}
+            target='_blank'>
+            <TwitterSVG fill={'#fff'} />
           </a>
-          <a href='fb://page/mypage' class='small-screen'>
-            Clicky
+          <a className='whatsapp' href={`https://wa.me/?text=Check out YZED.me https://${link}`}>
+            <WhatsAppSVG fill={'#fff'} />
           </a>
-          <a href={`https://www.facebook.com/sharer/sharer.php?u=http://${link}#`} target='_blank'>
-            Share on Facebook
+          <a
+            className='telegram'
+            href={`https://telegram.me/share/url?url=${link}&text=Check out YZED.me`}>
+            <TelegramSVG fill={'#fff'} />
           </a>
-          <a href='#'>T</a>
-          <a href='#'>W</a>
-          <a href='#'>T</a>
         </div>
       </section>
     </ShareStyles>
