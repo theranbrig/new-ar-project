@@ -24,7 +24,7 @@ const FormStyles = styled.div`
     input,
     select {
       height: 45px;
-      width: 300px;
+      width: 80%;
       display: block;
       margin: 20px auto;
       padding-left: 10px;
@@ -35,7 +35,8 @@ const FormStyles = styled.div`
       -webkit-appearance: none;
     }
     select {
-      width: 310px;
+      width: calc(80% + 10px);
+      height: 49px;
     }
   }
   h3 {
@@ -99,6 +100,7 @@ const SubscriptionForm = () => {
         setFormError(
           "You've already registered for our newsletter.  Keep an eye on your inbox for more information coming soon."
         );
+        setLoading(false);
       } else {
         await dbh
           .collection('newsletterSubscriptions')
@@ -146,6 +148,7 @@ const SubscriptionForm = () => {
               required
               placeholder='Name - Required'
               aria-label='Name'
+              minLength='3'
             />
           </div>
           <div className='form-input'>
