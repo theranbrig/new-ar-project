@@ -1,8 +1,10 @@
-import React, { useState, useContext } from 'react';
-import { useHistory, Link } from 'react-router-dom';
-import styled from 'styled-components';
+import { Link, useHistory } from 'react-router-dom';
+import React, { useContext, useState } from 'react';
+
+import Error from '../components/Error';
 import { FirebaseContext } from '../context/Firebase';
 import LoadingSpinner from '../components/LoadingSpinner';
+import styled from 'styled-components';
 
 const FormStyles = styled.div`
   margin: 0 auto;
@@ -19,27 +21,21 @@ const FormStyles = styled.div`
     }
   }
   .form-input {
-    display: flex;
-    margin: 20px 0;
     input,
     select {
-      flex: 2;
-      margin: 0 5px;
-      border: none;
-      border-radius: 0px !important;
-      border-bottom: 1px solid #c7c7c7;
-      background: white;
-      box-shadow: none;
-      height: 25px;
+      height: 45px;
+      width: 300px;
+      display: block;
+      margin: 20px auto;
+      padding-left: 10px;
+      border: 1px solid ${props => props.theme.colors.black};
+      border-radius: 25px;
       font-size: 1.1rem;
+      background: ${props => props.theme.colors.white};
       -webkit-appearance: none;
-      -webkit-border-radius: 0px;
-      margin-left: 10px;
     }
-    label {
-      height: 25px;
-      line-height: 25px;
-      font-size: 1.1rem;
+    select {
+      width: 310px;
     }
   }
   h3 {
@@ -61,37 +57,18 @@ const FormStyles = styled.div`
 const BlackButton = styled.button`
   border: 2px solid black;
   border-radius: 0px;
-  height: 52px;
+  height: 45px;
   display: block;
   margin: 0 auto;
-  font-size: 1.2rem;
-  padding: 5px 80px;
+  border-radius: 25px;
+  font-size: 1.1rem;
   font-family: ${props => props.theme.fonts.main};
   background: ${props => props.theme.colors.black};
-  color: white;
-  min-width: 284px;
+  color: ${props => props.theme.colors.white};
+  width: 200px;
   margin-bottom: 10px;
   :disabled {
     color: #989898;
-  }
-`;
-
-const BottomWhiteButton = styled.div`
-  width: 200px;
-  border: 2px solid black;
-  border-radius: 0px;
-  height: 50px;
-  line-height: 50px;
-  display: block;
-  margin: 0 auto;
-  font-size: 1.2rem;
-  padding: 0px 40px;
-  font-family: ${props => props.theme.fonts.main};
-  margin: 50px auto 50px;
-  text-align: center;
-  a {
-    color: ${props => props.theme.colors.black};
-    text-decoration: none;
   }
 `;
 
@@ -103,7 +80,7 @@ const SubscriptionForm = () => {
   const [email, setEmail] = useState('');
   const [gender, setGender] = useState('');
 
-  const { dbh } = useContext(FirebaseContext);
+  const { dbh, firebaseError } = useContext(FirebaseContext);
 
   const history = useHistory();
 
@@ -115,6 +92,7 @@ const SubscriptionForm = () => {
 
   const subscribe = () => {
     setLoading(true);
+    console.log('CLICK');
     const emailCheck = dbh.collection('newsletterSubscriptions').where('email', '==', email);
     emailCheck.get().then(async querySnapshot => {
       if (querySnapshot.docs.length) {
@@ -144,75 +122,76 @@ const SubscriptionForm = () => {
   return (
     <>
       <FormStyles>
-        <div>
-          <div className='box-area'>
-            <h1>SUBSCRIBE TO OUR NEWSLETTER</h1>
-            <div className='form-input'>
-              <label>
-                Name: <span>*</span>
-              </label>
-              <input
-                type='text'
-                name='name'
-                value={name}
-                onChange={e => setName(e.target.value)}
-                required
-              />
-            </div>
-            <div className='form-input'>
-              <label>
-                Email: <span>*</span>
-              </label>
-              <input
-                type='email'
-                name='email'
-                value={email}
-                onChange={e => setEmail(e.target.value)}
-                required
-              />
-            </div>
-            <div className='form-input'>
-              <label>Age: </label>
-              <input type='number' name='age' value={age} onChange={e => setAge(e.target.value)} />
-            </div>
-            <div className='form-input'>
-              <label>Gender: </label>
-              <select name='gender' onChange={e => setGender(e.target.value)} value={gender}>
-                <option value=''>-</option>
-                <option value='female'>Female</option>
-                <option value='male'>Male</option>
-                <option value='other'>Other</option>
-              </select>
-            </div>
-            <div className='required'>
-              <h5>
-                <span>*</span> = Required Fields
-              </h5>
-            </div>
-          </div>
-          <BlackButton
-            disabled={!email && !name}
-            onClick={() => {
-              if (!validateEmail(email)) {
-                setFormError('Ooops. You need to enter a proper email address');
+        <form
+          onSubmit={e => {
+            e.preventDefault();
+            if (!validateEmail(email)) {
+              setFormError('Ooops. You need to enter a proper email address');
+            } else {
+              if (name.length <= 2) {
+                setFormError(
+                  'Ooops. Please make sure your name is at least three characters long.'
+                );
               } else {
-                if (name.length <= 2) {
-                  setFormError(
-                    'Ooops. Please make sure your name is at least three characters long.'
-                  );
-                } else {
-                  subscribe();
-                }
+                subscribe();
               }
-            }}>
+            }
+          }}>
+          <div className='form-input'>
+            <input
+              type='text'
+              name='name'
+              value={name}
+              onChange={e => setName(e.target.value)}
+              required
+              placeholder='Name - Required'
+              aria-label='Name'
+            />
+          </div>
+          <div className='form-input'>
+            <input
+              type='email'
+              name='email'
+              value={email}
+              onChange={e => setEmail(e.target.value)}
+              required
+              placeholder='Email Address - Required'
+              aria-label='Email Address'
+            />
+          </div>
+          <div className='form-input'>
+            <input
+              type='number'
+              name='age'
+              value={age}
+              onChange={e => setAge(e.target.value)}
+              placeholder='Age'
+              aria-label='Age'
+            />
+          </div>
+          <div className='form-input'>
+            <select
+              name='gender'
+              onChange={e => setGender(e.target.value)}
+              value={gender}
+              aria-label='Gender'
+              placeholder='Gender'>
+              <option className='gender' value=''>
+                Gender
+              </option>
+              <option value='female'>Female</option>
+              <option value='male'>Male</option>
+              <option value='other'>Other</option>
+            </select>
+          </div>
+          <BlackButton disabled={!email && !name} type='submit'>
             SUBMIT
           </BlackButton>
-        </div>
-        {formError && <h3>{formError}</h3>}
+        </form>
+        {(formError || firebaseError) && (
+          <Error error={firebaseError || formError} clearFunction={setFormError} />
+        )}
       </FormStyles>
-      <BottomWhiteButton>
-        <Link to='/'>BACK TO HOME</Link>
-      </BottomWhiteButton>
     </>
   );
 };

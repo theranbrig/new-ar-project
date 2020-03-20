@@ -1,9 +1,10 @@
 import React, { useContext, useEffect } from 'react';
-import styled from 'styled-components';
-import SubscriptionForm from '../components/SubscriptionForm';
-import { Helmet } from 'react-helmet';
-import { useHistory } from 'react-router-dom';
+
 import { FirebaseContext } from '../context/Firebase';
+import { Helmet } from 'react-helmet';
+import SubscriptionForm from '../components/SubscriptionForm';
+import styled from 'styled-components';
+import { useHistory } from 'react-router-dom';
 
 export const SubscriptionStyles = styled.div`
   min-height: calc(90vh - 50px);
@@ -15,10 +16,11 @@ const Subscribe = () => {
   const { userData } = useContext(FirebaseContext);
 
   useEffect(() => {
-    if (userData) {
+    if (userData.loggedIn) {
       history.push('/');
     }
   }, [userData]);
+  
   return (
     <SubscriptionStyles>
       <Helmet>
