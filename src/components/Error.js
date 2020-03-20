@@ -26,7 +26,10 @@ export const ErrorStyles = styled.div`
     h4 {
       margin: 0;
     }
-    h4,
+    div,
+    button {
+      width: 30px;
+    }
   }
   p {
     text-align: center;
