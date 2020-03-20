@@ -40,7 +40,7 @@ export default function App() {
           {/* <Route path='/order_success'>
             <OrderSuccess />
           </Route> */}
-          <Route path='/product/:id'>
+          <Route path='/item/:id'>
             <Product />
           </Route>
           {/* <Route path='/checkout'>

@@ -4,6 +4,7 @@ import CopyLinkSVG from '../assets/icons/icon_copy_link';
 import { CopyToClipboard } from 'react-copy-to-clipboard';
 import FacebookSVG from '../assets/icons/icon_facebook';
 import { ModalContext } from '../context/Modal';
+import RedditSVG from '../assets/icons/icon_reddit';
 import TelegramSVG from '../assets/icons/icon_telegram';
 import TwitterSVG from '../assets/icons/icon_twitter';
 import WhatsAppSVG from '../assets/icons/icon_whatsapp';
@@ -69,7 +70,7 @@ export const ShareStyles = styled.div`
     .links {
       width: 90%;
       display: grid;
-      grid-template-columns: repeat(4, 1fr);
+      grid-template-columns: repeat(5, 1fr);
       justify-items: center;
       align-items: center;
       margin: 0 auto;
@@ -103,7 +104,7 @@ export const ShareStyles = styled.div`
       .whatsapp {
         background: #25d366;
         svg {
-          margin-left: 0px;
+          margin-left: 2px;
           margin-top: -5px;
         }
       }
@@ -112,6 +113,9 @@ export const ShareStyles = styled.div`
         svg {
           margin-left: -2px;
         }
+      }
+      .reddit {
+        background: #ff5700;
       }
     }
     p.copied,
@@ -132,7 +136,7 @@ export const ShareStyles = styled.div`
 `;
 
 const Share = ({ product, setShareOpen }) => {
-  const [link, setLink] = useState(`yzed-ar-v2.netlify.com/product/${product.id}`);
+  const [link, setLink] = useState(`yzed-ar-v2.netlify.com/item/${product.id}`);
   const [copied, setCopied] = useState(false);
   const { setOpenShareLinks, openShareLinks } = useContext(ModalContext);
   console.log(product);
@@ -158,27 +162,33 @@ const Share = ({ product, setShareOpen }) => {
         <div className='links'>
           <a
             className='facebook'
-            href={`https://www.facebook.com/sharer/sharer.php?u=http://${link}&text=Check%20out%20this%20look%20on%20YZED.%0A%0A&hashtag=%23YZED#`}
+            href={`https://www.facebook.com/sharer/sharer.php?u=https://${link}&text=Check%20out%20this%20look%20on%20YZED.%0A%0A&hashtag=%23YZED#`}
             target='_blank'>
-            <FacebookSVG fill={'#fff'} />
+            <FacebookSVG fill='#fff' />
           </a>
           <a
             className='twitter'
-            href={`http://twitter.com/share?text=Check%20out%20this%20look%20on%20YZED.%0A%0A&url=${link}&hashtags=YZED,YZEDAR`}
+            href={`http://twitter.com/share?text=Check%20out%20this%20look%20on%20YZED.%0A%0A&url=https://${link}&hashtags=YZED,YZEDAR`}
             target='_blank'>
-            <TwitterSVG fill={'#fff'} />
+            <TwitterSVG fill='#fff' />
           </a>
           <a
             className='whatsapp'
             href={`https://wa.me/?text=Check%20out%20this%20look%20on%20YZED.%0A%0Ahttps://${link}&source=&data=`}
             target='_blank'>
-            <WhatsAppSVG fill={'#fff'} />
+            <WhatsAppSVG fill='#fff' />
           </a>
           <a
             className='telegram'
-            href={`https://telegram.me/share/url?url=${link}&text=Check%20out%20this%20look%20on%20YZED.%0A%0A`}
+            href={`https://telegram.me/share/url?url=https://${link}&text=Check%20out%20this%20look%20on%20YZED.%0A%0A`}
             target='_blank'>
-            <TelegramSVG fill={'#fff'} />
+            <TelegramSVG fill='#fff' />
+          </a>
+          <a
+            className='reddit'
+            href={`https://www.reddit.com/submit?url=https://${link}`}
+            target='_blank'>
+            <RedditSVG fill='#fff' />
           </a>
         </div>
       </section>

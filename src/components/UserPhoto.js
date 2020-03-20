@@ -37,7 +37,7 @@ const Tag = ({ tag, setShowTags }) => {
         }}>
         <CloseSVG fill='white' />
       </HideTagButton>
-      <Link to={`/product/${taggedProduct.id}`}>
+      <Link to={`/item/${taggedProduct.id}`}>
         <h3>{taggedProduct.brand}</h3>
         <h4>{taggedProduct.name}</h4>
         <LazyLoadImage src={taggedProduct.mainImage} alt={taggedProduct.name} effect='blur' />

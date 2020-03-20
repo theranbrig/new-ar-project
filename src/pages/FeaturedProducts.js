@@ -134,7 +134,7 @@ const FeaturedProducts = () => {
               }}>
               {product.liked ? <LikeFilledSVG /> : <LikeEmptySVG />}
             </button>
-            <Link to={`/product/${product.id}`}>
+            <Link to={`/item/${product.id}`}>
               <img src={product.mainImage} alt={product.name} />
               <h2>{product.brand}</h2>
               <h3>{product.name}</h3>

@@ -125,7 +125,7 @@ const ShoppingBagItems = ({ canEdit, mode, setOpenBag, setBodyScroll }) => {
                     setBodyScroll(false);
                     setOpenBag(false);
                   }}
-                  to={`/product/${item.productId}`}>
+                  to={`/item/${item.productId}`}>
                   <img src={item.mainImage} alt={item.name} />
                 </Link>
               </div>

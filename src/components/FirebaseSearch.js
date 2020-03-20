@@ -82,7 +82,7 @@ const FirebaseSearch = () => {
                 onClick={() => {
                   closeSearchAndClear(clearSearch);
                   setProducts([]);
-                  history.push(`/product/${product.id}`);
+                  history.push(`/item/${product.id}`);
                 }}>
                 <Highlighter
                   highlightClassName='highlighted-text'
@@ -98,12 +98,12 @@ const FirebaseSearch = () => {
         <section className='products-list'>
           {products.slice(0, 5).map(product => (
             <Link
-              to={`/product/${product.id}`}
+              to={`/item/${product.id}`}
               className='display-link'
               onClick={() => {
                 closeSearchAndClear(clearSearch);
                 setProducts([]);
-                history.push(`/product/${product.id}`);
+                history.push(`/item/${product.id}`);
               }}>
               <img src={product.mainImage} alt={product.name} height='100px' width='100px' />
               <div className='link-info'>

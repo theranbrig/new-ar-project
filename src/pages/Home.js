@@ -264,7 +264,7 @@ const Home = () => {
           A R
         </RoundARButton>
         <div className='product-link'>
-          <Link to={mainProduct ? `/product/${mainProduct.id}` : '/featured'}>View product</Link>
+          <Link to={mainProduct ? `/item/${mainProduct.id}` : '/featured'}>View product</Link>
         </div>
       </section>
       <section className='discover-box'>
