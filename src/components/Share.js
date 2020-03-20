@@ -3,6 +3,7 @@ import React, { useContext, useEffect, useState } from 'react';
 import CopyLinkSVG from '../assets/icons/icon_copy_link';
 import { CopyToClipboard } from 'react-copy-to-clipboard';
 import FacebookSVG from '../assets/icons/icon_facebook';
+import { ModalContext } from '../context/Modal';
 import TelegramSVG from '../assets/icons/icon_telegram';
 import TwitterSVG from '../assets/icons/icon_twitter';
 import WhatsAppSVG from '../assets/icons/icon_whatsapp';
@@ -15,7 +16,7 @@ export const ShareStyles = styled.div`
   left: 0;
   position: fixed;
   background: #272727f9;
-  z-index: 2000;
+  z-index: 1010;
   font-family: ${props => props.theme.fonts.main};
   .content {
     /* transform: translate(-50%, -50%); */
@@ -23,7 +24,7 @@ export const ShareStyles = styled.div`
     max-width: 90%;
     background: ${props => props.theme.colors.white};
     margin: 0 auto;
-    margin-top: calc(50%);
+    margin-top: 100px;
     border-radius: 25px;
     h1 {
       text-transform: none;
@@ -127,13 +128,19 @@ export const ShareStyles = styled.div`
   }
 `;
 
-const Share = ({ product }) => {
+const Share = ({ product, setShareOpen }) => {
   const [link, setLink] = useState(`yzed-ar-v2.netlify.com/product/${product.id}`);
   const [copied, setCopied] = useState(false);
+  const { setOpenShareLinks, openShareLinks } = useContext(ModalContext);
   console.log(product);
   return (
-    <ShareStyles>
-      <section className='content'>
+    <ShareStyles onClick={() => setOpenShareLinks(false)}>
+      <section
+        className='content'
+        onClick={e => {
+          //stop clicks getting to the overlay
+          e.stopPropagation();
+        }}>
         <h1>Share item</h1>
         <div className='copy'>
           <p>{link}</p>

@@ -10,6 +10,7 @@ const ModalProvider = ({ children }) => {
   const [openSearch, setOpenSearch] = useState(false);
   const [openPhotoUpload, setOpenPhotoUpload] = useState(false);
   const [openOptions, setOpenOptions] = useState(false);
+  const [openShareLinks, setOpenShareLinks] = useState(true);
 
   const closeSearchAndClear = callback => {
     setBodyScroll(false);
@@ -45,6 +46,8 @@ const ModalProvider = ({ children }) => {
         setOpenPhotoUpload,
         closeSearchAndClear,
         closePhotoUploadAndClear,
+        openShareLinks,
+        setOpenShareLinks,
         setBodyScroll,
         openOptions,
         setOpenOptions,

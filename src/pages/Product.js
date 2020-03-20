@@ -10,6 +10,7 @@ import { Helmet } from 'react-helmet';
 import { LazyLoadImage } from 'react-lazy-load-image-component';
 import LoadingSpinner from '../components/LoadingSpinner';
 import MediaViewer from '../components/ModelViewer';
+import { ModalContext } from '../context/Modal';
 import ProductBrand from '../components/ProductBrand';
 import { RoundARButton } from '../utilities/ReusableStyles';
 import Share from '../components/Share';
@@ -95,7 +96,6 @@ const ProductContainer = styled.div`
   .selected-photo {
     border: 1px solid ${props => props.theme.colors.black} !important;
   }
-
   .main-content-box {
     text-align: center;
     height: 400px;
@@ -218,12 +218,12 @@ const Product = () => {
   const [product, setProduct] = useState(null);
   const [loading, setLoading] = useState(false);
   const [isAdded, setIsAdded] = useState(false);
-  const [showShare, setShowShare] = useState(true);
   const [mainDisplay, setMainDisplay] = useState('model');
 
   const { id } = useParams();
 
   const { dbh } = useContext(FirebaseContext);
+  const { openShareLinks, setOpenShareLinks } = useContext(ModalContext);
 
   useEffect(() => {
     setLoading(true);
@@ -258,7 +258,7 @@ const Product = () => {
       <Helmet>{/* <title>YZED - {product && product.name.toUpperCase()}</title> */}</Helmet>
       {isAdded && <AddToCartSuccessModal setIsAdded={setIsAdded} />}
 
-      {showShare && <Share setShowShare={setShowShare} product={product} />}
+      {openShareLinks && <Share product={product} />}
       <section className='product-top'>
         <div className='title-section'>
           <div className='title-name'>
@@ -313,7 +313,7 @@ const Product = () => {
             <button
               aria-label='Share'
               onClick={() => {
-                setShowShare(true);
+                setOpenShareLinks(true);
               }}>
               <ShareSVG />
             </button>
