@@ -2,6 +2,7 @@ import { Link, useHistory } from 'react-router-dom';
 import React, { useContext, useEffect, useState } from 'react';
 
 import BackButton from '../components/BackButton';
+import Error from '../components/Error';
 import { FirebaseContext } from '../context/Firebase';
 import { Helmet } from 'react-helmet';
 import styled from 'styled-components';
@@ -185,14 +186,16 @@ const Login = () => {
             onChange={e => setPassword(e.target.value)}
           />
         </div>
-        <BlackButton type='submit'>SIGN IN</BlackButton>
+        <BlackButton type='submit' disabled={!password.length || !email.length}>
+          SIGN IN
+        </BlackButton>
       </form>
       <div className='forgot'>
         <Link to='/request_reset'>I forgot my password.</Link>
       </div>
       {firebaseError && (
         <div className='error'>
-          <h3>{firebaseError}</h3>
+          <Error error={firebaseError} />
         </div>
       )}
       <div className='bottom'>

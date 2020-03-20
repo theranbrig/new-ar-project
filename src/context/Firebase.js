@@ -45,7 +45,7 @@ export const dbh = firebase.firestore();
 export const storage = firebase.storage();
 
 const FirebaseProvider = ({ children }) => {
-  const [firebaseError, setFirebaseError] = useState(null);
+  const [firebaseError, setFirebaseError] = useState('');
   const [userLoading, setUserLoading] = useState(true);
   const [userData, setUserData] = useState({
     id: '',

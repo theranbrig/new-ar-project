@@ -3,6 +3,7 @@ import React, { useContext, useEffect, useState } from 'react';
 
 import BackButton from '../components/BackButton';
 import CheckSVG from '../assets/icons/icon_success_check';
+import Error from '../components/Error';
 import { FirebaseContext } from '../context/Firebase';
 import { Helmet } from 'react-helmet';
 import styled from 'styled-components';
@@ -209,11 +210,13 @@ const Reset = () => {
                 onChange={e => setEmail(e.target.value)}
               />
             </div>
-            <BlackButton type='submit'>SEND LINK</BlackButton>
+            <BlackButton disabled={!email.length} type='submit'>
+              SEND LINK
+            </BlackButton>
           </form>
           {(firebaseError || error) && (
             <div className='error'>
-              <h3>{firebaseError || error}</h3>
+              <Error error={firebaseError || error} clickFunction={setError} />
             </div>
           )}
         </>

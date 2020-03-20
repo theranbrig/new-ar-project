@@ -2,6 +2,7 @@ import { Link, useHistory } from 'react-router-dom';
 import React, { useContext, useEffect, useState } from 'react';
 
 import BackButton from '../components/BackButton';
+import Error from '../components/Error';
 import { FirebaseContext } from '../context/Firebase';
 import { Helmet } from 'react-helmet';
 import LoadingSpinner from '../components/LoadingSpinner';
@@ -182,12 +183,11 @@ const Register = () => {
         </BlackButton>
       </form>
 
-      {firebaseError ||
-        (error && (
-          <div className='error'>
-            <h3>{firebaseError || error}</h3>
-          </div>
-        ))}
+      {(firebaseError || error) && (
+        <div className='error'>
+          <Error error={firebaseError || error} clearFunction={setError} />
+        </div>
+      )}
       {loading && <LoadingSpinner color='black' />}
       <div className='forgot'>
         <Link to='/login'>Already a member?</Link>
