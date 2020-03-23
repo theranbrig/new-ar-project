@@ -10,6 +10,7 @@ export const TopStyles = styled.div`
   display: flex;
   flex-direction: row;
   justify-content: space-between;
+  padding-top: 20px;
   button,
   div {
     align-self: center;

@@ -90,7 +90,6 @@ const FeaturedProducts = () => {
           if (userData.loggedIn) {
             liked = userData.favoriteProducts.some(product => product === doc.id);
           }
-          console.log(doc.data());
           tempProducts.push({ id: doc.id, ...doc.data(), liked });
         });
         setProducts(tempProducts);

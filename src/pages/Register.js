@@ -7,6 +7,7 @@ import { FirebaseContext } from '../context/Firebase';
 import { Helmet } from 'react-helmet';
 import LoadingSpinner from '../components/LoadingSpinner';
 import { LoginStyles } from './Login';
+import TopTitle from '../components/TopTitle';
 import styled from 'styled-components';
 
 const BlackButton = styled.button`
@@ -104,11 +105,7 @@ const Register = () => {
       <Helmet>
         <title>YZED - REGISTER</title>
       </Helmet>
-      <div className='top'>
-        <BackButton />
-        <h1>Register Today</h1>
-        <div className='right'></div>
-      </div>
+      <TopTitle title='Register Today' />
       <form
         className='register-form'
         onSubmit={async e => {

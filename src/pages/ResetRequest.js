@@ -6,6 +6,7 @@ import CheckSVG from '../assets/icons/icon_success_check';
 import Error from '../components/Error';
 import { FirebaseContext } from '../context/Firebase';
 import { Helmet } from 'react-helmet';
+import TopTitle from '../components/TopTitle';
 import styled from 'styled-components';
 
 const LoginStyles = styled.div`
@@ -167,11 +168,7 @@ const Reset = () => {
       </Helmet>
       {submitted ? (
         <div className='success'>
-          <div className='top'>
-            <BackButton onClick={() => setError('')} />
-            <h1>Link Sent</h1>
-            <div className='right'></div>
-          </div>
+          <TopTitle title='Forgot Password' />
           <div className='check'>
             <p>
               If any account is connected to the email address {email}, then there will be an email
@@ -182,11 +179,7 @@ const Reset = () => {
         </div>
       ) : (
         <>
-          <div className='top'>
-            <BackButton onClick={() => setError('')} />
-            <h1>Forgot Password</h1>
-            <div className='right'></div>
-          </div>
+          <TopTitle title='Forgot Password' />
           <div className='forgot'>
             <p>
               Forgot your password? Don’t worry, we’ve got you! Enter your email address and we will

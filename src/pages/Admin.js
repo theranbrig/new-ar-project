@@ -6,6 +6,7 @@ import { FirebaseContext } from '../context/Firebase';
 import { Helmet } from 'react-helmet';
 import LoadingSpinner from '../components/LoadingSpinner';
 import { ProductContext } from '../context/Product';
+import TopTitle from '../components/TopTitle';
 import styled from 'styled-components';
 
 export const LoginStyles = styled.div`
@@ -15,18 +16,17 @@ export const LoginStyles = styled.div`
   min-height: calc(90vh - 50px);
   margin-top: calc(10vh + 50px);
   ul {
-    list-style-type: none;
     li {
       padding: 20px;
       a {
         display: block;
         color: black;
-        text-decoration: none;
-        font-size: 1.5rem;
+        font-size: 1.2rem;
       }
     }
   }
   h2 {
+    margin-top: 50px;
     text-align: center;
   }
   a.create {
@@ -40,19 +40,20 @@ export const LoginStyles = styled.div`
     text-align: center;
     line-height: 45px;
     border-radius: 25px;
+    margin-top: 50px;
   }
 `;
 
 const BlackButton = styled.button`
-  border: 2px solid black;
+  border: 2px solid ${props => props.theme.colors.black};
   border-radius: 0px;
   height: 52px;
   display: block;
   margin: 0 auto;
   font-size: 1.2rem;
   padding: 5px 80px;
-  font-family: Montserrat, sans-serif;
-  background: black;
+  font-family: ${props => props.theme.fonts.main};
+  background: ${props => props.theme.colors.black};
   color: white;
   min-width: 284px;
   margin-bottom: 10px;
@@ -95,6 +96,7 @@ const Admin = () => {
       <Helmet>
         <title>YZED - CREATE</title>
       </Helmet>
+      <TopTitle title='Admin Page' />
       <Link to='/create' className='create'>
         CREATE NEW PRODUCT
       </Link>
