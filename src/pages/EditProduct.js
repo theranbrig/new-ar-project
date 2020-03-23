@@ -270,7 +270,8 @@ const EditProduct = () => {
                     glbFile,
                     usdzFile,
                     [picture1, picture2, picture3],
-                    allFeatures.goBack
+                    allFeatures,
+                    goBack
                   );
                 } else {
                   setError('Ooops. Needs at least one feature.');
