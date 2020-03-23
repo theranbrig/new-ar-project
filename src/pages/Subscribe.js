@@ -8,8 +8,8 @@ import styled from 'styled-components';
 import { useHistory } from 'react-router-dom';
 
 export const SubscriptionStyles = styled.div`
-  min-height: calc(90vh - 50px);
-  margin-top: calc(10vh + 50px);
+  min-height: calc(90vh);
+  margin-top: calc(10vh);
 `;
 
 const Subscribe = () => {

@@ -1,14 +1,13 @@
+import CheckSVG from '../assets/icons/icon_success_check';
+import { Helmet } from 'react-helmet';
+import { Link } from 'react-router-dom';
 import React from 'react';
 import styled from 'styled-components';
-import { Link } from 'react-router-dom';
-import { Helmet } from 'react-helmet';
-import CheckSVG from '../assets/icons/icon_success_check';
 
 const SuccessStyles = styled.div`
   text-align: center;
-  margin-top: 100px;
-  min-height: calc(90vh - 100px);
-  margin-top: calc(10vh + 50px);
+  min-height: calc(90vh);
+
   svg {
     width: 200px;
     @media (max-width: 576px) {

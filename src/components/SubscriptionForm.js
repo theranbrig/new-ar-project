@@ -32,11 +32,18 @@ const FormStyles = styled.div`
       border-radius: 25px;
       font-size: 1.1rem;
       background: ${props => props.theme.colors.white};
+      color: ${props => props.theme.colors.black};
       -webkit-appearance: none;
     }
     select {
-      width: calc(90% + 10px);
+      width: calc(90% + 20px);
       height: 49px;
+    }
+    select {
+      color: blue;
+    }
+    select:first-child {
+      color: green;
     }
   }
   h3 {
@@ -58,7 +65,7 @@ const FormStyles = styled.div`
 const BlackButton = styled.button`
   border: 2px solid black;
   border-radius: 0px;
-  height: 45px;
+  height: 49px;
   display: block;
   margin: 0 auto;
   border-radius: 25px;
@@ -66,8 +73,7 @@ const BlackButton = styled.button`
   font-family: ${props => props.theme.fonts.main};
   background: ${props => props.theme.colors.black};
   color: ${props => props.theme.colors.white};
-  width: 90%;
-  margin-bottom: 10px;
+  width: 95%;
   :disabled {
     color: #989898;
   }
@@ -179,9 +185,7 @@ const SubscriptionForm = () => {
               value={gender}
               aria-label='Gender'
               placeholder='Gender'>
-              <option disabled selected value=''>
-                Gender
-              </option>
+              <option value=''>Gender</option>
               <option value='female'>Female</option>
               <option value='male'>Male</option>
               <option value='other'>Other</option>

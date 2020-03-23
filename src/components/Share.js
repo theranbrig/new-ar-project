@@ -3,9 +3,9 @@ import React, { useContext, useEffect, useState } from 'react';
 import CopyLinkSVG from '../assets/icons/icon_copy_link';
 import { CopyToClipboard } from 'react-copy-to-clipboard';
 import FacebookSVG from '../assets/icons/icon_facebook';
+import KakaoSVG from '../assets/icons/icon_kakao';
 import { ModalContext } from '../context/Modal';
-import RedditSVG from '../assets/icons/icon_reddit';
-import TelegramSVG from '../assets/icons/icon_telegram';
+import PinterestSVG from '../assets/icons/icon_pinterest';
 import TwitterSVG from '../assets/icons/icon_twitter';
 import WhatsAppSVG from '../assets/icons/icon_whatsapp';
 import styled from 'styled-components';
@@ -108,14 +108,15 @@ export const ShareStyles = styled.div`
           margin-top: -5px;
         }
       }
-      .telegram {
-        background: #0088cc;
+      .kakao {
+        background: #ffe812;
         svg {
-          margin-left: -2px;
+          margin-left: 2px;
+          margin-top: -2px;
         }
       }
-      .reddit {
-        background: #ff5700;
+      .pinterest {
+        background: #e60023;
       }
     }
     p.copied,
@@ -136,7 +137,7 @@ export const ShareStyles = styled.div`
 `;
 
 const Share = ({ product, setShareOpen }) => {
-  const [link, setLink] = useState(`yzed-ar-v2.netlify.com/item/${product.id}`);
+  const [link, setLink] = useState(`yzed.101.global/item/${product.id}`);
   const [copied, setCopied] = useState(false);
   const { setOpenShareLinks, openShareLinks } = useContext(ModalContext);
   console.log(product);
@@ -179,16 +180,16 @@ const Share = ({ product, setShareOpen }) => {
             <WhatsAppSVG fill='#fff' />
           </a>
           <a
-            className='telegram'
-            href={`https://telegram.me/share/url?url=https://${link}&text=Check%20out%20this%20look%20on%20YZED.%0A%0A`}
+            className='kakao'
+            href={`https://story.kakao.com/s/share?url=https://${link}&text=Check%20out%20this%20look%20on%20YZED.%0A%0A`}
             target='_blank'>
-            <TelegramSVG fill='#fff' />
+            <KakaoSVG />
           </a>
           <a
-            className='reddit'
-            href={`https://www.reddit.com/submit?url=https://${link}`}
+            className='pinterest'
+            href={`http://pinterest.com/pin/create/button/?url=https://${link}&description=Check%20out%20this%20look%20on%20YZED.%0A%0A`}
             target='_blank'>
-            <RedditSVG fill='#fff' />
+            <PinterestSVG fill='#fff' />
           </a>
         </div>
       </section>
