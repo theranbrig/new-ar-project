@@ -35,15 +35,15 @@ const FormStyles = styled.div`
       color: ${props => props.theme.colors.black};
       -webkit-appearance: none;
     }
+    input::placeholder {
+      color: ${props => props.theme.colors.black};
+    }
     select {
       width: calc(90% + 20px);
       height: 49px;
     }
-    select {
-      color: blue;
-    }
-    select:first-child {
-      color: green;
+    option[disabled] {
+      color: green !important;
     }
   }
   h3 {
@@ -185,7 +185,9 @@ const SubscriptionForm = () => {
               value={gender}
               aria-label='Gender'
               placeholder='Gender'>
-              <option value=''>Gender</option>
+              <option selected disabled value=''>
+                Gender
+              </option>
               <option value='female'>Female</option>
               <option value='male'>Male</option>
               <option value='other'>Other</option>

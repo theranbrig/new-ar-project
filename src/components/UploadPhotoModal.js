@@ -2,6 +2,7 @@ import { BlackButtonClick, WhiteButtonClick } from '../utilities/ReusableStyles'
 import React, { useCallback, useContext, useState } from 'react';
 
 import CameraSVG from '../assets/icons/icon_photo';
+import ChevronLeft from '../assets/icons/icon_chevron_left';
 import CloseSVG from '../assets/icons/icon_close';
 import { FirebaseContext } from '../context/Firebase';
 import LoadingSpinner from './LoadingSpinner';
@@ -45,12 +46,21 @@ const UploadStyles = styled.div`
       border-bottom-left-radius: 50px;
       border-bottom-right-radius: 50px;
       box-shadow: ${props => props.theme.boxShadows.bottom};
+      .left-content {
+        button {
+          background: none;
+          border: none;
+          svg {
+            height: 14px;
+          }
+        }
+      }
       .title-buttons {
         display: flex;
         flex-direction: row;
         justify-content: space-between;
         height: 3vh;
-        margin: 10px 0;
+        margin: 10px 0 20px;
         .left-content {
           width: 60px;
         }
@@ -121,9 +131,6 @@ const UploadStyles = styled.div`
   }
   .bottom-content {
     margin-top: 10px;
-    button {
-      width: 80%;
-    }
   }
   .tags {
     padding: 10px 0 20px;
@@ -227,6 +234,13 @@ const UploadStyles = styled.div`
     background: ${props => props.theme.colors.white};
     overflow-y: scroll;
     height: 50vh;
+    h2 {
+      width: 90%;
+      margin: 0 auto 10px;
+      font-weight: 500;
+      font-size: 1.3rem;
+      font-family: ${props => props.theme.fonts.main};
+    }
   }
   .product-item {
     display: grid;
@@ -431,7 +445,6 @@ const UploadPhotoModal = () => {
     setLoading(true);
     S3Client.uploadFile(convertFile(imageString, newFileName), newFileName)
       .then(data => {
-        console.log(data);
         setCurrentPictureUrl(data.location);
         uploadPhoto(data.location);
         setLoading(false);
@@ -583,7 +596,10 @@ const UploadPhotoModal = () => {
                     <button
                       className='plus-icon'
                       aria-label='Search products to tag'
-                      onClick={() => setUploadState(3)}>
+                      onClick={() => {
+                        productSearch('YZED');
+                        setUploadState(3);
+                      }}>
                       <SavePlusSVG />
                     </button>
                     <div className='content'>
@@ -618,7 +634,11 @@ const UploadPhotoModal = () => {
           {uploadState === 3 && (
             <div className='top-content'>
               <div className='title-buttons'>
-                <div className='left-content'></div>
+                <div className='left-content'>
+                  <button onClick={() => setUploadState(2)}>
+                    <ChevronLeft />
+                  </button>
+                </div>
                 <h1>Search</h1>
                 <div className='right-content'></div>
               </div>
@@ -636,6 +656,7 @@ const UploadPhotoModal = () => {
                 />
               </section>
               <section className='product-list'>
+                <h2>Featured Products</h2>
                 {searchProducts.map(product => (
                   <div
                     key={product.id}

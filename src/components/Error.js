@@ -5,7 +5,7 @@ import { FirebaseContext } from '../context/Firebase';
 import styled from 'styled-components';
 
 export const ErrorStyles = styled.div`
-  width: 90%;
+  width: 80%;
   border: 1px solid tomato;
   color: tomato;
   font-family: ${props => props.theme.fonts.main};
@@ -34,6 +34,8 @@ export const ErrorStyles = styled.div`
   p {
     text-align: center;
     margin: 0;
+    font-weight: 300;
+    padding-top: 10px;
   }
 `;
 

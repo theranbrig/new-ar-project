@@ -32,7 +32,7 @@ export const BlackButtonClick = styled.button`
   border-radius: 25px;
   height: 45px;
   line-height: 40px;
-  letter-spacing: 3px;
+  letter-spacing: 1px;
   display: block;
   margin: 0 auto;
   background: ${props => props.theme.colors.black};
@@ -41,6 +41,7 @@ export const BlackButtonClick = styled.button`
   font-family: ${props => props.theme.fonts.main};
   margin: 10px auto;
   color: ${props => props.theme.colors.white};
+  min-width: 200px;
 `;
 
 export const WhiteButtonClick = styled.button`
@@ -48,7 +49,7 @@ export const WhiteButtonClick = styled.button`
   border-radius: 25px;
   height: 45px;
   line-height: 40px;
-  letter-spacing: 3px;
+  letter-spacing: 1px;
   display: block;
   margin: 0 auto;
   background: ${props => props.theme.colors.white};
@@ -57,6 +58,7 @@ export const WhiteButtonClick = styled.button`
   font-family: ${props => props.theme.fonts.main};
   margin: 10px auto;
   color: ${props => props.theme.colors.black};
+  min-width: 200px;
 `;
 
 export const RoundARButton = styled.button`

@@ -71,9 +71,12 @@ const ProductContainer = styled.div`
       margin: 0 auto;
       position: absolute;
       top: calc(50% - 40px);
-      left: calc(50% - 35px);
-      -webkit-filter: drop-shadow(0px 0px 4px rgba(255, 255, 255, 0.80));
-      filter: drop-shadow(0px 0px 4px rgba(255, 255, 255, 0.80));
+      left: calc(50% - 40px);
+      stroke: rgba(255, 255, 255, 0.70);
+      stroke-width: 0.4px;
+      stroke-linejoin: round;
+      /* -webkit-filter: drop-shadow(0px 0px 1px rgba(255, 255, 255, 0.90));
+      filter: drop-shadow(0px 0px 1px  rgba(255, 255, 255, 0.90)); */
     }
   }
   button {
@@ -190,6 +193,7 @@ const ProductContainer = styled.div`
     grid-template-columns: 1fr 2fr 1fr;
     justify-content: center;
     align-items: center;
+    padding-bottom: 70px;
     .left, .right {
       width: 50px;
     }
