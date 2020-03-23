@@ -5,6 +5,7 @@ import BackButton from '../components/BackButton';
 import Error from '../components/Error';
 import { FirebaseContext } from '../context/Firebase';
 import { Helmet } from 'react-helmet';
+import TopTitle from '../components/TopTitle';
 import styled from 'styled-components';
 
 export const LoginStyles = styled.div`
@@ -50,25 +51,6 @@ export const LoginStyles = styled.div`
       font-weight: 300;
       font-size: 0.9rem;
       text-align: center;
-    }
-  }
-  .top {
-    display: flex;
-    flex-direction: row;
-    justify-content: space-between;
-    button {
-      align-self: center;
-    }
-    .right {
-      width: 16px;
-    }
-    div {
-      align-self: center;
-    }
-    h1 {
-      font-size: 1.4rem;
-      font-family: ${props => props.theme.fonts.main};
-      font-weight: 500;
     }
   }
   .forgot {
@@ -154,11 +136,7 @@ const Login = () => {
       <Helmet>
         <title>YZED - LOGIN</title>
       </Helmet>
-      <div className='top'>
-        <BackButton />
-        <h1>Sign In</h1>
-        <div className='right'></div>
-      </div>
+      <TopTitle title='Log In' />
       <form
         className='user-form'
         onSubmit={e => {

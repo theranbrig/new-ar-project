@@ -182,7 +182,6 @@ const Register = () => {
           {loading ? 'BECOMING A YZER' : 'BECOME A YZER'}
         </BlackButton>
       </form>
-
       {(firebaseError || error) && (
         <div className='error'>
           <Error error={firebaseError || error} clearFunction={setError} />

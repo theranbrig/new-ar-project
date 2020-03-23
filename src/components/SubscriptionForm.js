@@ -24,7 +24,7 @@ const FormStyles = styled.div`
     input,
     select {
       height: 45px;
-      width: 80%;
+      width: 90%;
       display: block;
       margin: 20px auto;
       padding-left: 10px;
@@ -35,7 +35,7 @@ const FormStyles = styled.div`
       -webkit-appearance: none;
     }
     select {
-      width: calc(80% + 10px);
+      width: calc(90% + 10px);
       height: 49px;
     }
   }
@@ -66,7 +66,7 @@ const BlackButton = styled.button`
   font-family: ${props => props.theme.fonts.main};
   background: ${props => props.theme.colors.black};
   color: ${props => props.theme.colors.white};
-  width: 200px;
+  width: 90%;
   margin-bottom: 10px;
   :disabled {
     color: #989898;
@@ -179,7 +179,7 @@ const SubscriptionForm = () => {
               value={gender}
               aria-label='Gender'
               placeholder='Gender'>
-              <option className='gender' value=''>
+              <option disabled selected value=''>
                 Gender
               </option>
               <option value='female'>Female</option>

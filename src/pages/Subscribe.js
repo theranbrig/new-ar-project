@@ -3,6 +3,7 @@ import React, { useContext, useEffect } from 'react';
 import { FirebaseContext } from '../context/Firebase';
 import { Helmet } from 'react-helmet';
 import SubscriptionForm from '../components/SubscriptionForm';
+import TopTitle from '../components/TopTitle';
 import styled from 'styled-components';
 import { useHistory } from 'react-router-dom';
 
@@ -20,12 +21,13 @@ const Subscribe = () => {
       history.push('/');
     }
   }, [userData]);
-  
+
   return (
     <SubscriptionStyles>
       <Helmet>
         <title>YZED - SUBSCRIBE</title>
       </Helmet>
+      <TopTitle title='Subscribe to YZED' />
       <SubscriptionForm />
     </SubscriptionStyles>
   );
