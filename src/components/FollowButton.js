@@ -31,26 +31,22 @@ const FollowButton = ({ photoId }) => {
   const { dbh, userData, firebase } = useContext(FirebaseContext);
 
   const followThread = () => {
-    if (!followed) {
-      dbh
-        .collection('userPhotos')
-        .doc(photoId)
-        .update({
-          followers: firebase.firestore.FieldValue.arrayUnion({
-            userId: userData.id,
-            lastVisit: new Date(),
-          }),
-        })
-        .then(() => checkFollowed());
-    } else {
-      const newFollowers = followers.filter(follower => follower.userId !== userData.id);
-      dbh
-        .collection('userPhotos')
-        .doc(photoId)
-        .update({
-          followers: newFollowers,
-        })
-        .then(() => checkFollowed());
+    if (userData.loggedIn) {
+      if (!followed) {
+        dbh
+          .collection('userPhotos')
+          .doc(photoId)
+          .update({
+            followers: firebase.firestore.FieldValue.arrayUnion(userData.id),
+          });
+      } else {
+        dbh
+          .collection('userPhotos')
+          .doc(photoId)
+          .update({
+            followers: firebase.firestore.FieldValue.arrayRemove(userData.id),
+          });
+      }
     }
   };
 
@@ -62,11 +58,7 @@ const FollowButton = ({ photoId }) => {
         .onSnapshot(querySnapshot => {
           console.log(querySnapshot.data());
           if (querySnapshot.data().followers) {
-            console.log(querySnapshot.data().followers);
-            setFollowers(querySnapshot.data().followers);
-            setFollowed(
-              querySnapshot.data().followers.some(follower => follower.userId === userData.id)
-            );
+            setFollowed(querySnapshot.data().followers.some(follower => follower === userData.id));
           }
         });
     }
