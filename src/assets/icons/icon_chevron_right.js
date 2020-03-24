@@ -11,7 +11,7 @@ const ChevronRight = ({ fill }) => {
       viewBox='0 0 58 100'
       fill={fill ?? '#272727'}>
       <polygon
-        class='st0'
+        className='st0'
         points='0.6,6.8 7.1,0.3 52.1,45.2 53.7,46.8 53.7,46.8 57,50.1 53.7,53.4 53.7,53.4 7.1,100 0.6,93.4
 	43.8,50.1 '
       />

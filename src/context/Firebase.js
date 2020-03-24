@@ -129,7 +129,6 @@ const FirebaseProvider = ({ children }) => {
   const onAuthStateChange = async callback => {
     setUserLoading(true);
     await firebase.auth().onAuthStateChanged(user => {
-      console.log(user);
       if (user) {
         dbh
           .collection('users')
@@ -154,7 +153,7 @@ const FirebaseProvider = ({ children }) => {
                 followers,
                 favoriteProducts,
               };
-              callback({ loggedIn: true, id: user.uid, ...userDetails });
+              callback({ loggedIn: true, id: user.uid, ...userDetails, lastVisit: new Date() });
               setUserLoading(false);
             }
           });
@@ -176,6 +175,7 @@ const FirebaseProvider = ({ children }) => {
   useEffect(() => {
     setUserLoading(true);
     onAuthStateChange(setUserData);
+
     return () => {
       onAuthStateChange(setUserData);
     };

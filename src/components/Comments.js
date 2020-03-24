@@ -188,7 +188,6 @@ const Comment = ({ comment, setSelectedReplies, photoRef, toggleUpvoteComment })
       .doc(comment.id)
       .collection('replies')
       .onSnapshot(querySnapshot => setReplyCount(querySnapshot.docs.length));
-    console.log(comment);
   }, []);
 
   return (

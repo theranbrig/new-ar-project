@@ -23,6 +23,7 @@ import ShopCategory from '../pages/ShopCategory';
 import SubmitReset from '../pages/SubmitReset';
 import Subscribe from '../pages/Subscribe';
 import Success from '../pages/SubscribeSuccess';
+import Threads from '../pages/Threads';
 import User from '../pages/User';
 
 export default function App() {
@@ -58,6 +59,9 @@ export default function App() {
           {/* <Route exact path='/sale/:value'>
             <Sale />
           </Route> */}
+          <Route path='/threads/:userId'>
+            <Threads />
+          </Route>
           <Route path='/login'>
             <Login />
           </Route>
