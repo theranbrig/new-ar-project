@@ -129,6 +129,7 @@ const FirebaseProvider = ({ children }) => {
   const onAuthStateChange = async callback => {
     setUserLoading(true);
     await firebase.auth().onAuthStateChanged(user => {
+      console.log(user);
       if (user) {
         dbh
           .collection('users')
@@ -137,7 +138,6 @@ const FirebaseProvider = ({ children }) => {
             if (doc.exists) {
               const {
                 userName,
-
                 role,
                 description,
                 photo,

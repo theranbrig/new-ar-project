@@ -9,6 +9,7 @@ import ChevronRight from '../assets/icons/icon_chevron_right';
 import EmptyUpVoteSVG from '../assets/icons/icon_upvote_empty';
 import FilledUpVoteSVG from '../assets/icons/icon_upvote_filled';
 import { FirebaseContext } from '../context/Firebase';
+import FollowButton from '../components/FollowButton';
 import { LazyLoadImage } from 'react-lazy-load-image-component';
 import LoadingSpinner from '../components/LoadingSpinner';
 import { ModalContext } from '../context/Modal';
@@ -335,12 +336,15 @@ const Comments = () => {
         let tempComments = [];
         querySnapshot.forEach(doc => {
           let liked;
+          let followed;
           if (userData.loggedIn) {
             liked = doc.data().upVotes.some(vote => vote === userData.id);
+            if (doc.data().followers) {
+              followed = doc.data().followers(follower => follower.userId === userData.id);
+            }
           }
           tempComments.push({ id: doc.id, liked, ...doc.data() });
         });
-
         setComments(
           tempComments.sort((a, b) => {
             return b.addedOn.seconds - a.addedOn.seconds;
@@ -412,8 +416,13 @@ const Comments = () => {
       ) : (
         <>
           <section className='top-section'>
-            <BackButton />
-            <h1>Replies ({comments.length})</h1>
+            <div className='left'>
+              <BackButton />
+              <h1>Replies ({comments.length})</h1>
+            </div>
+            <div className='right'>
+              <FollowButton photoId={photoId} />
+            </div>
           </section>
           <section className='buttons'>
             <div className='left-buttons'>
@@ -514,11 +523,20 @@ const CommentsStyles = styled.div`
   }
   .top-section {
     font-family: ${props => props.theme.fonts.main};
-    display: grid;
-    grid-template-columns: 50px 1fr;
-    align-items: center;
-    h1 {
-      margin: 0;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    .left div,
+    .left h1 {
+      display: inline-block;
+    }
+    .left h1 {
+      margin-left: 20px;
+    }
+    .right {
+      align-self: center;
+      button {
+      }
     }
   }
 
