@@ -5,7 +5,7 @@ import styled from 'styled-components';
 
 export const TopStyles = styled.div`
   width: 500px;
-  max-width: 90%;
+  max-width: 100%;
   margin: 0 auto;
   display: flex;
   flex-direction: row;

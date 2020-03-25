@@ -17,9 +17,27 @@ export const FollowingStyles = styled.div`
   .followed-items {
     padding-bottom: 50px;
   }
+  .buttons {
+    border-bottom: 1px solid ${props => props.theme.colors.lightGrey};
+    padding: 20px 0;
+    button {
+      border: 1px solid ${props => props.theme.colors.black};
+      background: none;
+      width: 100px;
+      margin: 0 5px;
+      height: 20px;
+      border-radius: 10px;
+      font-family: ${props => props.theme.fonts.main};
+    }
+    button.inactive {
+      border: 1px solid ${props => props.theme.colors.lightGrey};
+      color: ${props => props.theme.colors.lightGrey};
+    }
+  }
 `;
 
 const Following = ({ userId }) => {
+  const [sortByDate, setSortByDate] = useState(true);
   const [followedThreads, setFollowedThreads] = useState([]);
   const { dbh } = useContext(FirebaseContext);
 
@@ -61,6 +79,18 @@ const Following = ({ userId }) => {
   return (
     <FollowingStyles>
       <TopTitle title='Following Threads' />
+      <section className='buttons'>
+        <button
+          className={sortByDate ? 'active' : 'inactive'}
+          onClick={() => setSortByDate(!sortByDate)}>
+          Latest
+        </button>
+        <button
+          className={!sortByDate ? 'active' : 'inactive'}
+          onClick={() => setSortByDate(!sortByDate)}>
+          Overview
+        </button>
+      </section>
       <div className='followed-items'>
         {followedThreads.map(thread => (
           <FollowedItem item={thread} key={thread.id} />
