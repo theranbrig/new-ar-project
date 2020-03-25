@@ -75,7 +75,6 @@ const FollowedItem = ({ item }) => {
       .then(doc => {
         setCommenter({ id: doc.id, ...doc.data() });
         const match = document.cookie.match(new RegExp('(^| )' + 'previousVisitDate' + '=([^;]+)'));
-
         if (match) {
           setLastVisit(match[2]);
         }
@@ -93,11 +92,11 @@ const FollowedItem = ({ item }) => {
               {item.comment.length > 12 ? `${item.comment.substring(0, 12)}...` : item.comment}" by{' '}
               <strong>{commenter && commenter.userName}</strong>
             </p>
-            <p>
+            <div>
               {moment.unix(item.commentAdded.seconds).fromNow()}{' '}
               {item.commentAdded.seconds > lastVisit && <div className='new'></div>}{' '}
               <Link to={`/comments/${item.threadId}`}>view reply</Link>
-            </p>
+            </div>
           </div>
           <button>
             <CloseSVG fill='white' />

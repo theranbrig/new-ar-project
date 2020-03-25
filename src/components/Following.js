@@ -25,8 +25,11 @@ export const FollowingStyles = styled.div`
       background: none;
       width: 100px;
       margin: 0 5px;
-      height: 20px;
-      border-radius: 10px;
+      height: 25px;
+      font-size: 16px;
+      line-height: 22px;
+      padding: 0;
+      border-radius: 12.5px;
       font-family: ${props => props.theme.fonts.main};
     }
     button.inactive {
@@ -37,7 +40,8 @@ export const FollowingStyles = styled.div`
 `;
 
 const Following = ({ userId }) => {
-  const [sortByDate, setSortByDate] = useState(true);
+  const [sortByDate, setSortByDate] = useState(false);
+  const [followedItems, setFollowedItems] = useState([]);
   const [followedThreads, setFollowedThreads] = useState([]);
   const { dbh } = useContext(FirebaseContext);
 
@@ -48,9 +52,10 @@ const Following = ({ userId }) => {
       .get()
       .then(querySnapshot => {
         let comments = [];
+        let followed = [];
         querySnapshot.docs.map(doc => {
           let thread = { threadId: doc.id, ...doc.data() };
-          console.log(thread);
+          followed.push(thread);
           dbh
             .collection('userPhotos')
             .doc(doc.id)
@@ -65,16 +70,42 @@ const Following = ({ userId }) => {
                   ...thread,
                 });
               });
-              console.log(comments);
-              setFollowedThreads(
-                [...followedThreads, ...comments].sort(
-                  (a, b) => b.commentAdded.seconds - a.commentAdded.seconds
-                )
-              );
+              if (sortByDate) {
+                setFollowedItems(
+                  [...followedItems, ...comments].sort(
+                    (a, b) => b.commentAdded.seconds - a.commentAdded.seconds
+                  )
+                );
+              } else {
+                const previousVisitDate = document.cookie.match(
+                  new RegExp('(^| )' + 'previousVisitDate' + '=([^;]+)')
+                );
+                if (previousVisitDate) {
+                  const filteredThreads = [...followedItems, ...comments].filter(
+                    item => item.commentAdded.seconds < previousVisitDate[2] - 604800
+                  );
+                  setFollowedItems(
+                    filteredThreads.sort((a, b) => b.addedOn.seconds - a.addedOn.seconds)
+                  );
+                } else {
+                  setFollowedItems(
+                    [...followedItems, ...comments].sort(
+                      (a, b) => b.commentAdded.seconds - a.commentAdded.seconds
+                    )
+                  );
+                }
+              }
             });
         });
+        console.log(followed);
+        setFollowedThreads(followed);
       });
-  }, []);
+  }, [sortByDate]);
+
+  const toggleView = () => {
+    setFollowedItems([]);
+    setSortByDate(!sortByDate);
+  };
 
   return (
     <FollowingStyles>
@@ -82,18 +113,22 @@ const Following = ({ userId }) => {
       <section className='buttons'>
         <button
           className={sortByDate ? 'active' : 'inactive'}
-          onClick={() => setSortByDate(!sortByDate)}>
+          onClick={() => {
+            toggleView();
+          }}>
           Latest
         </button>
         <button
           className={!sortByDate ? 'active' : 'inactive'}
-          onClick={() => setSortByDate(!sortByDate)}>
+          onClick={() => {
+            toggleView();
+          }}>
           Overview
         </button>
       </section>
       <div className='followed-items'>
-        {followedThreads.map(thread => (
-          <FollowedItem item={thread} key={thread.id} />
+        {followedItems.map(item => (
+          <FollowedItem item={item} key={item.id} />
         ))}
       </div>
     </FollowingStyles>
