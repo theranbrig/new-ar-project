@@ -6,6 +6,7 @@ import CloseSVG from '../assets/icons/icon_close';
 import { FirebaseContext } from '../context/Firebase';
 import { LazyLoadImage } from 'react-lazy-load-image-component';
 import { Link } from 'react-router-dom';
+import MinusSVG from '../assets/icons/icon_minus';
 import moment from 'moment';
 import styled from 'styled-components';
 
@@ -36,14 +37,13 @@ export const FollowedItemStyles = styled.div`
     }
   }
   button {
-    background: ${props => props.theme.colors.grey};
     border: none;
-    height: 16px;
-    width: 16px;
+    height: 20px;
+    width: 20px;
     align-self: center;
-    border-radius: 8px;
     svg {
-      height: 8px;
+      height: 16px;
+      width: 16px;
       margin-left: -3px;
     }
   }
@@ -62,11 +62,12 @@ export const FollowedItemStyles = styled.div`
   }
 `;
 
-const FollowedItem = ({ item }) => {
+const FollowedItem = ({ item, setFollowedItems }) => {
   const [commenter, setCommenter] = useState(null);
   const [lastVisit, setLastVisit] = useState(null);
 
-  const { dbh } = useContext(FirebaseContext);
+  const { dbh, firebase, userData } = useContext(FirebaseContext);
+
   useEffect(() => {
     dbh
       .collection('users')
@@ -80,6 +81,17 @@ const FollowedItem = ({ item }) => {
         }
       });
   }, []);
+
+  const unFollowThread = () => {
+    if (window.confirm('Are you sure you want to unfollow this thread?')) {
+      dbh
+        .collection('userPhotos')
+        .doc(item.threadId)
+        .update({
+          followers: firebase.firestore.FieldValue.arrayRemove(userData.id),
+        });
+    }
+  };
 
   return (
     <FollowedItemStyles>
@@ -98,8 +110,12 @@ const FollowedItem = ({ item }) => {
               <Link to={`/comments/${item.threadId}`}>view reply</Link>
             </div>
           </div>
-          <button>
-            <CloseSVG fill='white' />
+          <button
+            onClick={() => {
+              setFollowedItems([]);
+              unFollowThread();
+            }}>
+            <MinusSVG fill='#7c7c7c' />
           </button>
         </div>
       </div>

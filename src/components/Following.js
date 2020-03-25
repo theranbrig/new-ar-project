@@ -3,6 +3,8 @@ import React, { useContext, useEffect, useState } from 'react';
 import { FirebaseContext } from '../context/Firebase';
 import FollowedItem from '../components/FollowedItem';
 import FollowedThread from './FollowedThread';
+import { Link } from 'react-router-dom';
+import LoadingSpinner from '../components/LoadingSpinner';
 import TopTitle from './TopTitle';
 import styled from 'styled-components';
 
@@ -38,20 +40,30 @@ export const FollowingStyles = styled.div`
       color: ${props => props.theme.colors.lightGrey};
     }
   }
+  p.no-products {
+    width: 90%;
+    margin: 20px auto;
+    font-family: ${props => props.theme.fonts.main};
+    color: ${props => props.theme.colors.black};
+    a {
+      color: ${props => props.theme.colors.black};
+    }
+  }
 `;
 
 const Following = ({ userId }) => {
-  const [sortByDate, setSortByDate] = useState(false);
+  const [sortByDate, setSortByDate] = useState(true);
+  const [loading, setLoading] = useState(false);
   const [followedItems, setFollowedItems] = useState([]);
   const [followedThreads, setFollowedThreads] = useState([]);
   const { dbh } = useContext(FirebaseContext);
 
   useEffect(() => {
+    setLoading(true);
     dbh
       .collection('userPhotos')
       .where('followers', 'array-contains', userId)
-      .get()
-      .then(querySnapshot => {
+      .onSnapshot(querySnapshot => {
         let comments = [];
         let threads = [];
         querySnapshot.docs.map(doc => {
@@ -61,8 +73,7 @@ const Following = ({ userId }) => {
             .collection('userPhotos')
             .doc(doc.id)
             .collection('comments')
-            .get()
-            .then(querySnapshot => {
+            .onSnapshot(querySnapshot => {
               querySnapshot.docs.forEach(doc => {
                 comments.push({
                   id: doc.id,
@@ -79,6 +90,7 @@ const Following = ({ userId }) => {
             });
         });
         setFollowedThreads(threads);
+        setLoading(false);
       });
   }, [sortByDate]);
 
@@ -86,6 +98,13 @@ const Following = ({ userId }) => {
     setFollowedItems([]);
     setSortByDate(!sortByDate);
   };
+
+  if (loading)
+    return (
+      <FollowingStyles>
+        <LoadingSpinner color='black' />;
+      </FollowingStyles>
+    );
 
   return (
     <FollowingStyles>
@@ -107,8 +126,15 @@ const Following = ({ userId }) => {
         </button>
       </section>
       <div className='followed-items'>
+        {(!followedItems.length || !followedThreads.length) && (
+          <p className='no-products'>
+            Nothing followed yet. Explore more in <Link to='/featured'>Featured Products</Link>.
+          </p>
+        )}
         {sortByDate
-          ? followedItems.map(item => <FollowedItem item={item} key={item.id} />)
+          ? followedItems.map(item => (
+              <FollowedItem item={item} key={item.id} setFollowedItems={setFollowedItems} />
+            ))
           : followedThreads.map(thread => <FollowedThread thread={thread} />)}
       </div>
     </FollowingStyles>
