@@ -2,6 +2,7 @@ import React, { useContext, useEffect, useState } from 'react';
 
 import { FirebaseContext } from '../context/Firebase';
 import FollowedItem from '../components/FollowedItem';
+import FollowedThread from './FollowedThread';
 import TopTitle from './TopTitle';
 import styled from 'styled-components';
 
@@ -52,10 +53,10 @@ const Following = ({ userId }) => {
       .get()
       .then(querySnapshot => {
         let comments = [];
-        let followed = [];
+        let threads = [];
         querySnapshot.docs.map(doc => {
           let thread = { threadId: doc.id, ...doc.data() };
-          followed.push(thread);
+          threads.push(thread);
           dbh
             .collection('userPhotos')
             .doc(doc.id)
@@ -70,35 +71,14 @@ const Following = ({ userId }) => {
                   ...thread,
                 });
               });
-              if (sortByDate) {
-                setFollowedItems(
-                  [...followedItems, ...comments].sort(
-                    (a, b) => b.commentAdded.seconds - a.commentAdded.seconds
-                  )
-                );
-              } else {
-                const previousVisitDate = document.cookie.match(
-                  new RegExp('(^| )' + 'previousVisitDate' + '=([^;]+)')
-                );
-                if (previousVisitDate) {
-                  const filteredThreads = [...followedItems, ...comments].filter(
-                    item => item.commentAdded.seconds < previousVisitDate[2] - 604800
-                  );
-                  setFollowedItems(
-                    filteredThreads.sort((a, b) => b.addedOn.seconds - a.addedOn.seconds)
-                  );
-                } else {
-                  setFollowedItems(
-                    [...followedItems, ...comments].sort(
-                      (a, b) => b.commentAdded.seconds - a.commentAdded.seconds
-                    )
-                  );
-                }
-              }
+              setFollowedItems(
+                [...followedItems, ...comments].sort(
+                  (a, b) => b.commentAdded.seconds - a.commentAdded.seconds
+                )
+              );
             });
         });
-        console.log(followed);
-        setFollowedThreads(followed);
+        setFollowedThreads(threads);
       });
   }, [sortByDate]);
 
@@ -127,9 +107,9 @@ const Following = ({ userId }) => {
         </button>
       </section>
       <div className='followed-items'>
-        {followedItems.map(item => (
-          <FollowedItem item={item} key={item.id} />
-        ))}
+        {sortByDate
+          ? followedItems.map(item => <FollowedItem item={item} key={item.id} />)
+          : followedThreads.map(thread => <FollowedThread thread={thread} />)}
       </div>
     </FollowingStyles>
   );
