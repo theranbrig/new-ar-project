@@ -1,16 +1,21 @@
 import React, { useContext, useEffect, useState } from 'react';
 
 import { FirebaseContext } from '../context/Firebase';
+import FollowedItem from '../components/FollowedItem';
 import TopTitle from './TopTitle';
-import moment from 'moment';
 import styled from 'styled-components';
 
 export const FollowingStyles = styled.div`
   width: 500px;
   margin: 0 auto;
-  max-width: 90%;
+  max-width: 95%;
+  min-height: 90vh;
+  margin-top: 10vh;
   img {
     width: 65px;
+  }
+  .followed-items {
+    padding-bottom: 50px;
   }
 `;
 
@@ -26,6 +31,8 @@ const Following = ({ userId }) => {
       .then(querySnapshot => {
         let comments = [];
         querySnapshot.docs.map(doc => {
+          let thread = { threadId: doc.id, ...doc.data() };
+          console.log(thread);
           dbh
             .collection('userPhotos')
             .doc(doc.id)
@@ -33,12 +40,17 @@ const Following = ({ userId }) => {
             .get()
             .then(querySnapshot => {
               querySnapshot.docs.forEach(doc => {
-                comments.push({ id: doc.id, ...doc.data() });
+                comments.push({
+                  id: doc.id,
+                  ...doc.data(),
+                  commentAdded: doc.data().addedOn,
+                  ...thread,
+                });
               });
               console.log(comments);
               setFollowedThreads(
                 [...followedThreads, ...comments].sort(
-                  (a, b) => b.addedOn.seconds - a.addedOn.seconds
+                  (a, b) => b.commentAdded.seconds - a.commentAdded.seconds
                 )
               );
             });
@@ -49,14 +61,11 @@ const Following = ({ userId }) => {
   return (
     <FollowingStyles>
       <TopTitle title='Following Threads' />
-      {followedThreads.map(thread => (
-        <div>
-          {thread.photo && <img src={thread.photo} alt={thread.photo} />}
-          <p>
-            {thread.comment} - {moment.unix(thread.addedOn.seconds).fromNow()}
-          </p>
-        </div>
-      ))}
+      <div className='followed-items'>
+        {followedThreads.map(thread => (
+          <FollowedItem item={thread} key={thread.id} />
+        ))}
+      </div>
     </FollowingStyles>
   );
 };

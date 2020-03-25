@@ -24,7 +24,6 @@ export const StyledMenu = styled.nav`
   transition: transform 0.3s ease-in-out;
   font-family: ${props => props.theme.fonts.main};
   overflow-y: scroll;
-
   @media (max-width: 576px) {
     width: 100%;
     padding: 0;
@@ -188,6 +187,16 @@ const MenuLinks = () => {
                 }}>
                 Featured
               </NavLink>
+              {userData.loggedIn && (
+                <NavLink
+                  to={`/threads/${userData.id}`}
+                  activeClassName='active-link'
+                  onClick={() => {
+                    setModals();
+                  }}>
+                  My Threads
+                </NavLink>
+              )}
               {/* <NavLink
               to='/checkout'
               activeClassName='active-link'

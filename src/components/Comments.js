@@ -485,7 +485,7 @@ const CommentsStyles = styled.div`
   width: 500px;
   max-width: 95%;
   margin: 12vh auto 0;
-  height: 75vh;
+  height: 90vh;
   padding: 0 10px;
   background: ${props => props.theme.colors.white};
   .bottom {

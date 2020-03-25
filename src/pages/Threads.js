@@ -1,3 +1,5 @@
+import 'react-lazy-load-image-component/src/effects/blur.css';
+
 import React, { useContext, useEffect, useState } from 'react';
 
 import { FirebaseContext } from '../context/Firebase';
@@ -31,12 +33,7 @@ const Threads = () => {
     }
   }, []);
 
-  return (
-    <div>
-      <h1>Following</h1>
-      <Following userId={userId} />
-    </div>
-  );
+  return <Following userId={userId} />;
 };
 
 export default Threads;

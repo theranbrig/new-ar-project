@@ -7,6 +7,7 @@ import CameraSVG from '../assets/icons/icon_photo';
 import ChevronRight from '../assets/icons/icon_chevron_right';
 import CloseSVG from '../assets/icons/icon_close';
 import { FirebaseContext } from '../context/Firebase';
+import LoadingSpinner from '../components/LoadingSpinner';
 import ReactCrop from 'react-image-crop';
 import S3 from 'aws-s3-pro';
 import TextareaAutosize from 'react-textarea-autosize';
@@ -18,7 +19,7 @@ const UploadStyles = styled.div`
   width: 500px;
   max-width: 95%;
   margin: 10vh 0 0;
-  height: 90vh;
+
   background: ${props => props.theme.colors.white};
   z-index: 600;
   transition: 0.5s;
@@ -27,7 +28,7 @@ const UploadStyles = styled.div`
     .top-content {
       width: 500px;
       max-width: 100%;
-      height: 65vh;
+      height: 90vh;
       margin: 0 auto;
       background: ${props => props.theme.colors.white};
       .title-buttons {
@@ -123,7 +124,6 @@ const UploadStyles = styled.div`
       border: none;
       padding: 5px;
       background: transparent;
-
     }
     button {
       background: transparent !important;
@@ -237,6 +237,12 @@ const CropperComponent = ({ src, setImageString, uploadS3File, comment, setComme
               </button>
             )}
           </div>
+          {loading && (
+            <>
+              <LoadingSpinner color='black' />
+              <p>Submitting Comment</p>
+            </>
+          )}
         </>
       ) : (
         <>
@@ -277,7 +283,6 @@ const SelectPhoto = ({ photoRef, photoId, setUploadPhotoComment }) => {
     setLoading(true);
     await S3Client.uploadFile(convertFile(imageString, newFileName), newFileName)
       .then(data => {
-        console.log(data);
         setCurrentPictureUrl(data.location);
         photoRef
           .collection('comments')
