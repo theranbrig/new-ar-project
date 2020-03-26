@@ -1,11 +1,10 @@
 import React, { useContext, useEffect, useState } from 'react';
 
+import FeedPhoto from '../components/FeedPhoto';
 import { FirebaseContext } from '../context/Firebase';
 import { Helmet } from 'react-helmet';
 import LoadingSpinner from '../components/LoadingSpinner';
 import TopTitle from '../components/TopTitle';
-import UserInfo from '../components/UserInfo';
-import UserPhoto from '../components/UserPhoto';
 import styled from 'styled-components';
 import { useParams } from 'react-router-dom';
 
@@ -57,7 +56,7 @@ const Feed = () => {
       </Helmet>
       <TopTitle title={'YZED Feed'} />
       {photos.map(photo => (
-        <UserPhoto photo={photo} key={photo.imageUrl} userData={userData} />
+        <FeedPhoto photo={photo} key={photo.imageUrl} userData={userData} />
       ))}
     </UserStyles>
   );

@@ -10,7 +10,7 @@ import { Helmet } from 'react-helmet';
 import { Link } from 'react-router-dom';
 import LoadingSpinner from '../components/LoadingSpinner';
 import MainPageCarousel from '../components/PhotoCarousel';
-import MediaViewer from '../components/ModelViewer';
+import ModelViewer from '../components/ModelViewer';
 import ProductThumbs from '../components/ProductThumbs';
 import { formatPrice } from '../utilities/formatting';
 import moment from 'moment';
@@ -21,19 +21,20 @@ const HomeStyles = styled.div`
   text-align: center;
   font-family: ${props => props.theme.fonts.main};
   color: ${props => props.theme.colors.black};
-  margin-top: calc(5vh + 100px);
-  max-width: 500px;
+  margin-top: calc(10vh + 20px);
+  width: 500px;
+  max-width: 100%;
   background: ${props => props.theme.colors.white};
   @media (max-width: 576px) {
     width: 100% !important ;
   }
   model-viewer {
-    width: 450px;
+    width: 90%;
     height: 300px;
     margin: 0 auto;
     z-index: 0;
     @media (max-width: 576px) {
-      max-width: 90%;
+      max-width: 80%;
     }
   }
   .main-product-title {
@@ -86,14 +87,14 @@ const HomeStyles = styled.div`
   .product-buttons {
     padding: 10px 0;
     width: 95%;
-    margin: 20px 2.5% 0;
+    margin: 20px auto 0;
     display: grid;
-    grid-template-columns: 120px 1fr 120px;
+    grid-template-columns: 110px 1fr 110px;
     justify-items: center;
     align-content: center;
     .product-link {
       position: relative;
-      width: 120px;
+      width: 110px;
       height: 25px;
       align-self: center;
       a {
@@ -251,14 +252,13 @@ const Home = () => {
               <strong>{mainProduct.brand}</strong> {mainProduct.name}
             </h3>
           </div>
-          <MediaViewer
+          <ModelViewer
             glbFile={mainProduct.glbFile}
             usdzFile={mainProduct.usdzFile}
             productId='5NlpClokHFwJG6Pl7IYz'
           />
         </>
       )}
-
       <section className='product-buttons'>
         <div className='square-area'></div>
         <RoundARButton

@@ -31,6 +31,7 @@ const LoginStyles = styled.div`
       margin: 10px auto;
       padding: 0 10px;
       background: ${props => props.theme.colors.white};
+      -webkit-appearance: none;
     }
     .invalid input {
       color: tomato;

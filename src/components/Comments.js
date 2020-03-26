@@ -419,9 +419,7 @@ const Comments = () => {
               <BackButton />
               <h1>Replies ({comments.length})</h1>
             </div>
-            <div className='right'>
-              <FollowButton photoId={photoId} />
-            </div>
+            <div className='right'>{userData.loggedIn && <FollowButton photoId={photoId} />}</div>
           </section>
           <section className='buttons'>
             <div className='left-buttons'>
@@ -470,7 +468,7 @@ const Comments = () => {
                   }}>
                   <CameraSVG fill='white' />
                 </button>
-                <CreateComments sendComment={sendComment} />
+                {userData.loggedIn && <CreateComments sendComment={sendComment} />}
               </div>
             </section>
           )}
@@ -481,12 +479,10 @@ const Comments = () => {
 };
 
 const CommentsStyles = styled.div`
-  margin-top: 10vh;
+  margin: 10vh auto 0;
   width: 500px;
   max-width: 95%;
-  margin: 12vh auto 0;
-  height: 90vh;
-  padding: 0 10px;
+  min-height: calc(90vh - 80px);
   background: ${props => props.theme.colors.white};
   .bottom {
     bottom: 0;

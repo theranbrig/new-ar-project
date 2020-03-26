@@ -41,7 +41,7 @@ const ProductContainer = styled.div`
   background: ${props => props.theme.colors.white};
   position: relative;
   model-viewer {
-    width: 95%;
+    width: 85%;
     height: 400px;
     margin: 0 auto;
   }
@@ -65,13 +65,14 @@ const ProductContainer = styled.div`
       border: 1px solid ${props => props.theme.colors.lightGrey};
     }
     svg {
-      height: 70px;
-      width: 70px;
+
+      width: 60px;
+      height: 60px;
       display: block;
       margin: 0 auto;
       position: absolute;
-      top: calc(50% - 40px);
-      left: calc(50% - 40px);
+      top: calc(50% - 30px);
+      left: calc(50% - 30px);
       stroke: rgba(255, 255, 255, 0.70);
       stroke-width: 0.4px;
       stroke-linejoin: round;

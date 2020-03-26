@@ -46,7 +46,7 @@ const Tag = ({ tag, setShowTags }) => {
   );
 };
 
-const UserPhoto = ({ photo, userName, userData }) => {
+const UserPhoto = ({ photo, userData }) => {
   const [showTags, setShowTags] = useState(false);
   const [isLiked, setIsLiked] = useState(false);
   const [loading, setLoading] = useState(false);
@@ -54,6 +54,7 @@ const UserPhoto = ({ photo, userName, userData }) => {
   const [commentNumber, setCommentNumber] = useState(0);
   const [likeLoading, setLikeLoading] = useState(false);
   const [currentPhoto, setCurrentPhoto] = useState(null);
+  const [photoOwner, setPhotoOwner] = useState(null);
 
   const { setOpenOptions, openOptions, setBodyScroll } = useContext(ModalContext);
 
@@ -106,8 +107,15 @@ const UserPhoto = ({ photo, userName, userData }) => {
             setIsLiked(false);
           }
         }
-        setLikeLoading(false);
-        setLoading(false);
+        dbh
+          .collection('users')
+          .doc(photo.userId)
+          .get()
+          .then(doc => {
+            setPhotoOwner({ ...doc.data() });
+            setLikeLoading(false);
+            setLoading(false);
+          });
       });
   };
 
@@ -125,6 +133,7 @@ const UserPhoto = ({ photo, userName, userData }) => {
   };
 
   useEffect(() => {
+    console.log(photo);
     getPhotoData();
     return () => {
       getPhotoData();
@@ -177,7 +186,7 @@ const UserPhoto = ({ photo, userName, userData }) => {
         <p className='date'>{moment.unix(currentPhoto.addedOn.seconds).fromNow()}</p>
       </div>
       <div className='description'>
-        <h4>@{userName}</h4>
+        <h4>@{photoOwner.userName}</h4>
         <p>
           {currentPhoto.description.split('\n').map((item, key) => {
             return (
