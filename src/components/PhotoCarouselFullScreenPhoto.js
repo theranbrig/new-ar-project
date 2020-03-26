@@ -138,7 +138,13 @@ const PhotoCarouselFullScreenPhoto = ({ photo, userData, likePhoto }) => {
   return (
     <FullScreenPhotoStyles>
       <div className='image gradient'>
-        <img src={photo.url} alt={photo.description} />
+        <Link
+          onClick={() => {
+            enableBodyScroll(body);
+          }}
+          to={`/comments/${photo.id}`}>
+          <img src={photo.url} alt={photo.id} />
+        </Link>
       </div>
       {user && (
         <section className='photo-info'>

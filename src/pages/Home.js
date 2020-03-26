@@ -4,6 +4,7 @@ import { BlackButton, RoundARButton } from '../utilities/ReusableStyles';
 import React, { useContext, useEffect, useState } from 'react';
 
 import ArrowIcon from '../assets/images/down-arrow.png';
+import ChevronRight from '../assets/icons/icon_chevron_right';
 import { FirebaseContext } from '../context/Firebase';
 import { Helmet } from 'react-helmet';
 import { Link } from 'react-router-dom';
@@ -87,15 +88,14 @@ const HomeStyles = styled.div`
     width: 95%;
     margin: 20px 2.5% 0;
     display: grid;
-    grid-template-columns: 100px 1fr 100px;
+    grid-template-columns: 120px 1fr 120px;
     justify-items: center;
-
     align-content: center;
     .product-link {
       position: relative;
-      width: 100px;
+      width: 120px;
       height: 25px;
-        align-self: center;
+      align-self: center;
       a {
         color: ${props => props.theme.colors.grey};
         height: 16px;
@@ -109,13 +109,18 @@ const HomeStyles = styled.div`
           content: '';
           position: absolute;
           bottom: 0;
-          left: 5%;
-
+          left: 8%;
           height: 1px;
           background: ${props => props.theme.colors.mediumGrey};
           display: block;
           width: 90px;
         }
+      }
+      svg {
+        height: 0.7rem;
+        display: inline-block;
+        vertical-align: middle;
+        margin-left: 5px;
       }
     }
     .square-area {
@@ -265,6 +270,7 @@ const Home = () => {
         </RoundARButton>
         <div className='product-link'>
           <Link to={mainProduct ? `/item/${mainProduct.id}` : '/featured'}>View product</Link>
+          <ChevronRight color='#7c7c7c' />
         </div>
       </section>
       <section className='discover-box'>
@@ -309,7 +315,6 @@ const Home = () => {
             YZED is a platform for creative consumers to engage with their favourite brands through
             cutting edge technology.
           </p>
-
           <BlackButton>
             <Link to='/login'>BECOME A YZER</Link>
           </BlackButton>
