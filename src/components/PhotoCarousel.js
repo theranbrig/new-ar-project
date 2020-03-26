@@ -147,7 +147,8 @@ const MainPageCarousel = ({ title, product, brand }) => {
       .then(querySnapshot => {
         let tempItems = [];
         querySnapshot.docs.forEach(doc => {
-          tempItems.push({ id: doc.id, ...doc.data() });
+          const url = doc.data().url.replace('/yzed/', '/yzed/300x200/');
+          tempItems.push({ id: doc.id, ...doc.data(), miniPhoto: url });
         });
         setPhotos(tempItems);
       });
@@ -173,7 +174,7 @@ const MainPageCarousel = ({ title, product, brand }) => {
                 disableBodyScroll(body);
                 setShowFullScreen(index);
               }}>
-              <img src={photo.url} alt={photo.id} />
+              <img src={photo.miniPhoto} alt={photo.id} />
             </div>
           ))}
         </Carousel>
