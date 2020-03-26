@@ -2,6 +2,7 @@ import React, { useContext, useEffect, useState } from 'react';
 
 import Div100vh from 'react-div-100vh';
 import EditProfile from '../components/ProfileEdit';
+import Favorites from '../components/Favorites';
 import { FirebaseContext } from '../context/Firebase';
 import { Helmet } from 'react-helmet';
 import LoadingSpinner from '../components/LoadingSpinner';
@@ -82,6 +83,7 @@ const AddPhotoButton = styled.button`
   border: 1px solid ${props => props.theme.colors.lightGrey} !important;
   font-family: ${props => props.theme.fonts.main};import { Div100vh } from 'react-div-100vh';
   font-weight: 600;
+
   svg {
     height: 80%;
     margin-right: 5px;
@@ -159,6 +161,7 @@ const Profile = () => {
                 userData={userData}
               />
             ))}
+            <Favorites favorites={userData.favoriteProducts} />
             <section className='bottom-buttons'>
               {userData.role === 'ADMIN' && (
                 <WhiteButtonClick onClick={() => history.push('/admin')}>ADMIN</WhiteButtonClick>
