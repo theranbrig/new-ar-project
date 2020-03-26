@@ -102,7 +102,7 @@ const Following = ({ userId }) => {
   if (loading)
     return (
       <FollowingStyles>
-        <LoadingSpinner color='black' />;
+        <LoadingSpinner color='black' />
       </FollowingStyles>
     );
 
@@ -128,7 +128,7 @@ const Following = ({ userId }) => {
       <div className='followed-items'>
         {(!followedItems.length || !followedThreads.length) && (
           <p className='no-products'>
-            Nothing followed yet. Explore more in <Link to='/featured'>Featured Products</Link>.
+            Nothing followed yet. <Link to='/feed'>Explore more</Link> in the photo feed.
           </p>
         )}
         {sortByDate

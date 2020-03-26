@@ -6,6 +6,7 @@ import CloseSVG from '../assets/icons/icon_close';
 import { FirebaseContext } from '../context/Firebase';
 import { LazyLoadImage } from 'react-lazy-load-image-component';
 import { Link } from 'react-router-dom';
+import LoadingSpinner from '../components/LoadingSpinner';
 import MinusSVG from '../assets/icons/icon_minus';
 import moment from 'moment';
 import styled from 'styled-components';
@@ -65,10 +66,12 @@ export const FollowedItemStyles = styled.div`
 const FollowedItem = ({ item, setFollowedItems }) => {
   const [commenter, setCommenter] = useState(null);
   const [lastVisit, setLastVisit] = useState(null);
+  const [loading, setLoading] = useState(false);
 
   const { dbh, firebase, userData } = useContext(FirebaseContext);
 
   useEffect(() => {
+    setLoading(true);
     dbh
       .collection('users')
       .doc(item.userId)
@@ -77,8 +80,9 @@ const FollowedItem = ({ item, setFollowedItems }) => {
         setCommenter({ id: doc.id, ...doc.data() });
         const match = document.cookie.match(new RegExp('(^| )' + 'previousVisitDate' + '=([^;]+)'));
         if (match) {
-          setLastVisit(match[2]);
+          setLastVisit(parseInt(match[2] / 1000));
         }
+        setLoading(false);
       });
   }, []);
 
@@ -92,6 +96,13 @@ const FollowedItem = ({ item, setFollowedItems }) => {
         });
     }
   };
+
+  if (loading)
+    return (
+      <FollowedItemStyles>
+        <LoadingSpinner color='black' />
+      </FollowedItemStyles>
+    );
 
   return (
     <FollowedItemStyles>

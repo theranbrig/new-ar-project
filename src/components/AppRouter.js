@@ -7,6 +7,7 @@ import Comments from '../pages/Comments';
 import CreateProduct from '../pages/CreateProduct';
 import EditProduct from '../pages/EditProduct';
 import FeaturedProducts from '../pages/FeaturedProducts';
+import Feed from '../pages/Feed';
 import Home from '../pages/Home';
 import Login from '../pages/Login';
 import MainSearchPage from '../pages/Search';
@@ -59,6 +60,9 @@ export default function App() {
           {/* <Route exact path='/sale/:value'>
             <Sale />
           </Route> */}
+          <Route path='/feed'>
+            <Feed />
+          </Route>
           <Route path='/threads/:userId'>
             <Threads />
           </Route>

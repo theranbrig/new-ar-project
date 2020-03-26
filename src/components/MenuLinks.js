@@ -187,6 +187,14 @@ const MenuLinks = () => {
                 }}>
                 Featured
               </NavLink>
+              <NavLink
+                to='/feed'
+                activeClassName='active-link'
+                onClick={() => {
+                  setModals();
+                }}>
+                Feed
+              </NavLink>
               {userData.loggedIn && (
                 <NavLink
                   to={`/threads/${userData.id}`}

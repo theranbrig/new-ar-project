@@ -251,6 +251,9 @@ export const EditUserStyles = styled.div`
       vertical-align: middle;
     }
   }
+  p.max {
+    color: tomato !important;
+  }
 `;
 
 const EditUserInfo = ({
@@ -433,7 +436,9 @@ const CropperComponent = ({
               setStatus('SAVE');
             }}
           />
-          <p>{editDescription.length} / 150</p>
+          <p className={editDescription.length === 150 ? 'max' : 'normal'}>
+            {editDescription.length} / 150
+          </p>
         </div>
       </section>
       <section className='save-buttons'>
