@@ -59,6 +59,7 @@ const FirebaseSearch = () => {
       <SearchStyles>
         <section className='search-box'>
           <input
+            placeholder='Search'
             aria-label='search input'
             value={searchQuery}
             onChange={e => {
@@ -94,7 +95,6 @@ const FirebaseSearch = () => {
             );
           })}
         </section>
-
         <section className='products-list'>
           {products.slice(0, 5).map(product => (
             <Link
@@ -155,6 +155,10 @@ const SearchStyles = styled.div`
       font-family: ${props => props.theme.fonts.main};
       padding: 3px;
       -webkit-border-radius: 0px;
+      &::placeholder {
+        color: ${props => props.theme.colors.white};
+        font-family: ${props => props.theme.fonts.main};
+      }
     }
     svg {
       height: 25px;

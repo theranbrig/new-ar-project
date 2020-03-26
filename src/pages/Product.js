@@ -228,7 +228,7 @@ const Product = () => {
   const { id } = useParams();
 
   const { dbh } = useContext(FirebaseContext);
-  const { openShareLinks, setOpenShareLinks } = useContext(ModalContext);
+  const { openShareLinks, setOpenShareLinks, setBodyScroll } = useContext(ModalContext);
 
   useEffect(() => {
     setLoading(true);
@@ -262,7 +262,6 @@ const Product = () => {
     <ProductContainer>
       <Helmet>{/* <title>YZED - {product && product.name.toUpperCase()}</title> */}</Helmet>
       {isAdded && <AddToCartSuccessModal setIsAdded={setIsAdded} />}
-
       {openShareLinks && <Share product={product} />}
       <section className='product-top'>
         <div className='title-section'>
@@ -319,6 +318,7 @@ const Product = () => {
               aria-label='Share'
               onClick={() => {
                 setOpenShareLinks(true);
+                setBodyScroll(true);
               }}>
               <ShareSVG />
             </button>

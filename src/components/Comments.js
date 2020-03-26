@@ -6,6 +6,7 @@ import React, { useContext, useEffect, useState } from 'react';
 import BackButton from '../components/BackButton';
 import CameraSVG from '../assets/icons/icon_camera';
 import ChevronRight from '../assets/icons/icon_chevron_right';
+import Div100vh from 'react-div-100vh';
 import EmptyUpVoteSVG from '../assets/icons/icon_upvote_empty';
 import FilledUpVoteSVG from '../assets/icons/icon_upvote_filled';
 import { FirebaseContext } from '../context/Firebase';
@@ -398,91 +399,92 @@ const Comments = () => {
     );
 
   return (
-    <CommentsStyles>
-      {uploadPhotoComment ? (
-        <UploadPhotoComment
-          photoRef={photoRef}
-          photoId={photoId}
-          setUploadPhotoComment={setUploadPhotoComment}
-        />
-      ) : selectedReplies ? (
-        <Replies
-          sendReply={sendReply}
-          comment={selectedReplies}
-          setSelectedReplies={setSelectedReplies}
-          photoRef={photoRef}
-        />
-      ) : (
-        <>
-          <section className='top-section'>
-            <div className='left'>
-              <BackButton />
-              <h1>Replies ({comments.length})</h1>
-            </div>
-            <div className='right'>{userData.loggedIn && <FollowButton photoId={photoId} />}</div>
-          </section>
-          <section className='buttons'>
-            <div className='left-buttons'>
-              <button
-                className='sort-button'
-                disabled={!dateSort}
-                onClick={() => sortByPopularity()}>
-                BEST
-              </button>
-              <button className='sort-button' disabled={dateSort} onClick={() => sortByDate()}>
-                NEWEST
-              </button>
-            </div>
-            <div className='right-buttons'>
-              <button
-                disabled={hideCommentOnlyPosts}
-                className='toggle-button'
-                onClick={() => togglePhotoPosts()}>
-                <PictureSVG fill={hidePhotos && '#c7c7c7'} />
-              </button>
-              <button
-                disabled={hidePhotos}
-                className='toggle-button'
-                onClick={() => toggleCommentPosts()}>
-                <TextSVG fill={hideCommentOnlyPosts && '#c7c7c7'} />
-              </button>
-            </div>
-          </section>
-          {comments.map(comment => (
-            <Comment
-              key={comment.id}
-              comment={comment}
-              setSelectedReplies={setSelectedReplies}
-              photoRef={photoRef}
-              toggleUpvoteComment={toggleUpvoteComment}
-            />
-          ))}
-          {userData.loggedIn && (
-            <section className='bottom'>
-              <div className='comment-inputs'>
-                <LazyLoadImage src={userData.photo} alt={userData.userName} effect='blur' />
+    <Div100vh>
+      <CommentsStyles>
+        {uploadPhotoComment ? (
+          <UploadPhotoComment
+            photoRef={photoRef}
+            photoId={photoId}
+            setUploadPhotoComment={setUploadPhotoComment}
+          />
+        ) : selectedReplies ? (
+          <Replies
+            sendReply={sendReply}
+            comment={selectedReplies}
+            setSelectedReplies={setSelectedReplies}
+            photoRef={photoRef}
+          />
+        ) : (
+          <>
+            <section className='top-section'>
+              <div className='left'>
+                <BackButton />
+                <h1>Replies ({comments.length})</h1>
+              </div>
+              <div className='right'>{userData.loggedIn && <FollowButton photoId={photoId} />}</div>
+            </section>
+            <section className='buttons'>
+              <div className='left-buttons'>
                 <button
-                  onClick={() => {
-                    setUploadPhotoComment(!uploadPhotoComment);
-                    console.log(uploadPhotoComment);
-                  }}>
-                  <CameraSVG fill='white' />
+                  className='sort-button'
+                  disabled={!dateSort}
+                  onClick={() => sortByPopularity()}>
+                  BEST
                 </button>
-                {userData.loggedIn && <CreateComments sendComment={sendComment} />}
+                <button className='sort-button' disabled={dateSort} onClick={() => sortByDate()}>
+                  NEWEST
+                </button>
+              </div>
+              <div className='right-buttons'>
+                <button
+                  disabled={hideCommentOnlyPosts}
+                  className='toggle-button'
+                  onClick={() => togglePhotoPosts()}>
+                  <PictureSVG fill={hidePhotos && '#c7c7c7'} />
+                </button>
+                <button
+                  disabled={hidePhotos}
+                  className='toggle-button'
+                  onClick={() => toggleCommentPosts()}>
+                  <TextSVG fill={hideCommentOnlyPosts && '#c7c7c7'} />
+                </button>
               </div>
             </section>
-          )}
-        </>
-      )}
-    </CommentsStyles>
+            {comments.map(comment => (
+              <Comment
+                key={comment.id}
+                comment={comment}
+                setSelectedReplies={setSelectedReplies}
+                photoRef={photoRef}
+                toggleUpvoteComment={toggleUpvoteComment}
+              />
+            ))}
+            {userData.loggedIn && (
+              <section className='bottom'>
+                <div className='comment-inputs'>
+                  <LazyLoadImage src={userData.photo} alt={userData.userName} effect='blur' />
+                  <button
+                    onClick={() => {
+                      setUploadPhotoComment(!uploadPhotoComment);
+                      console.log(uploadPhotoComment);
+                    }}>
+                    <CameraSVG fill='white' />
+                  </button>
+                  {userData.loggedIn && <CreateComments sendComment={sendComment} />}
+                </div>
+              </section>
+            )}
+          </>
+        )}
+      </CommentsStyles>
+    </Div100vh>
   );
 };
 
 const CommentsStyles = styled.div`
-  margin: 10vh auto 0;
+  padding-top: 10vh;
   width: 500px;
   max-width: 95%;
-  min-height: calc(90vh - 80px);
   background: ${props => props.theme.colors.white};
   .bottom {
     bottom: 0;

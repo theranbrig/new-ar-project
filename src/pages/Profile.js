@@ -1,5 +1,6 @@
 import React, { useContext, useEffect, useState } from 'react';
 
+import Div100vh from 'react-div-100vh';
 import EditProfile from '../components/ProfileEdit';
 import { FirebaseContext } from '../context/Firebase';
 import { Helmet } from 'react-helmet';
@@ -15,10 +16,10 @@ import { useHistory } from 'react-router-dom';
 export const ProfileStyles = styled.div`
   width: 500px;
   max-width: 95%;
-  margin: 10vh auto 0;
-  font-family: Montserrat, sans-serif;
+  padding-top: 10vh;
+  margin: 0 auto;
+  font-family: ${props => props.theme.fonts.main};
   text-align: center;
-  min-height: 80vh;
   .buttons {
     width: 90%;
     margin: 0 auto;
@@ -79,8 +80,7 @@ const AddPhotoButton = styled.button`
   border-radius: 25px;
   margin-bottom: 20px;
   border: 1px solid ${props => props.theme.colors.lightGrey} !important;
-  font-family: ${props => props.theme.fonts.main};
-
+  font-family: ${props => props.theme.fonts.main};import { Div100vh } from 'react-div-100vh';
   font-weight: 600;
   svg {
     height: 80%;
@@ -127,52 +127,56 @@ const Profile = () => {
 
   if (loading || userLoading)
     return (
-      <ProfileStyles>
-        <LoadingSpinner color='black' />
-      </ProfileStyles>
+      <Div100vh>
+        <ProfileStyles>
+          <LoadingSpinner color='black' />
+        </ProfileStyles>
+      </Div100vh>
     );
 
   return (
-    <ProfileStyles>
-      <Helmet>
-        <title>YZED - {userData.userName.toUpperCase()}</title>
-      </Helmet>
-      {!editProfile ? (
-        <>
-          <UserInfo userData={userData} photos={photos} />
-          <section className='buttons'>
-            <AddPhotoButton
-              onClick={() => {
-                setEditProfile(true);
-              }}>
-              <PencilSVG /> EDIT PROFILE
-            </AddPhotoButton>
-          </section>
-          {photos.map(photo => (
-            <UserPhoto
-              photo={photo}
-              userName={userData.userName}
-              key={photo.id}
-              userData={userData}
-            />
-          ))}
-          <section className='bottom-buttons'>
-            {userData.role === 'ADMIN' && (
-              <WhiteButtonClick onClick={() => history.push('/admin')}>ADMIN</WhiteButtonClick>
-            )}
-            <WhiteButtonClick
-              onClick={() => {
-                logoutUser();
-                history.push('/');
-              }}>
-              SIGN OUT
-            </WhiteButtonClick>
-          </section>
-        </>
-      ) : (
-        <EditProfile setEditProfile={setEditProfile} />
-      )}
-    </ProfileStyles>
+    <Div100vh>
+      <ProfileStyles>
+        <Helmet>
+          <title>YZED - {userData.userName.toUpperCase()}</title>
+        </Helmet>
+        {!editProfile ? (
+          <>
+            <UserInfo userData={userData} photos={photos} />
+            <section className='buttons'>
+              <AddPhotoButton
+                onClick={() => {
+                  setEditProfile(true);
+                }}>
+                <PencilSVG /> EDIT PROFILE
+              </AddPhotoButton>
+            </section>
+            {photos.map(photo => (
+              <UserPhoto
+                photo={photo}
+                userName={userData.userName}
+                key={photo.id}
+                userData={userData}
+              />
+            ))}
+            <section className='bottom-buttons'>
+              {userData.role === 'ADMIN' && (
+                <WhiteButtonClick onClick={() => history.push('/admin')}>ADMIN</WhiteButtonClick>
+              )}
+              <WhiteButtonClick
+                onClick={() => {
+                  logoutUser();
+                  history.push('/');
+                }}>
+                SIGN OUT
+              </WhiteButtonClick>
+            </section>
+          </>
+        ) : (
+          <EditProfile setEditProfile={setEditProfile} />
+        )}
+      </ProfileStyles>
+    </Div100vh>
   );
 };
 

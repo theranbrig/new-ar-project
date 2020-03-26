@@ -13,7 +13,7 @@ export const ModalStyles = styled.div`
   box-shadow: 0px 10px 0px 0px rgba(0, 0, 3, 0.28);
   transition: all 0.5s ease-in-out;
   transform-origin: left top;
-  background: #272727f7;
+  background: #272727f2;
   position: fixed;
   bottom: 0;
   left: 0;
@@ -31,14 +31,14 @@ export const ModalStyles = styled.div`
     left: 0;
     bottom: 0;
     .buttons {
-        width: 500px;
+      width: 500px;
       max-width: 90%;
-      margin: 0 auto;
+      margin: 20px auto 0;
       display: block;
       height: 60px;
       button {
-      background: ${props => props.theme.colors.white};
-        width: 80%;
+        background: ${props => props.theme.colors.white};
+        width: 90%;
         height: 45px;
         border-radius: 25px;
         line-height: 42px;

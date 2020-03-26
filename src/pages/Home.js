@@ -110,9 +110,9 @@ const HomeStyles = styled.div`
           content: '';
           position: absolute;
           bottom: 0;
-          left: 8%;
+          left: 6%;
           height: 1px;
-          background: ${props => props.theme.colors.mediumGrey};
+          background: ${props => props.theme.colors.grey};
           display: block;
           width: 90px;
         }
@@ -195,7 +195,6 @@ const HomeStyles = styled.div`
         font-weight: 300;
         strong {
           font-weight: 700;
-
         }
       }
       p {

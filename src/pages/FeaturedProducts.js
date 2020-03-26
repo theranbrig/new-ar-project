@@ -17,6 +17,7 @@ export const FeaturedStyles = styled.div`
     grid-template-columns: 1fr 1fr;
     grid-template-rows: repeat(3, 1fr);
     grid-gap: 20px;
+    padding-bottom: 50px;
     .product {
       width: 100%;
       margin: 20px auto;

@@ -139,10 +139,14 @@ export const ShareStyles = styled.div`
 const Share = ({ product, setShareOpen }) => {
   const [link, setLink] = useState(`yzed.101.global/item/${product.id}`);
   const [copied, setCopied] = useState(false);
-  const { setOpenShareLinks, openShareLinks } = useContext(ModalContext);
-  console.log(product);
+  const { setOpenShareLinks, openShareLinks, setBodyScroll } = useContext(ModalContext);
+
   return (
-    <ShareStyles onClick={() => setOpenShareLinks(false)}>
+    <ShareStyles
+      onClick={() => {
+        setBodyScroll(false);
+        setOpenShareLinks(false);
+      }}>
       <section
         className='content'
         onClick={e => {
