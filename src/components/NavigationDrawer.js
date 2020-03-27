@@ -18,7 +18,7 @@ import styled from 'styled-components';
 
 const StyledBurger = styled.button`
   position: fixed;
-  top: 3vh;
+  top: calc(5vh - 1rem);
   left: 10px;
   display: flex;
   flex-direction: column;
@@ -34,7 +34,7 @@ const StyledBurger = styled.button`
     outline: none;
   }
   @media (max-width: 576px) {
-    top: 3vh;
+    top: calc(5vh - 1rem);
     left: 15px;
   }
   div {
