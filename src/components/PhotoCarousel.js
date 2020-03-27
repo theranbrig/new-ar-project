@@ -8,6 +8,7 @@ import Carousel from 'react-multi-carousel';
 import CloseSVG from '../assets/icons/icon_close';
 import { FirebaseContext } from '../context/Firebase';
 import { LazyLoadComponent } from 'react-lazy-load-image-component';
+import { ModalContext } from '../context/Modal';
 import PhotoCarouselFullScreenPhoto from './PhotoCarouselFullScreenPhoto';
 import TagFilledSVG from '../assets/icons/icon_tag_filled';
 import { motion } from 'framer-motion';
@@ -123,6 +124,11 @@ const MainPageCarousel = ({ title, product, brand }) => {
   const [photos, setPhotos] = useState([]);
 
   const { dbh, userData, firebase } = useContext(FirebaseContext);
+  const { setLikePhoto } = useContext(ModalContext);
+
+  const { sliderPhotos, sliderPhotoIndex, setOpenFullScreenSlider, setSliderPhotos } = useContext(
+    ModalContext
+  );
 
   const likePhoto = (photo, liked) => {
     if (liked) {
@@ -178,14 +184,16 @@ const MainPageCarousel = ({ title, product, brand }) => {
                 key={photo.id}
                 onClick={() => {
                   disableBodyScroll(body);
-                  setShowFullScreen(index);
+                  setOpenFullScreenSlider(index);
+                  setSliderPhotos(photos);
+                  // setLikePhoto(likePhoto);
                 }}>
                 <img src={photo.url} alt={photo.id} rel='preload' />
               </div>
             ))}
           </Carousel>
         </LazyLoadComponent>
-        {showFullScreen.length !== 0 && (
+        {/* {showFullScreen.length !== 0 && (
           <FullScreenSlider
             photos={photos}
             setShowFullScreen={setShowFullScreen}
@@ -193,7 +201,7 @@ const MainPageCarousel = ({ title, product, brand }) => {
             likePhoto={likePhoto}
             showFullScreen={showFullScreen}
           />
-        )}
+        )} */}
       </div>
     </SliderStyles>
   );
@@ -263,7 +271,13 @@ const FullSliderStyles = styled.div`
   }
 `;
 
-const FullScreenSlider = ({ photos, setShowFullScreen, userData, likePhoto, showFullScreen }) => {
+export const FullScreenSlider = ({
+  sliderPhotos,
+  setOpenFullScreenSlider,
+  userData,
+  likePhoto,
+  openFullScreenSlider,
+}) => {
   const fullScreenRef = useRef();
 
   const fullResponsive = {
@@ -287,46 +301,41 @@ const FullScreenSlider = ({ photos, setShowFullScreen, userData, likePhoto, show
 
   useEffect(() => {
     if (fullScreenRef) {
-      fullScreenRef.current.goToSlide(showFullScreen);
+      fullScreenRef.current.goToSlide(openFullScreenSlider);
     }
   }, [fullScreenRef]);
-
+  console.log(sliderPhotos);
   return (
-    <motion.div
-      exit={{ opacity: 0, scale: 0 }}
-      initial={{ opacity: 0, scale: 0 }}
-      animate={{ opacity: 1, scale: 1 }}>
-      <FullSliderStyles>
-        <div className='carousel'>
-          <section className='top'>
-            <div className='title'>
-              <h1>Today's Timeline</h1>
-              <h2>Swipe to explore more!</h2>
-            </div>
-            <button
-              onClick={() => {
-                enableBodyScroll(body);
-                setShowFullScreen('');
-              }}>
-              <CloseSVG fill='#fff' />
-            </button>
-          </section>
-          <section className='main-carousel'>
-            <Carousel ref={fullScreenRef} responsive={fullResponsive} swipeable>
-              {photos.map(photo => (
-                <PhotoCarouselFullScreenPhoto
-                  key={photo.id}
-                  photo={photo}
-                  setShowFullScreen={setShowFullScreen}
-                  userData={userData}
-                  likePhoto={likePhoto}
-                />
-              ))}
-            </Carousel>
-          </section>
-        </div>
-      </FullSliderStyles>
-    </motion.div>
+    <FullSliderStyles>
+      <div className='carousel'>
+        <section className='top'>
+          <div className='title'>
+            <h1>Today's Timeline</h1>
+            <h2>Swipe to explore more!</h2>
+          </div>
+          <button
+            onClick={() => {
+              enableBodyScroll(body);
+              setOpenFullScreenSlider('');
+            }}>
+            <CloseSVG fill='#fff' />
+          </button>
+        </section>
+        <section className='main-carousel'>
+          <Carousel ref={fullScreenRef} responsive={fullResponsive} swipeable>
+            {sliderPhotos.map(photo => (
+              <PhotoCarouselFullScreenPhoto
+                key={photo.id}
+                photo={photo}
+                setOpenFullScreenSlider={setOpenFullScreenSlider}
+                userData={userData}
+                likePhoto={likePhoto}
+              />
+            ))}
+          </Carousel>
+        </section>
+      </div>
+    </FullSliderStyles>
   );
 };
 
