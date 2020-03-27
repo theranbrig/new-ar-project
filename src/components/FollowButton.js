@@ -26,7 +26,6 @@ export const FollowButtonStyles = styled.div`
 
 const FollowButton = ({ photoId }) => {
   const [followed, setFollowed] = useState(false);
-  const [followers, setFollowers] = useState([]);
 
   const { dbh, userData, firebase } = useContext(FirebaseContext);
 
@@ -56,7 +55,6 @@ const FollowButton = ({ photoId }) => {
         .collection('userPhotos')
         .doc(photoId)
         .onSnapshot(querySnapshot => {
-          console.log(querySnapshot.data());
           if (querySnapshot.data().followers) {
             setFollowed(querySnapshot.data().followers.some(follower => follower === userData.id));
           }

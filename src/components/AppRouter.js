@@ -21,7 +21,6 @@ import RequestReset from '../pages/ResetRequest';
 import Sale from '../pages/Sale';
 import Shop from '../pages/Shop';
 import ShopCategory from '../pages/ShopCategory';
-import SubmitReset from '../pages/SubmitReset';
 import Subscribe from '../pages/Subscribe';
 import Success from '../pages/SubscribeSuccess';
 import Threads from '../pages/Threads';
@@ -99,9 +98,7 @@ export default function App() {
           <Route path='/request_reset'>
             <RequestReset />
           </Route>
-          <Route path='/reset_password'>
-            <SubmitReset />
-          </Route>
+
           <Route path='/'>
             <Home />
           </Route>

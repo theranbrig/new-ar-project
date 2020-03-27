@@ -3,7 +3,6 @@ import { Link, useParams } from 'react-router-dom';
 import BackButton from '../components/BackButton';
 import { Helmet } from 'react-helmet';
 import React from 'react';
-import ShopThumbs from '../components/ShopThumbs';
 import styled from 'styled-components';
 
 export const ShopCategoryStyles = styled.div`
@@ -59,7 +58,6 @@ const Sale = () => {
       <div className='all-link'>
         <Link to={`/shop`}>BROWSE ALL PRODUCTS</Link>
       </div>
-
     </ShopCategoryStyles>
   );
 };

@@ -8,7 +8,7 @@ export const convertFile = (file, newFileName) => {
   const newBlob = new Blob([ab], {
     type: 'image/png',
   });
-  console.log(newBlob);
+
   function blobToFile(theBlob, fileName) {
     return new File([theBlob], 'my_file.png', {
       type: 'image/png',

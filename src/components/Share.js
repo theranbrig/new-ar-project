@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from 'react';
+import React, { useContext, useState } from 'react';
 
 import CopyLinkSVG from '../assets/icons/icon_copy_link';
 import { CopyToClipboard } from 'react-copy-to-clipboard';
@@ -137,9 +137,9 @@ export const ShareStyles = styled.div`
 `;
 
 const Share = ({ product, setShareOpen }) => {
-  const [link, setLink] = useState(`yzed.me/item/${product.id}`);
+  const [link] = useState(`yzed.me/item/${product.id}`);
   const [copied, setCopied] = useState(false);
-  const { setOpenShareLinks, openShareLinks, setBodyScroll } = useContext(ModalContext);
+  const { setOpenShareLinks, setBodyScroll } = useContext(ModalContext);
 
   return (
     <ShareStyles
@@ -168,31 +168,36 @@ const Share = ({ product, setShareOpen }) => {
           <a
             className='facebook'
             href={`https://www.facebook.com/sharer/sharer.php?u=https://${link}&text=Check%20out%20this%20look%20on%20YZED.%0A%0A&hashtag=%23YZED#`}
-            target='_blank'>
+            target='_blank'
+            rel='noopener noreferrer'>
             <FacebookSVG fill='#fff' />
           </a>
           <a
             className='twitter'
             href={`http://twitter.com/share?text=Check%20out%20this%20look%20on%20YZED.%0A%0A&url=https://${link}&hashtags=YZED,YZEDAR`}
-            target='_blank'>
+            target='_blank'
+            rel='noopener noreferrer'>
             <TwitterSVG fill='#fff' />
           </a>
           <a
             className='whatsapp'
             href={`https://wa.me/?text=Check%20out%20this%20look%20on%20YZED.%0A%0Ahttps://${link}&source=&data=`}
-            target='_blank'>
+            target='_blank'
+            rel='noopener noreferrer'>
             <WhatsAppSVG fill='#fff' />
           </a>
           <a
             className='kakao'
             href={`https://story.kakao.com/s/share?url=https://${link}&text=Check%20out%20this%20look%20on%20YZED.%0A%0A`}
-            target='_blank'>
+            target='_blank'
+            rel='noopener noreferrer'>
             <KakaoSVG />
           </a>
           <a
             className='pinterest'
             href={`http://pinterest.com/pin/create/button/?url=https://${link}&description=Check%20out%20this%20look%20on%20YZED.%0A%0A`}
-            target='_blank'>
+            target='_blank'
+            rel='noopener noreferrer'>
             <PinterestSVG fill='#fff' />
           </a>
         </div>

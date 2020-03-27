@@ -242,9 +242,6 @@ const Product = () => {
           const details = doc.data();
           setProduct({ id, ...details });
           setLoading(false);
-        })
-        .catch(err => {
-          console.log(err);
         });
     };
     getData();

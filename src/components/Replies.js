@@ -309,13 +309,13 @@ const Reply = ({ reply, loading, toggleLikeReply }) => {
   const [user, setUser] = useState();
 
   useEffect(() => {
-    console.log(reply.user);
     dbh
       .collection('users')
       .doc(reply.user.id)
       .get()
       .then(doc => setUser({ ...doc.data() }));
   }, []);
+
   return (
     <div className='reply'>
       {user && (

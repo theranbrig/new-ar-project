@@ -3,7 +3,6 @@ import '@google/model-viewer';
 import { BlackButton, RoundARButton } from '../utilities/ReusableStyles';
 import React, { useContext, useEffect, useState } from 'react';
 
-import ArrowIcon from '../assets/images/down-arrow.png';
 import ChevronRight from '../assets/icons/icon_chevron_right';
 import { FirebaseContext } from '../context/Firebase';
 import { Helmet } from 'react-helmet';
@@ -11,7 +10,6 @@ import { Link } from 'react-router-dom';
 import LoadingSpinner from '../components/LoadingSpinner';
 import MainPageCarousel from '../components/PhotoCarousel';
 import ModelViewer from '../components/ModelViewer';
-import ProductThumbs from '../components/ProductThumbs';
 import { formatPrice } from '../utilities/formatting';
 import moment from 'moment';
 import styled from 'styled-components';
@@ -21,9 +19,10 @@ const HomeStyles = styled.div`
   text-align: center;
   font-family: ${props => props.theme.fonts.main};
   color: ${props => props.theme.colors.black};
-  margin-top: calc(10vh + 20px);
+  padding-top: calc(10vh);
   width: 500px;
   max-width: 100%;
+  min-height: 90vh;
   background: ${props => props.theme.colors.white};
   @media (max-width: 576px) {
     width: 100% !important ;
@@ -40,7 +39,7 @@ const HomeStyles = styled.div`
   .main-product-title {
     width: 450px;
     text-align: left;
-    margin: 0 auto;
+    margin: 20px auto;
     @media (max-width: 576px) {
       max-width: 90%;
     }
@@ -293,15 +292,11 @@ const Home = () => {
           <h3>
             <strong>Today's</strong> timeline
           </h3>
+          <MainPageCarousel brand='YZED' title='DRESS & TUNIC' product='5NlpClokHFwJG6Pl7IYz' />
           <MainPageCarousel
             brand='YZED'
-            title='BODY SUIT AND SKIRT'
-            product='q9qdq22KRhtOBUnqUCSf'
-          />
-          <MainPageCarousel
-            brand='YZED'
-            title='VINYL TRENCH & LATEX DRESS'
-            product='rxvt0XOGtaCl9n4Px9gp'
+            title='BODYSUIT & FOLD SKIRT'
+            product='Yr2FhLca1kxAvm7ZXeoU'
           />
         </div>
       </section>

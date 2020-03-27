@@ -1,7 +1,5 @@
 import React, { useContext } from 'react';
 
-import { FirebaseContext } from '../context/Firebase';
-import FirebaseSearch from './FirebaseSearch';
 import { ModalContext } from '../context/Modal';
 import styled from 'styled-components';
 
@@ -61,7 +59,6 @@ export const ModalStyles = styled.div`
 
 const OptionsModal = ({ photoId, removePhoto }) => {
   const { openOptions, setOpenOptions, setBodyScroll } = useContext(ModalContext);
-  const { dbh } = useContext(FirebaseContext);
 
   return (
     <ModalStyles openOptions={openOptions}>

@@ -1,6 +1,5 @@
-import React, { useContext, useEffect, useState } from 'react';
-
 import BackButton from './BackButton';
+import React from 'react';
 import styled from 'styled-components';
 
 export const TopStyles = styled.div`
@@ -10,7 +9,6 @@ export const TopStyles = styled.div`
   display: flex;
   flex-direction: row;
   justify-content: space-between;
-  padding-top: 20px;
   button,
   div {
     align-self: center;

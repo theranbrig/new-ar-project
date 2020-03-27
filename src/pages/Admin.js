@@ -1,11 +1,9 @@
 import { Link, useHistory } from 'react-router-dom';
 import React, { useContext, useEffect, useState } from 'react';
 
-import FileUpload from '../components/FileUpload';
 import { FirebaseContext } from '../context/Firebase';
 import { Helmet } from 'react-helmet';
 import LoadingSpinner from '../components/LoadingSpinner';
-import { ProductContext } from '../context/Product';
 import TopTitle from '../components/TopTitle';
 import styled from 'styled-components';
 
@@ -42,21 +40,6 @@ export const LoginStyles = styled.div`
     border-radius: 25px;
     margin-top: 50px;
   }
-`;
-
-const BlackButton = styled.button`
-  border: 2px solid ${props => props.theme.colors.black};
-  border-radius: 0px;
-  height: 52px;
-  display: block;
-  margin: 0 auto;
-  font-size: 1.2rem;
-  padding: 5px 80px;
-  font-family: ${props => props.theme.fonts.main};
-  background: ${props => props.theme.colors.black};
-  color: white;
-  min-width: 284px;
-  margin-bottom: 10px;
 `;
 
 const Admin = () => {

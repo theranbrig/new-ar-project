@@ -1,9 +1,7 @@
 import '@google/model-viewer';
 
-import React, { useState } from 'react';
-
+import React from 'react';
 import styled from 'styled-components';
-import { useHistory } from 'react-router-dom';
 
 export const ModelStyles = styled.div`
   button {
@@ -39,9 +37,7 @@ export const ModelStyles = styled.div`
   }
 `;
 
-
 const ModelViewer = ({ glbFile, usdzFile, imageUrl, productId, displayLink }) => {
-  const [stateGLB, setStateGLB] = useState('');
   return (
     <ModelStyles className='model-box'>
       <model-viewer

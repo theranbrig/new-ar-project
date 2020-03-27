@@ -114,7 +114,7 @@ const AddToCart = ({ sizes, product, setIsAdded }) => {
         <BlackButton
           disabled={!selectedSize || !quantity}
           onClick={() => {
-            console.log(product, selectedSize, quantity);
+     
             addItemToCart(product, selectedSize, quantity);
             setIsAdded(true);
           }}>

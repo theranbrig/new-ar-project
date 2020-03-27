@@ -1,20 +1,19 @@
-import { Link, useHistory } from 'react-router-dom';
 import React, { useContext, useEffect, useState } from 'react';
 
-import BackButton from '../components/BackButton';
 import CheckSVG from '../assets/icons/icon_success_check';
+import Div100vh from 'react-div-100vh';
 import Error from '../components/Error';
 import { FirebaseContext } from '../context/Firebase';
 import { Helmet } from 'react-helmet';
 import TopTitle from '../components/TopTitle';
 import styled from 'styled-components';
+import { useHistory } from 'react-router-dom';
 
 const LoginStyles = styled.div`
   width: 500px;
   max-width: 95%;
   margin: 0 auto;
-  min-height: calc(90vh - 50px);
-  margin-top: calc(10vh);
+  padding-top: calc(10vh);
   font-family: ${props => props.theme.fonts.main};
   form {
     width: 90%;
@@ -145,8 +144,6 @@ const BlackButton = styled.button`
   }
 `;
 
-const BottomWhiteButton = styled.div``;
-
 const Reset = () => {
   const [error, setError] = useState('');
   const [email, setEmail] = useState('');
@@ -163,59 +160,61 @@ const Reset = () => {
   }, [userData]);
 
   return (
-    <LoginStyles>
-      <Helmet>
-        <title>YZED - FORGOT PASSWORD</title>
-      </Helmet>
-      {submitted ? (
-        <div className='success'>
-          <TopTitle title='Forgot Password' />
-          <div className='check'>
-            <p>
-              If any account is connected to the email address {email}, then there will be an email
-              with a magic link in your inbox within 24 hours.
-            </p>
-            <CheckSVG />
-          </div>
-        </div>
-      ) : (
-        <>
-          <TopTitle title='Forgot Password' />
-          <div className='forgot'>
-            <p>
-              Forgot your password? Don’t worry, we’ve got you! Enter your email address and we will
-              send you a magic link.
-            </p>
-          </div>
-          <form
-            className='user-form'
-            onSubmit={e => {
-              e.preventDefault();
-              forgotEmail(email, setSubmitted);
-            }}>
-            <div className='form-input'>
-              <input
-                aria-label='email'
-                placeholder='Email Address'
-                name='email'
-                type='email'
-                value={email}
-                required
-                onChange={e => setEmail(e.target.value)}
-              />
+    <Div100vh>
+      <LoginStyles>
+        <Helmet>
+          <title>YZED - FORGOT PASSWORD</title>
+        </Helmet>
+        {submitted ? (
+          <div className='success'>
+            <TopTitle title='Forgot Password' />
+            <div className='check'>
+              <p>
+                If any account is connected to the email address {email}, then there will be an
+                email with a magic link in your inbox within 24 hours.
+              </p>
+              <CheckSVG />
             </div>
-            <BlackButton disabled={!email.length} type='submit'>
-              SEND LINK
-            </BlackButton>
-          </form>
-          {(firebaseError || error) && (
-            <div className='error'>
-              <Error error={firebaseError || error} clickFunction={setError} />
+          </div>
+        ) : (
+          <>
+            <TopTitle title='Forgot Password' />
+            <div className='forgot'>
+              <p>
+                Forgot your password? Don’t worry, we’ve got you! Enter your email address and we
+                will send you a magic link.
+              </p>
             </div>
-          )}
-        </>
-      )}
-    </LoginStyles>
+            <form
+              className='user-form'
+              onSubmit={e => {
+                e.preventDefault();
+                forgotEmail(email, setSubmitted);
+              }}>
+              <div className='form-input'>
+                <input
+                  aria-label='email'
+                  placeholder='Email Address'
+                  name='email'
+                  type='email'
+                  value={email}
+                  required
+                  onChange={e => setEmail(e.target.value)}
+                />
+              </div>
+              <BlackButton disabled={!email.length} type='submit'>
+                SEND LINK
+              </BlackButton>
+            </form>
+            {(firebaseError || error) && (
+              <div className='error'>
+                <Error error={firebaseError || error} clickFunction={setError} />
+              </div>
+            )}
+          </>
+        )}
+      </LoginStyles>
+    </Div100vh>
   );
 };
 

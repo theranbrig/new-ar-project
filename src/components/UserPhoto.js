@@ -24,9 +24,7 @@ const Tag = ({ tag, setShowTags }) => {
       .doc(tag)
       .get()
       .then(doc => {
-        console.log(doc);
         setTaggedProduct({ id: doc.id, ...doc.data() });
-        console.log(doc.data());
       });
   }, []);
   return (

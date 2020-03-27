@@ -1,10 +1,10 @@
-import { Link, useHistory } from 'react-router-dom';
 import React, { useContext, useState } from 'react';
 
 import Error from '../components/Error';
 import { FirebaseContext } from '../context/Firebase';
 import LoadingSpinner from '../components/LoadingSpinner';
 import styled from 'styled-components';
+import { useHistory } from 'react-router-dom';
 
 const FormStyles = styled.div`
   margin: 0 auto;
@@ -99,7 +99,7 @@ const SubscriptionForm = () => {
 
   const subscribe = () => {
     setLoading(true);
-    console.log('CLICK');
+
     const emailCheck = dbh.collection('newsletterSubscriptions').where('email', '==', email);
     emailCheck.get().then(async querySnapshot => {
       if (querySnapshot.docs.length) {

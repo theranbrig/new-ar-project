@@ -45,7 +45,6 @@ const EditProduct = () => {
       .doc(product)
       .get()
       .then(doc => {
-        console.log(doc.data().brand);
         const {
           name,
           brand,
@@ -194,7 +193,6 @@ const EditProduct = () => {
                 <p>{feature}</p>
                 <button
                   onClick={() => {
-                    console.log(index);
                     const tempArr = allFeatures.map(feature => feature);
                     const removed = tempArr.splice(index, 1);
                     setAllFeatures(tempArr);

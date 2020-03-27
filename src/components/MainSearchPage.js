@@ -3,9 +3,7 @@ import React, { useContext, useEffect, useState } from 'react';
 import { formatPrice, formatProductName } from '../utilities/formatting';
 
 import BackButton from '../components/BackButton';
-import CloseSVG from '../assets/icons/icon_close';
 import { FirebaseContext } from '../context/Firebase';
-import Highlighter from 'react-highlight-words';
 import { ModalContext } from '../context/Modal';
 import SearchSVG from '../assets/icons/icon_search';
 import debounce from 'lodash.debounce';
@@ -14,7 +12,7 @@ import styled from 'styled-components';
 const MainPageSearch = () => {
   const [products, setProducts] = useState([]);
 
-  const { setOpenSearch, setBodyScroll, closeSearchAndClear } = useContext(ModalContext);
+  const { closeSearchAndClear } = useContext(ModalContext);
 
   const { dbh } = useContext(FirebaseContext);
 

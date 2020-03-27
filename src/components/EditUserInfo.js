@@ -1,8 +1,7 @@
 import 'react-lazy-load-image-component/src/effects/blur.css';
 import 'react-image-crop/dist/ReactCrop.css';
 
-import { BlackButtonClick, WhiteButtonClick } from '../utilities/ReusableStyles';
-import React, { useCallback, useContext, useEffect, useState } from 'react';
+import React, { useCallback, useContext, useState } from 'react';
 
 import BackButton from '../components/BackButton';
 import CameraSVG from '../assets/icons/icon_photo';

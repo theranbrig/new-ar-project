@@ -1,10 +1,8 @@
-import { Link, useParams } from 'react-router-dom';
-
 import BackButton from '../components/BackButton';
 import { Helmet } from 'react-helmet';
 import React from 'react';
-import ShopThumbs from '../components/ShopThumbs';
 import styled from 'styled-components';
+import { useParams } from 'react-router-dom';
 
 export const ShopCategoryStyles = styled.div`
   width: 500px;

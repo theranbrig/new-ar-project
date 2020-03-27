@@ -7,7 +7,6 @@ import { FirebaseContext } from '../context/Firebase';
 import { Helmet } from 'react-helmet';
 import LoadingSpinner from '../components/LoadingSpinner';
 import PencilSVG from '../assets/icons/icon_pencil';
-import SettingsSVG from '../assets/icons/icon_settings';
 import UserInfo from '../components/UserInfo';
 import UserPhoto from '../components/UserPhoto';
 import { WhiteButtonClick } from '../utilities/ReusableStyles';
@@ -33,42 +32,6 @@ export const ProfileStyles = styled.div`
     button {
       width: 200px;
     }
-  }
-`;
-
-const BlackButton = styled.div`
-  border: 2px solid black;
-  border-radius: 0px;
-  height: 50px;
-  line-height: 50px;
-  display: block;
-  margin: 0 auto;
-  font-size: 1.2rem;
-  font-family: Montserrat, sans-serif;
-  text-align: center;
-  width: 50%;
-  background: black;
-  margin-bottom: 20px;
-  a {
-    color: white;
-    text-decoration: none;
-  }
-`;
-
-const WhiteLogoutButton = styled.button`
-  border: 2px solid black;
-  border-radius: 0px;
-  height: 54px;
-  line-height: 50px;
-  display: block;
-  margin: 150px auto;
-  font-size: 1.2rem;
-  font-family: Montserrat, sans-serif;
-  text-align: center;
-  width: calc(50% + 4px);
-  a {
-    color: black;
-    text-decoration: none;
   }
 `;
 

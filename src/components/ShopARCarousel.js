@@ -65,10 +65,6 @@ const ShopPageProductCarousel = () => {
             fSProducts.push({ id: doc.ref.id, ...doc.data() });
           });
           setProducts(fSProducts);
-          console.log(products);
-        })
-        .catch(err => {
-          console.log(err);
         });
     };
     getData();

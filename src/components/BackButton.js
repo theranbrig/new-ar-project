@@ -1,7 +1,6 @@
 import React, { useContext } from 'react';
 
 import ChevronLeft from '../assets/icons/icon_chevron_left';
-import ChevronRight from '../assets/icons/icon_chevron_right';
 import { FirebaseContext } from '../context/Firebase';
 import styled from 'styled-components';
 import { useHistory } from 'react-router-dom';

@@ -28,7 +28,6 @@ export const FollowedThreadStyles = styled.div`
 `;
 
 const FollowedThread = ({ thread }) => {
-  console.log(thread);
   const [commenter, setCommenter] = useState(null);
   const [newFeedComments, setNewFeedComments] = useState([]);
   const { dbh } = useContext(FirebaseContext);

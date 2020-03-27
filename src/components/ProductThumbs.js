@@ -1,9 +1,11 @@
-import React, { useState, useContext, useEffect } from 'react';
-import styled from 'styled-components';
-import { LazyLoadImage } from 'react-lazy-load-image-component';
 import 'react-lazy-load-image-component/src/effects/blur.css';
-import { Link } from 'react-router-dom';
+
+import React, { useContext, useEffect, useState } from 'react';
+
 import { FirebaseContext } from '../context/Firebase';
+import { LazyLoadImage } from 'react-lazy-load-image-component';
+import { Link } from 'react-router-dom';
+import styled from 'styled-components';
 
 export const ProductThumbsStyles = styled.div`
   display: grid;
@@ -49,9 +51,6 @@ const ProductThumbs = ({ open }) => {
             fSProducts.push({ id: doc.ref.id, ...doc.data() });
           });
           setProducts(fSProducts);
-        })
-        .catch(err => {
-          console.log(err);
         });
     };
     getData();

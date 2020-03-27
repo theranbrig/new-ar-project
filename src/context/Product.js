@@ -5,7 +5,6 @@ import React, { useContext } from 'react';
 
 import { FirebaseContext } from './Firebase';
 import PropTypes from 'prop-types';
-import { useHistory } from 'react-router-dom';
 
 export const ProductContext = React.createContext();
 
@@ -21,7 +20,7 @@ const ProductProvider = ({ children }) => {
       curName += letter;
       arrName.push(curName.toLowerCase());
     });
-    console.log(arrName);
+
     return arrName;
   };
 
@@ -29,7 +28,6 @@ const ProductProvider = ({ children }) => {
     const wordsArray = phrase.split(' ');
     let arrKeys = [];
     wordsArray.map(word => (arrKeys = [...createKeywords(word), ...arrKeys]));
-    console.log(arrKeys);
     return arrKeys;
   };
 

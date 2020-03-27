@@ -1,13 +1,14 @@
-import React, { useState, useEffect, useContext } from 'react';
-import { LazyLoadImage } from 'react-lazy-load-image-component';
-import { Brands } from '../data';
-import styled from 'styled-components';
-import { Link } from 'react-router-dom';
+import React, { useContext, useEffect, useState } from 'react';
+
 import { BlackLink } from '../utilities/ReusableStyles';
-import LogoYSVG from '../assets/icons/yzed_y_logo';
+import { Brands } from '../data';
 import { FirebaseContext } from '../context/Firebase';
+import { LazyLoadImage } from 'react-lazy-load-image-component';
+import { Link } from 'react-router-dom';
 import LoadingSpinner from '../components/LoadingSpinner';
+import LogoYSVG from '../assets/icons/yzed_y_logo';
 import { formatNumberWithCommas } from '../utilities/formatting';
+import styled from 'styled-components';
 
 export const BrandStyles = styled.div`
   font-family: ${props => props.theme.fonts.main};
@@ -88,7 +89,6 @@ const ProductBrand = ({ brandId }) => {
       .doc(brandId)
       .get()
       .then(doc => {
-        console.log(doc.data());
         setBrand(doc.data());
         setLoading(false);
       });

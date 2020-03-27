@@ -66,25 +66,19 @@ const FileUpload = ({ name, setFileUploading, state, setStateFunction, isImage }
   const uploadS3File = e => {
     setFileUploading(true);
     const file = e.target.files[0];
-    console.log(file);
-    S3Client.uploadFile(file, newFileName)
-      .then(data => {
-        console.log(data);
-        setStateFunction(data.location);
-        setFileUploading(false);
-      })
-      .catch(err => console.error(err));
+
+    S3Client.uploadFile(file, newFileName).then(data => {
+      setStateFunction(data.location);
+      setFileUploading(false);
+    });
   };
 
   const removeS3File = () => {
     setFileUploading(true);
-    S3Client.deleteFile(newFileName)
-      .then(response => {
-        console.log(response);
-        setStateFunction('');
-        setFileUploading(false);
-      })
-      .catch(err => console.error(err));
+    S3Client.deleteFile(newFileName).then(response => {
+      setStateFunction('');
+      setFileUploading(false);
+    });
   };
 
   return (

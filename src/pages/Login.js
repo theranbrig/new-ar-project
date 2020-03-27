@@ -1,7 +1,7 @@
 import { Link, useHistory } from 'react-router-dom';
 import React, { useContext, useEffect, useState } from 'react';
 
-import BackButton from '../components/BackButton';
+import Div100vh from 'react-div-100vh';
 import Error from '../components/Error';
 import { FirebaseContext } from '../context/Firebase';
 import { Helmet } from 'react-helmet';
@@ -12,8 +12,8 @@ export const LoginStyles = styled.div`
   width: 500px;
   max-width: 95%;
   margin: 0 auto;
-  min-height: calc(90vh - 50px);
-  margin-top: calc(10vh);
+  background: ${props => props.theme.colors.white};
+  padding-top: calc(10vh);
   font-family: ${props => props.theme.fonts.main};
   form {
     width: 90%;
@@ -66,13 +66,14 @@ export const LoginStyles = styled.div`
       color: ${props => props.theme.colors.grey};
     }
   }
+
   .bottom {
     position: fixed;
     bottom: 0;
     width: 500px;
-    max-width: 95%;
+    max-width: 100%;
     border-top: 1px solid ${props => props.theme.colors.lightGrey};
-    min-height: 20vh;
+    height: 15vh;
     text-align: center;
     background: ${props => props.theme.colors.white};
     display: grid;
@@ -94,7 +95,7 @@ export const LoginStyles = styled.div`
       font-weight: 300;
       max-width: 90%;
       margin: 0 auto;
-      margin-bottom: 20px;
+      padding-bottom: 20px;
     }
   }
 `;
@@ -126,64 +127,67 @@ const Login = () => {
   const { loginUser, firebaseError, userData } = useContext(FirebaseContext);
 
   useEffect(() => {
-    console.log(userData);
     if (userData.loggedIn) {
       history.push('/');
     }
   }, [userData, history]);
 
   return (
-    <LoginStyles>
-      <Helmet>
-        <title>YZED - LOGIN</title>
-      </Helmet>
-      <TopTitle title='Log In' />
-      <form
-        className='user-form'
-        onSubmit={e => {
-          e.preventDefault();
-          loginUser(email, password);
-        }}>
-        <div className='form-input'>
-          <input
-            aria-label='email'
-            name='email'
-            type='email'
-            value={email}
-            placeholder='Enter Email'
-            required
-            onChange={e => setEmail(e.target.value)}
-          />
+    <Div100vh>
+      <LoginStyles>
+        <Helmet>
+          <title>YZED - LOGIN</title>
+        </Helmet>
+        <section className='top'>
+          <TopTitle title='Log In' />
+          <form
+            className='user-form'
+            onSubmit={e => {
+              e.preventDefault();
+              loginUser(email, password);
+            }}>
+            <div className='form-input'>
+              <input
+                aria-label='email'
+                name='email'
+                type='email'
+                value={email}
+                placeholder='Enter Email'
+                required
+                onChange={e => setEmail(e.target.value)}
+              />
+            </div>
+            <div className='form-input'>
+              <input
+                aria-label='password'
+                name='password'
+                type='password'
+                placeholder='Enter Password'
+                required
+                onChange={e => setPassword(e.target.value)}
+              />
+            </div>
+            <BlackButton type='submit' disabled={!password.length || !email.length}>
+              SIGN IN
+            </BlackButton>
+          </form>
+          <div className='forgot'>
+            <Link to='/request_reset'>I forgot my password.</Link>
+          </div>
+          {firebaseError && (
+            <div className='error'>
+              <Error error={firebaseError} />
+            </div>
+          )}
+        </section>
+        <div className='bottom'>
+          <div className='bottom-content'>
+            <p>Want to become a YZER?</p>
+            <Link to='/register'>Sign Up Now</Link>
+          </div>
         </div>
-        <div className='form-input'>
-          <input
-            aria-label='password'
-            name='password'
-            type='password'
-            placeholder='Enter Password'
-            required
-            onChange={e => setPassword(e.target.value)}
-          />
-        </div>
-        <BlackButton type='submit' disabled={!password.length || !email.length}>
-          SIGN IN
-        </BlackButton>
-      </form>
-      <div className='forgot'>
-        <Link to='/request_reset'>I forgot my password.</Link>
-      </div>
-      {firebaseError && (
-        <div className='error'>
-          <Error error={firebaseError} />
-        </div>
-      )}
-      <div className='bottom'>
-        <div className='bottom-content'>
-          <p>Want to become a YZER?</p>
-          <Link to='/register'>Sign Up Now</Link>
-        </div>
-      </div>
-    </LoginStyles>
+      </LoginStyles>
+    </Div100vh>
   );
 };
 

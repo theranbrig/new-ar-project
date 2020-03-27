@@ -57,8 +57,6 @@ const FileUpload = ({ name, setFileUploading, state, setStateFunction, isImage }
     secretAccessKey: process.env.REACT_APP_S3_SECRET_ACCESS_KEY,
   };
 
-  console.log(process.env.REACT_APP_MY_NAME);
-
   const S3Client = new S3(config);
 
   const newFileName = shortid.generate();
@@ -67,7 +65,6 @@ const FileUpload = ({ name, setFileUploading, state, setStateFunction, isImage }
     const file = e.target.files[0];
     S3Client.uploadFile(file, newFileName)
       .then(data => {
-        console.log(data);
         setStateFunction(data.location);
         setFileUploading(false);
       })

@@ -12,7 +12,6 @@ const CartProvider = ({ children }) => {
   const { userData, dbh, userLoading } = useContext(FirebaseContext);
 
   const addToFirebaseCart = (userId, product, size, quantity) => {
-    console.log(product);
     dbh
       .collection('cartItems')
       .doc()
@@ -52,8 +51,7 @@ const CartProvider = ({ children }) => {
             });
           });
         }
-      })
-      .catch(err => console.log(err));
+      });
   };
 
   const addItemToCart = async (product, selectedSize, quantity) => {
@@ -104,8 +102,7 @@ const CartProvider = ({ children }) => {
         dbh
           .collection('cartItems')
           .doc(cartItemId)
-          .delete()
-          .catch(err => console.log(err));
+          .delete();
       }
     }
   };
@@ -123,11 +120,9 @@ const CartProvider = ({ children }) => {
         .update({ quantity, selectedSize });
     } else {
       const cartItems = await JSON.parse(localStorage.getItem('shoppingCart'));
-      console.log(cartItems);
       const item = cartItems[index];
       item.quantity = quantity;
       item.selectedSize = selectedSize;
-      console.log(item);
       localStorage.setItem('shoppingCart', JSON.stringify(cartItems));
       setCart(JSON.parse(localStorage.getItem('shoppingCart')));
     }
@@ -141,7 +136,6 @@ const CartProvider = ({ children }) => {
         .onSnapshot(querySnapshot => {
           let cartItems = [];
           querySnapshot.forEach(doc => {
-            console.log(doc.data());
             cartItems.push({ cartItemId: doc.ref.id, ...doc.data() });
           });
           setCart(cartItems);

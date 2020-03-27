@@ -67,9 +67,6 @@ const ShopCategoryCarousel = () => {
             fSProducts.push({ id: doc.ref.id, ...doc.data() });
           });
           setProducts(fSProducts);
-        })
-        .catch(err => {
-          console.log(err);
         });
     };
     getData();

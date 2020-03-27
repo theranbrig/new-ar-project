@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from 'react';
+import React, { useContext } from 'react';
 
 import CloseSVG from '../assets/icons/icon_close';
 import { FirebaseContext } from '../context/Firebase';

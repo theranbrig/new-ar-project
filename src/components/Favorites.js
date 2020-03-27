@@ -1,9 +1,7 @@
 import React, { useContext, useEffect, useState } from 'react';
 
 import { FirebaseContext } from '../context/Firebase';
-import { LazyLoadImage } from 'react-lazy-load-image-component';
-import LikeEmptySVG from '../assets/icons/icon_like_empty';
-import LikeFilledSVG from '../assets/icons/icon_like_filled';
+import { LazyLoadImage } from 'react-lazy-load-image-component';import LikeFilledSVG from '../assets/icons/icon_like_filled';
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 
@@ -83,7 +81,6 @@ const FavoriteItem = ({ item }) => {
       .doc(item)
       .get()
       .then(doc => {
-        console.log(doc.data());
         setProduct({ ...doc.data() });
       });
   }, []);

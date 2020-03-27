@@ -65,7 +65,6 @@ const Checkout = () => {
       return accum + parseInt(item.price) * item.quantity;
     }, 0);
     setCartTotal(formatPrice(total));
-    console.log(cart);
   }, [cart]);
 
   if ((cartLoading && !userData) || checkoutLoading || userLoading) {

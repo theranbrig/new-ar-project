@@ -5,7 +5,6 @@ import FilledUpVoteSVG from '../assets/icons/icon_upvote_filled';
 import { FirebaseContext } from '../context/Firebase';
 import { Link } from 'react-router-dom';
 import LoadingSpinner from './LoadingSpinner';
-import PictureSVG from '../assets/icons/icon_picture';
 import { enableBodyScroll } from 'body-scroll-lock';
 import moment from 'moment';
 import styled from 'styled-components';
@@ -99,12 +98,10 @@ export const FullScreenPhotoStyles = styled.div`
 `;
 
 const PhotoCarouselFullScreenPhoto = ({ photo, userData, likePhoto }) => {
-  const [currentPhoto, setCurrentPhoto] = useState(photo);
-  const [liked, setLiked] = useState(false);
   const [user, setUser] = useState(null);
   const [comments, setComments] = useState(0);
   const [loading, setLoading] = useState(false);
-  const { dbh, firebase } = useContext(FirebaseContext);
+  const { dbh } = useContext(FirebaseContext);
 
   useEffect(() => {
     setLoading(true);
@@ -120,7 +117,6 @@ const PhotoCarouselFullScreenPhoto = ({ photo, userData, likePhoto }) => {
           .collection('comments')
           .get()
           .then(querySnapshot => {
-            console.log(querySnapshot);
             setComments(querySnapshot.docs.length);
             setLoading(false);
           });
@@ -187,7 +183,6 @@ const PhotoLikes = ({ photo, likePhoto, userData }) => {
   const [liked, setLiked] = useState(false);
 
   useEffect(() => {
-    let liked = false;
     if (userData.loggedIn) {
       setLiked(photo.likes.some(like => like === userData.id));
     }

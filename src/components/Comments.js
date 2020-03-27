@@ -19,7 +19,6 @@ import Replies from './Replies';
 import TextSVG from '../assets/icons/icon_text';
 import TextareaAutosize from 'react-textarea-autosize';
 import UploadPhotoComment from '../components/UploadPhotoComment';
-import UserSVG from '../assets/icons/icon_user';
 import ViewPhoto from './ViewPhoto';
 import moment from 'moment';
 import styled from 'styled-components';
@@ -180,8 +179,6 @@ const Comment = ({ comment, setSelectedReplies, photoRef, toggleUpvoteComment })
   const { userData } = useContext(FirebaseContext);
 
   const { setBodyScroll } = useContext(ModalContext);
-
-  console.log(comment.comment.replace(/(?:\r\n|\r|\n)/g, '<br />'));
 
   useEffect(() => {
     photoRef
@@ -466,7 +463,6 @@ const Comments = () => {
                   <button
                     onClick={() => {
                       setUploadPhotoComment(!uploadPhotoComment);
-                      console.log(uploadPhotoComment);
                     }}>
                     <CameraSVG fill='white' />
                   </button>

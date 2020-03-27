@@ -1,13 +1,12 @@
-import { Link, useParams } from 'react-router-dom';
 import React, { useContext, useEffect, useState } from 'react';
 
-import BackButton from '../components/BackButton';
 import { FirebaseContext } from '../context/Firebase';
 import { Helmet } from 'react-helmet';
 import LoadingSpinner from '../components/LoadingSpinner';
 import LogoYSVG from '../assets/icons/yzed_y_logo';
 import ShopThumbs from '../components/ShopThumbs';
 import styled from 'styled-components';
+import { useParams } from 'react-router-dom';
 
 export const ShopCategoryStyles = styled.div`
   width: 500px;
@@ -98,7 +97,6 @@ const Brand = () => {
       .get()
       .then(querySnapshot =>
         querySnapshot.forEach(snapshot => {
-          console.log(snapshot.data());
           setBrand({ id: snapshot.id, ...snapshot.data() });
           setLoading(false);
         })

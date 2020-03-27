@@ -1,4 +1,5 @@
 import 'react-multi-carousel/lib/styles.css';
+import 'react-lazy-load-image-component/src/effects/blur.css';
 
 import React, { useContext, useEffect, useRef, useState } from 'react';
 import { disableBodyScroll, enableBodyScroll } from 'body-scroll-lock';
@@ -6,6 +7,7 @@ import { disableBodyScroll, enableBodyScroll } from 'body-scroll-lock';
 import Carousel from 'react-multi-carousel';
 import CloseSVG from '../assets/icons/icon_close';
 import { FirebaseContext } from '../context/Firebase';
+import { LazyLoadComponent } from 'react-lazy-load-image-component';
 import PhotoCarouselFullScreenPhoto from './PhotoCarouselFullScreenPhoto';
 import TagFilledSVG from '../assets/icons/icon_tag_filled';
 import styled from 'styled-components';
@@ -58,7 +60,10 @@ const SliderStyles = styled.div`
   }
   .slider-cell-content {
     img {
-      background: ${props => props.theme.colors.lightGrey};
+      background: #7f7fd5;
+      background: -webkit-linear-gradient(to top, #91eae4, #86a8e7, #7f7fd5);
+      background: linear-gradient(to top, #91eae4, #86a8e7, #7f7fd5);
+      background-size: 100% 100%;
       width: 92%;
       margin: 0 auto;
     }
@@ -139,7 +144,6 @@ const MainPageCarousel = ({ title, product, brand }) => {
   };
 
   const checkPhotos = () => {
-    console.log(product);
     dbh
       .collection('userPhotos')
       .where('tag', '==', product)
@@ -165,19 +169,21 @@ const MainPageCarousel = ({ title, product, brand }) => {
           <TagFilledSVG />
           <span>{brand}</span> {title}
         </h2>
-        <Carousel ref={carouselRef} responsive={responsive} partialVisible swipeable>
-          {photos.map((photo, index) => (
-            <div
-              className='slider-cell-content'
-              key={photo.id}
-              onClick={() => {
-                disableBodyScroll(body);
-                setShowFullScreen(index);
-              }}>
-              <img src={photo.url} alt={photo.id} />
-            </div>
-          ))}
-        </Carousel>
+        <LazyLoadComponent>
+          <Carousel ref={carouselRef} responsive={responsive} partialVisible swipeable>
+            {photos.map((photo, index) => (
+              <div
+                className='slider-cell-content'
+                key={photo.id}
+                onClick={() => {
+                  disableBodyScroll(body);
+                  setShowFullScreen(index);
+                }}>
+                <img src={photo.url} alt={photo.id} rel='preload' />
+              </div>
+            ))}
+          </Carousel>
+        </LazyLoadComponent>
         {showFullScreen.length !== 0 && (
           <FullScreenSlider
             photos={photos}

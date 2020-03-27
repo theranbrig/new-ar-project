@@ -23,7 +23,7 @@ const CreateProduct = () => {
   const [picture1, setPicture1] = useState('');
   const [picture2, setPicture2] = useState('');
   const [picture3, setPicture3] = useState('');
-  const [sizes, setSizes] = useState(['S', 'M', 'L']);
+  const [sizes] = useState(['S', 'M', 'L']);
   const [imageUploading, setImageUploading] = useState(false);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
@@ -31,7 +31,7 @@ const CreateProduct = () => {
 
   const history = useHistory();
 
-  const { firebaseError, userData, dbh, userLoading } = useContext(FirebaseContext);
+  const { firebaseError, userData, userLoading } = useContext(FirebaseContext);
 
   const { createProduct } = useContext(ProductContext);
 

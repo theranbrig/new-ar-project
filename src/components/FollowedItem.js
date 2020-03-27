@@ -2,7 +2,6 @@ import 'react-lazy-load-image-component/src/effects/blur.css';
 
 import React, { useContext, useEffect, useState } from 'react';
 
-import CloseSVG from '../assets/icons/icon_close';
 import { FirebaseContext } from '../context/Firebase';
 import { LazyLoadImage } from 'react-lazy-load-image-component';
 import { Link } from 'react-router-dom';
@@ -78,7 +77,7 @@ const FollowedItem = ({ item, setFollowedItems }) => {
       .get()
       .then(doc => {
         setCommenter({ id: doc.id, ...doc.data() });
-        const match = document.cookie.match(new RegExp('(^| )' + 'previousVisitDate' + '=([^;]+)'));
+        const match = document.cookie.match(new RegExp('(^| )previousVisitDate=([^;]+)'));
         if (match) {
           setLastVisit(parseInt(match[2] / 1000));
         }

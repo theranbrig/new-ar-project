@@ -24,9 +24,7 @@ const Tag = ({ tag, setShowTags }) => {
       .doc(tag)
       .get()
       .then(doc => {
-        console.log(doc);
         setTaggedProduct({ id: doc.id, ...doc.data() });
-        console.log(doc.data());
       });
   }, []);
   return (
@@ -133,7 +131,6 @@ const UserPhoto = ({ photo, userData }) => {
   };
 
   useEffect(() => {
-    console.log(photo);
     getPhotoData();
     return () => {
       getPhotoData();
