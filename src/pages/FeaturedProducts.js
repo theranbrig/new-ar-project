@@ -5,6 +5,7 @@ import LikeEmptySVG from '../assets/icons/icon_like_empty';
 import LikeFilledSVG from '../assets/icons/icon_like_filled';
 import { Link } from 'react-router-dom';
 import { formatPrice } from '../utilities/formatting';
+import { motion } from 'framer-motion';
 import styled from 'styled-components';
 
 export const FeaturedStyles = styled.div`
@@ -119,31 +120,36 @@ const FeaturedProducts = () => {
   }, [userData, userLoading]);
 
   return (
-    <FeaturedStyles>
-      <div className='title'>
-        <h1>Featured Products</h1>
-      </div>
-      <div className='products'>
-        {products.map(product => (
-          <div className='product' key={product.id}>
-            <button
-              disabled={!userData.loggedIn}
-              className='favorite'
-              onClick={() => {
-                likeProduct(product.id, product.liked);
-              }}>
-              {product.liked ? <LikeFilledSVG /> : <LikeEmptySVG />}
-            </button>
-            <Link to={`/item/${product.id}`}>
-              <img src={product.mainImage} alt={product.name} />
-              <h2>{product.brand}</h2>
-              <h3>{product.name}</h3>
-              {/* <h4>{formatPrice(product.price)}</h4> */}
-            </Link>
-          </div>
-        ))}
-      </div>
-    </FeaturedStyles>
+    <motion.div
+      exit={{ opacity: 0, scale: 0 }}
+      initial={{ opacity: 0, scale: 0 }}
+      animate={{ opacity: 1, scale: 1 }}>
+      <FeaturedStyles>
+        <div className='title'>
+          <h1>Featured Products</h1>
+        </div>
+        <div className='products'>
+          {products.map(product => (
+            <div className='product' key={product.id}>
+              <button
+                disabled={!userData.loggedIn}
+                className='favorite'
+                onClick={() => {
+                  likeProduct(product.id, product.liked);
+                }}>
+                {product.liked ? <LikeFilledSVG /> : <LikeEmptySVG />}
+              </button>
+              <Link to={`/item/${product.id}`}>
+                <img src={product.mainImage} alt={product.name} />
+                <h2>{product.brand}</h2>
+                <h3>{product.name}</h3>
+                {/* <h4>{formatPrice(product.price)}</h4> */}
+              </Link>
+            </div>
+          ))}
+        </div>
+      </FeaturedStyles>
+    </motion.div>
   );
 };
 

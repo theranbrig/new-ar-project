@@ -6,6 +6,7 @@ import Error from '../components/Error';
 import { FirebaseContext } from '../context/Firebase';
 import { Helmet } from 'react-helmet';
 import TopTitle from '../components/TopTitle';
+import { motion } from 'framer-motion';
 import styled from 'styled-components';
 
 export const LoginStyles = styled.div`
@@ -133,61 +134,67 @@ const Login = () => {
   }, [userData, history]);
 
   return (
-    <Div100vh>
-      <LoginStyles>
-        <Helmet>
-          <title>YZED - LOGIN</title>
-        </Helmet>
-        <section className='top'>
-          <TopTitle title='Log In' />
-          <form
-            className='user-form'
-            onSubmit={e => {
-              e.preventDefault();
-              loginUser(email, password);
-            }}>
-            <div className='form-input'>
-              <input
-                aria-label='email'
-                name='email'
-                type='email'
-                value={email}
-                placeholder='Enter Email'
-                required
-                onChange={e => setEmail(e.target.value)}
-              />
+    <motion.div
+      exit={{ opacity: 0, x: '-100vw' }}
+      initial={{ opacity: 0, x: '100vw' }}
+      animate={{ opacity: 1, x: 0 }}
+      transition={{ type: 'tween', ease: 'anticipate', duration: 1 }}>
+      <Div100vh>
+        <LoginStyles>
+          <Helmet>
+            <title>YZED - LOGIN</title>
+          </Helmet>
+          <section className='top'>
+            <TopTitle title='Log In' />
+            <form
+              className='user-form'
+              onSubmit={e => {
+                e.preventDefault();
+                loginUser(email, password);
+              }}>
+              <div className='form-input'>
+                <input
+                  aria-label='email'
+                  name='email'
+                  type='email'
+                  value={email}
+                  placeholder='Enter Email'
+                  required
+                  onChange={e => setEmail(e.target.value)}
+                />
+              </div>
+              <div className='form-input'>
+                <input
+                  aria-label='password'
+                  name='password'
+                  type='password'
+                  placeholder='Enter Password'
+                  required
+                  onChange={e => setPassword(e.target.value)}
+                />
+              </div>
+              <BlackButton type='submit' disabled={!password.length || !email.length}>
+                SIGN IN
+              </BlackButton>
+            </form>
+            <div className='forgot'>
+              <Link to='/request_reset'>I forgot my password.</Link>
             </div>
-            <div className='form-input'>
-              <input
-                aria-label='password'
-                name='password'
-                type='password'
-                placeholder='Enter Password'
-                required
-                onChange={e => setPassword(e.target.value)}
-              />
+            {firebaseError && (
+              <div className='error'>
+                <Error error={firebaseError} />
+              </div>
+            )}
+          </section>
+          <div className='bottom'>
+            <div className='bottom-content'>
+              <p>Want to become a YZER?</p>
+              <Link to='/register'>Sign Up Now</Link>
             </div>
-            <BlackButton type='submit' disabled={!password.length || !email.length}>
-              SIGN IN
-            </BlackButton>
-          </form>
-          <div className='forgot'>
-            <Link to='/request_reset'>I forgot my password.</Link>
           </div>
-          {firebaseError && (
-            <div className='error'>
-              <Error error={firebaseError} />
-            </div>
-          )}
-        </section>
-        <div className='bottom'>
-          <div className='bottom-content'>
-            <p>Want to become a YZER?</p>
-            <Link to='/register'>Sign Up Now</Link>
-          </div>
-        </div>
-      </LoginStyles>
-    </Div100vh>
+        </LoginStyles>
+      </Div100vh>
+    </motion.div>
   );
 };
 

@@ -1,6 +1,8 @@
-import { Route, BrowserRouter as Router, Switch } from 'react-router-dom';
+import { BrowserRouterasRouter, Route, Switch, useLocation } from 'react-router-dom';
+import React, { useContext } from 'react';
 
 import Admin from '../pages/Admin';
+import { AnimatePresence } from 'framer-motion';
 import Brand from '../pages/Brand';
 import Checkout from '../pages/Checkout';
 import Comments from '../pages/Comments';
@@ -11,14 +13,15 @@ import Feed from '../pages/Feed';
 import Home from '../pages/Home';
 import Login from '../pages/Login';
 import MainSearchPage from '../pages/Search';
+import { ModalContext } from '../context/Modal';
 import NavigationDrawer from './NavigationDrawer';
 import OrderSuccess from '../pages/OrderSuccess';
 import Product from '../pages/Product';
 import Profile from '../pages/Profile';
-import React from 'react';
 import Register from '../pages/Register';
 import RequestReset from '../pages/ResetRequest';
 import Sale from '../pages/Sale';
+import Share from './Share';
 import Shop from '../pages/Shop';
 import ShopCategory from '../pages/ShopCategory';
 import Subscribe from '../pages/Subscribe';
@@ -27,10 +30,14 @@ import Threads from '../pages/Threads';
 import User from '../pages/User';
 
 export default function App() {
+  const location = useLocation();
+  const { openShareLinks } = useContext(ModalContext);
+
   return (
-    <Router onUpdate={() => window.scrollTo(-50, 0)}>
-      <div style={{ width: '100%', backgroundColor: '#fffdf9' }}>
-        <NavigationDrawer />
+    <div style={{ width: '100%', backgroundColor: '#fffdf9' }}>
+      <NavigationDrawer />
+      {openShareLinks && <Share product={openShareLinks} />}
+      <AnimatePresence>
         <Switch>
           <Route path='/subscribe'>
             <Subscribe />
@@ -98,12 +105,11 @@ export default function App() {
           <Route path='/request_reset'>
             <RequestReset />
           </Route>
-
           <Route path='/'>
             <Home />
           </Route>
         </Switch>
-      </div>
-    </Router>
+      </AnimatePresence>
+    </div>
   );
 }

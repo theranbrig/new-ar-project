@@ -8,6 +8,7 @@ import { Helmet } from 'react-helmet';
 import LoadingSpinner from '../components/LoadingSpinner';
 import { LoginStyles } from './Login';
 import TopTitle from '../components/TopTitle';
+import { motion } from 'framer-motion';
 import styled from 'styled-components';
 
 const BlackButton = styled.button`
@@ -82,102 +83,109 @@ const Register = () => {
   };
 
   return (
-    <Div100vh>
-      <LoginStyles>
-        <Helmet>
-          <title>YZED - REGISTER</title>
-        </Helmet>
-        <TopTitle title='Register Today' />
-        <form
-          className='register-form'
-          onSubmit={async e => {
-            setLoading(true);
-            e.preventDefault();
-            if (checkForm() && passwordValid) {
-              await registerUser(email, password, userName);
-            }
-            setLoading(false);
-          }}>
-          <div className='form-input'>
-            <input
-              placeholder='Username'
-              name='userName'
-              type='text'
-              value={userName}
-              required
-              minLength='5'
-              maxLength='18'
-              aria-label='username'
-              onChange={e => setUserName(e.target.value)}
-            />
+    <motion.div
+      exit={{ opacity: 0, x: '100vw' }}
+      initial={{ opacity: 0, x: '-100vw' }}
+      animate={{ opacity: 1, x: 0 }}
+      transition={{ type: 'tween', ease: 'anticipate', duration: 1 }}>
+      <Div100vh>
+        <LoginStyles>
+          <Helmet>
+            <title>YZED - REGISTER</title>
+          </Helmet>
+          <TopTitle title='Register Today' />
+          <form
+            className='register-form'
+            onSubmit={async e => {
+              setLoading(true);
+              e.preventDefault();
+              if (checkForm() && passwordValid) {
+                await registerUser(email, password, userName);
+              }
+              setLoading(false);
+            }}>
+            <div className='form-input'>
+              <input
+                placeholder='Username'
+                name='userName'
+                type='text'
+                value={userName}
+                required
+                minLength='5'
+                maxLength='18'
+                aria-label='username'
+                onChange={e => setUserName(e.target.value)}
+              />
+            </div>
+            <div className='form-input'>
+              <input
+                placeholder='Email Address'
+                name='email'
+                type='email'
+                value={email}
+                required
+                aria-label='email'
+                onChange={e => setEmail(e.target.value)}
+              />
+            </div>
+            <div className={passwordValid ? 'form-input valid' : 'form-input invalid'}>
+              <input
+                placeholder='Password'
+                name='password'
+                type='password'
+                required
+                minLength='8'
+                maxLength='32'
+                aria-label='password'
+                onChange={e => {
+                  checkPassword(e.target.value);
+                  setPassword(e.target.value);
+                }}
+              />
+            </div>
+            <div
+              className={password === confirmPassword ? 'form-input valid' : 'form-input invalid'}>
+              <input
+                placeholder='Confirm Password'
+                name='Confirm Password'
+                type='password'
+                required
+                minLength='8'
+                maxLength='32'
+                aria-label='confirm password'
+                onChange={e => setConfirmPassword(e.target.value)}
+              />
+              <PasswordBox>
+                <div className='password-info'>
+                  <p>
+                    Password must be between 8 and 32 characters, and contain at least one number
+                    and one special character.
+                  </p>
+                </div>
+              </PasswordBox>
+            </div>
+            <BlackButton disabled={password !== confirmPassword || !passwordValid} type='submit'>
+              {loading ? 'BECOMING A YZER' : 'BECOME A YZER'}
+            </BlackButton>
+          </form>
+          {(firebaseError || error) && (
+            <div className='error'>
+              <Error error={firebaseError || error} clearFunction={setError} />
+            </div>
+          )}
+          {loading && <LoadingSpinner color='black' />}
+          <div className='forgot'>
+            <Link to='/login'>Already a member?</Link>
           </div>
-          <div className='form-input'>
-            <input
-              placeholder='Email Address'
-              name='email'
-              type='email'
-              value={email}
-              required
-              aria-label='email'
-              onChange={e => setEmail(e.target.value)}
-            />
+          <div className='bottom'>
+            <p>
+              If you join our platform and becaome a YZER you accept our terms of use and privacy
+              policy.
+            </p>
           </div>
-          <div className={passwordValid ? 'form-input valid' : 'form-input invalid'}>
-            <input
-              placeholder='Password'
-              name='password'
-              type='password'
-              required
-              minLength='8'
-              maxLength='32'
-              aria-label='password'
-              onChange={e => {
-                checkPassword(e.target.value);
-                setPassword(e.target.value);
-              }}
-            />
-          </div>
-          <div className={password === confirmPassword ? 'form-input valid' : 'form-input invalid'}>
-            <input
-              placeholder='Confirm Password'
-              name='Confirm Password'
-              type='password'
-              required
-              minLength='8'
-              maxLength='32'
-              aria-label='confirm password'
-              onChange={e => setConfirmPassword(e.target.value)}
-            />
-            <PasswordBox>
-              <div className='password-info'>
-                <p>
-                  Password must be between 8 and 32 characters, and contain at least one number and
-                  one special character.
-                </p>
-              </div>
-            </PasswordBox>
-          </div>
-          <BlackButton disabled={password !== confirmPassword || !passwordValid} type='submit'>
-            {loading ? 'BECOMING A YZER' : 'BECOME A YZER'}
-          </BlackButton>
-        </form>
-        {(firebaseError || error) && (
-          <div className='error'>
-            <Error error={firebaseError || error} clearFunction={setError} />
-          </div>
-        )}
-        {loading && <LoadingSpinner color='black' />}
-        <div className='forgot'>
-          <Link to='/login'>Already a member?</Link>
-        </div>
-        <div className='bottom'>
-          <p>
-            If you join our platform and becaome a YZER you accept our terms of use and privacy
-            policy.
-          </p>
-        </div>
-      </LoginStyles>
-    </Div100vh>
+        </LoginStyles>
+      </Div100vh>
+    </motion.div>
   );
 };
 

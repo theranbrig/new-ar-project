@@ -16,6 +16,7 @@ import { RoundARButton } from '../utilities/ReusableStyles';
 import Share from '../components/Share';
 import ShareSVG from '../assets/icons/icon_share';
 import ThreeDSVG from '../assets/icons/icon_ar_toggle';
+import { motion } from 'framer-motion';
 import styled from 'styled-components';
 import { useParams } from 'react-router-dom';
 
@@ -194,7 +195,7 @@ const ProductContainer = styled.div`
     grid-template-columns: 1fr 2fr 1fr;
     justify-content: center;
     align-items: center;
-    padding-bottom: 70px;
+    padding-bottom: 20px;
     .left, .right {
       width: 50px;
     }
@@ -250,103 +251,115 @@ const Product = () => {
 
   if (!product || loading)
     return (
-      <LoadingContainer>
-        <LoadingSpinner color='black' />
-      </LoadingContainer>
+      <motion.div
+        exit={{ opacity: 0, x: '100vw' }}
+        initial={{ opacity: 0, x: '-100vw' }}
+        animate={{ opacity: 1, x: 0 }}
+        transition={{ type: 'tween', ease: 'anticipate', duration: 1 }}>
+        <LoadingContainer>
+          <LoadingSpinner color='black' />
+        </LoadingContainer>
+      </motion.div>
     );
 
   return (
-    <ProductContainer>
-      <Helmet>{/* <title>YZED - {product && product.name.toUpperCase()}</title> */}</Helmet>
-      {isAdded && <AddToCartSuccessModal setIsAdded={setIsAdded} />}
-      {openShareLinks && <Share product={product} />}
-      <section className='product-top'>
-        <div className='title-section'>
-          <div className='title-name'>
-            <h3>{product.brand}</h3>
-            <h1>{product.name}</h1>
+    <motion.div
+      exit={{ opacity: 0, x: '100vw' }}
+      initial={{ opacity: 0, x: '-100vw' }}
+      animate={{ opacity: 1, x: 0 }}
+      transition={{ type: 'tween', ease: 'anticipate', duration: 1 }}>
+      <ProductContainer>
+        <Helmet>{/* <title>YZED - {product && product.name.toUpperCase()}</title> */}</Helmet>
+        {isAdded && <AddToCartSuccessModal setIsAdded={setIsAdded} />}
+
+        <section className='product-top'>
+          <div className='title-section'>
+            <div className='title-name'>
+              <h3>{product.brand}</h3>
+              <h1>{product.name}</h1>
+            </div>
+            <div className='title-price'>
+              {/* <h2>{`$${(product.price / 100).toFixed(2)}`}</h2> */}
+            </div>
           </div>
-          <div className='title-price'>
-            {/* <h2>{`$${(product.price / 100).toFixed(2)}`}</h2> */}
+          <div className='main-content-box'>
+            {mainDisplay === 'model' ? (
+              <MediaViewer
+                glbFile={product.glbFile}
+                usdzFile={product.usdzFile}
+                poster={product.imageUrl}
+                displayLink={false}
+                productId={product.id}
+              />
+            ) : (
+              <LazyLoadImage src={mainDisplay} />
+            )}
           </div>
-        </div>
-        <div className='main-content-box'>
-          {mainDisplay === 'model' ? (
-            <MediaViewer
-              glbFile={product.glbFile}
-              usdzFile={product.usdzFile}
-              poster={product.imageUrl}
-              displayLink={false}
-              productId={product.id}
-            />
-          ) : (
-            <LazyLoadImage src={mainDisplay} />
-          )}
-        </div>
-        <div className='picture-thumbs'>
-          <div className='ar-pic'>
-            <LazyLoadImage
-              src={product.mainImage}
-              onClick={() => setMainDisplay('model')}
-              effect='blur'
-              alt={product.mainImage}
-              className={mainDisplay === 'model' && 'selected-photo'}
-            />
-            <ThreeDSVG setMainDisplay={setMainDisplay} fill='#272727' />
+          <div className='picture-thumbs'>
+            <div className='ar-pic'>
+              <LazyLoadImage
+                src={product.mainImage}
+                onClick={() => setMainDisplay('model')}
+                effect='blur'
+                alt={product.mainImage}
+                className={mainDisplay === 'model' && 'selected-photo'}
+              />
+              <ThreeDSVG setMainDisplay={setMainDisplay} fill='#272727' />
+            </div>
+            {product.pictures.map(image => (
+              <LazyLoadImage
+                key={image}
+                src={image}
+                onClick={() => setMainDisplay(image)}
+                effect='blur'
+                className={mainDisplay === image ? 'selected-photo' : ''}
+                alt={image}
+              />
+            ))}
           </div>
-          {product.pictures.map(image => (
-            <LazyLoadImage
-              key={image}
-              src={image}
-              onClick={() => setMainDisplay(image)}
-              effect='blur'
-              className={mainDisplay === image ? 'selected-photo' : ''}
-              alt={image}
-            />
-          ))}
-        </div>
-        <div className='buttons'>
-          <div className='left' />
-          <RoundARButton onClick={() => document.querySelector('model-viewer').activateAR()}>
-            AR
-          </RoundARButton>
-          <div className='right'>
-            <button
-              aria-label='Share'
-              onClick={() => {
-                setOpenShareLinks(true);
-                setBodyScroll(true);
-              }}>
-              <ShareSVG />
-            </button>
-            <p>SHARE</p>
+          <div className='buttons'>
+            <div className='left' />
+            <RoundARButton onClick={() => document.querySelector('model-viewer').activateAR()}>
+              AR
+            </RoundARButton>
+            <div className='right'>
+              <button
+                aria-label='Share'
+                onClick={() => {
+                  setOpenShareLinks(true);
+                  setBodyScroll(true);
+                }}>
+                <ShareSVG />
+              </button>
+              <p>SHARE</p>
+            </div>
           </div>
-        </div>
-      </section>
-      {/* REMOVED FOR NOW TO SIMPLIFY PAGE */}
-      {/* <section className='order-details '>
+        </section>
+        {/* REMOVED FOR NOW TO SIMPLIFY PAGE */}
+        {/* <section className='order-details '>
         <AddToCart sizes={product.sizes} product={product} setIsAdded={setIsAdded} />
-      </section>
+        </section>
       <div className='accordions'>
         <Accordion titleRegular='PRODUCT' titleStrong='INFORMATION' id='information-accordion'>
           <ul className='product-information'>
-            {product.features.map((feature, index) => (
-              <li key={index}>{feature}</li>
+          {product.features.map((feature, index) => (
+            <li key={index}>{feature}</li>
             ))}
-          </ul>
-        </Accordion>
-        <Accordion titleRegular='PRODUCT' titleStrong='SIZING'>
-          <LazyLoadImage
+            </ul>
+            </Accordion>
+            <Accordion titleRegular='PRODUCT' titleStrong='SIZING'>
+            <LazyLoadImage
             src={
               'https://res.cloudinary.com/dq7uyauun/image/upload/v1579495625/size-guide-women-shoes.png'
             }
             alt='size-chart'
             effect='blur'
-          />
-        </Accordion>
-      </div> */}
-      {/* <ProductBrand brandId={product.brandId} /> */}
-    </ProductContainer>
+            />
+            </Accordion>
+          </div> */}
+        {/* <ProductBrand brandId={product.brandId} /> */}
+      </ProductContainer>
+    </motion.div>
   );
 };
 

@@ -12,6 +12,7 @@ import MainPageCarousel from '../components/PhotoCarousel';
 import ModelViewer from '../components/ModelViewer';
 import { formatPrice } from '../utilities/formatting';
 import moment from 'moment';
+import { motion } from 'framer-motion';
 import styled from 'styled-components';
 
 const HomeStyles = styled.div`
@@ -27,6 +28,7 @@ const HomeStyles = styled.div`
   @media (max-width: 576px) {
     width: 100% !important ;
   }
+
   model-viewer {
     width: 90%;
     height: 300px;
@@ -236,85 +238,91 @@ const Home = () => {
     );
 
   return (
-    <HomeStyles>
-      <Helmet>
-        <title>YZED - HOME</title>
-      </Helmet>
-      {mainProduct && (
-        <>
-          <div className='main-product-title'>
-            <div className='date-and-price'>
-              <h3>{displayDate}</h3>
+    <motion.div
+      exit={{ opacity: 0, x: '-100vw' }}
+      initial={{ opacity: 0, x: '100vw' }}
+      animate={{ opacity: 1, x: 0 }}
+      transition={{ type: 'tween', ease: 'anticipate', duration: 1 }}>
+      <HomeStyles>
+        <Helmet>
+          <title>YZED - HOME</title>
+        </Helmet>
+        {mainProduct && (
+          <>
+            <div className='main-product-title'>
+              <div className='date-and-price'>
+                <h3>{displayDate}</h3>
+              </div>
+              <h3>
+                <strong>{mainProduct.brand}</strong> {mainProduct.name}
+              </h3>
             </div>
-            <h3>
-              <strong>{mainProduct.brand}</strong> {mainProduct.name}
-            </h3>
+            <ModelViewer
+              glbFile={mainProduct.glbFile}
+              usdzFile={mainProduct.usdzFile}
+              productId='Yr2FhLca1kxAvm7ZXeoU'
+            />
+          </>
+        )}
+        <section className='product-buttons'>
+          <div className='square-area'></div>
+          <RoundARButton
+            aria-label='Start AR'
+            onClick={() => {
+              document.querySelector('model-viewer').activateAR();
+            }}>
+            A R
+          </RoundARButton>
+          <div className='product-link'>
+            <Link to={mainProduct ? `/item/${mainProduct.id}` : '/featured'}>View product</Link>
+            <ChevronRight color='#7c7c7c' />
           </div>
-          <ModelViewer
-            glbFile={mainProduct.glbFile}
-            usdzFile={mainProduct.usdzFile}
-            productId='Yr2FhLca1kxAvm7ZXeoU'
-          />
-        </>
-      )}
-      <section className='product-buttons'>
-        <div className='square-area'></div>
-        <RoundARButton
-          aria-label='Start AR'
-          onClick={() => {
-            document.querySelector('model-viewer').activateAR();
-          }}>
-          A R
-        </RoundARButton>
-        <div className='product-link'>
-          <Link to={mainProduct ? `/item/${mainProduct.id}` : '/featured'}>View product</Link>
-          <ChevronRight color='#7c7c7c' />
-        </div>
-      </section>
-      <section className='discover-box'>
-        <h3>Discover YZED.</h3>
-        <div className='down-arrow' />
-      </section>
-      <section className='connected-content'>
-        <div className='join-section'>
-          <h3>
-            <strong>Explore</strong> AR
-          </h3>
-          <p>
-            Select objects from our wide catalogue and place them anywhere in real life with the
-            power of augmented reality.
-          </p>
-          <BlackButton>
-            <Link to='/featured'>EXPLORE AR</Link>
-          </BlackButton>
-        </div>
-        <div className='timeline'>
-          <h3>
-            <strong>Today's</strong> timeline
-          </h3>
-          <MainPageCarousel brand='YZED' title='DRESS & TUNIC' product='5NlpClokHFwJG6Pl7IYz' />
-          <MainPageCarousel
-            brand='YZED'
-            title='BODYSUIT & FOLD SKIRT'
-            product='Yr2FhLca1kxAvm7ZXeoU'
-          />
-        </div>
-      </section>
-      <footer>
-        <div className='footer-content'>
-          <h3>
-            <strong>YZED</strong> Show it first
-          </h3>
-          <p>
-            YZED is a platform for creative consumers to engage with their favourite brands through
-            cutting edge technology.
-          </p>
-          <BlackButton>
-            <Link to='/login'>BECOME A YZER</Link>
-          </BlackButton>
-        </div>
-      </footer>
-    </HomeStyles>
+        </section>
+        <section className='discover-box'>
+          <h3>Discover YZED.</h3>
+          <div className='down-arrow' />
+        </section>
+        <section className='connected-content'>
+          <div className='join-section'>
+            <h3>
+              <strong>Explore</strong> AR
+            </h3>
+            <p>
+              Select objects from our wide catalogue and place them anywhere in real life with the
+              power of augmented reality.
+            </p>
+            <BlackButton>
+              <Link to='/featured'>EXPLORE AR</Link>
+            </BlackButton>
+          </div>
+          <div className='timeline'>
+            <h3>
+              <strong>Today's</strong> timeline
+            </h3>
+            <MainPageCarousel brand='YZED' title='DRESS & TUNIC' product='5NlpClokHFwJG6Pl7IYz' />
+            <MainPageCarousel
+              brand='YZED'
+              title='BODYSUIT & FOLD SKIRT'
+              product='Yr2FhLca1kxAvm7ZXeoU'
+            />
+          </div>
+        </section>
+        <footer>
+          <div className='footer-content'>
+            <h3>
+              <strong>YZED</strong> Show it first
+            </h3>
+            <p>
+              YZED is a platform for creative consumers to engage with their favourite brands
+              through cutting edge technology.
+            </p>
+            <BlackButton>
+              <Link to='/login'>BECOME A YZER</Link>
+            </BlackButton>
+          </div>
+        </footer>
+      </HomeStyles>
+    </motion.div>
   );
 };
 

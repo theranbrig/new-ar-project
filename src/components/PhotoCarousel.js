@@ -10,6 +10,7 @@ import { FirebaseContext } from '../context/Firebase';
 import { LazyLoadComponent } from 'react-lazy-load-image-component';
 import PhotoCarouselFullScreenPhoto from './PhotoCarouselFullScreenPhoto';
 import TagFilledSVG from '../assets/icons/icon_tag_filled';
+import { motion } from 'framer-motion';
 import styled from 'styled-components';
 
 const body = document.querySelector('body');
@@ -199,6 +200,7 @@ const MainPageCarousel = ({ title, product, brand }) => {
 };
 
 const FullSliderStyles = styled.div`
+  animation: fadein 1.5s;
   position: fixed;
   top: 0;
   left: 0;
@@ -249,6 +251,16 @@ const FullSliderStyles = styled.div`
       }
     }
   }
+  @keyframes fadein {
+    from {
+      opacity: 0;
+      top: 100vh;
+    }
+    to {
+      opacity: 1;
+      top: 0;
+    }
+  }
 `;
 
 const FullScreenSlider = ({ photos, setShowFullScreen, userData, likePhoto, showFullScreen }) => {
@@ -280,36 +292,41 @@ const FullScreenSlider = ({ photos, setShowFullScreen, userData, likePhoto, show
   }, [fullScreenRef]);
 
   return (
-    <FullSliderStyles>
-      <div className='carousel'>
-        <section className='top'>
-          <div className='title'>
-            <h1>Today's Timeline</h1>
-            <h2>Swipe to explore more!</h2>
-          </div>
-          <button
-            onClick={() => {
-              enableBodyScroll(body);
-              setShowFullScreen('');
-            }}>
-            <CloseSVG fill='#fff' />
-          </button>
-        </section>
-        <section className='main-carousel'>
-          <Carousel ref={fullScreenRef} responsive={fullResponsive} swipeable>
-            {photos.map(photo => (
-              <PhotoCarouselFullScreenPhoto
-                key={photo.id}
-                photo={photo}
-                setShowFullScreen={setShowFullScreen}
-                userData={userData}
-                likePhoto={likePhoto}
-              />
-            ))}
-          </Carousel>
-        </section>
-      </div>
-    </FullSliderStyles>
+    <motion.div
+      exit={{ opacity: 0, scale: 0 }}
+      initial={{ opacity: 0, scale: 0 }}
+      animate={{ opacity: 1, scale: 1 }}>
+      <FullSliderStyles>
+        <div className='carousel'>
+          <section className='top'>
+            <div className='title'>
+              <h1>Today's Timeline</h1>
+              <h2>Swipe to explore more!</h2>
+            </div>
+            <button
+              onClick={() => {
+                enableBodyScroll(body);
+                setShowFullScreen('');
+              }}>
+              <CloseSVG fill='#fff' />
+            </button>
+          </section>
+          <section className='main-carousel'>
+            <Carousel ref={fullScreenRef} responsive={fullResponsive} swipeable>
+              {photos.map(photo => (
+                <PhotoCarouselFullScreenPhoto
+                  key={photo.id}
+                  photo={photo}
+                  setShowFullScreen={setShowFullScreen}
+                  userData={userData}
+                  likePhoto={likePhoto}
+                />
+              ))}
+            </Carousel>
+          </section>
+        </div>
+      </FullSliderStyles>
+    </motion.div>
   );
 };
 

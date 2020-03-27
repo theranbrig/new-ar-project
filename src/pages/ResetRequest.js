@@ -6,6 +6,7 @@ import Error from '../components/Error';
 import { FirebaseContext } from '../context/Firebase';
 import { Helmet } from 'react-helmet';
 import TopTitle from '../components/TopTitle';
+import { motion } from 'framer-motion';
 import styled from 'styled-components';
 import { useHistory } from 'react-router-dom';
 
@@ -160,61 +161,67 @@ const Reset = () => {
   }, [userData]);
 
   return (
-    <Div100vh>
-      <LoginStyles>
-        <Helmet>
-          <title>YZED - FORGOT PASSWORD</title>
-        </Helmet>
-        {submitted ? (
-          <div className='success'>
-            <TopTitle title='Forgot Password' />
-            <div className='check'>
-              <p>
-                If any account is connected to the email address {email}, then there will be an
-                email with a magic link in your inbox within 24 hours.
-              </p>
-              <CheckSVG />
-            </div>
-          </div>
-        ) : (
-          <>
-            <TopTitle title='Forgot Password' />
-            <div className='forgot'>
-              <p>
-                Forgot your password? Don’t worry, we’ve got you! Enter your email address and we
-                will send you a magic link.
-              </p>
-            </div>
-            <form
-              className='user-form'
-              onSubmit={e => {
-                e.preventDefault();
-                forgotEmail(email, setSubmitted);
-              }}>
-              <div className='form-input'>
-                <input
-                  aria-label='email'
-                  placeholder='Email Address'
-                  name='email'
-                  type='email'
-                  value={email}
-                  required
-                  onChange={e => setEmail(e.target.value)}
-                />
+    <motion.div
+      exit={{ opacity: 0, x: '100vw' }}
+      initial={{ opacity: 0, x: '-100vw' }}
+      animate={{ opacity: 1, x: 0 }}
+      transition={{ type: 'tween', ease: 'anticipate', duration: 1 }}>
+      <Div100vh>
+        <LoginStyles>
+          <Helmet>
+            <title>YZED - FORGOT PASSWORD</title>
+          </Helmet>
+          {submitted ? (
+            <div className='success'>
+              <TopTitle title='Forgot Password' />
+              <div className='check'>
+                <p>
+                  If any account is connected to the email address {email}, then there will be an
+                  email with a magic link in your inbox within 24 hours.
+                </p>
+                <CheckSVG />
               </div>
-              <BlackButton disabled={!email.length} type='submit'>
-                SEND LINK
-              </BlackButton>
-            </form>
-            {(firebaseError || error) && (
-              <div className='error'>
-                <Error error={firebaseError || error} clickFunction={setError} />
+            </div>
+          ) : (
+            <>
+              <TopTitle title='Forgot Password' />
+              <div className='forgot'>
+                <p>
+                  Forgot your password? Don’t worry, we’ve got you! Enter your email address and we
+                  will send you a magic link.
+                </p>
               </div>
-            )}
-          </>
-        )}
-      </LoginStyles>
-    </Div100vh>
+              <form
+                className='user-form'
+                onSubmit={e => {
+                  e.preventDefault();
+                  forgotEmail(email, setSubmitted);
+                }}>
+                <div className='form-input'>
+                  <input
+                    aria-label='email'
+                    placeholder='Email Address'
+                    name='email'
+                    type='email'
+                    value={email}
+                    required
+                    onChange={e => setEmail(e.target.value)}
+                  />
+                </div>
+                <BlackButton disabled={!email.length} type='submit'>
+                  SEND LINK
+                </BlackButton>
+              </form>
+              {(firebaseError || error) && (
+                <div className='error'>
+                  <Error error={firebaseError || error} clickFunction={setError} />
+                </div>
+              )}
+            </>
+          )}
+        </LoginStyles>
+      </Div100vh>
+    </motion.div>
   );
 };
 

@@ -2,6 +2,7 @@ import React, { useContext, useState } from 'react';
 
 import CopyLinkSVG from '../assets/icons/icon_copy_link';
 import { CopyToClipboard } from 'react-copy-to-clipboard';
+import Div100vh from 'react-div-100vh';
 import FacebookSVG from '../assets/icons/icon_facebook';
 import KakaoSVG from '../assets/icons/icon_kakao';
 import { ModalContext } from '../context/Modal';
@@ -17,7 +18,7 @@ export const ShareStyles = styled.div`
   left: 0;
   position: fixed;
   background: #272727f9;
-  z-index: 1010;
+  z-index: 1500;
   font-family: ${props => props.theme.fonts.main};
   .content {
     /* transform: translate(-50%, -50%); */
@@ -25,8 +26,9 @@ export const ShareStyles = styled.div`
     max-width: 90%;
     background: ${props => props.theme.colors.white};
     margin: 0 auto;
-    margin-top: 100px;
     border-radius: 25px;
+    animation: fadein 1s;
+    margin-top: 150px;
     h1 {
       text-transform: none;
       font-weight: 600;
@@ -134,6 +136,17 @@ export const ShareStyles = styled.div`
       padding-left: 10px;
     }
   }
+
+  @keyframes fadein {
+    from {
+      opacity: 0;
+      margin-top: 300px;
+    }
+    to {
+      opacity: 1;
+      margin-top: 150px;
+    }
+  }
 `;
 
 const Share = ({ product, setShareOpen }) => {
@@ -145,7 +158,7 @@ const Share = ({ product, setShareOpen }) => {
     <ShareStyles
       onClick={() => {
         setBodyScroll(false);
-        setOpenShareLinks(false);
+        setOpenShareLinks(null);
       }}>
       <section
         className='content'
