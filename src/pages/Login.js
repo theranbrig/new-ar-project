@@ -1,12 +1,13 @@
-import { Link, useHistory } from 'react-router-dom';
 import React, { useContext, useEffect, useState } from 'react';
 
 import Div100vh from 'react-div-100vh';
 import Error from '../components/Error';
 import { FirebaseContext } from '../context/Firebase';
 import { Helmet } from 'react-helmet';
+import { Link } from 'react-tiger-transition';
 import TopTitle from '../components/TopTitle';
 import styled from 'styled-components';
+import { useHistory } from 'react-router-dom';
 
 export const LoginStyles = styled.div`
   width: 500px;
@@ -81,7 +82,6 @@ export const LoginStyles = styled.div`
     grid-template-columns: 1fr;
     justify-content: center;
     align-items: center;
-
     a {
       text-decoration: none;
       border-bottom: 1px solid ${props => props.theme.colors.grey};
@@ -172,7 +172,9 @@ const Login = () => {
             </BlackButton>
           </form>
           <div className='forgot'>
-            <Link to='/request_reset'>I forgot my password.</Link>
+            <Link to='/request_reset' transition='glide-left'>
+              I forgot my password.
+            </Link>
           </div>
           {firebaseError && (
             <div className='error'>
@@ -183,7 +185,9 @@ const Login = () => {
         <div className='bottom'>
           <div className='bottom-content'>
             <p>Want to become a YZER?</p>
-            <Link to='/register'>Sign Up Now</Link>
+            <Link to='/register' transition='glide-left'>
+              Sign Up Now
+            </Link>
           </div>
         </div>
       </LoginStyles>

@@ -6,7 +6,7 @@ import React, { useContext, useEffect, useState } from 'react';
 import ChevronRight from '../assets/icons/icon_chevron_right';
 import { FirebaseContext } from '../context/Firebase';
 import { Helmet } from 'react-helmet';
-import { Link } from 'react-router-dom';
+import { Link } from 'react-tiger-transition';
 import LoadingSpinner from '../components/LoadingSpinner';
 import MainPageCarousel from '../components/PhotoCarousel';
 import ModelViewer from '../components/ModelViewer';
@@ -267,7 +267,9 @@ const Home = () => {
           A R
         </RoundARButton>
         <div className='product-link'>
-          <Link to={mainProduct ? `/item/${mainProduct.id}` : '/featured'}>View product</Link>
+          <Link to={mainProduct ? `/item/${mainProduct.id}` : '/featured'} transition='glide-left'>
+            View product
+          </Link>
           <ChevronRight color='#7c7c7c' />
         </div>
       </section>
@@ -285,7 +287,9 @@ const Home = () => {
             power of augmented reality.
           </p>
           <BlackButton>
-            <Link to='/featured'>EXPLORE AR</Link>
+            <Link to='/featured' transition='glide-left'>
+              EXPLORE AR
+            </Link>
           </BlackButton>
         </div>
         <div className='timeline'>
@@ -310,7 +314,9 @@ const Home = () => {
             cutting edge technology.
           </p>
           <BlackButton>
-            <Link to='/login'>BECOME A YZER</Link>
+            <Link to='/login' transition='glide-left'>
+              BECOME A YZER
+            </Link>
           </BlackButton>
         </div>
       </footer>

@@ -5,7 +5,7 @@ import { CartContext } from '../context/Cart';
 import CloseSVG from '../assets/icons/icon_close';
 import { FirebaseContext } from '../context/Firebase';
 import FullShopBagSVG from '../assets/icons/icon_shoppingbag_full';
-import { Link } from 'react-router-dom';
+import { Link } from 'react-tiger-transition';
 import LogoSVG from '../assets/icons/yzed_logo';
 import MenuLinks from './MenuLinks';
 import { ModalContext } from '../context/Modal';
@@ -178,7 +178,7 @@ const NavigationDrawer = ({ children }) => {
             {openSearch ? <CloseSVG /> : <SearchSVG />}
           </button>
         </div>
-        <Link to='/' className='logo-link'>
+        <Link to='/' transition='glide-right' className='logo-link'>
           <LogoSVG />
         </Link>
         <div className='right-icons'>

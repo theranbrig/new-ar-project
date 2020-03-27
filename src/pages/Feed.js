@@ -28,7 +28,6 @@ const Feed = () => {
   const { id } = useParams();
 
   useEffect(() => {
-    window.scrollTo(0, 0);
     setLoading(true);
     let tempPhotos = [];
     dbh

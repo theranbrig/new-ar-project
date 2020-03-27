@@ -233,19 +233,20 @@ const Product = () => {
   useEffect(() => {
     setLoading(true);
     const getData = async () => {
-      await dbh
-        .collection('products')
-        .doc(id)
-        .get()
-        .then(doc => {
-          const id = doc.id;
-          const details = doc.data();
-          setProduct({ id, ...details });
-          setLoading(false);
-        });
+      if (id) {
+        await dbh
+          .collection('products')
+          .doc(id || '1234')
+          .get()
+          .then(doc => {
+            const id = doc.id;
+            const details = doc.data();
+            setProduct({ id, ...details });
+            setLoading(false);
+          });
+      }
     };
     getData();
-    window.scrollTo(0, 0);
   }, [dbh, id]);
 
   if (!product || loading)

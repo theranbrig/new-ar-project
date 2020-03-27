@@ -1,14 +1,15 @@
-import { Link, useHistory } from 'react-router-dom';
 import React, { useContext, useEffect, useState } from 'react';
 
 import Div100vh from 'react-div-100vh';
 import Error from '../components/Error';
 import { FirebaseContext } from '../context/Firebase';
 import { Helmet } from 'react-helmet';
+import { Link } from 'react-tiger-transition';
 import LoadingSpinner from '../components/LoadingSpinner';
 import { LoginStyles } from './Login';
 import TopTitle from '../components/TopTitle';
 import styled from 'styled-components';
+import { useHistory } from 'react-router-dom';
 
 const BlackButton = styled.button`
   font-family: ${props => props.theme.fonts.main};
@@ -168,7 +169,9 @@ const Register = () => {
         )}
         {loading && <LoadingSpinner color='black' />}
         <div className='forgot'>
-          <Link to='/login'>Already a member?</Link>
+          <Link to='/login' transition='glide-right'>
+            Already a member?
+          </Link>
         </div>
         <div className='bottom'>
           <p>
