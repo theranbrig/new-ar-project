@@ -217,7 +217,7 @@ const Home = () => {
       setLoading(true);
       dbh
         .collection('products')
-        .doc('5NlpClokHFwJG6Pl7IYz')
+        .doc('Yr2FhLca1kxAvm7ZXeoU')
         .get()
         .then(doc => {
           setMainProduct({ id: doc.id, ...doc.data() });
@@ -253,7 +253,7 @@ const Home = () => {
           <ModelViewer
             glbFile={mainProduct.glbFile}
             usdzFile={mainProduct.usdzFile}
-            productId='5NlpClokHFwJG6Pl7IYz'
+            productId='Yr2FhLca1kxAvm7ZXeoU'
           />
         </>
       )}
