@@ -91,10 +91,9 @@ const ProductContainer = styled.div`
     display: grid;
     grid-template-columns: repeat(4, 1fr);
     grid-auto-rows: 1fr;
-    grid-gap: 10px;
+    grid-gap: 15px;
     img {
-      width: 100px;
-      max-width: 100%;
+      width: 100%;
       border: 1px solid ${props => props.theme.colors.lightGrey};
     }
   }
@@ -210,6 +209,7 @@ const ProductContainer = styled.div`
         svg {
           height: 20px;
           vertical-align: middle;
+          margin-left: -2px;
         }
       }
       p {
