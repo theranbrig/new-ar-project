@@ -52,7 +52,7 @@ export const FollowingStyles = styled.div`
 `;
 
 const Following = ({ userId }) => {
-  const [sortByDate, setSortByDate] = useState(true);
+  const [sortByDate, setSortByDate] = useState(false);
   const [loading, setLoading] = useState(false);
   const [followedItems, setFollowedItems] = useState([]);
   const [followedThreads, setFollowedThreads] = useState([]);
@@ -126,7 +126,7 @@ const Following = ({ userId }) => {
         </button>
       </section>
       <div className='followed-items'>
-        {(!followedItems.length || !followedThreads.length) && (
+        {!followedItems.length && !followedThreads.length && (
           <p className='no-products'>
             Nothing followed yet. <Link to='/feed'>Explore more</Link> in the photo feed.
           </p>

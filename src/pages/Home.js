@@ -239,10 +239,11 @@ const Home = () => {
 
   return (
     <motion.div
-      exit={{ opacity: 0, x: '-100vw' }}
-      initial={{ opacity: 0, x: '100vw' }}
+      exit={{ opacity: 0, x: '100vw' }}
+      initial={{ opacity: 0, x: '-100vw' }}
       animate={{ opacity: 1, x: 0 }}
-      transition={{ type: 'tween', ease: 'anticipate', duration: 1 }}>
+      show={{ opacity: 1, transition: { staggerChildren: 0.5 } }}
+      transition={{ type: 'spring', ease: 'linear', duration: 1 }}>
       <HomeStyles>
         <Helmet>
           <title>YZED - HOME</title>

@@ -251,23 +251,17 @@ const Product = () => {
 
   if (!product || loading)
     return (
-      <motion.div
-        exit={{ opacity: 0, x: '100vw' }}
-        initial={{ opacity: 0, x: '-100vw' }}
-        animate={{ opacity: 1, x: 0 }}
-        transition={{ type: 'tween', ease: 'anticipate', duration: 1 }}>
-        <LoadingContainer>
-          <LoadingSpinner color='black' />
-        </LoadingContainer>
-      </motion.div>
+      <LoadingContainer>
+        <LoadingSpinner color='black' />
+      </LoadingContainer>
     );
 
   return (
     <motion.div
-      exit={{ opacity: 0, x: '100vw' }}
-      initial={{ opacity: 0, x: '-100vw' }}
+      exit={{ opacity: 0, x: '-100vw' }}
+      initial={{ opacity: 0, x: '100vw' }}
       animate={{ opacity: 1, x: 0 }}
-      transition={{ type: 'tween', ease: 'anticipate', duration: 1 }}>
+      transition={{ type: 'spring', ease: 'easeIn', duration: 1 }}>
       <ProductContainer>
         <Helmet>{/* <title>YZED - {product && product.name.toUpperCase()}</title> */}</Helmet>
         {isAdded && <AddToCartSuccessModal setIsAdded={setIsAdded} />}
