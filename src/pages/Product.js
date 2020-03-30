@@ -261,7 +261,7 @@ const Product = () => {
       exit={{ opacity: 0, x: '-100vw' }}
       initial={{ opacity: 0, x: '100vw' }}
       animate={{ opacity: 1, x: 0 }}
-      transition={{ type: 'spring', ease: 'easeIn', duration: 1 }}>
+      transition={{ type: 'spring', ease: 'linear', duration: 1, mass: 0.5 }}>
       <ProductContainer>
         <Helmet>{/* <title>YZED - {product && product.name.toUpperCase()}</title> */}</Helmet>
         {isAdded && <AddToCartSuccessModal setIsAdded={setIsAdded} />}

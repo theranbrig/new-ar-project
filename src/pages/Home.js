@@ -242,8 +242,7 @@ const Home = () => {
       exit={{ opacity: 0, x: '100vw' }}
       initial={{ opacity: 0, x: '-100vw' }}
       animate={{ opacity: 1, x: 0 }}
-      show={{ opacity: 1, transition: { staggerChildren: 0.5 } }}
-      transition={{ type: 'spring', ease: 'linear', duration: 1 }}>
+      transition={{ type: 'spring', ease: 'linear', duration: 1, mass: 0.5 }}>
       <HomeStyles>
         <Helmet>
           <title>YZED - HOME</title>

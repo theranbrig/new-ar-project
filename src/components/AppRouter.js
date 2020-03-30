@@ -55,7 +55,7 @@ export default function App() {
             openFullScreenSlider={openFullScreenSlider}
           />
         )}
-        <AnimatePresence>
+        <AnimatePresence exitBeforeEnter>
           <Switch>
             <Route path='/subscribe'>
               <Subscribe />
