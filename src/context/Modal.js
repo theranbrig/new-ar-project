@@ -13,7 +13,6 @@ const ModalProvider = ({ children }) => {
   const [openShareLinks, setOpenShareLinks] = useState(false);
   const [openFullScreenSlider, setOpenFullScreenSlider] = useState('');
   const [sliderPhotos, setSliderPhotos] = useState([]);
-  const [likePhoto, setLikePhoto] = useState('');
 
   const closeSearchAndClear = callback => {
     setBodyScroll(false);
@@ -56,7 +55,6 @@ const ModalProvider = ({ children }) => {
         setOpenOptions,
         openFullScreenSlider,
         setOpenFullScreenSlider,
-        likePhoto,
         sliderPhotos,
         setSliderPhotos,
       }}>

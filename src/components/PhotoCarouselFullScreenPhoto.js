@@ -5,6 +5,7 @@ import FilledUpVoteSVG from '../assets/icons/icon_upvote_filled';
 import { FirebaseContext } from '../context/Firebase';
 import { Link } from 'react-router-dom';
 import LoadingSpinner from './LoadingSpinner';
+import { ModalContext } from '../context/Modal';
 import { enableBodyScroll } from 'body-scroll-lock';
 import moment from 'moment';
 import styled from 'styled-components';
@@ -97,10 +98,12 @@ export const FullScreenPhotoStyles = styled.div`
   }
 `;
 
-const PhotoCarouselFullScreenPhoto = ({ photo, userData, likePhoto }) => {
+const PhotoCarouselFullScreenPhoto = ({ photo, userData }) => {
   const [user, setUser] = useState(null);
   const [comments, setComments] = useState(0);
   const [loading, setLoading] = useState(false);
+
+  const { setOpenFullScreenSlider } = useContext(ModalContext);
   const { dbh } = useContext(FirebaseContext);
 
   useEffect(() => {
@@ -136,6 +139,7 @@ const PhotoCarouselFullScreenPhoto = ({ photo, userData, likePhoto }) => {
       <div className='image gradient'>
         <Link
           onClick={() => {
+            setOpenFullScreenSlider('');
             enableBodyScroll(body);
           }}
           to={`/comments/${photo.id}`}>
@@ -148,7 +152,8 @@ const PhotoCarouselFullScreenPhoto = ({ photo, userData, likePhoto }) => {
             <p className='comment'>
               <Link
                 onClick={() => {
-                  enableBodyScroll(body);
+                  setOpenFullScreenSlider('');
+                  enableBodyScroll(false);
                 }}
                 to={`/user/${user.id}`}>
                 @{user.userName}
@@ -166,38 +171,73 @@ const PhotoCarouselFullScreenPhoto = ({ photo, userData, likePhoto }) => {
               <h5>
                 <span>{moment.unix(photo.addedOn.seconds).fromNow()}</span> repl
                 {comments === 1 ? 'y' : 'ies'}({comments})
-                <Link onClick={() => enableBodyScroll(body)} to={`/comments/${photo.id}`}>
+                <Link
+                  onClick={() => {
+                    setOpenFullScreenSlider('');
+                    enableBodyScroll(false);
+                  }}
+                  to={`/comments/${photo.id}`}>
                   reply
                 </Link>
               </h5>
             </div>
           </div>
-          <PhotoLikes photo={photo} likePhoto={likePhoto} userData={userData} />
+          <PhotoLikes photo={photo} />
         </section>
       )}
     </FullScreenPhotoStyles>
   );
 };
 
-const PhotoLikes = ({ photo, likePhoto, userData }) => {
-  const [liked, setLiked] = useState(false);
+const PhotoLikes = ({ photo }) => {
+  const [isLiked, setIsLiked] = useState(false);
+  const [likes, setLikes] = useState([]);
+
+  const { dbh, userData, firebase } = useContext(FirebaseContext);
+
+  const toggleLikePhoto = (photo, liked) => {
+    if (liked) {
+      dbh
+        .collection('userPhotos')
+        .doc(photo.id)
+        .update({ likes: firebase.firestore.FieldValue.arrayRemove(userData.id) });
+    } else {
+      dbh
+        .collection('userPhotos')
+        .doc(photo.id)
+        .update({ likes: firebase.firestore.FieldValue.arrayUnion(userData.id) });
+    }
+  };
+
+  const checkLike = () => {
+    dbh
+      .collection('userPhotos')
+      .doc(photo.id)
+      .onSnapshot(querySnapshot => {
+        if (userData.loggedIn) {
+          setIsLiked(querySnapshot.data().likes.some(like => like === userData.id));
+          setLikes(querySnapshot.data().likes);
+        }
+      });
+  };
 
   useEffect(() => {
-    if (userData.loggedIn) {
-      setLiked(photo.likes.some(like => like === userData.id));
-    }
-  }, [photo]);
+    checkLike();
+    return () => {
+      checkLike();
+    };
+  }, [photo, userData]);
 
   return (
     <div className='likes'>
       <button
         disabled={!userData.loggedIn}
         onClick={() => {
-          likePhoto(photo, liked);
+          toggleLikePhoto(photo, isLiked);
         }}>
-        {liked ? <FilledUpVoteSVG fill='#fff' /> : <EmptyUpVoteSVG fill='#fff' />}
+        {isLiked ? <FilledUpVoteSVG fill='#fff' /> : <EmptyUpVoteSVG fill='#fff' />}
       </button>
-      <h5>{photo.likes.length}</h5>
+      <h5>{likes.length}</h5>
     </div>
   );
 };

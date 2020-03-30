@@ -36,7 +36,6 @@ export default function App() {
   const {
     openShareLinks,
     sliderPhotos,
-    likePhoto,
     setOpenFullScreenSlider,
     openFullScreenSlider,
   } = useContext(ModalContext);
@@ -52,7 +51,6 @@ export default function App() {
           <FullScreenSlider
             userData={userData}
             sliderPhotos={sliderPhotos}
-            likePhoto={likePhoto}
             setOpenFullScreenSlider={setOpenFullScreenSlider}
             openFullScreenSlider={openFullScreenSlider}
           />

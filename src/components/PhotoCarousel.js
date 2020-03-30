@@ -124,38 +124,16 @@ const MainPageCarousel = ({ title, product, brand }) => {
   const [photos, setPhotos] = useState([]);
 
   const { dbh, userData, firebase } = useContext(FirebaseContext);
-  const { setLikePhoto } = useContext(ModalContext);
 
   const { sliderPhotos, sliderPhotoIndex, setOpenFullScreenSlider, setSliderPhotos } = useContext(
     ModalContext
   );
 
-  const likePhoto = (photo, liked) => {
-    if (liked) {
-      dbh
-        .collection('userPhotos')
-        .doc(photo.id)
-        .update({ likes: firebase.firestore.FieldValue.arrayRemove(userData.id) })
-        .then(() => {
-          checkPhotos();
-        });
-    } else {
-      dbh
-        .collection('userPhotos')
-        .doc(photo.id)
-        .update({ likes: firebase.firestore.FieldValue.arrayUnion(userData.id) })
-        .then(() => {
-          checkPhotos();
-        });
-    }
-  };
-
   const checkPhotos = () => {
     dbh
       .collection('userPhotos')
       .where('tag', '==', product)
-      .get()
-      .then(querySnapshot => {
+      .onSnapshot(querySnapshot => {
         let tempItems = [];
         querySnapshot.docs.forEach(doc => {
           // const url = doc.data().url.replace('/yzed/', '/yzed/300x200/');
@@ -167,6 +145,9 @@ const MainPageCarousel = ({ title, product, brand }) => {
 
   useEffect(() => {
     checkPhotos();
+    return () => {
+      checkPhotos();
+    };
   }, []);
 
   return (
@@ -186,22 +167,12 @@ const MainPageCarousel = ({ title, product, brand }) => {
                   disableBodyScroll(body);
                   setOpenFullScreenSlider(index);
                   setSliderPhotos(photos);
-                  // setLikePhoto(likePhoto);
                 }}>
                 <img src={photo.url} alt={photo.id} rel='preload' />
               </div>
             ))}
           </Carousel>
         </LazyLoadComponent>
-        {/* {showFullScreen.length !== 0 && (
-          <FullScreenSlider
-            photos={photos}
-            setShowFullScreen={setShowFullScreen}
-            userData={userData}
-            likePhoto={likePhoto}
-            showFullScreen={showFullScreen}
-          />
-        )} */}
       </div>
     </SliderStyles>
   );
@@ -275,7 +246,6 @@ export const FullScreenSlider = ({
   sliderPhotos,
   setOpenFullScreenSlider,
   userData,
-  likePhoto,
   openFullScreenSlider,
 }) => {
   const fullScreenRef = useRef();
@@ -304,7 +274,7 @@ export const FullScreenSlider = ({
       fullScreenRef.current.goToSlide(openFullScreenSlider);
     }
   }, [fullScreenRef]);
-  console.log(sliderPhotos);
+
   return (
     <FullSliderStyles>
       <div className='carousel'>
@@ -329,7 +299,6 @@ export const FullScreenSlider = ({
                 photo={photo}
                 setOpenFullScreenSlider={setOpenFullScreenSlider}
                 userData={userData}
-                likePhoto={likePhoto}
               />
             ))}
           </Carousel>
