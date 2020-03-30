@@ -1,6 +1,9 @@
+import 'react-lazy-load-image-component/src/effects/blur.css';
+
 import React, { useContext, useEffect, useState } from 'react';
 
 import { FirebaseContext } from '../context/Firebase';
+import { LazyLoadImage } from 'react-lazy-load-image-component';
 import LikeEmptySVG from '../assets/icons/icon_like_empty';
 import LikeFilledSVG from '../assets/icons/icon_like_filled';
 import { Link } from 'react-router-dom';
@@ -31,6 +34,10 @@ export const FeaturedStyles = styled.div`
       img {
         border: 1px solid ${props => props.theme.colors.lightGrey};
         width: 100%;
+        background: #7f7fd5;
+        background: -webkit-linear-gradient(to top, #91eae4, #86a8e7, #7f7fd5);
+        background: linear-gradient(to top, #91eae4, #86a8e7, #7f7fd5);
+        background-size: 100% 100%;
       }
       h2,
       h3,
@@ -141,7 +148,7 @@ const FeaturedProducts = () => {
                 {product.liked ? <LikeFilledSVG /> : <LikeEmptySVG />}
               </button>
               <Link to={`/item/${product.id}`}>
-                <img src={product.mainImage} alt={product.name} />
+                <LazyLoadImage src={product.mainImage} alt={product.name} effect='blur' />
                 <h2>{product.brand}</h2>
                 <h3>{product.name}</h3>
                 {/* <h4>{formatPrice(product.price)}</h4> */}
