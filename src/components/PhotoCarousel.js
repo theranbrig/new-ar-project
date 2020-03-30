@@ -181,7 +181,7 @@ const FullSliderStyles = styled.div`
   top: 0;
   left: 0;
   z-index: 1005;
-  background: ${props => props.theme.colors.black};
+  background: #272727f9;
   height: 100vh;
   width: 100%;
   font-family: ${props => props.theme.fonts.main};

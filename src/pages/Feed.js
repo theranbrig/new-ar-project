@@ -5,6 +5,7 @@ import { FirebaseContext } from '../context/Firebase';
 import { Helmet } from 'react-helmet';
 import LoadingSpinner from '../components/LoadingSpinner';
 import TopTitle from '../components/TopTitle';
+import { motion } from 'framer-motion';
 import styled from 'styled-components';
 import { useParams } from 'react-router-dom';
 
@@ -51,15 +52,21 @@ const Feed = () => {
     );
 
   return (
-    <UserStyles>
-      <Helmet>
-        <title>YZED - FEED</title>
-      </Helmet>
-      <TopTitle title={'YZED Feed'} />
-      {photos.map(photo => (
-        <FeedPhoto photo={photo} key={photo.imageUrl} userData={userData} />
-      ))}
-    </UserStyles>
+    <motion.div
+      exit={{ opacity: 0, scale: 0 }}
+      initial={{ opacity: 0, scale: 0.8 }}
+      animate={{ opacity: 1, scale: 1 }}
+      transition={{ type: 'spring', ease: 'easeIn', duration: 1, mass: 0.5 }}>
+      <UserStyles>
+        <Helmet>
+          <title>YZED - FEED</title>
+        </Helmet>
+        <TopTitle title={'YZED Feed'} />
+        {photos.map(photo => (
+          <FeedPhoto photo={photo} key={photo.imageUrl} userData={userData} />
+        ))}
+      </UserStyles>
+    </motion.div>
   );
 };
 

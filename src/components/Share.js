@@ -163,7 +163,6 @@ const Share = ({ product, setShareOpen }) => {
       <section
         className='content'
         onClick={e => {
-          //stop clicks getting to the overlay
           e.stopPropagation();
         }}>
         <h1>Share item</h1>

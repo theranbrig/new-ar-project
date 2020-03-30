@@ -122,8 +122,9 @@ const FeaturedProducts = () => {
   return (
     <motion.div
       exit={{ opacity: 0, scale: 0 }}
-      initial={{ opacity: 0, scale: 0 }}
-      animate={{ opacity: 1, scale: 1 }}>
+      initial={{ opacity: 0, scale: 0.8 }}
+      animate={{ opacity: 1, scale: 1 }}
+      transition={{ type: 'spring', ease: 'easeIn', duration: 1, mass: 0.5 }}>
       <FeaturedStyles>
         <div className='title'>
           <h1>Featured Products</h1>

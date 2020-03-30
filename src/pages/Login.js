@@ -138,7 +138,7 @@ const Login = () => {
       exit={{ opacity: 0, x: '-100vw' }}
       initial={{ opacity: 0, x: '100vw' }}
       animate={{ opacity: 1, x: 0 }}
-      transition={{ type: 'tween', ease: 'anticipate', duration: 1 }}>
+      transition={{ type: 'spring', ease: 'easeIn', duration: 1, mass: 0.5 }}>
       <Div100vh>
         <LoginStyles>
           <Helmet>

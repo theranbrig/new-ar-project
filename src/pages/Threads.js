@@ -4,6 +4,7 @@ import React, { useContext, useEffect } from 'react';
 
 import { FirebaseContext } from '../context/Firebase';
 import Following from '../components/Following';
+import { motion } from 'framer-motion';
 import { useParams } from 'react-router-dom';
 
 const Threads = () => {
@@ -29,7 +30,15 @@ const Threads = () => {
     }
   }, []);
 
-  return <Following userId={userId} />;
+  return (
+    <motion.div
+      exit={{ opacity: 0, x: '-100vw' }}
+      initial={{ opacity: 0, x: '100vw' }}
+      animate={{ opacity: 1, x: 0 }}
+      transition={{ type: 'spring', ease: 'easeIn', duration: 1, mass: 0.5 }}>
+      <Following userId={userId} />;
+    </motion.div>
+  );
 };
 
 export default Threads;
