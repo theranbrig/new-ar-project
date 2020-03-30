@@ -145,9 +145,7 @@ const MainPageCarousel = ({ title, product, brand }) => {
 
   useEffect(() => {
     checkPhotos();
-    return () => {
-      checkPhotos();
-    };
+    return () => checkPhotos();
   }, []);
 
   return (
@@ -179,7 +177,6 @@ const MainPageCarousel = ({ title, product, brand }) => {
 };
 
 const FullSliderStyles = styled.div`
-  animation: fadein 1.5s;
   position: fixed;
   top: 0;
   left: 0;
@@ -189,6 +186,7 @@ const FullSliderStyles = styled.div`
   width: 100%;
   font-family: ${props => props.theme.fonts.main};
   .carousel {
+    animation: fadein 1.5s;
     width: 500px;
     max-width: 95%;
     height: 100vh;
@@ -233,11 +231,10 @@ const FullSliderStyles = styled.div`
   @keyframes fadein {
     from {
       opacity: 0;
-      top: 100vh;
     }
+
     to {
       opacity: 1;
-      top: 0;
     }
   }
 `;
@@ -277,8 +274,17 @@ export const FullScreenSlider = ({
 
   return (
     <FullSliderStyles>
-      <div className='carousel'>
-        <section className='top'>
+      <div
+        className='carousel'
+        onClick={() => {
+          enableBodyScroll(body);
+          setOpenFullScreenSlider('');
+        }}>
+        <section
+          className='top'
+          onClick={e => {
+            e.stopPropagation();
+          }}>
           <div className='title'>
             <h1>Today's Timeline</h1>
             <h2>Swipe to explore more!</h2>
@@ -291,7 +297,11 @@ export const FullScreenSlider = ({
             <CloseSVG fill='#fff' />
           </button>
         </section>
-        <section className='main-carousel'>
+        <section
+          className='main-carousel'
+          onClick={e => {
+            e.stopPropagation();
+          }}>
           <Carousel ref={fullScreenRef} responsive={fullResponsive} swipeable>
             {sliderPhotos.map(photo => (
               <PhotoCarouselFullScreenPhoto

@@ -126,16 +126,29 @@ const Following = ({ userId }) => {
         </button>
       </section>
       <div className='followed-items'>
-        {!followedItems.length && !followedThreads.length && (
-          <p className='no-products'>
-            Nothing followed yet. <Link to='/feed'>Explore more</Link> in the photo feed.
-          </p>
-        )}
-        {sortByDate
-          ? followedItems.map(item => (
+        {sortByDate ? (
+          <>
+            {!followedItems.length && (
+              <p className='no-products'>
+                Nothing is here yet. <Link to='/feed'>Explore more</Link> in the photo feed.
+              </p>
+            )}
+            {followedItems.map(item => (
               <FollowedItem item={item} key={item.id} setFollowedItems={setFollowedItems} />
-            ))
-          : followedThreads.map(thread => <FollowedThread thread={thread} />)}
+            ))}
+          </>
+        ) : (
+          <>
+            {!followedThreads.length && (
+              <p className='no-products'>
+                Nothing is here yet. <Link to='/feed'>Explore more</Link> in the photo feed.
+              </p>
+            )}
+            {followedThreads.map(thread => (
+              <FollowedThread thread={thread} />
+            ))}
+          </>
+        )}
       </div>
     </FollowingStyles>
   );

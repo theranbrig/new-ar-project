@@ -164,6 +164,7 @@ const HomeStyles = styled.div`
       padding-bottom: 20px;
       background-color: ${props => props.theme.colors.white};
       box-shadow: 0 0 6px #27272722;
+      z-index: 0;
       h3 {
         padding-top: 30px;
         font-size: 1.5rem;
@@ -239,10 +240,10 @@ const Home = () => {
 
   return (
     <motion.div
-      exit={{ opacity: 0, x: '100vw' }}
+      exit={{ opacity: 0.5, x: '100vw' }}
       initial={{ opacity: 0, x: '-100vw' }}
       animate={{ opacity: 1, x: 0 }}
-      transition={{ type: 'spring', ease: 'linear', duration: 1, mass: 0.5 }}>
+      transition={{ type: 'spring', ease: 'easeIn', duration: 1, mass: 0.5 }}>
       <HomeStyles>
         <Helmet>
           <title>YZED - HOME</title>

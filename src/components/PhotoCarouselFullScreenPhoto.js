@@ -1,8 +1,11 @@
+import 'react-lazy-load-image-component/src/effects/blur.css';
+
 import React, { useContext, useEffect, useState } from 'react';
 
 import EmptyUpVoteSVG from '../assets/icons/icon_upvote_empty';
 import FilledUpVoteSVG from '../assets/icons/icon_upvote_filled';
 import { FirebaseContext } from '../context/Firebase';
+import { LazyLoadImage } from 'react-lazy-load-image-component';
 import { Link } from 'react-router-dom';
 import LoadingSpinner from './LoadingSpinner';
 import { ModalContext } from '../context/Modal';
@@ -143,7 +146,7 @@ const PhotoCarouselFullScreenPhoto = ({ photo, userData }) => {
             enableBodyScroll(body);
           }}
           to={`/comments/${photo.id}`}>
-          <img src={photo.url} alt={photo.id} />
+          <LazyLoadImage src={photo.url} alt={photo.id} effect='blur' />
         </Link>
       </div>
       {user && (
