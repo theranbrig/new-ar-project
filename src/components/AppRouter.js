@@ -46,7 +46,7 @@ export default function App() {
     <>
       <NavigationDrawer />
       <div style={{ width: '100%', backgroundColor: '#fffdf9' }}>
-        {openShareLinks && <Share product={openShareLinks} />}
+        {openShareLinks.length && <Share product={openShareLinks} />}
         {openFullScreenSlider.length !== 0 && (
           <FullScreenSlider
             userData={userData}

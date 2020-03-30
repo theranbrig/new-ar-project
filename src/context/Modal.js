@@ -10,7 +10,7 @@ const ModalProvider = ({ children }) => {
   const [openSearch, setOpenSearch] = useState(false);
   const [openPhotoUpload, setOpenPhotoUpload] = useState(false);
   const [openOptions, setOpenOptions] = useState(false);
-  const [openShareLinks, setOpenShareLinks] = useState(false);
+  const [openShareLinks, setOpenShareLinks] = useState('');
   const [openFullScreenSlider, setOpenFullScreenSlider] = useState('');
   const [sliderPhotos, setSliderPhotos] = useState([]);
 

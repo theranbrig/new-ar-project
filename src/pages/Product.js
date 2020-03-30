@@ -265,7 +265,6 @@ const Product = () => {
       <ProductContainer>
         <Helmet>{/* <title>YZED - {product && product.name.toUpperCase()}</title> */}</Helmet>
         {isAdded && <AddToCartSuccessModal setIsAdded={setIsAdded} />}
-
         <section className='product-top'>
           <div className='title-section'>
             <div className='title-name'>
@@ -320,7 +319,7 @@ const Product = () => {
               <button
                 aria-label='Share'
                 onClick={() => {
-                  setOpenShareLinks(true);
+                  setOpenShareLinks(product.id);
                   setBodyScroll(true);
                 }}>
                 <ShareSVG />
