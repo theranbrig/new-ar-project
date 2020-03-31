@@ -178,7 +178,16 @@ const NavigationDrawer = ({ children }) => {
             {openSearch ? <CloseSVG /> : <SearchSVG />}
           </button>
         </div>
-        <Link to='/' className='logo-link'>
+        <Link
+          to='/'
+          className='logo-link'
+          onClick={() => {
+            setOpenMenu(false);
+            setOpenBag(false);
+            setOpenSearch(false);
+            setOpenPhotoUpload(false);
+            setBodyScroll(false);
+          }}>
           <LogoSVG />
         </Link>
         <div className='right-icons'>
