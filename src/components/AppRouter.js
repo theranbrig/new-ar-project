@@ -8,6 +8,7 @@ import Checkout from '../pages/Checkout';
 import Comments from '../pages/Comments';
 import CreateProduct from '../pages/CreateProduct';
 import EditProduct from '../pages/EditProduct';
+import Error from '../pages/Error';
 import Fade from '../components/FadeOut';
 import FeaturedProducts from '../pages/FeaturedProducts';
 import Feed from '../pages/Feed';
@@ -47,7 +48,7 @@ export default function App() {
     <>
       <NavigationDrawer />
       <div style={{ width: '100%', backgroundColor: '#fffdf9' }}>
-        {openShareLinks.length && <Share product={openShareLinks} />}
+        {openShareLinks.length > 0 && <Share product={openShareLinks} />}
         {openFullScreenSlider.length !== 0 && (
           <FullScreenSlider
             userData={userData}
@@ -58,6 +59,9 @@ export default function App() {
         )}
         <AnimatePresence exitBeforeEnter>
           <Switch>
+            <Route exact path='/'>
+              <Home />
+            </Route>
             <Route path='/subscribe'>
               <Subscribe />
             </Route>
@@ -106,16 +110,16 @@ export default function App() {
             <Route path='/create'>
               <CreateProduct />
             </Route>
-            <Route exact path='/edit/:product'>
+            <Route path='/edit/:product'>
               <EditProduct />
             </Route>
             <Route path='/admin'>
               <Admin />
             </Route>
-            <Route exact path='/user/:id'>
+            <Route path='/user/:id'>
               <User />
             </Route>
-            <Route exact path='/comments/:photoId'>
+            <Route path='/comments/:photoId'>
               <Comments />
             </Route>
             <Route path='/featured'>
@@ -124,8 +128,8 @@ export default function App() {
             <Route path='/request_reset'>
               <RequestReset />
             </Route>
-            <Route path='/'>
-              <Home />
+            <Route>
+              <Error />
             </Route>
           </Switch>
         </AnimatePresence>

@@ -32,7 +32,7 @@ export const StyledMenu = styled.nav`
   i {
     font-size: 2rem;
     text-transform: uppercase;
-    padding: 1rem 2rem;
+    padding: 0.6rem 1.5rem;
     font-weight: bold;
     letter-spacing: 0.5rem;
     color: white;
@@ -67,7 +67,7 @@ export const StyledMenu = styled.nav`
     color: ${props => props.theme.colors.black};
   }
   .side-links {
-    top: 15vh;
+    top: 10vh;
     position: relative;
     background: ${props => props.theme.colors.white};
     a {
@@ -84,7 +84,6 @@ export const StyledMenu = styled.nav`
     display: flex;
     flex-direction: row;
     justify-content: space-around;
-
     button {
       align-self: center;
       padding: 0 0 5px 0;
@@ -105,7 +104,8 @@ export const StyledMenu = styled.nav`
 
   }
   .main-links {
-    height: 40vh;
+    height: 45vh;
+    padding-top: 20px;
   }
   .bottom-links {
       border-top: 1px solid ${props => props.theme.colors.grey};
@@ -113,24 +113,24 @@ export const StyledMenu = styled.nav`
       margin: 0 auto;
     a {
       text-align: left;
-      font-size: 1.4rem;
+      font-size: 1.3rem;
       font-weight: 300;
       text-shadow: none;
       text-transform: none;
       letter-spacing: 0.05rem;
-      padding-left: 10px;
+      padding-left: 8px;
       color: ${props => props.theme.colors.black};
     }
     button {
       display: flex;
       flex-direction: row;
       justify-content: space-between;
-      font-size: 1.2rem;
+      font-size: 1.1rem;
       width: 100%;
       font-weight: 300;
       margin-top: 10px;
       letter-spacing: 0.05rem;
-      padding: 0.5rem 1rem 0.5rem 10px;
+      padding: 0.5rem 0.5rem 0.5rem 10px;
       color: ${props => props.theme.colors.black};
       border: none;
       background: transparent;
