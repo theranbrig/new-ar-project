@@ -62,8 +62,8 @@ const SliderStyles = styled.div`
     }
   }
   .slider-cell-content {
-    animation: fadein 1s;
     img {
+      animation: fadein 1s;
       background: #7f7fd5;
       background: -webkit-linear-gradient(to top, #91eae4, #86a8e7, #7f7fd5);
       background: linear-gradient(to top, #91eae4, #86a8e7, #7f7fd5);
@@ -246,23 +246,6 @@ const FullSliderStyles = styled.div`
         }
       }
     }
-  }
-  .example-enter {
-    opacity: 0.01;
-  }
-
-  .example-enter.example-enter-active {
-    opacity: 1;
-    transition: opacity 500ms ease-in;
-  }
-
-  .example-leave {
-    opacity: 1;
-  }
-
-  .example-leave.example-leave-active {
-    opacity: 0.01;
-    transition: opacity 300ms ease-in;
   }
 `;
 
