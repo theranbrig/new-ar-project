@@ -66,6 +66,7 @@ export const RoundARButton = styled.button`
   border-radius: 0px;
   height: 75px;
   width: 75px;
+  line-height: 16px;
   padding: 0 0 4px 0;
   display: block;
   font-size: 20px;
