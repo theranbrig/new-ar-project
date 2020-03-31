@@ -104,7 +104,7 @@ const PhotoCarouselFullScreenPhoto = ({ photo, userData }) => {
   const [comments, setComments] = useState(0);
   const [loading, setLoading] = useState(false);
 
-  const { setOpenFullScreenSlider } = useContext(ModalContext);
+  const { setOpenFullScreenSlider, setBodyScroll } = useContext(ModalContext);
   const { dbh } = useContext(FirebaseContext);
 
   useEffect(() => {
@@ -141,7 +141,7 @@ const PhotoCarouselFullScreenPhoto = ({ photo, userData }) => {
         <Link
           onClick={() => {
             setOpenFullScreenSlider('');
-            enableBodyScroll(body);
+            setBodyScroll(false);
           }}
           to={`/comments/${photo.id}`}>
           <LazyLoadImage src={photo.url} alt={photo.id} effect='blur' />
@@ -154,7 +154,7 @@ const PhotoCarouselFullScreenPhoto = ({ photo, userData }) => {
               <Link
                 onClick={() => {
                   setOpenFullScreenSlider('');
-                  enableBodyScroll(false);
+                  setBodyScroll(false);
                 }}
                 to={`/user/${user.id}`}>
                 @{user.userName}
@@ -175,7 +175,7 @@ const PhotoCarouselFullScreenPhoto = ({ photo, userData }) => {
                 <Link
                   onClick={() => {
                     setOpenFullScreenSlider('');
-                    enableBodyScroll(false);
+                    setBodyScroll(false);
                   }}
                   to={`/comments/${photo.id}`}>
                   reply

@@ -26,6 +26,7 @@ const EditProduct = () => {
   const [sizes, setSizes] = useState(['S', 'M', 'L']);
   const [imageUploading, setImageUploading] = useState(false);
   const [error, setError] = useState('');
+  const [featured, setFeatured] = useState(false);
 
   const { product } = useParams();
 
@@ -55,6 +56,7 @@ const EditProduct = () => {
           glbFile,
           usdzFile,
           features,
+          featured,
         } = doc.data();
         setName(name);
         setBrand(brand);
@@ -67,6 +69,7 @@ const EditProduct = () => {
         setUsdzFile(usdzFile);
         setGlbFile(glbFile);
         setAllFeatures(features);
+        setFeatured(featured);
       });
   }, []);
 
@@ -269,6 +272,7 @@ const EditProduct = () => {
                     usdzFile,
                     [picture1, picture2, picture3],
                     allFeatures,
+                    featured,
                     goBack
                   );
                 } else {

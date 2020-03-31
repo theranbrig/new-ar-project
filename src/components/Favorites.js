@@ -1,7 +1,8 @@
 import React, { useContext, useEffect, useState } from 'react';
 
 import { FirebaseContext } from '../context/Firebase';
-import { LazyLoadImage } from 'react-lazy-load-image-component';import LikeFilledSVG from '../assets/icons/icon_like_filled';
+import { LazyLoadImage } from 'react-lazy-load-image-component';
+import LikeFilledSVG from '../assets/icons/icon_like_filled';
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 
@@ -10,7 +11,7 @@ export const FavoritesStyles = styled.div`
     width: 95%;
     margin: 0 auto;
     display: grid;
-    grid-template-columns: 1fr 20px;
+    grid-template-columns: 1fr 40px;
     align-items: center;
     grid-gap: 15px;
     padding: 10px 0;
@@ -40,6 +41,8 @@ export const FavoritesStyles = styled.div`
       font-weight: 300;
     }
     button {
+      background: none;
+      border: none;
       svg {
         height: 16px;
       }

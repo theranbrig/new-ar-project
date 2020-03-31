@@ -5,17 +5,18 @@ import { Helmet } from 'react-helmet';
 import LoadingSpinner from '../components/LoadingSpinner';
 import UserInfo from '../components/UserInfo';
 import UserPhoto from '../components/UserPhoto';
+import { motion } from 'framer-motion';
 import styled from 'styled-components';
 import { useParams } from 'react-router-dom';
 
 export const UserStyles = styled.div`
   width: 500px;
   max-width: 95%;
-  margin: -10vh auto 0;
-  margin-top: calc(10vh + 50px);
-  font-family: Montserrat, sans-serif;
+  padding-top: 10vh;
+  margin: 0 auto;
+  font-family: ${props => props.theme.fonts.main};
   text-align: center;
-  min-height: 100vh;
+  min-height: 90vh;
 `;
 
 const User = () => {
@@ -57,24 +58,30 @@ const User = () => {
       </UserStyles>
     );
   return (
-    <UserStyles>
-      {user && (
-        <>
-          <Helmet>
-            <title>YZED - {user.userName}</title>
-          </Helmet>
-          <UserInfo photos={photos} userData={user} />
-          {photos.map(photo => (
-            <UserPhoto
-              photo={photo}
-              key={photo.imageUrl}
-              userName={user.userName}
-              userData={userData}
-            />
-          ))}
-        </>
-      )}
-    </UserStyles>
+    <motion.div
+      exit={{ opacity: 0, x: '-100vw' }}
+      initial={{ opacity: 0, x: '100vw' }}
+      animate={{ opacity: 1, x: 0 }}
+      transition={{ type: 'spring', ease: 'linear', duration: 1, mass: 0.5 }}>
+      <UserStyles>
+        {user && (
+          <>
+            <Helmet>
+              <title>YZED - {user.userName}</title>
+            </Helmet>
+            <UserInfo photos={photos} userData={user} />
+            {photos.map(photo => (
+              <UserPhoto
+                photo={photo}
+                key={photo.imageUrl}
+                userName={user.userName}
+                userData={userData}
+              />
+            ))}
+          </>
+        )}
+      </UserStyles>
+    </motion.div>
   );
 };
 

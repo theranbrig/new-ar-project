@@ -29,10 +29,12 @@ export const FeaturedStyles = styled.div`
       a {
         color: ${props => props.theme.colors.black};
         text-decoration: none;
+        width: 100%;
       }
       img {
         border: 1px solid ${props => props.theme.colors.lightGrey};
-        width: 100%;
+        width: 100% !important;
+        margin: 0 auto;
         background: #7f7fd5;
         background: -webkit-linear-gradient(to top, #91eae4, #86a8e7, #7f7fd5);
         background: linear-gradient(to top, #91eae4, #86a8e7, #7f7fd5);
@@ -65,6 +67,7 @@ export const FeaturedStyles = styled.div`
         box-shadow: 0 0 6px #27272727;
         top: 5px;
         right: 5px;
+        z-index: 100;
         svg {
           position: absolute;
           height: 18px;
@@ -80,6 +83,9 @@ export const FeaturedStyles = styled.div`
     h1 {
       font-size: 1.5rem;
     }
+  }
+  .lazy-load-image-background {
+    width: 100%;
   }
 `;
 
@@ -98,7 +104,9 @@ const FeaturedProducts = () => {
           if (userData.loggedIn) {
             liked = userData.favoriteProducts.some(product => product === doc.id);
           }
-          tempProducts.push({ id: doc.id, ...doc.data(), liked });
+          if (doc.data().featured) {
+            tempProducts.push({ id: doc.id, ...doc.data(), liked });
+          }
         });
         setProducts(tempProducts);
       });

@@ -34,6 +34,10 @@ export const ProfileStyles = styled.div`
       width: 200px;
     }
   }
+  .photos {
+    border-top: 1px solid ${props => props.theme.colors.lightGrey};
+    border-bottom: 1px solid ${props => props.theme.colors.lightGrey};
+  }
 `;
 
 const AddPhotoButton = styled.button`
@@ -47,7 +51,6 @@ const AddPhotoButton = styled.button`
   border: 1px solid ${props => props.theme.colors.lightGrey} !important;
   font-family: ${props => props.theme.fonts.main};
   font-weight: 600;
-
   svg {
     height: 80%;
     margin-right: 5px;
@@ -122,14 +125,20 @@ const Profile = () => {
                   <PencilSVG /> EDIT PROFILE
                 </AddPhotoButton>
               </section>
-              {photos.map(photo => (
-                <UserPhoto
-                  photo={photo}
-                  userName={userData.userName}
-                  key={photo.id}
-                  userData={userData}
-                />
-              ))}
+              <section className='photos'>
+                {photos.length === 0 ? (
+                  <p>No photos added yet.</p>
+                ) : (
+                  photos.map(photo => (
+                    <UserPhoto
+                      photo={photo}
+                      userName={userData.userName}
+                      key={photo.id}
+                      userData={userData}
+                    />
+                  ))
+                )}
+              </section>
               <Favorites favorites={userData.favoriteProducts} />
               <section className='bottom-buttons'>
                 {userData.role === 'ADMIN' && (

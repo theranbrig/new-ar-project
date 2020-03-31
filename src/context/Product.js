@@ -78,6 +78,7 @@ const ProductProvider = ({ children }) => {
         usdzFile,
         pictures,
         features,
+        featured: true,
         keywords,
       })
       .then(() => callback())
@@ -96,6 +97,7 @@ const ProductProvider = ({ children }) => {
     usdzFile,
     pictures,
     features,
+    featured,
     callback
   ) => {
     const keywords = await generateKeywords(brand, name);
@@ -113,6 +115,7 @@ const ProductProvider = ({ children }) => {
         usdzFile,
         pictures,
         features,
+        featured,
         keywords,
       })
       .then(() => callback())
