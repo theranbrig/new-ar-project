@@ -5,7 +5,7 @@ import PropTypes from 'prop-types';
 export const ModalContext = React.createContext();
 
 const ModalProvider = ({ children }) => {
-  const [openMenu, setOpenMenu] = useState(true);
+  const [openMenu, setOpenMenu] = useState(false);
   const [openBag, setOpenBag] = useState(false);
   const [openSearch, setOpenSearch] = useState(false);
   const [openPhotoUpload, setOpenPhotoUpload] = useState(false);
