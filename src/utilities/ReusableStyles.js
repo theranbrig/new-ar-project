@@ -66,9 +66,9 @@ export const RoundARButton = styled.button`
   border-radius: 0px;
   height: 75px;
   width: 75px;
-  line-height: 71px;
+  padding: 0 0 4px 0;
   display: block;
-  font-size: 1.2rem;
+  font-size: 20px;
   font-weight: 600;
   border-radius: 50%;
   text-align: center;
@@ -77,6 +77,11 @@ export const RoundARButton = styled.button`
   color: ${props => props.theme.colors.white};
   box-shadow: 0 0 0 8px ${props => props.theme.colors.black},
     0 0 2px 9px ${props => props.theme.colors.grey};
+  span {
+    font-weight: 300;
+    font-size: 12px;
+    color: white;
+  }
 `;
 
 // Be sure to include aria label along with it.

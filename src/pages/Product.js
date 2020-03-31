@@ -313,6 +313,8 @@ const Product = () => {
           <div className='buttons'>
             <div className='left' />
             <RoundARButton onClick={() => document.querySelector('model-viewer').activateAR()}>
+              <span>VIEW IN</span>
+              <br />
               AR
             </RoundARButton>
             <div className='right'>

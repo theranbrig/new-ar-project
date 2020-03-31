@@ -269,7 +269,8 @@ const Home = () => {
             onClick={() => {
               document.querySelector('model-viewer').activateAR();
             }}>
-            A R
+            <span>VIEW IN</span>
+            <br />AR
           </RoundARButton>
           <div className='product-link'>
             <Link to={mainProduct ? `/item/${mainProduct.id}` : '/featured'}>View product</Link>
