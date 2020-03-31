@@ -19,7 +19,7 @@ export const BackButtonStyles = styled.div`
   }
 `;
 
-const BackButton = () => {
+const BackButton = ({ link }) => {
   const { setFirebaseError } = useContext(FirebaseContext);
   const history = useHistory();
   return (
@@ -27,7 +27,11 @@ const BackButton = () => {
       <button
         onClick={() => {
           document.body.style.overflow = 'unset';
-          history.goBack();
+          if (link) {
+            history.push(link);
+          } else {
+            history.goBack();
+          }
           setFirebaseError('');
         }}
         aria-label='Back Button'>
