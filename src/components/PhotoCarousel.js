@@ -6,6 +6,7 @@ import { disableBodyScroll, enableBodyScroll } from 'body-scroll-lock';
 
 import Carousel from 'react-multi-carousel';
 import CloseSVG from '../assets/icons/icon_close';
+import Fade from './FadeOut';
 import { FirebaseContext } from '../context/Firebase';
 import { LazyLoadComponent } from 'react-lazy-load-image-component';
 import { ModalContext } from '../context/Modal';
@@ -61,6 +62,7 @@ const SliderStyles = styled.div`
     }
   }
   .slider-cell-content {
+    animation: fadein 1s;
     img {
       background: #7f7fd5;
       background: -webkit-linear-gradient(to top, #91eae4, #86a8e7, #7f7fd5);
@@ -115,19 +117,33 @@ const SliderStyles = styled.div`
   a {
     text-decoration: none;
   }
+  .hidden-slider-cell-content {
+    opacity: 0;
+  }
+  @keyframes fadein {
+    from {
+      opacity: 0;
+    }
+    to {
+      opacity: 1;
+    }
+  }
 `;
 
 const MainPageCarousel = ({ title, product, brand }) => {
   const carouselRef = useRef();
 
-  const [showFullScreen, setShowFullScreen] = useState('');
   const [photos, setPhotos] = useState([]);
 
   const { dbh, userData, firebase } = useContext(FirebaseContext);
 
-  const { sliderPhotos, sliderPhotoIndex, setOpenFullScreenSlider, setSliderPhotos } = useContext(
-    ModalContext
-  );
+  const {
+    sliderPhotos,
+    sliderPhotoIndex,
+    setOpenFullScreenSlider,
+    openFullScreenSlider,
+    setSliderPhotos,
+  } = useContext(ModalContext);
 
   const checkPhotos = () => {
     dbh
@@ -159,7 +175,11 @@ const MainPageCarousel = ({ title, product, brand }) => {
           <Carousel ref={carouselRef} responsive={responsive} partialVisible swipeable>
             {photos.map((photo, index) => (
               <div
-                className='slider-cell-content'
+                className={
+                  openFullScreenSlider.length === 0
+                    ? 'slider-cell-content'
+                    : 'hidden-slider-cell-content'
+                }
                 key={photo.id}
                 onClick={() => {
                   disableBodyScroll(body);
@@ -180,13 +200,12 @@ const FullSliderStyles = styled.div`
   position: fixed;
   top: 0;
   left: 0;
-  z-index: 1005;
+  z-index: 1500;
   background: #272727f9;
   height: 100vh;
   width: 100%;
   font-family: ${props => props.theme.fonts.main};
   .carousel {
-    animation: fadein 1.5s;
     width: 500px;
     max-width: 95%;
     height: 100vh;
@@ -228,14 +247,22 @@ const FullSliderStyles = styled.div`
       }
     }
   }
-  @keyframes fadein {
-    from {
-      opacity: 0;
-    }
+  .example-enter {
+    opacity: 0.01;
+  }
 
-    to {
-      opacity: 1;
-    }
+  .example-enter.example-enter-active {
+    opacity: 1;
+    transition: opacity 500ms ease-in;
+  }
+
+  .example-leave {
+    opacity: 1;
+  }
+
+  .example-leave.example-leave-active {
+    opacity: 0.01;
+    transition: opacity 300ms ease-in;
   }
 `;
 
@@ -273,7 +300,7 @@ export const FullScreenSlider = ({
   }, [fullScreenRef]);
 
   return (
-    <FullSliderStyles>
+    <FullSliderStyles key='full-screen-slider'>
       <div
         className='carousel'
         onClick={() => {

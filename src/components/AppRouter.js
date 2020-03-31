@@ -8,6 +8,7 @@ import Checkout from '../pages/Checkout';
 import Comments from '../pages/Comments';
 import CreateProduct from '../pages/CreateProduct';
 import EditProduct from '../pages/EditProduct';
+import Fade from '../components/FadeOut';
 import FeaturedProducts from '../pages/FeaturedProducts';
 import Feed from '../pages/Feed';
 import { FirebaseContext } from '../context/Firebase';
@@ -47,14 +48,14 @@ export default function App() {
       <NavigationDrawer />
       <div style={{ width: '100%', backgroundColor: '#fffdf9' }}>
         {openShareLinks.length && <Share product={openShareLinks} />}
-        {openFullScreenSlider.length !== 0 && (
+        <Fade show={openFullScreenSlider.length !== 0 ? true : false}>
           <FullScreenSlider
             userData={userData}
             sliderPhotos={sliderPhotos}
             setOpenFullScreenSlider={setOpenFullScreenSlider}
             openFullScreenSlider={openFullScreenSlider}
           />
-        )}
+        </Fade>
         <AnimatePresence exitBeforeEnter>
           <Switch>
             <Route path='/subscribe'>

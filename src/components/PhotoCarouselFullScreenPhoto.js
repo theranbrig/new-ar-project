@@ -40,7 +40,6 @@ export const FullScreenPhotoStyles = styled.div`
       margin-right: 10px;
     }
   }
-
   .gradient {
     background: #7f7fd5;
     background: -webkit-linear-gradient(to top, #91eae4, #86a8e7, #7f7fd5);
@@ -48,7 +47,6 @@ export const FullScreenPhotoStyles = styled.div`
     background-size: 100% 100%;
     position: relative;
   }
-
   .photo-info {
     width: 325px;
     margin: 20px auto 0;

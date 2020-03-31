@@ -30,7 +30,6 @@ export const FeaturedStyles = styled.div`
         color: ${props => props.theme.colors.black};
         text-decoration: none;
       }
-
       img {
         border: 1px solid ${props => props.theme.colors.lightGrey};
         width: 100%;

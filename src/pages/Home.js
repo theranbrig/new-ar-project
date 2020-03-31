@@ -28,7 +28,6 @@ const HomeStyles = styled.div`
   @media (max-width: 576px) {
     width: 100% !important ;
   }
-
   model-viewer {
     width: 90%;
     height: 300px;
@@ -156,7 +155,6 @@ const HomeStyles = styled.div`
       }
     }
     .timeline {
-      position: relative;
       margin-top: -70px;
       margin-bottom: -70px;
       width: 100%;
@@ -164,7 +162,6 @@ const HomeStyles = styled.div`
       padding-bottom: 20px;
       background-color: ${props => props.theme.colors.white};
       box-shadow: 0 0 6px #27272722;
-      z-index: 0;
       h3 {
         padding-top: 30px;
         font-size: 1.5rem;
