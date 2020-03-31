@@ -301,46 +301,48 @@ export const FullScreenSlider = ({
 
   return (
     <FullSliderStyles key='full-screen-slider'>
-      <div
-        className='carousel'
-        onClick={() => {
-          enableBodyScroll(body);
-          setOpenFullScreenSlider('');
-        }}>
-        <section
-          className='top'
-          onClick={e => {
-            e.stopPropagation();
+      <Fade show={openFullScreenSlider.length === 0 ? false : true}>
+        <div
+          className='carousel'
+          onClick={() => {
+            enableBodyScroll(body);
+            setOpenFullScreenSlider('');
           }}>
-          <div className='title'>
-            <h1>Today's Timeline</h1>
-            <h2>Swipe to explore more!</h2>
-          </div>
-          <button
-            onClick={() => {
-              enableBodyScroll(body);
-              setOpenFullScreenSlider('');
+          <section
+            className='top'
+            onClick={e => {
+              e.stopPropagation();
             }}>
-            <CloseSVG fill='#fff' />
-          </button>
-        </section>
-        <section
-          className='main-carousel'
-          onClick={e => {
-            e.stopPropagation();
-          }}>
-          <Carousel ref={fullScreenRef} responsive={fullResponsive} swipeable>
-            {sliderPhotos.map(photo => (
-              <PhotoCarouselFullScreenPhoto
-                key={photo.id}
-                photo={photo}
-                setOpenFullScreenSlider={setOpenFullScreenSlider}
-                userData={userData}
-              />
-            ))}
-          </Carousel>
-        </section>
-      </div>
+            <div className='title'>
+              <h1>Today's Timeline</h1>
+              <h2>Swipe to explore more!</h2>
+            </div>
+            <button
+              onClick={() => {
+                enableBodyScroll(body);
+                setOpenFullScreenSlider('');
+              }}>
+              <CloseSVG fill='#fff' />
+            </button>
+          </section>
+          <section
+            className='main-carousel'
+            onClick={e => {
+              e.stopPropagation();
+            }}>
+            <Carousel ref={fullScreenRef} responsive={fullResponsive} swipeable>
+              {sliderPhotos.map(photo => (
+                <PhotoCarouselFullScreenPhoto
+                  key={photo.id}
+                  photo={photo}
+                  setOpenFullScreenSlider={setOpenFullScreenSlider}
+                  userData={userData}
+                />
+              ))}
+            </Carousel>
+          </section>
+        </div>
+      </Fade>
     </FullSliderStyles>
   );
 };

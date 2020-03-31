@@ -5,13 +5,10 @@ import styled from 'styled-components';
 export const FadeContainer = styled.div`
   @keyframes fadeIn {
     0% {
-      z-index: 1000;
       opacity: 0;
-      margin-top: 0vh;
     }
     100% {
       opacity: 1;
-      margin-top: 100vh;
     }
   }
   @keyframes fadeOut {

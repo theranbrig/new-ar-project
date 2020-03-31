@@ -48,14 +48,14 @@ export default function App() {
       <NavigationDrawer />
       <div style={{ width: '100%', backgroundColor: '#fffdf9' }}>
         {openShareLinks.length && <Share product={openShareLinks} />}
-        <Fade show={openFullScreenSlider.length !== 0 ? true : false}>
+        {openFullScreenSlider.length !== 0 && (
           <FullScreenSlider
             userData={userData}
             sliderPhotos={sliderPhotos}
             setOpenFullScreenSlider={setOpenFullScreenSlider}
             openFullScreenSlider={openFullScreenSlider}
           />
-        </Fade>
+        )}
         <AnimatePresence exitBeforeEnter>
           <Switch>
             <Route path='/subscribe'>
