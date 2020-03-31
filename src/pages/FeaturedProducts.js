@@ -2,6 +2,7 @@ import 'react-lazy-load-image-component/src/effects/blur.css';
 
 import React, { useContext, useEffect, useState } from 'react';
 
+import ChevronLeft from '../assets/icons/icon_chevron_left';
 import { FirebaseContext } from '../context/Firebase';
 import { LazyLoadImage } from 'react-lazy-load-image-component';
 import LikeEmptySVG from '../assets/icons/icon_like_empty';
@@ -14,7 +15,9 @@ import styled from 'styled-components';
 export const FeaturedStyles = styled.div`
   width: 500px;
   max-width: 95%;
-  margin: 12vh auto 0;
+  margin: 0 auto;
+  min-height: 88%;
+  padding-top: 12vh;
   font-family: ${props => props.theme.fonts.main};
   .products {
     display: grid;
@@ -30,6 +33,13 @@ export const FeaturedStyles = styled.div`
         color: ${props => props.theme.colors.black};
         text-decoration: none;
         width: 100%;
+      }
+      .placeholder {
+        width: 100%;
+        height: 365px;
+        background: #7f7fd5;
+        background: -webkit-linear-gradient(to top, #91eae4, #86a8e7, #7f7fd5);
+        background: linear-gradient(to top, #91eae4, #86a8e7, #7f7fd5);
       }
       img {
         border: 1px solid ${props => props.theme.colors.lightGrey};
@@ -155,7 +165,12 @@ const FeaturedProducts = () => {
                 {product.liked ? <LikeFilledSVG /> : <LikeEmptySVG />}
               </button>
               <Link to={`/item/${product.id}`}>
-                <LazyLoadImage src={product.mainImage} alt={product.name} effect='blur' />
+                <LazyLoadImage
+                  src={product.mainImage}
+                  alt={product.name}
+                  effect='blur'
+                  placeholder={<div className='placeholder'></div>}
+                />
                 <h2>{product.brand}</h2>
                 <h3>{product.name}</h3>
                 {/* <h4>{formatPrice(product.price)}</h4> */}
