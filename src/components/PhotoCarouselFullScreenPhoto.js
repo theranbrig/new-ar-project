@@ -9,7 +9,6 @@ import { LazyLoadImage } from 'react-lazy-load-image-component';
 import { Link } from 'react-router-dom';
 import LoadingSpinner from './LoadingSpinner';
 import { ModalContext } from '../context/Modal';
-import { enableBodyScroll } from 'body-scroll-lock';
 import moment from 'moment';
 import styled from 'styled-components';
 

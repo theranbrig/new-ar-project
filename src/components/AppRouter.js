@@ -1,37 +1,45 @@
 import { BrowserRouterasRouter, Route, Switch, useLocation } from 'react-router-dom';
-import React, { useContext } from 'react';
+import React, { Suspense, lazy, useContext } from 'react';
 
-import Admin from '../pages/Admin';
 import { AnimatePresence } from 'framer-motion';
-import Brand from '../pages/Brand';
-import Checkout from '../pages/Checkout';
-import Comments from '../pages/Comments';
-import CreateProduct from '../pages/CreateProduct';
-import EditProduct from '../pages/EditProduct';
-import Error from '../pages/Error';
 import Fade from '../components/FadeOut';
-import FeaturedProducts from '../pages/FeaturedProducts';
-import Feed from '../pages/Feed';
 import { FirebaseContext } from '../context/Firebase';
 import { FullScreenSlider } from './PhotoCarousel';
-import Home from '../pages/Home';
-import Login from '../pages/Login';
-import MainSearchPage from '../pages/Search';
+import LoadingSpinner from '../components/LoadingSpinner';
 import { ModalContext } from '../context/Modal';
 import NavigationDrawer from './NavigationDrawer';
-import OrderSuccess from '../pages/OrderSuccess';
-import Product from '../pages/Product';
-import Profile from '../pages/Profile';
-import Register from '../pages/Register';
-import RequestReset from '../pages/ResetRequest';
-import Sale from '../pages/Sale';
 import Share from './Share';
-import Shop from '../pages/Shop';
-import ShopCategory from '../pages/ShopCategory';
-import Subscribe from '../pages/Subscribe';
-import Success from '../pages/SubscribeSuccess';
-import Threads from '../pages/Threads';
-import User from '../pages/User';
+
+const load = (Component: any) => (props: any) => (
+  <Suspense fallback={<LoadingSpinner />}>
+    <Component {...props} />
+  </Suspense>
+);
+
+const Admin = load(lazy(() => import('../pages/Admin')));
+const Brand = load(lazy(() => import('../pages/Brand')));
+const Checkout = load(lazy(() => import('../pages/Checkout')));
+const Comments = load(lazy(() => import('../pages/Comments')));
+const CreateProduct = load(lazy(() => import('../pages/CreateProduct')));
+const EditProduct = load(lazy(() => import('../pages/EditProduct')));
+const Error = load(lazy(() => import('../pages/Error')));
+const FeaturedProducts = load(lazy(() => import('../pages/FeaturedProducts')));
+const Feed = load(lazy(() => import('../pages/Feed')));
+const Home = load(lazy(() => import('../pages/Home')));
+const Login = load(lazy(() => import('../pages/Login')));
+const MainSearchPage = load(lazy(() => import('../pages/Search')));
+const OrderSuccess = load(lazy(() => import('../pages/OrderSuccess')));
+const Product = load(lazy(() => import('../pages/Product')));
+const Profile = load(lazy(() => import('../pages/Profile')));
+const Register = load(lazy(() => import('../pages/Register')));
+const RequestReset = load(lazy(() => import('../pages/ResetRequest')));
+const Sale = load(lazy(() => import('../pages/Sale')));
+const Shop = load(lazy(() => import('../pages/Shop')));
+const ShopCategory = load(lazy(() => import('../pages/ShopCategory')));
+const Subscribe = load(lazy(() => import('../pages/Subscribe')));
+const Success = load(lazy(() => import('../pages/SubscribeSuccess')));
+const Threads = load(lazy(() => import('../pages/Threads')));
+const User = load(lazy(() => import('../pages/User')));
 
 export default function App() {
   const location = useLocation();

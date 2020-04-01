@@ -179,6 +179,7 @@ const NavigationDrawer = ({ children }) => {
           </button>
         </div>
         <Link
+          aria-label='Home'
           to='/'
           className='logo-link'
           onClick={() => {

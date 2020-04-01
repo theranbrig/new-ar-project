@@ -4,7 +4,6 @@ const KakaoSVG = ({ fill }) => {
   return (
     <svg
       version='1.1'
-      id='Laag_1'
       xmlns='http://www.w3.org/2000/svg'
       fill={fill ?? '#272727'}
       x='0px'

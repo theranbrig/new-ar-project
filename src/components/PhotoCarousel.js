@@ -12,7 +12,6 @@ import { LazyLoadComponent } from 'react-lazy-load-image-component';
 import { ModalContext } from '../context/Modal';
 import PhotoCarouselFullScreenPhoto from './PhotoCarouselFullScreenPhoto';
 import TagFilledSVG from '../assets/icons/icon_tag_filled';
-import { motion } from 'framer-motion';
 import styled from 'styled-components';
 
 const body = document.querySelector('body');
@@ -135,7 +134,7 @@ const MainPageCarousel = ({ title, product, brand }) => {
 
   const [photos, setPhotos] = useState([]);
 
-  const { dbh, userData, firebase } = useContext(FirebaseContext);
+  const { dbh } = useContext(FirebaseContext);
 
   const {
     sliderPhotos,
@@ -161,7 +160,9 @@ const MainPageCarousel = ({ title, product, brand }) => {
 
   useEffect(() => {
     checkPhotos();
-    return () => checkPhotos();
+    return () => {
+      checkPhotos();
+    };
   }, []);
 
   return (

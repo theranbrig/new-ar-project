@@ -157,6 +157,7 @@ const FeaturedProducts = () => {
           {products.map(product => (
             <div className='product' key={product.id}>
               <button
+                aria-label='save to favorites'
                 disabled={!userData.loggedIn}
                 className='favorite'
                 onClick={() => {

@@ -378,7 +378,13 @@ const CropperComponent = ({
             <CameraSVG />
             <p>Click here to browse your camera roll</p>
           </button>
-          <input type='file' name='file upload' accept='image/*' onChange={onSelectFile} />
+          <input
+            type='file'
+            name='file upload'
+            accept='image/*'
+            onChange={onSelectFile}
+            aria-label='add photo'
+          />
         </>
       )}
     </>
