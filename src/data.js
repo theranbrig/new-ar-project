@@ -1,4 +1,3 @@
-import yzedLogo from '../src/assets/images/yzed-logo.png';
 export const products = [
   {
     id: '1',
@@ -337,7 +336,6 @@ export const Brands = [
   {
     id: 1,
     name: 'YZED',
-    imageUrl: yzedLogo,
     followers: 45664,
     products: 54,
     challenges: 4,
