@@ -1,5 +1,6 @@
 import '@google/model-viewer';
 
+import Logo from '../assets/images/yzed-logo.png';
 import React from 'react';
 import styled from 'styled-components';
 
@@ -37,7 +38,7 @@ export const ModelStyles = styled.div`
   }
 `;
 
-const ModelViewer = ({ glbFile, usdzFile, imageUrl, productId, displayLink }) => {
+const ModelViewer = ({ glbFile, usdzFile, poster }) => {
   return (
     <ModelStyles className='model-box'>
       <model-viewer
@@ -45,6 +46,7 @@ const ModelViewer = ({ glbFile, usdzFile, imageUrl, productId, displayLink }) =>
         src={glbFile}
         alt='YZED 3D MODEL'
         auto-rotate
+        poster={poster}
         ar
         preload
         camera-controls

@@ -210,7 +210,7 @@ const Home = () => {
   const [mainProduct, setMainProduct] = useState(null);
   const [loading, setLoading] = useState(false);
   const [displayDate, setDisplayDate] = useState('');
-  const { dbh } = useContext(FirebaseContext);
+  const { dbh, userData } = useContext(FirebaseContext);
 
   useEffect(() => {
     const fetchData = () => {
@@ -258,7 +258,7 @@ const Home = () => {
             <ModelViewer
               glbFile={mainProduct.glbFile}
               usdzFile={mainProduct.usdzFile}
-              productId='Yr2FhLca1kxAvm7ZXeoU'
+              poster={mainProduct.mainImage}
             />
           </>
         )}
@@ -270,7 +270,8 @@ const Home = () => {
               document.querySelector('model-viewer').activateAR();
             }}>
             <span>VIEW IN</span>
-            <br />AR
+            <br />
+            AR
           </RoundARButton>
           <div className='product-link'>
             <Link to={mainProduct ? `/item/${mainProduct.id}` : '/featured'}>View product</Link>
@@ -315,9 +316,15 @@ const Home = () => {
               YZED is a platform for creative consumers to engage with their favourite brands
               through cutting edge technology.
             </p>
-            <BlackButton>
-              <Link to='/login'>BECOME A YZER</Link>
-            </BlackButton>
+            {userData.loggedIn ? (
+              <BlackButton>
+                <Link to='/featured'>DISCOVER MORE</Link>
+              </BlackButton>
+            ) : (
+              <BlackButton>
+                <Link to='/register'>BECOME A YZER</Link>
+              </BlackButton>
+            )}
           </div>
         </footer>
       </HomeStyles>

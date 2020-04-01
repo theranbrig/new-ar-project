@@ -280,9 +280,8 @@ const Product = () => {
               <MediaViewer
                 glbFile={product.glbFile}
                 usdzFile={product.usdzFile}
-                poster={product.imageUrl}
+                poster={product.mainImage}
                 displayLink={false}
-                productId={product.id}
               />
             ) : (
               <LazyLoadImage src={mainDisplay} />
