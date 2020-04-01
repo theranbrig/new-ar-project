@@ -46,7 +46,7 @@ const ModelViewer = ({ glbFile, usdzFile, poster }) => {
         src={glbFile}
         alt='YZED 3D MODEL'
         auto-rotate
-        poster={Logo}
+        // poster={Logo}
         ar
         preload
         camera-controls
