@@ -96,6 +96,32 @@ export const FullScreenPhotoStyles = styled.div`
       }
     }
   }
+  @media (orientation: landscape) {
+    .image {
+      height: 70vh;
+      width: 150px;
+      img {
+        height: 70vh;
+        width: auto;
+      }
+    }
+    .photo-info {
+      display: none;
+    }
+  }
+  @media (max-width: 350px) {
+    .image {
+      width: 213px;
+      height: 343px;
+      img {
+        width: 213px;
+        height: 344px;
+      }
+    }
+    .photo-info {
+      max-width: 95%;
+    }
+  }
 `;
 
 const PhotoCarouselFullScreenPhoto = ({ photo, userData }) => {

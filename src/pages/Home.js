@@ -6,6 +6,7 @@ import React, { useContext, useEffect, useState } from 'react';
 import ChevronRight from '../assets/icons/icon_chevron_right';
 import { FirebaseContext } from '../context/Firebase';
 import { Helmet } from 'react-helmet';
+import { LazyLoadComponent } from 'react-lazy-load-image-component';
 import { Link } from 'react-router-dom';
 import LoadingSpinner from '../components/LoadingSpinner';
 import MainPageCarousel from '../components/PhotoCarousel';
@@ -92,6 +93,7 @@ const HomeStyles = styled.div`
     grid-template-columns: 110px 1fr 110px;
     justify-items: center;
     align-content: center;
+
     .product-link {
       position: relative;
       width: 110px;
@@ -129,6 +131,21 @@ const HomeStyles = styled.div`
     }
     button {
       align-self: center;
+    }
+    @media (max-width: 350px) {
+      grid-template-columns: 90px 1fr 90px;
+      .product-link {
+        width: 90px;
+        a {
+          font-size: 0.75rem;
+          &:after {
+            width: 70px;
+          }
+        }
+        svg {
+          height: 0.6rem;
+        }
+      }
     }
   }
   .connected-content {
@@ -282,51 +299,63 @@ const Home = () => {
           <h3>Discover YZED.</h3>
           <div className='down-arrow' />
         </section>
-        <section className='connected-content'>
-          <div className='join-section'>
-            <h3>
-              <strong>Explore</strong> AR
-            </h3>
-            <p>
-              Select objects from our wide catalogue and place them anywhere in real life with the
-              power of augmented reality.
-            </p>
-            <BlackButton>
-              <Link to='/featured'>EXPLORE AR</Link>
-            </BlackButton>
-          </div>
-          <div className='timeline'>
-            <h3>
-              <strong>Today's</strong> timeline
-            </h3>
-            <MainPageCarousel brand='YZED' title='DRESS & TUNIC' product='5NlpClokHFwJG6Pl7IYz' />
-            <MainPageCarousel
-              brand='YZED'
-              title='BODYSUIT & FOLD SKIRT'
-              product='Yr2FhLca1kxAvm7ZXeoU'
-            />
-          </div>
-        </section>
-        <footer>
-          <div className='footer-content'>
-            <h3>
-              <strong>YZED</strong> Show it first
-            </h3>
-            <p>
-              YZED is a platform for creative consumers to engage with their favourite brands
-              through cutting edge technology.
-            </p>
-            {userData.loggedIn ? (
+        <LazyLoadComponent>
+          <section className='connected-content'>
+            <div className='join-section'>
+              <h3>
+                <strong>Explore</strong> AR
+              </h3>
+              <p>
+                Select objects from our wide catalogue and place them anywhere in real life with the
+                power of augmented reality.
+              </p>
               <BlackButton>
-                <Link to='/featured'>DISCOVER MORE</Link>
+                <Link to='/featured'>EXPLORE AR</Link>
               </BlackButton>
-            ) : (
-              <BlackButton>
-                <Link to='/register'>BECOME A YZER</Link>
-              </BlackButton>
-            )}
-          </div>
-        </footer>
+            </div>
+            <div className='timeline'>
+              <h3>
+                <strong>Today's</strong> timeline
+              </h3>
+              <LazyLoadComponent>
+                <MainPageCarousel
+                  brand='YZED'
+                  title='DRESS & TUNIC'
+                  product='5NlpClokHFwJG6Pl7IYz'
+                />
+              </LazyLoadComponent>
+              <LazyLoadComponent>
+                <MainPageCarousel
+                  brand='YZED'
+                  title='BODYSUIT & FOLD SKIRT'
+                  product='Yr2FhLca1kxAvm7ZXeoU'
+                />
+              </LazyLoadComponent>
+            </div>
+          </section>
+        </LazyLoadComponent>
+        <LazyLoadComponent>
+          <footer>
+            <div className='footer-content'>
+              <h3>
+                <strong>YZED</strong> Show it first
+              </h3>
+              <p>
+                YZED is a platform for creative consumers to engage with their favourite brands
+                through cutting edge technology.
+              </p>
+              {userData.loggedIn ? (
+                <BlackButton>
+                  <Link to='/featured'>DISCOVER MORE</Link>
+                </BlackButton>
+              ) : (
+                <BlackButton>
+                  <Link to='/register'>BECOME A YZER</Link>
+                </BlackButton>
+              )}
+            </div>
+          </footer>
+        </LazyLoadComponent>
       </HomeStyles>
     </motion.div>
   );

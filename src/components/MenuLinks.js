@@ -27,6 +27,7 @@ export const StyledMenu = styled.nav`
   @media (max-width: 576px) {
     width: 100%;
     padding: 0;
+    min-width: 0;
   }
   a,
   i {
@@ -137,6 +138,32 @@ export const StyledMenu = styled.nav`
       svg {
         height: 1rem;
       }
+    }
+  }
+  @media (max-width: 350px) {
+    .top-links {
+      margin-top: -10px;
+    }
+  }
+  @media (orientation: landscape) {
+    min-width: ${({ open }) => (open ? '100vw' : '0')};
+    .side-links {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+    }
+    .top-links {
+      height: 40px;
+      button {
+        font-size: 1rem;
+        padding-bottom: 2px;
+        margin-top: -5px;
+      }
+    }
+    .bottom-links {
+      border: none;
+    }
+    .main-links {
+      padding-top: 10px;
     }
   }
 `;

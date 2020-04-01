@@ -6,6 +6,7 @@ import BackButton from '../components/BackButton';
 import { FirebaseContext } from '../context/Firebase';
 import { ModalContext } from '../context/Modal';
 import SearchSVG from '../assets/icons/icon_search';
+import TopTitle from '../components/TopTitle';
 import debounce from 'lodash.debounce';
 import styled from 'styled-components';
 
@@ -53,13 +54,7 @@ const MainPageSearch = () => {
   return (
     <>
       <SearchStyles>
-        <section className='top'>
-          <div>
-            <BackButton />
-          </div>
-          <h1>Top Results on YZED</h1>
-          <div></div>
-        </section>
+        <TopTitle title='Top Search Results' />
         <section className='search-box'>
           <input
             aria-label='search input'

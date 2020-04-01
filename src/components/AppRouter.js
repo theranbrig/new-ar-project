@@ -16,6 +16,7 @@ const load = (Component: any) => (props: any) => (
   </Suspense>
 );
 
+
 const Admin = load(lazy(() => import('../pages/Admin')));
 const Brand = load(lazy(() => import('../pages/Brand')));
 const Checkout = load(lazy(() => import('../pages/Checkout')));
@@ -55,7 +56,7 @@ export default function App() {
   return (
     <>
       <NavigationDrawer />
-      <div style={{ width: '100%', backgroundColor: '#fffdf9' }}>
+      <div style={{ width: '100vw', backgroundColor: '#fffdf9' }}>
         {openShareLinks.length > 0 && <Share product={openShareLinks} />}
         {openFullScreenSlider.length !== 0 && (
           <FullScreenSlider

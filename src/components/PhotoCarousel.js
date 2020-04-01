@@ -248,6 +248,36 @@ const FullSliderStyles = styled.div`
       }
     }
   }
+  @media (max-width: 350px) {
+    .top {
+      max-width: 95%;
+    }
+    .carousel {
+      height: 90vh;
+    }
+  }
+  @media (orientation: landscape) {
+    .top {
+      .title h1 {
+        font-size: 0.8rem;
+      }
+      .title h2 {
+        font-size: 0.6rem;
+      }
+      button.close {
+        height: 20px;
+        width: 20px;
+        svg {
+          margin-top: 3px;
+          margin-left: -3px;
+          height: 10px;
+        }
+      }
+    }
+    .carousel {
+      height: 90vh;
+    }
+  }
 `;
 
 export const FullScreenSlider = ({
@@ -302,6 +332,7 @@ export const FullScreenSlider = ({
               <h2>Swipe to explore more!</h2>
             </div>
             <button
+              className='close'
               onClick={() => {
                 enableBodyScroll(body);
                 setOpenFullScreenSlider('');

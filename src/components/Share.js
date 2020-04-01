@@ -21,7 +21,6 @@ export const ShareStyles = styled.div`
   z-index: 1500;
   font-family: ${props => props.theme.fonts.main};
   .content {
-    /* transform: translate(-50%, -50%); */
     width: 400px;
     max-width: 90%;
     background: ${props => props.theme.colors.white};
@@ -136,6 +135,19 @@ export const ShareStyles = styled.div`
       padding-left: 10px;
     }
   }
+  @media (orientation: landscape) {
+    .content {
+      animation: fadeinlandscape 1s;
+      margin-top: 20px;
+    }
+  }
+
+  @media (max-width: 350px) {
+    .content {
+      animation: fadeinsmallscreen 1s;
+      margin-top: 80px;
+    }
+  }
 
   @keyframes fadein {
     from {
@@ -145,6 +157,26 @@ export const ShareStyles = styled.div`
     to {
       opacity: 1;
       margin-top: 150px;
+    }
+  }
+  @keyframes fadeinlandscape {
+    from {
+      opacity: 0;
+      margin-top: 300px;
+    }
+    to {
+      opacity: 1;
+      margin-top: 20px;
+    }
+  }
+  @keyframes fadeinsmallscreen {
+    from {
+      opacity: 0;
+      margin-top: 300px;
+    }
+    to {
+      opacity: 1;
+      margin-top: 80px;
     }
   }
 `;

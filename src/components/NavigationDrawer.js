@@ -55,6 +55,13 @@ const StyledBurger = styled.button`
       transform: ${({ open }) => (open ? 'rotate(-45deg)' : 'rotate(0)')};
     }
   }
+  @media (orientation: landscape) {
+    top: calc(5vh - 0.75rem);
+    height: 1.5rem;
+    div {
+      width: 1.5rem;
+    }
+  }
 `;
 
 const Burger = () => {
@@ -117,6 +124,9 @@ const StretchedNavStyles = styled.div`
       svg {
         height: 2rem;
         vertical-align: middle;
+        @media (orientation: landscape) {
+          height: 1.5rem;
+        }
       }
     }
   }
@@ -130,6 +140,9 @@ const StretchedNavStyles = styled.div`
         height: 2rem;
         vertical-align: middle;
       }
+      @media (orientation: landscape) {
+        display: none;
+      }
     }
   }
   .logo-link svg {
@@ -139,6 +152,9 @@ const StretchedNavStyles = styled.div`
     }
     @media (min-width: 500px) {
       height: 40px;
+    }
+    @media (orientation: landscape) {
+      height: 20px;
     }
   }
 `;
