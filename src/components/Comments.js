@@ -258,7 +258,7 @@ const Comment = ({ comment, setSelectedReplies, photoRef, toggleUpvoteComment })
 
 const Comments = () => {
   const [uploadPhotoComment, setUploadPhotoComment] = useState(false);
-  const [loading, setLoading] = useState(false);
+  const [loading, setLoading] = useState(true);
 
   const [dateSort, setDateSort] = useState(true);
   const [comments, setComments] = useState([]);

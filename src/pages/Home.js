@@ -225,7 +225,7 @@ const HomeStyles = styled.div`
 
 const Home = () => {
   const [mainProduct, setMainProduct] = useState(null);
-  const [loading, setLoading] = useState(false);
+  const [loading, setLoading] = useState(true);
   const [displayDate, setDisplayDate] = useState('');
   const { dbh, userData } = useContext(FirebaseContext);
 

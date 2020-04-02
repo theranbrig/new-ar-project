@@ -58,7 +58,7 @@ const AddPhotoButton = styled.button`
 `;
 
 const Profile = () => {
-  const [loading, setLoading] = useState(false);
+  const [loading, setLoading] = useState(true);
   const [photos, setPhotos] = useState([]);
   const [editProfile, setEditProfile] = useState(false);
 
