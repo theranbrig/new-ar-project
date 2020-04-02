@@ -96,7 +96,7 @@ export const FullScreenPhotoStyles = styled.div`
       }
     }
   }
-  @media (orientation: landscape) {
+  @media (orientation: landscape) and (max-width: 900px) {
     .image {
       height: 70vh;
       width: 150px;

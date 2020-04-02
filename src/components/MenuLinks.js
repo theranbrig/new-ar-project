@@ -145,7 +145,7 @@ export const StyledMenu = styled.nav`
       margin-top: -10px;
     }
   }
-  @media (orientation: landscape) {
+  @media (orientation: landscape) and (max-width: 900px) {
     min-width: ${({ open }) => (open ? '100vw' : '0')};
     .side-links {
       display: grid;

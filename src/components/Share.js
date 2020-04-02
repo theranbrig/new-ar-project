@@ -135,13 +135,12 @@ export const ShareStyles = styled.div`
       padding-left: 10px;
     }
   }
-  @media (orientation: landscape) {
+  @media (orientation: landscape) and (max-width: 900px) {
     .content {
       animation: fadeinlandscape 1s;
       margin-top: 20px;
     }
   }
-
   @media (max-width: 350px) {
     .content {
       animation: fadeinsmallscreen 1s;
