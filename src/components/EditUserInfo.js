@@ -13,6 +13,7 @@ import { LazyLoadImage } from 'react-lazy-load-image-component';
 import PencilSVG from '../assets/icons/icon_pencil';
 import ReactCrop from 'react-image-crop';
 import RefreshSVG from '../assets/icons/icon_refresh';
+import RotateSVG from '../assets/icons/icon_rotate';
 import S3 from 'aws-s3-pro';
 import UserSVG from '../assets/icons/icon_user';
 import { convertFile } from '../utilities/coverting';
@@ -253,6 +254,23 @@ export const EditUserStyles = styled.div`
   p.max {
     color: tomato !important;
   }
+  .landscape-mode {
+    display: none;
+    h2 {
+      font-weight: 300;
+    }
+    svg {
+      height: 40px;
+    }
+  }
+  @media (orientation: landscape) and (max-width: 900px) {
+    .portrait-mode {
+      display: none;
+    }
+    .landscape-mode {
+      display: block;
+    }
+  }
 `;
 
 const EditUserInfo = ({
@@ -407,17 +425,23 @@ const CropperComponent = ({
         </>
       ) : (
         <>
-          <button className='btn'>
-            <CameraSVG />
-            <p>Click here to browse your camera roll</p>
-          </button>
-          <input
-            className='select-file'
-            type='file'
-            name='file upload'
-            accept='image/*'
-            onChange={onSelectFile}
-          />
+          <div className='landscape-mode'>
+            <RotateSVG />
+            <h2>Please rotate to portrait mode to upload a photo.</h2>
+          </div>
+          <div className='portrait-mode'>
+            <button className='btn'>
+              <CameraSVG />
+              <p>Click here to browse your camera roll</p>
+            </button>
+            <input
+              className='select-file'
+              type='file'
+              name='file upload'
+              accept='image/*'
+              onChange={onSelectFile}
+            />
+          </div>
         </>
       )}
       <section className='edit'>

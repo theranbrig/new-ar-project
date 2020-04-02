@@ -233,13 +233,13 @@ const MenuLinks = () => {
                 </NavLink>
               )}
               {/* <NavLink
-              to='/checkout'
-              activeClassName='active-link'
-              onClick={() => {
-                setModals();
-              }}>
-              My Bag
-            </NavLink> */}
+                to='/checkout'
+                activeClassName='active-link'
+                onClick={() => {
+                  setModals();
+                }}>
+                My Bag
+              </NavLink> */}
               {!userData.loggedIn && (
                 <NavLink
                   to='/subscribe'

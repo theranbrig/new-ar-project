@@ -263,7 +263,9 @@ const Product = () => {
       animate={{ opacity: 1, x: 0 }}
       transition={{ type: 'spring', ease: 'linear', duration: 1, mass: 0.5 }}>
       <ProductContainer>
-        <Helmet>{/* <title>YZED - {product && product.name.toUpperCase()}</title> */}</Helmet>
+        <Helmet>
+          <title>YZED - {product && product.name.toUpperCase()}</title>
+        </Helmet>
         {isAdded && <AddToCartSuccessModal setIsAdded={setIsAdded} />}
         <section className='product-top'>
           <div className='title-section'>

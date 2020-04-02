@@ -9,144 +9,12 @@ import CloseSVG from '../assets/icons/icon_close';
 import { FirebaseContext } from '../context/Firebase';
 import LoadingSpinner from '../components/LoadingSpinner';
 import ReactCrop from 'react-image-crop';
+import RotateSVG from '../assets/icons/icon_rotate';
 import S3 from 'aws-s3-pro';
 import TextareaAutosize from 'react-textarea-autosize';
 import { convertFile } from '../utilities/coverting';
 import shortid from 'shortid';
 import styled from 'styled-components';
-
-const UploadStyles = styled.div`
-  width: 500px;
-  max-width: 95%;
-  margin: 10vh 0 0;
-
-  background: ${props => props.theme.colors.white};
-  z-index: 600;
-  transition: 0.5s;
-  font-family: ${props => props.theme.fonts.main};
-  .upload-content {
-    .top-content {
-      width: 500px;
-      max-width: 100%;
-      height: 90vh;
-      margin: 0 auto;
-      background: ${props => props.theme.colors.white};
-      .title-buttons {
-        display: flex;
-        flex-direction: row;
-        justify-content: space-between;
-        height: 5vh;
-        .left-content {
-          width: 60px;
-        }
-        h1 {
-          font-size: 1.5rem;
-          align-self: center;
-        }
-        .right-content {
-          width: 60px;
-          align-self: center;
-          button {
-            border: 1px solid ${props => props.theme.colors.grey};
-            height: 32px;
-            width: 32px;
-            background: none;
-            border-radius: 16px;
-
-            svg {
-              margin-top: 2px;
-              height: 16px;
-            }
-          }
-        }
-      }
-      .upload-btn-wrapper {
-        position: relative;
-        overflow: hidden;
-        display: inline-block;
-        width: 90%;
-        margin: 0 5%;
-        height: 100%;
-        max-height: 600px;
-        text-align: center;
-        padding-bottom: 200px;
-      }
-      .btn {
-        border: 1px solid #b9b9b9;
-        color: ${props => props.theme.colors.black};
-        background-color: ${props => props.theme.colors.white};
-        border-radius: 0px;
-        font-size: 20px;
-        font-weight: bold;
-        height: 340px;
-        overflow: hidden;
-        width: 100%;
-        max-width: 225px;
-        margin: 20px auto 60px;
-        svg {
-          height: 100px;
-        }
-        p {
-          width: 50%;
-          margin: 0 auto;
-          font-weight: 300;
-          color: #b9b9b9;
-        }
-      }
-      .upload-btn-wrapper input[type='file'] {
-        font-size: 1.2rem;
-        position: absolute;
-        left: 0;
-        top: 0;
-        opacity: 0;
-        font-size: 100px;
-        width: 500px;
-        height: 100%;
-      }
-    }
-  }
-  .selected {
-    border: 1px solid ${props => props.theme.colors.black};
-  }
-  p {
-    margin-top: 20px;
-  }
-  .comment-input {
-    border: 1px solid ${props => props.theme.colors.lightGrey};
-    padding: 5px;
-    border-radius: 25px;
-    textarea {
-      display: block;
-      margin: 0 auto;
-      font-size: 16px;
-      width: 90%;
-      resize: none;
-      border: none;
-      padding: 5px;
-      background: transparent;
-    }
-    button {
-      background: transparent !important;
-      margin: 10px 5%;
-      font-weight: 700;
-      width: 90% !important;
-      text-align: left;
-      padding: 0;
-      font-size: 16px;
-      display: flex;
-      flex-direction: row;
-      justify-content: space-between;
-      border: none;
-      svg {
-        align-self: center;
-        height: 12px;
-      }
-    }
-  }
-  .ReactCrop {
-    width: 250px;
-  }
-`;
 
 const CropperComponent = ({ src, setImageString, uploadS3File, comment, setComment, loading }) => {
   const [upImg, setUpImg] = useState();
@@ -203,56 +71,62 @@ const CropperComponent = ({ src, setImageString, uploadS3File, comment, setComme
   };
 
   return (
-    <div className='App'>
-      {upImg ? (
-        <>
-          <ReactCrop
-            src={upImg}
-            onImageLoaded={onLoad}
-            crop={crop}
-            onChange={c => setCrop(c)}
-            onComplete={makeClientCrop}
-            ruleOfThirds
-          />
-          <p>Please select the photo area above and add a comment below to submit.</p>
-          <div className='comment-input'>
-            <TextareaAutosize
-              placeholder='Tap to write..'
-              name='comment'
-              value={comment}
-              minRows='1'
-              maxRows='3'
-              onChange={e => {
-                setComment(e.target.value);
-              }}
+    <div className='photo-upload-crop'>
+      <div className='landscape-mode'>
+        <RotateSVG />
+        <h2>Please rotate to portrait mode to upload a photo.</h2>
+      </div>
+      <div className='portrait-mode'>
+        {upImg ? (
+          <>
+            <ReactCrop
+              src={upImg}
+              onImageLoaded={onLoad}
+              crop={crop}
+              onChange={c => setCrop(c)}
+              onComplete={makeClientCrop}
+              ruleOfThirds
             />
-            {comment && result && (
-              <button
-                disabled={!comment || !result || loading}
-                onClick={() => {
-                  uploadS3File();
-                }}>
-                Add Photo...
-                <ChevronRight fill={!comment || !result || (loading && '#7c7c7c')} />
-              </button>
+            <p>Please select the photo area above and add a comment below to submit.</p>
+            <div className='comment-input'>
+              <TextareaAutosize
+                placeholder='Tap to write..'
+                name='comment'
+                value={comment}
+                minRows='1'
+                maxRows='3'
+                onChange={e => {
+                  setComment(e.target.value);
+                }}
+              />
+              {comment && result && (
+                <button
+                  disabled={!comment || !result || loading}
+                  onClick={() => {
+                    uploadS3File();
+                  }}>
+                  Add Photo...
+                  <ChevronRight fill={!comment || !result || (loading && '#7c7c7c')} />
+                </button>
+              )}
+            </div>
+            {loading && (
+              <>
+                <LoadingSpinner color='black' />
+                <p>Submitting Comment</p>
+              </>
             )}
-          </div>
-          {loading && (
-            <>
-              <LoadingSpinner color='black' />
-              <p>Submitting Comment</p>
-            </>
-          )}
-        </>
-      ) : (
-        <>
-          <button className='btn'>
-            <CameraSVG />
-            <p>Click here to browse your camera roll</p>
-          </button>
-          <input type='file' name='file upload' accept='image/*' onChange={onSelectFile} />
-        </>
-      )}
+          </>
+        ) : (
+          <>
+            <button className='btn'>
+              <CameraSVG />
+              <p>Click here to browse your camera roll</p>
+            </button>
+            <input type='file' name='file upload' accept='image/*' onChange={onSelectFile} />
+          </>
+        )}
+      </div>
     </div>
   );
 };
@@ -343,5 +217,156 @@ const SelectPhoto = ({ photoRef, photoId, setUploadPhotoComment }) => {
     </UploadStyles>
   );
 };
+
+const UploadStyles = styled.div`
+  width: 500px;
+  max-width: 95%;
+  margin: 0 auto;
+  background: ${props => props.theme.colors.white};
+  z-index: 600;
+  transition: 0.5s;
+  font-family: ${props => props.theme.fonts.main};
+  .upload-content {
+    .top-content {
+      width: 500px;
+      padding-top: 40px;
+      max-width: 100%;
+      margin: 0 auto;
+      background: ${props => props.theme.colors.white};
+      .title-buttons {
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+        height: 5vh;
+        .left-content {
+          width: 60px;
+        }
+        h1 {
+          font-size: 1.5rem;
+          align-self: center;
+        }
+        .right-content {
+          width: 60px;
+          align-self: center;
+          button {
+            border: 1px solid ${props => props.theme.colors.grey};
+            height: 32px;
+            width: 32px;
+            background: none;
+            border-radius: 16px;
+            text-align: center;
+            padding: 0;
+            svg {
+              margin-top: 2px;
+              height: 16px;
+            }
+          }
+        }
+      }
+      .upload-btn-wrapper {
+        position: relative;
+        overflow: hidden;
+        display: inline-block;
+        width: 90%;
+        margin: 0 5%;
+        height: 100%;
+        max-height: 600px;
+        text-align: center;
+      }
+      .btn {
+        border: 1px solid #b9b9b9;
+        color: ${props => props.theme.colors.black};
+        background-color: ${props => props.theme.colors.white};
+        border-radius: 0px;
+        font-size: 20px;
+        font-weight: bold;
+        height: 340px;
+        overflow: hidden;
+        width: 100%;
+        max-width: 225px;
+        margin: 20px auto 60px;
+        svg {
+          height: 100px;
+        }
+        p {
+          width: 50%;
+          margin: 0 auto;
+          font-weight: 300;
+          color: #b9b9b9;
+        }
+      }
+      .upload-btn-wrapper input[type='file'] {
+        font-size: 1.2rem;
+        position: absolute;
+        left: 0;
+        top: 0;
+        opacity: 0;
+        font-size: 100px;
+        width: 500px;
+        height: 100%;
+      }
+    }
+  }
+  .selected {
+    border: 1px solid ${props => props.theme.colors.black};
+  }
+  p {
+    margin-top: 20px;
+  }
+  .comment-input {
+    border: 1px solid ${props => props.theme.colors.lightGrey};
+    padding: 5px;
+    border-radius: 25px;
+    textarea {
+      display: block;
+      margin: 0 auto;
+      font-size: 16px;
+      width: 90%;
+      resize: none;
+      border: none;
+      padding: 5px;
+      background: transparent;
+    }
+    button {
+      background: transparent !important;
+      margin: 10px 5%;
+      font-weight: 700;
+      width: 90% !important;
+      text-align: left;
+      padding: 0;
+      font-size: 16px;
+      display: flex;
+      flex-direction: row;
+      justify-content: space-between;
+      border: none;
+      svg {
+        height: 12px;
+      }
+    }
+  }
+  .ReactCrop {
+    width: 250px;
+  }
+  .portrait-mode {
+    padding-bottom: 20px;
+  }
+  .landscape-mode {
+    display: none;
+    h2 {
+      font-weight: 300;
+    }
+    svg {
+      height: 40px;
+    }
+  }
+  @media (orientation: landscape) and (max-width: 900px) {
+    .portrait-mode {
+      display: none;
+    }
+    .landscape-mode {
+      display: block;
+    }
+  }
+`;
 
 export default SelectPhoto;

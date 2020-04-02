@@ -233,8 +233,6 @@ const SearchStyles = styled.div`
       max-width: 100%;
       margin: 0 auto;
       background: ${props => props.theme.colors.white};
-      height: 100%;
-      padding-bottom: 10vh;
       overflow-y: scroll !important;
     }
   }
@@ -244,7 +242,7 @@ const SearchLinkStyles = styled.div`
   position: fixed;
   bottom: 0;
   left: 0;
-  height: 15vh;
+  min-height: 10vh;
   width: 100%;
   text-align: center;
   display: grid;

@@ -230,8 +230,8 @@ const Home = () => {
   const { dbh, userData } = useContext(FirebaseContext);
 
   useEffect(() => {
+    setLoading(true);
     const fetchData = () => {
-      setLoading(true);
       dbh
         .collection('products')
         .doc('Yr2FhLca1kxAvm7ZXeoU')

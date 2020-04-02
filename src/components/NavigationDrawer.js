@@ -140,9 +140,6 @@ const StretchedNavStyles = styled.div`
         height: 2rem;
         vertical-align: middle;
       }
-      @media (orientation: landscape) and (max-width: 900px) {
-        display: none;
-      }
     }
   }
   .logo-link svg {

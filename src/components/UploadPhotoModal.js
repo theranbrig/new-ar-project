@@ -8,6 +8,7 @@ import { FirebaseContext } from '../context/Firebase';
 import LoadingSpinner from './LoadingSpinner';
 import { ModalContext } from '../context/Modal';
 import ReactCrop from 'react-image-crop';
+import RotateSVG from '../assets/icons/icon_rotate';
 import S3 from 'aws-s3-pro';
 import SavePlusSVG from '../assets/icons/icon_save_plus';
 import SearchSVG from '../assets/icons/icon_search';
@@ -291,6 +292,23 @@ const UploadStyles = styled.div`
   .next button {
     font-size: 1rem !important;
   }
+  .landscape-mode {
+    display: none;
+    h2 {
+      font-weight: 300;
+    }
+    svg {
+      height: 40px;
+    }
+  }
+  @media (orientation: landscape) and (max-width: 900px) {
+    .portrait-mode {
+      display: none;
+    }
+    .landscape-mode {
+      display: block;
+    }
+  }
 `;
 
 const CropperComponent = ({
@@ -349,44 +367,50 @@ const CropperComponent = ({
 
   return (
     <>
-      {upImg || imgRef ? (
-        <>
-          <ReactCrop
-            src={upImg}
-            onImageLoaded={onLoad}
-            crop={crop}
-            onChange={c => setCrop(c)}
-            onComplete={makeClientCrop}
-            ruleOfThirds
-          />
-          {result ? (
-            <div className='next'>
-              <BlackButtonClick
-                onClick={() => {
-                  setUploadState(2);
-                }}>
-                {`NEXT STEP (1/2)`}
-              </BlackButtonClick>
-            </div>
-          ) : (
-            <p>Please select the photo area.</p>
-          )}
-        </>
-      ) : (
-        <>
-          <button className='btn'>
-            <CameraSVG />
-            <p>Click here to browse your camera roll</p>
-          </button>
-          <input
-            type='file'
-            name='file upload'
-            accept='image/*'
-            onChange={onSelectFile}
-            aria-label='add photo'
-          />
-        </>
-      )}
+      <div className='landscape-mode'>
+        <RotateSVG />
+        <h2>Please rotate to portrait mode to upload a photo.</h2>
+      </div>
+      <div className='portrait-mode'>
+        {upImg || imgRef ? (
+          <>
+            <ReactCrop
+              src={upImg}
+              onImageLoaded={onLoad}
+              crop={crop}
+              onChange={c => setCrop(c)}
+              onComplete={makeClientCrop}
+              ruleOfThirds
+            />
+            {result ? (
+              <div className='next'>
+                <BlackButtonClick
+                  onClick={() => {
+                    setUploadState(2);
+                  }}>
+                  {`NEXT STEP (1/2)`}
+                </BlackButtonClick>
+              </div>
+            ) : (
+              <p>Please select the photo area.</p>
+            )}
+          </>
+        ) : (
+          <>
+            <button className='btn'>
+              <CameraSVG />
+              <p>Click here to browse your camera roll</p>
+            </button>
+            <input
+              type='file'
+              name='file upload'
+              accept='image/*'
+              onChange={onSelectFile}
+              aria-label='add photo'
+            />
+          </>
+        )}
+      </div>
     </>
   );
 };

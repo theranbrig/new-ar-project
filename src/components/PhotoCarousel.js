@@ -61,8 +61,8 @@ const SliderStyles = styled.div`
     }
   }
   .slider-cell-content {
+    animation: fadein 1s;
     img {
-      animation: fadein 1s;
       background: #7f7fd5;
       background: -webkit-linear-gradient(to top, #91eae4, #86a8e7, #7f7fd5);
       background: linear-gradient(to top, #91eae4, #86a8e7, #7f7fd5);

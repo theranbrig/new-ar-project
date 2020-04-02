@@ -57,6 +57,7 @@ const User = () => {
         <LoadingSpinner color='black' />
       </UserStyles>
     );
+
   return (
     <motion.div
       exit={{ opacity: 0, x: '-100vw' }}

@@ -5,7 +5,7 @@ import { ModalContext } from '../context/Modal';
 import styled from 'styled-components';
 
 export const ModalStyles = styled.div`
-  height: ${({ openSearch }) => (openSearch ? '80vh' : '0px')};
+  height: ${({ openSearch }) => (openSearch ? '90vh' : '0px')};
   transform: ${({ openSearch }) => (openSearch ? 'scaleY(100%)' : 'scaleY(0)')};
   transition: all 0.5s ease-in-out;
   transform-origin: left top;
@@ -16,7 +16,7 @@ export const ModalStyles = styled.div`
   overflow-y: scroll;
   z-index: 1005;
   .modal-bottom {
-    height: ${({ openSearch }) => (openSearch ? 'calc(10vh)' : '5px')};
+    height: ${({ openSearch }) => (openSearch ? 'calc(10vh)' : '0')};
     background: ${props => props.theme.colors.white};
     position: fixed;
     background-attachment: fixed;
