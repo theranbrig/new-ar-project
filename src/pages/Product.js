@@ -277,12 +277,7 @@ const Product = () => {
           </div>
           <div className='main-content-box'>
             {mainDisplay === 'model' ? (
-              <MediaViewer
-                glbFile={product.glbFile}
-                usdzFile={product.usdzFile}
-                poster={product.mainImage}
-                displayLink={false}
-              />
+              <MediaViewer product={product} displayLink={false} />
             ) : (
               <LazyLoadImage src={mainDisplay} />
             )}

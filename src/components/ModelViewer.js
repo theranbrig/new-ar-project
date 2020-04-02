@@ -38,19 +38,19 @@ export const ModelStyles = styled.div`
   }
 `;
 
-const ModelViewer = ({ glbFile, usdzFile, poster }) => {
+const ModelViewer = ({ product }) => {
   return (
     <ModelStyles className='model-box'>
       <model-viewer
         id='main-viewer'
-        src={glbFile}
+        src={product.glbFile}
         alt='YZED 3D MODEL'
         auto-rotate
-        // poster={Logo}
+        poster={product.modelPoster.length > 0 ? product.modelPoster : product.mainImage}
         ar
         preload
         camera-controls
-        ios-src={usdzFile}
+        ios-src={product.usdzFile}
         autoplay
         background-color='#f9f9f9'></model-viewer>
     </ModelStyles>

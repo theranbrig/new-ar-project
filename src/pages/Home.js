@@ -272,11 +272,7 @@ const Home = () => {
                 <strong>{mainProduct.brand}</strong> {mainProduct.name}
               </h3>
             </div>
-            <ModelViewer
-              glbFile={mainProduct.glbFile}
-              usdzFile={mainProduct.usdzFile}
-              poster={mainProduct.mainImage}
-            />
+            <ModelViewer product={mainProduct} />
           </>
         )}
         <section className='product-buttons'>
@@ -317,20 +313,12 @@ const Home = () => {
               <h3>
                 <strong>Today's</strong> timeline
               </h3>
-              <LazyLoadComponent>
-                <MainPageCarousel
-                  brand='YZED'
-                  title='DRESS & TUNIC'
-                  product='5NlpClokHFwJG6Pl7IYz'
-                />
-              </LazyLoadComponent>
-              <LazyLoadComponent>
-                <MainPageCarousel
-                  brand='YZED'
-                  title='BODYSUIT & FOLD SKIRT'
-                  product='Yr2FhLca1kxAvm7ZXeoU'
-                />
-              </LazyLoadComponent>
+              <MainPageCarousel brand='YZED' title='DRESS & TUNIC' product='5NlpClokHFwJG6Pl7IYz' />
+              <MainPageCarousel
+                brand='YZED'
+                title='BODYSUIT & FOLD SKIRT'
+                product='Yr2FhLca1kxAvm7ZXeoU'
+              />
             </div>
           </section>
         </LazyLoadComponent>
