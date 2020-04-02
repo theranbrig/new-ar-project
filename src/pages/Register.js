@@ -179,7 +179,7 @@ const Register = () => {
           </div>
           <div className='bottom'>
             <p>
-              If you join our platform and becaome a YZER you accept our terms of use and privacy
+              If you join our platform and become a YZER you accept our terms of use and privacy
               policy.
             </p>
           </div>

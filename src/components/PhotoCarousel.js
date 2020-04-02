@@ -256,7 +256,7 @@ const FullSliderStyles = styled.div`
       height: 90vh;
     }
   }
-  @media (orientation: landscape) {
+  @media (orientation: landscape) and (max-width: 900px) {
     .top {
       .title h1 {
         font-size: 0.8rem;
