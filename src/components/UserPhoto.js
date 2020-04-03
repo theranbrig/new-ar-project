@@ -85,8 +85,7 @@ const UserPhoto = ({ photo, userName, userData }) => {
     dbh
       .collection('userPhotos')
       .doc(photo.id)
-      .get()
-      .then(doc => {
+      .onSnapshot(doc => {
         dbh
           .collection('userPhotos')
           .doc(photo.id)
@@ -118,6 +117,7 @@ const UserPhoto = ({ photo, userName, userData }) => {
         .then(() => {
           setOpenOptions(!openOptions);
           setBodyScroll(!openOptions);
+          getPhotoData();
         });
     }
   };

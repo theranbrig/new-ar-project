@@ -34,8 +34,7 @@ const User = () => {
     dbh
       .collection('userPhotos')
       .where('userId', '==', id)
-      .get()
-      .then(querySnapshot => {
+      .onSnapshot(querySnapshot => {
         querySnapshot.forEach(doc => {
           tempPhotos.push({ id: doc.id, ...doc.data() });
         });
