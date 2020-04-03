@@ -64,19 +64,15 @@ const PhotoLikes = ({ photo, userData }) => {
   };
 
   const checkLike = () => {
-    if (photo.id) {
-      setLikes([]);
-      dbh
-        .collection('userPhotos')
-        .doc(photo.id)
-        .onSnapshot(querySnapshot => {
-          console.log(querySnapshot);
-          if (userData.loggedIn && querySnapshot.exists) {
-            setIsLiked(querySnapshot.data().likes.some(like => like === userData.id));
-            setLikes(querySnapshot.data().likes);
-          }
-        });
-    }
+    dbh
+      .collection('userPhotos')
+      .doc(photo.id)
+      .onSnapshot(querySnapshot => {
+        if (userData.loggedIn && querySnapshot.exists) {
+          setIsLiked(querySnapshot.data().likes.some(like => like === userData.id));
+          setLikes(querySnapshot.data().likes);
+        }
+      });
   };
 
   useEffect(() => {

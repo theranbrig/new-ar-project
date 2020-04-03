@@ -6,6 +6,7 @@ import styled from 'styled-components';
 export const ModalStyles = styled.div`
   height: ${({ openOptions }) => (openOptions ? '90vh' : '0px')};
   transform: ${({ openOptions }) => (openOptions ? 'scaleY(100%)' : 'scaleY(0)')}
+  opacity: ${({ openOptions }) => (openOptions ? '1' : '0')}
   -webkit-box-shadow: 0px 10px 0px 0px rgba(0, 0, 3, 0.28);
   -moz-box-shadow: 0px 10px 0px 0px rgba(0, 0, 3, 0.28);
   box-shadow: 0px 10px 0px 0px rgba(0, 0, 3, 0.28);

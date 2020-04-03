@@ -8,10 +8,8 @@ import { LazyLoadImage } from 'react-lazy-load-image-component';
 import { Link } from 'react-router-dom';
 import LoadingSpinner from './LoadingSpinner';
 import { ModalContext } from '../context/Modal';
-import OptionsModal from './OptionsModal';
 import PhotoLikes from './PhotoLikes';
 import TagSVG from '../assets/icons/icon_tag';
-import ThreeDotsSVG from '../assets/icons/icon_threedots';
 import moment from 'moment';
 import styled from 'styled-components';
 
@@ -117,19 +115,6 @@ const UserPhoto = ({ photo, userData }) => {
       });
   };
 
-  const removePhoto = photoId => {
-    if (window.confirm('Are you sure you want to remove this photo?')) {
-      dbh
-        .collection('userPhotos')
-        .doc(photoId)
-        .delete()
-        .then(() => {
-          setOpenOptions(!openOptions);
-          setBodyScroll(!openOptions);
-        });
-    }
-  };
-
   useEffect(() => {
     getPhotoData();
     return () => {
@@ -146,18 +131,6 @@ const UserPhoto = ({ photo, userData }) => {
 
   return (
     <PhotoStyles>
-      {owner && (
-        <>
-          <button
-            className='more'
-            onClick={() => {
-              setOpenOptions(!openOptions);
-              setBodyScroll(!openOptions);
-            }}>
-            <ThreeDotsSVG />
-          </button>
-        </>
-      )}
       <div className='image'>
         {!showTags && (
           <ShowTagButton
@@ -183,7 +156,9 @@ const UserPhoto = ({ photo, userData }) => {
         <p className='date'>{moment.unix(currentPhoto.addedOn.seconds).fromNow()}</p>
       </div>
       <div className='description'>
-        <h4>@{photoOwner.userName}</h4>
+        <Link to={`/user/${currentPhoto.userId}`} className='user-link'>
+          @{photoOwner.userName}
+        </Link>
         <p>
           {currentPhoto.description.split('\n').map((item, key) => {
             return (
@@ -194,11 +169,10 @@ const UserPhoto = ({ photo, userData }) => {
             );
           })}
         </p>
-        <Link to={`/comments/${currentPhoto.id}`}>
+        <Link to={`/comments/${currentPhoto.id}`} className='comment-link'>
           Read {commentNumber > 1 && 'all'} {commentNumber} comment{commentNumber !== 1 && 's'}...
         </Link>
       </div>
-      <OptionsModal photoId={photo.id} removePhoto={removePhoto} />
     </PhotoStyles>
   );
 };
@@ -241,8 +215,10 @@ export const PhotoStyles = styled.div`
     text-align: left;
     width: 90%;
     margin: 0 auto;
-    h4 {
+    .user-link {
       margin: 0;
+      font-weight: 600;
+      color: ${props => props.theme.colors.black};
     }
     p {
       width: 100%;

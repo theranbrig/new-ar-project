@@ -150,47 +150,52 @@ const UserPhoto = ({ photo, userName, userData }) => {
           </button>
         </>
       )}
-      <div className='image'>
-        {!showTags && (
-          <ShowTagButton
-            showTags={showTags}
-            onClick={() => {
-              setShowTags(true);
-            }}>
-            <TagSVG />
-          </ShowTagButton>
-        )}
-        <LazyLoadImage src={currentPhoto.url} alt={currentPhoto.description} effect='blur' />
-        {showTags && <Tag tag={currentPhoto.tag} setShowTags={setShowTags} />}
-      </div>
-      <div className='likes-and-time'>
-        <PhotoLikes
-          photo={currentPhoto}
-          toggleLike={toggleLike}
-          isLiked={isLiked}
-          setIsLiked={setIsLiked}
-          loading={likeLoading}
-          userData={userData}
-        />
-        <p className='date'>{moment.unix(currentPhoto.addedOn.seconds).fromNow()}</p>
-      </div>
-      <div className='description'>
-        <h4>@{userName}</h4>
-        <p>
-          {currentPhoto.description.split('\n').map((item, key) => {
-            return (
-              <span key={key}>
-                {item}
-                <br />
-              </span>
-            );
-          })}
-        </p>
-        <Link to={`/comments/${currentPhoto.id}`}>
-          Read {commentNumber > 1 && 'all'} {commentNumber} comment{commentNumber !== 1 && 's'}...
-        </Link>
-      </div>
-      <OptionsModal photoId={photo.id} removePhoto={removePhoto} />
+      {currentPhoto && (
+        <>
+          <div className='image'>
+            {!showTags && (
+              <ShowTagButton
+                showTags={showTags}
+                onClick={() => {
+                  setShowTags(true);
+                }}>
+                <TagSVG />
+              </ShowTagButton>
+            )}
+            <LazyLoadImage src={currentPhoto.url} alt={currentPhoto.description} effect='blur' />
+            {showTags && <Tag tag={currentPhoto.tag} setShowTags={setShowTags} />}
+          </div>
+          <div className='likes-and-time'>
+            <PhotoLikes
+              photo={currentPhoto}
+              toggleLike={toggleLike}
+              isLiked={isLiked}
+              setIsLiked={setIsLiked}
+              loading={likeLoading}
+              userData={userData}
+            />
+            <p className='date'>{moment.unix(currentPhoto.addedOn.seconds).fromNow()}</p>
+          </div>
+          <div className='description'>
+            <h4>@{userName}</h4>
+            <p>
+              {currentPhoto.description.split('\n').map((item, key) => {
+                return (
+                  <span key={key}>
+                    {item}
+                    <br />
+                  </span>
+                );
+              })}
+            </p>
+            <Link to={`/comments/${currentPhoto.id}`}>
+              Read {commentNumber > 1 && 'all'} {commentNumber} comment{commentNumber !== 1 && 's'}
+              ...
+            </Link>
+          </div>
+          <OptionsModal photoId={photo.id} removePhoto={removePhoto} />
+        </>
+      )}
     </PhotoStyles>
   );
 };

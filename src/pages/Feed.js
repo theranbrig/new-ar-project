@@ -29,19 +29,16 @@ const Feed = () => {
   const { id } = useParams();
 
   useEffect(() => {
-    window.scrollTo(0, 0);
+    setPhotos([]);
     setLoading(true);
     let tempPhotos = [];
-    dbh
-      .collection('userPhotos')
-      .get()
-      .then(querySnapshot => {
-        querySnapshot.forEach(doc => {
-          tempPhotos.push({ id: doc.id, ...doc.data() });
-        });
-        setPhotos(tempPhotos.sort((a, b) => b.addedOn.seconds - a.addedOn.seconds));
-        setLoading(false);
+    dbh.collection('userPhotos').onSnapshot(querySnapshot => {
+      querySnapshot.forEach(doc => {
+        tempPhotos.push({ id: doc.id, ...doc.data() });
       });
+      setPhotos(tempPhotos.sort((a, b) => b.addedOn.seconds - a.addedOn.seconds));
+      setLoading(false);
+    });
   }, [dbh, id]);
 
   if (loading || userLoading)
@@ -63,7 +60,7 @@ const Feed = () => {
         </Helmet>
         <TopTitle title={'YZED Feed'} />
         {photos.map(photo => (
-          <FeedPhoto photo={photo} key={photo.imageUrl} userData={userData} />
+          <FeedPhoto photo={photo} key={photo.id} userData={userData} />
         ))}
       </UserStyles>
     </motion.div>
