@@ -187,11 +187,6 @@ const MenuLinks = () => {
           onClick={() => setShowHome(true)}>
           YZED
         </button>
-        {/* <button
-          className={!showHome ? 'top-link-active' : 'top-link'}
-          onClick={() => setShowHome(false)}>
-          SHOP
-        </button> */}
       </div>
       <section className='side-links'>
         {showHome ? (
