@@ -46,7 +46,7 @@ const ModelViewer = ({ product }) => {
         src={product.glbFile}
         alt='YZED 3D MODEL'
         auto-rotate
-        poster={product.modelPoster.length > 0 ? product.modelPoster : product.mainImage}
+        poster={product.mainImage}
         ar
         preload
         camera-controls
