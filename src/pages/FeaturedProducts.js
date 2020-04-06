@@ -106,7 +106,6 @@ const FeaturedProducts = () => {
   const checkItems = () => {
     dbh
       .collection('products')
-      .limit(12)
       .onSnapshot(querySnapshot => {
         let tempProducts = [];
         querySnapshot.forEach(doc => {
