@@ -145,7 +145,7 @@ const Following = ({ userId }) => {
               </p>
             )}
             {followedThreads.map(thread => (
-              <FollowedThread thread={thread} />
+              <FollowedThread key={thread.threadId} thread={thread} />
             ))}
           </>
         )}

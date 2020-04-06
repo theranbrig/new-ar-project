@@ -60,7 +60,7 @@ const Feed = () => {
         </Helmet>
         <TopTitle title={'YZED Feed'} />
         {photos.map(photo => (
-          <FeedPhoto photo={photo} key={photo.id} userData={userData} />
+          <FeedPhoto key={photo.id} photo={photo} userData={userData} />
         ))}
       </UserStyles>
     </motion.div>

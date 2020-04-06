@@ -222,7 +222,7 @@ const ProductContainer = styled.div`
 
 const Product = () => {
   const [product, setProduct] = useState(null);
-  const [loading, setLoading] = useState(true );
+  const [loading, setLoading] = useState(true);
   const [isAdded, setIsAdded] = useState(false);
   const [mainDisplay, setMainDisplay] = useState('model');
 
@@ -291,7 +291,7 @@ const Product = () => {
                 onClick={() => setMainDisplay('model')}
                 effect='blur'
                 alt={product.mainImage}
-                className={mainDisplay === 'model' && 'selected-photo'}
+                className={mainDisplay === 'model' ? 'selected-photo' : ''}
               />
               <ThreeDSVG setMainDisplay={setMainDisplay} fill='#272727' />
             </div>

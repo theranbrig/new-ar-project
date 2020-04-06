@@ -67,8 +67,8 @@ export const CreateComments = ({ sendComment }) => {
   return (
     <CreateCommentsStyles>
       <TextareaAutosize
-        minRows='1'
-        maxRows='2'
+        minRows={1}
+        maxRows={2}
         aria-label='comment'
         placeholder='Tap to write...'
         name='comment'
@@ -437,13 +437,13 @@ const Comments = () => {
                   disabled={hideCommentOnlyPosts}
                   className='toggle-button'
                   onClick={() => togglePhotoPosts()}>
-                  <PictureSVG fill={hidePhotos && '#c7c7c7'} />
+                  <PictureSVG fill={hidePhotos ? '#c7c7c7' : '#272727'} />
                 </button>
                 <button
                   disabled={hidePhotos}
                   className='toggle-button'
                   onClick={() => toggleCommentPosts()}>
-                  <TextSVG fill={hideCommentOnlyPosts && '#c7c7c7'} />
+                  <TextSVG fill={hideCommentOnlyPosts ? '#c7c7c7' : '#272727'} />
                 </button>
               </div>
             </section>
