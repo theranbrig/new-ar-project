@@ -235,7 +235,7 @@ const Home = () => {
     const fetchData = () => {
       dbh
         .collection('products')
-        .doc(process.env.REACT_APP_home_product_id || 'Yr2FhLca1kxAvm7ZXeoU')
+        .doc(process.env.REACT_APP_home_product_id)
         .get()
         .then(doc => {
           setMainProduct({ id: doc.id, ...doc.data() });
@@ -317,12 +317,12 @@ const Home = () => {
               <MainPageCarousel
                 brand='YZED'
                 title='DRESS & TUNIC'
-                product={process.env.REACT_APP_home_product_carousel_1_id || '5NlpClokHFwJG6Pl7IYz'}
+                product={process.env.REACT_APP_home_product_carousel_1_id}
               />
               <MainPageCarousel
                 brand='YZED'
                 title='BODYSUIT & FOLD SKIRT'
-                product={process.env.REACT_APP_home_product_carousel_2_id || 'Yr2FhLca1kxAvm7ZXeoU'}
+                product={process.env.REACT_APP_home_product_carousel_2_id}
               />
             </div>
           </section>
