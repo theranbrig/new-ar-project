@@ -1,9 +1,9 @@
+import { NavLink, useHistory } from 'react-router-dom';
 import React, { useContext, useState } from 'react';
 
 import ChevronRight from '../assets/icons/icon_chevron_right';
 import { FirebaseContext } from '../context/Firebase';
 import { ModalContext } from '../context/Modal';
-import { NavLink } from 'react-router-dom';
 import StoreMenuLinks from './StoreMenuLinks';
 import styled from 'styled-components';
 
@@ -172,6 +172,8 @@ const MenuLinks = () => {
   const [showHome, setShowHome] = useState(true);
   const { userData, logoutUser } = useContext(FirebaseContext);
 
+  const history = useHistory();
+
   const { openMenu, setOpenMenu, setBodyScroll } = useContext(ModalContext);
 
   const setModals = () => {
@@ -269,6 +271,7 @@ const MenuLinks = () => {
                   <button
                     onClick={() => {
                       logoutUser();
+                      history.push('/');
                       setBodyScroll(false);
                     }}>
                     Logout

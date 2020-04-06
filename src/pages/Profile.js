@@ -146,6 +146,7 @@ const Profile = () => {
                 )}
                 <WhiteButtonClick
                   onClick={() => {
+                    setLoading(true);
                     logoutUser();
                     history.push('/');
                   }}>

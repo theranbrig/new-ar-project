@@ -222,7 +222,7 @@ const ProductContainer = styled.div`
 
 const Product = () => {
   const [product, setProduct] = useState(null);
-  const [loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState(true );
   const [isAdded, setIsAdded] = useState(false);
   const [mainDisplay, setMainDisplay] = useState('model');
 

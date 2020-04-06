@@ -193,7 +193,7 @@ const UserPhoto = ({ photo, userName, userData }) => {
               ...
             </Link>
           </div>
-          <OptionsModal photoId={photo.id} removePhoto={removePhoto} />
+          {owner && <OptionsModal photoId={photo.id} removePhoto={removePhoto} />}
         </>
       )}
     </PhotoStyles>

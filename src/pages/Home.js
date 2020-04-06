@@ -172,6 +172,7 @@ const HomeStyles = styled.div`
       }
     }
     .timeline {
+      position: relative;
       margin-top: -70px;
       margin-bottom: -70px;
       width: 100%;
@@ -234,7 +235,7 @@ const Home = () => {
     const fetchData = () => {
       dbh
         .collection('products')
-        .doc('Yr2FhLca1kxAvm7ZXeoU')
+        .doc(process.env.REACT_APP_home_product_id || 'Yr2FhLca1kxAvm7ZXeoU')
         .get()
         .then(doc => {
           setMainProduct({ id: doc.id, ...doc.data() });
@@ -313,11 +314,15 @@ const Home = () => {
               <h3>
                 <strong>Today's</strong> timeline
               </h3>
-              <MainPageCarousel brand='YZED' title='DRESS & TUNIC' product='5NlpClokHFwJG6Pl7IYz' />
+              <MainPageCarousel
+                brand='YZED'
+                title='DRESS & TUNIC'
+                product={process.env.REACT_APP_home_product_carousel_1_id || '5NlpClokHFwJG6Pl7IYz'}
+              />
               <MainPageCarousel
                 brand='YZED'
                 title='BODYSUIT & FOLD SKIRT'
-                product='Yr2FhLca1kxAvm7ZXeoU'
+                product={process.env.REACT_APP_home_product_carousel_2_id || 'Yr2FhLca1kxAvm7ZXeoU'}
               />
             </div>
           </section>
