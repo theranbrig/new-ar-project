@@ -49,6 +49,33 @@ const FirebaseProvider = ({ children }) => {
 
   firebase.analytics().logEvent('notification_received');
 
+  var actionCodeSettings = {
+    // URL you want to redirect back to. The domain (www.example.com) for this
+    // URL must be whitelisted in the Firebase Console.
+    url: 'https://localhost:3000/setup',
+    // This must be true.
+    handleCodeInApp: true,
+  };
+
+  const verifiedRegister = (email, password, userName) => {
+    firebase
+      .auth()
+      .createUserWithEmailAndPassword(email, password)
+      .then(function(user) {
+        if (user && user.emailVerified === false) {
+          user.sendEmailVerification().then(function() {
+            console.log('email verification sent to user');
+          });
+        }
+      })
+      .catch(function(error) {
+        // Handle Errors here.
+        var errorCode = error.code;
+        var errorMessage = error.message;
+        console.log(errorCode, errorMessage);
+      });
+  };
+
   const registerUser = (email, password, userName) => {
     dbh
       .collection('users')
@@ -215,6 +242,7 @@ const FirebaseProvider = ({ children }) => {
         userLoading,
         uploadUserPhoto,
         forgotEmail,
+        verifiedRegister,
       }}>
       {children}
     </FirebaseContext.Provider>

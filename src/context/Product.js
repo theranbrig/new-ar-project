@@ -115,7 +115,7 @@ const ProductProvider = ({ children }) => {
         usdzFile,
         pictures,
         features,
-        featured,
+        featured: true,
         keywords,
       })
       .then(() => callback())

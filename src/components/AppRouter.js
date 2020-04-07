@@ -20,6 +20,7 @@ const Admin = load(lazy(() => import('../pages/Admin')));
 const Comments = load(lazy(() => import('../pages/Comments')));
 const CreateProduct = load(lazy(() => import('../pages/CreateProduct')));
 const EditProduct = load(lazy(() => import('../pages/EditProduct')));
+const EmailLogin = load(lazy(() => import('../pages/LoginEmail')));
 const Error = load(lazy(() => import('../pages/Error')));
 const FeaturedProducts = load(lazy(() => import('../pages/FeaturedProducts')));
 const Feed = load(lazy(() => import('../pages/Feed')));
@@ -63,6 +64,9 @@ export default function App() {
           <Switch>
             <Route exact path='/'>
               <Home />
+            </Route>
+            <Route path='/emailLogin'>
+              <EmailLogin />
             </Route>
             <Route path='/subscribe'>
               <Subscribe />
