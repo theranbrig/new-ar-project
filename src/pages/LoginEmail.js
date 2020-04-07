@@ -55,12 +55,13 @@ const Register = () => {
 
   const history = useHistory();
 
-  const { registerUser, firebaseError, userData, emailLogin } = useContext(FirebaseContext);
+  const { registerUser, firebaseError, userData, verifiedRegister } = useContext(FirebaseContext);
 
   useEffect(() => {
-    if (userData.loggedIn) {
-      history.push('/profile');
-    }
+    console.log(userData);
+    // if (userData.loggedIn) {
+    //   history.push('/profile');
+    // }
   }, [userData, history]);
 
   const checkForm = () => {
@@ -99,9 +100,22 @@ const Register = () => {
             onSubmit={async e => {
               setLoading(true);
               e.preventDefault();
-              await emailLogin(email);
+              await verifiedRegister(email, password, userName);
               setLoading(false);
             }}>
+            <div className='form-input'>
+              <input
+                placeholder='Username'
+                name='userName'
+                type='text'
+                value={userName}
+                required
+                minLength='5'
+                maxLength='18'
+                aria-label='username'
+                onChange={e => setUserName(e.target.value)}
+              />
+            </div>
             <div className='form-input'>
               <input
                 placeholder='Email Address'
@@ -113,7 +127,45 @@ const Register = () => {
                 onChange={e => setEmail(e.target.value)}
               />
             </div>
-            <BlackButton type='submit'>{loading ? 'BECOMING A YZER' : 'BECOME A YZER'}</BlackButton>
+            <div className={passwordValid ? 'form-input valid' : 'form-input invalid'}>
+              <input
+                placeholder='Password'
+                name='password'
+                type='password'
+                required
+                minLength='8'
+                maxLength='32'
+                aria-label='password'
+                onChange={e => {
+                  checkPassword(e.target.value);
+                  setPassword(e.target.value);
+                }}
+              />
+            </div>
+            <div
+              className={password === confirmPassword ? 'form-input valid' : 'form-input invalid'}>
+              <input
+                placeholder='Confirm Password'
+                name='Confirm Password'
+                type='password'
+                required
+                minLength='8'
+                maxLength='32'
+                aria-label='confirm password'
+                onChange={e => setConfirmPassword(e.target.value)}
+              />
+              <PasswordBox>
+                <div className='password-info'>
+                  <p>
+                    Password must be between 8 and 32 characters, and contain at least one number
+                    and one special character.
+                  </p>
+                </div>
+              </PasswordBox>
+            </div>
+            <BlackButton disabled={password !== confirmPassword || !passwordValid} type='submit'>
+              {loading ? 'BECOMING A YZER' : 'BECOME A YZER'}
+            </BlackButton>
           </form>
           {(firebaseError || error) && (
             <div className='error'>

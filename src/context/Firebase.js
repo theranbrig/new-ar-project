@@ -62,8 +62,13 @@ const FirebaseProvider = ({ children }) => {
       .auth()
       .createUserWithEmailAndPassword(email, password)
       .then(function(user) {
-        if (user && user.emailVerified === false) {
-          user.sendEmailVerification().then(function() {
+        console.log(user);
+        console.log(user.user.emailVerified);
+        if (user && user.user.emailVerified === false) {
+          var user1 = firebase.auth().currentUser;
+          console.log('USER', user);
+          console.log('USER1', user1);
+          user.user.sendEmailVerification().then(function() {
             console.log('email verification sent to user');
           });
         }
@@ -157,6 +162,7 @@ const FirebaseProvider = ({ children }) => {
     setUserLoading(true);
     await firebase.auth().onAuthStateChanged(user => {
       if (user) {
+        console.log(user);
         dbh
           .collection('users')
           .doc(user.uid)
