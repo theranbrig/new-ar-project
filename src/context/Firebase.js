@@ -36,6 +36,7 @@ export const storage = firebase.storage();
 const FirebaseProvider = ({ children }) => {
   const [firebaseError, setFirebaseError] = useState('');
   const [userLoading, setUserLoading] = useState(true);
+  const [userValidated, setUserValidated] = useState(false);
   const [userData, setUserData] = useState({
     id: '',
     loggedIn: false,
@@ -58,26 +59,48 @@ const FirebaseProvider = ({ children }) => {
   };
 
   const verifiedRegister = (email, password, userName) => {
-    firebase
-      .auth()
-      .createUserWithEmailAndPassword(email, password)
-      .then(function(user) {
-        console.log(user);
-        console.log(user.user.emailVerified);
-        if (user && user.user.emailVerified === false) {
-          var user1 = firebase.auth().currentUser;
-          console.log('USER', user);
-          console.log('USER1', user1);
-          user.user.sendEmailVerification().then(function() {
-            console.log('email verification sent to user');
-          });
+    //  Check if user name is taken.
+    dbh
+      .collection('users')
+      .where('userName', '==', userName)
+      .get()
+      .then(querySnapshot => {
+        if (querySnapshot.docs.length) {
+          setFirebaseError('Someone has already taken that username.');
+        } else {
+          // Sign up user and create user in db. Send user data validation.
+          firebase
+            .auth()
+            .createUserWithEmailAndPassword(email, password)
+            .then(user => {
+              console.log(user);
+              if (user && user.user.emailVerified === false) {
+                user.user.sendEmailVerification().then(() => {
+                  dbh
+                    .collection('users')
+                    .doc(user.user.uid)
+                    .set({
+                      userName,
+                      role: 'USER',
+                      photoLikes: [],
+                      followers: [],
+                      favoriteProducts: [],
+                      photo:
+                        'https://oneoone-resource.s3.ap-northeast-2.amazonaws.com/yzed/icon_user.png',
+                    })
+                    .then(() => {
+                      dbh
+                        .collection('newsletterSubscriptions')
+                        .doc()
+                        .set({ age: null, name: userName, email, gender: '' });
+                    });
+                });
+              }
+            })
+            .catch(function(error) {
+              setFirebaseError(error.message);
+            });
         }
-      })
-      .catch(function(error) {
-        // Handle Errors here.
-        var errorCode = error.code;
-        var errorMessage = error.message;
-        console.log(errorCode, errorMessage);
       });
   };
 
@@ -161,12 +184,14 @@ const FirebaseProvider = ({ children }) => {
   const onAuthStateChange = async callback => {
     setUserLoading(true);
     await firebase.auth().onAuthStateChanged(user => {
-      if (user) {
-        console.log(user);
+      console.log(user);
+      if (user && user.emailVerified) {
+        setUserValidated(true);
         dbh
           .collection('users')
           .doc(user.uid)
           .onSnapshot(doc => {
+            console.log(doc);
             if (doc.exists) {
               const {
                 userName,
@@ -186,6 +211,12 @@ const FirebaseProvider = ({ children }) => {
                 followers,
                 favoriteProducts,
               };
+              console.log({
+                loggedIn: true,
+                id: user.uid,
+                ...userDetails,
+                lastVisit: new Date(),
+              });
               callback({ loggedIn: true, id: user.uid, ...userDetails, lastVisit: new Date() });
               setUserLoading(false);
             }
@@ -208,7 +239,6 @@ const FirebaseProvider = ({ children }) => {
   useEffect(() => {
     setUserLoading(true);
     onAuthStateChange(setUserData);
-
     return () => {
       onAuthStateChange(setUserData);
     };
