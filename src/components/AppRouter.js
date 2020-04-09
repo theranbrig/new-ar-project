@@ -17,6 +17,8 @@ const load = (Component: any) => (props: any) => (
 );
 
 const Admin = load(lazy(() => import('../pages/Admin')));
+const Verified = load(lazy(() => import('../pages/VerificationConfirmed')));
+const Sent = load(lazy(() => import('../pages/VerificationSent')));
 const Comments = load(lazy(() => import('../pages/Comments')));
 const CreateProduct = load(lazy(() => import('../pages/CreateProduct')));
 const EditProduct = load(lazy(() => import('../pages/EditProduct')));
@@ -67,6 +69,12 @@ export default function App() {
             </Route>
             <Route path='/emailLogin'>
               <EmailLogin />
+            </Route>
+            <Route path='/verified'>
+              <Verified />
+            </Route>
+            <Route path='/sent'>
+              <Sent />
             </Route>
             <Route path='/subscribe'>
               <Subscribe />
