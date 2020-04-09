@@ -29,7 +29,7 @@ export const VerificationStyles = styled.div`
   }
   input {
     width: 90%;
-    margin: 0 auto;
+    margin: 10px auto;
     display: block;
     height: 45px;
     font-size: 1.3rem;
@@ -51,6 +51,9 @@ export const VerificationStyles = styled.div`
     &:disabled {
       color: ${props => props.theme.colors.grey};
     }
+  }
+  .success {
+    color: tomato;
   }
 `;
 
@@ -94,25 +97,13 @@ const VerificationConfirmed = props => {
         setLoading(false);
       })
       .catch(function(error) {
-        setError(error.message);
+        setError('Oops. This token is either not valid or has been used.');
         setLoading(false);
       });
   };
 
   const loginAndSendEmailVerification = () => {
-    setLoading(true);
-    firebase
-      .auth()
-      .applyActionCode(oobCode)
-      .then(function(resp) {
-        setConfirmed(true);
-        setLoading(false);
-      })
-      .catch(function(error) {
-        setError(error.message);
-
-        setLoading(false);
-      });
+    // TODO: FINISH LOGIN AND NEW CODE
   };
 
   useEffect(() => {
@@ -156,14 +147,13 @@ const VerificationConfirmed = props => {
                 {sendClicked && (
                   <p>Your request for email confirmation has been sent. Check your inbox.</p>
                 )}
-                )}
               </form>
             </>
           ) : (
             <>
               <p>
                 Please enter your login information to send the confirmation email again. We will
-                sned
+                send an email shortly with a link to validate your email.
               </p>
               <form
                 onSubmit={e => {
@@ -172,22 +162,26 @@ const VerificationConfirmed = props => {
                 <input
                   type='text'
                   name='email'
-                  placeholder='email'
+                  placeholder='Enter Email'
                   required
                   onChange={e => setEmail(e.target.value)}
                 />
                 <input
                   type='password'
-                  name='email'
-                  placeholder='email'
+                  name='password'
+                  placeholder='Enter Password'
                   required
-                  onChange={e => setEmail(e.target.value)}
+                  onChange={e => setPassword(e.target.value)}
                 />
                 <button>SEND</button>
               </form>
             </>
           )}
-          {resent && <p>Thanks for request. Check your inbox for a confirmation email.</p>}
+          {resent && (
+            <p className='success'>
+              Thanks for request. Check your inbox for a confirmation email.
+            </p>
+          )}
         </div>
       )}
       {confirmed && !error && (
