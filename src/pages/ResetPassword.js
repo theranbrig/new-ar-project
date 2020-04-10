@@ -1,4 +1,4 @@
-import { Link, useHistory } from 'react-router-dom';
+import { Link, useHistory, useLocation } from 'react-router-dom';
 import React, { useContext, useEffect, useState } from 'react';
 
 import CheckSVG from '../assets/icons/icon_success_check';
@@ -88,8 +88,18 @@ const ResetPassword = () => {
   const [error, setError] = useState('');
   const [success, setSuccess] = useState(false);
 
+  const { firebase } = useContext(FirebaseContext);
+
   const history = useHistory();
 
+  const location = useLocation();
+
+  const oobCode = location.search.slice(
+    location.search.indexOf('oobCode=') + 8,
+    location.search.indexOf('continue') - 1
+  );
+
+  console.log(oobCode);
   const { registerUser, firebaseError, userData } = useContext(FirebaseContext);
 
   const checkPassword = value => {
@@ -104,7 +114,34 @@ const ResetPassword = () => {
   };
 
   const resetPassword = () => {
-    setSuccess(true);
+    firebase
+      .auth()
+      .verifyPasswordResetCode(oobCode)
+      .then(function(email) {
+        var accountEmail = email;
+        console.log(accountEmail);
+        firebase
+          .auth()
+          .confirmPasswordReset(oobCode, password)
+          .then(function(resp) {
+            console.log(resp);
+            setSuccess(true);
+            setTimeout(() => {
+              history.push('/login');
+            }, 2000);
+          })
+          .catch(function(error) {
+            console.log(error.message);
+            setError(
+              'Something went wrong. This link may have been used already. Resend link to reset password.'
+            );
+          });
+      })
+      .catch(function(error) {
+        setError(
+          'Something went wrong. This link may have been used already. Resend link to reset password.'
+        );
+      });
   };
 
   return (
@@ -133,6 +170,7 @@ const ResetPassword = () => {
                 onSubmit={async e => {
                   setLoading(true);
                   e.preventDefault();
+                  resetPassword();
                   setLoading(false);
                 }}>
                 <div className={passwordValid ? 'form-input valid' : 'form-input invalid'}>
@@ -182,6 +220,7 @@ const ResetPassword = () => {
               {(firebaseError || error) && (
                 <div className='error'>
                   <Error error={firebaseError || error} clearFunction={setError} />
+                  <Link to='verified'>Resend password reset link.</Link>
                 </div>
               )}
             </>
