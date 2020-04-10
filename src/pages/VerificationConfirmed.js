@@ -192,7 +192,6 @@ const VerificationConfirmed = props => {
             Please enter your login information to send the validation email again. Shortly, a link
             will arrive in your inbox.
           </p>
-
           <form
             onSubmit={e => {
               loginAndSendEmailVerification(e);
@@ -245,7 +244,6 @@ const VerificationConfirmed = props => {
                     Please enter your login information to send the validation email again. Shortly,
                     a link will arrive in your inbox.
                   </p>
-
                   <form
                     onSubmit={e => {
                       loginAndSendEmailVerification(e);
@@ -282,10 +280,10 @@ const VerificationConfirmed = props => {
               <CheckSVG />
               <p>
                 Thank you! You may now go and login with YZED. You may need to login again. Click
-                below to go to the login page. If you are already logged in you will be taken to
+                below to go to the login page. If you are already logged in you will be taken directly to
                 YZED.
               </p>
-              <button>LOGIN</button>
+              <button onClick={() => window.reload()}>LOGIN</button>
             </div>
           )}
           {sendClicked && (

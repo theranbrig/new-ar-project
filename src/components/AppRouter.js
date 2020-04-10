@@ -22,7 +22,6 @@ const Sent = load(lazy(() => import('../pages/VerificationSent')));
 const Comments = load(lazy(() => import('../pages/Comments')));
 const CreateProduct = load(lazy(() => import('../pages/CreateProduct')));
 const EditProduct = load(lazy(() => import('../pages/EditProduct')));
-const EmailLogin = load(lazy(() => import('../pages/LoginEmail')));
 const Error = load(lazy(() => import('../pages/Error')));
 const FeaturedProducts = load(lazy(() => import('../pages/FeaturedProducts')));
 const Feed = load(lazy(() => import('../pages/Feed')));
@@ -31,12 +30,14 @@ const Login = load(lazy(() => import('../pages/Login')));
 const MainSearchPage = load(lazy(() => import('../pages/Search')));
 const Product = load(lazy(() => import('../pages/Product')));
 const Profile = load(lazy(() => import('../pages/Profile')));
-const Register = load(lazy(() => import('../pages/Register')));
+const Register = load(lazy(() => import('../pages/RegisterEmail')));
 const RequestReset = load(lazy(() => import('../pages/ResetRequest')));
+const ResetPassword = load(lazy(() => import('../pages/ResetPassword')));
 const Subscribe = load(lazy(() => import('../pages/Subscribe')));
 const Success = load(lazy(() => import('../pages/SubscribeSuccess')));
 const Threads = load(lazy(() => import('../pages/Threads')));
 const User = load(lazy(() => import('../pages/User')));
+const UserAction = load(lazy(() => import('../pages/UserAction')));
 
 export default function App() {
   const location = useLocation();
@@ -67,8 +68,11 @@ export default function App() {
             <Route exact path='/'>
               <Home />
             </Route>
-            <Route path='/emailLogin'>
-              <EmailLogin />
+            <Route exact path='/user_action'>
+              <UserAction />
+            </Route>
+            <Route path='/login'>
+              <Login />
             </Route>
             <Route path='/verified'>
               <Verified />
@@ -90,9 +94,6 @@ export default function App() {
             </Route>
             <Route path='/threads/:userId'>
               <Threads />
-            </Route>
-            <Route path='/login'>
-              <Login />
             </Route>
             <Route path='/register'>
               <Register />
@@ -123,6 +124,9 @@ export default function App() {
             </Route>
             <Route path='/request_reset'>
               <RequestReset />
+            </Route>
+            <Route path='/reset'>
+              <ResetPassword />
             </Route>
             <Route>
               <Error />
