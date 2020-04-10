@@ -6,6 +6,7 @@ import Error from '../components/Error';
 import { FirebaseContext } from '../context/Firebase';
 import { Helmet } from 'react-helmet';
 import LoadingSpinner from '../components/LoadingSpinner';
+import VerificationSent from './VerificationSent';
 import styled from 'styled-components';
 
 export const VerificationStyles = styled.div`
@@ -15,9 +16,11 @@ export const VerificationStyles = styled.div`
   min-height: 90vh;
   padding-top: 10vh;
   font-family: ${props => props.theme.fonts.main};
+  color: ${props => props.theme.colors.black};
   h1 {
     text-align: center;
     margin: 20px auto;
+    color: ${props => props.theme.colors.black};
   }
   p {
     text-align: center;
@@ -53,8 +56,26 @@ export const VerificationStyles = styled.div`
       color: ${props => props.theme.colors.grey};
     }
   }
-  .success {
-    color: tomato;
+  .confirm {
+    svg {
+      height: 100px;
+      display: block;
+      margin: 0 auto;
+    }
+    a {
+      display: block;
+      margin: 0 auto;
+      width: 200px;
+      text-align: center;
+      height: 45px;
+      line-height: 45px;
+      font-size: 1.3rem;
+      text-decoration: none;
+      color: ${props => props.theme.colors.black};
+      background: ${props => props.theme.colors.white};
+      border: 2px solid ${props => props.theme.colors.black};
+      border-radius: 45px;
+    }
   }
 `;
 
@@ -62,7 +83,7 @@ const VerificationConfirmed = props => {
   const location = useLocation();
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
-  const [confirmed, setConfirmed] = useState(false);
+  const [confirmed, setConfirmed] = useState(true);
   const [resent, setReset] = useState(false);
   const [unverifiedUser, setUnverifiedUser] = useState(false);
   const [email, setEmail] = useState('');
@@ -71,6 +92,7 @@ const VerificationConfirmed = props => {
   const [sendLoading, setSendLoading] = useState(false);
   const [sendClicked, setSendClicked] = useState(false);
   const [loginError, setLoginError] = useState(null);
+  const [alreadyVerified, setAlreadyVerified] = useState(false);
 
   const { firebase, userData } = useContext(FirebaseContext);
 
@@ -115,8 +137,6 @@ const VerificationConfirmed = props => {
       .signInWithEmailAndPassword(email, password)
       .then(() => {
         const user = firebase.auth().currentUser;
-        console.log(user);
-
         user.sendEmailVerification();
         setSendClicked(true);
         setSendLoading(false);
@@ -128,30 +148,41 @@ const VerificationConfirmed = props => {
   };
 
   useEffect(() => {
-    // if (userData.loggedIn) {
-    //   history.push('/');
-    // }
-    const verifyUser = async () => {
-      await verify();
-      const user = await firebase.auth().currentUser;
-      console.log(user);
-      setCurrentUser(user);
-    };
-    verifyUser();
+    if (userData.loggedIn) {
+      setAlreadyVerified(true);
+      setTimeout(() => {
+        history.push('/');
+      }, 3000);
+    } else {
+      const verifyUser = async () => {
+        await verify();
+        const user = await firebase.auth().currentUser;
+        setCurrentUser(user);
+      };
+      verifyUser();
+    }
   }, [currentUser, userData]);
 
   if (loading)
     return (
       <VerificationStyles>
-        <LoadingSpinner color='#272727' />
         <h1>Confirming Email Address</h1>
+        <LoadingSpinner color='#272727' />
+      </VerificationStyles>
+    );
+
+  if (alreadyVerified)
+    return (
+      <VerificationStyles>
+        <h1>Email address is already verified. Redirecting back to YZED.</h1>
+        <LoadingSpinner color='#272727' />
       </VerificationStyles>
     );
 
   return (
     <VerificationStyles>
       <Helmet>YZED - EMAIL VERIFICATION</Helmet>
-      {error && !confirmed && (
+      {error && !confirmed && !sendClicked && (
         <div>
           <h1>{error}</h1>
           {currentUser ? (
@@ -168,9 +199,6 @@ const VerificationConfirmed = props => {
                   SEND
                 </button>
                 {sendLoading && <LoadingSpinner color='#272727' />}
-                {sendClicked && (
-                  <p>Your request for email confirmation has been sent. Check your inbox.</p>
-                )}
               </form>
             </>
           ) : (
@@ -179,6 +207,7 @@ const VerificationConfirmed = props => {
                 Please enter your login information to send the validation email again. Shortly, a
                 link will arrive in your inbox.
               </p>
+
               <form
                 onSubmit={e => {
                   loginAndSendEmailVerification(e);
@@ -197,28 +226,32 @@ const VerificationConfirmed = props => {
                   required
                   onChange={e => setPassword(e.target.value)}
                 />
-                <button>SEND</button>
+                <button type='submit' disabled={sendLoading || (!password.length && !email.length)}>
+                  SEND
+                </button>
               </form>
-              {loginError && <Error error={loginError} />}
+              {loginError && <Error error={loginError} clearFunction={setLoginError} />}
+              {sendLoading && <LoadingSpinner color='#272727' />}
             </>
-          )}
-          {resent && (
-            <p className='success'>
-              Thanks for request. Check your inbox for a confirmation email.
-            </p>
           )}
         </div>
       )}
-      {confirmed && !error && (
-        <div>
+      {confirmed && !error && !sendClicked && (
+        <div className='confirm'>
           <h1>Email Address Confirmed!</h1>
           <CheckSVG />
           <p>
             Thank you! You may now go and login with YZED. You may need to login again. Click below
-            to go to the login page.
+            to go to the login page. If you are already logged in you will be taken to YZED.
           </p>
-          <Link to='/login'>Login</Link>
+          <Link to='/login'>LOGIN</Link>
         </div>
+      )}
+      {sendClicked && (
+        <>
+          <h1>Your request is on it's way.</h1>
+          <p>Thanks for request. Check your inbox for a validation email.</p>
+        </>
       )}
     </VerificationStyles>
   );
