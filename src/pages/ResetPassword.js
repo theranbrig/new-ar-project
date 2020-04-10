@@ -43,6 +43,13 @@ const ResetStyles = styled.div`
     text-align: center;
     font-size: 1.4rem;
   }
+  a {
+    color: ${props => props.theme.colors.grey};
+    display: block;
+    font-family: ${props => props.theme.fonts.main};
+    font-size: 1.1rem;
+    text-align: center;
+  }
 `;
 
 const BlackButton = styled.button`
@@ -85,7 +92,7 @@ const ResetPassword = () => {
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
   const [passwordValid, setPasswordValid] = useState(false);
-  const [error, setError] = useState('');
+  const [error, setError] = useState('Ooos');
   const [success, setSuccess] = useState(false);
 
   const { firebase } = useContext(FirebaseContext);
@@ -220,7 +227,7 @@ const ResetPassword = () => {
               {(firebaseError || error) && (
                 <div className='error'>
                   <Error error={firebaseError || error} clearFunction={setError} />
-                  <Link to='verified'>Resend password reset link.</Link>
+                  <Link to='/verified'>Resend password reset link.</Link>
                 </div>
               )}
             </>

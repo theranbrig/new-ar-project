@@ -187,7 +187,6 @@ const VerificationConfirmed = props => {
       <Helmet>YZED - EMAIL VERIFICATION</Helmet>
       {!oobCode.length && !userData.loggedIn ? (
         <>
-          <h1>Hi</h1>
           <p>
             Please enter your login information to send the validation email again. Shortly, a link
             will arrive in your inbox.
@@ -280,8 +279,8 @@ const VerificationConfirmed = props => {
               <CheckSVG />
               <p>
                 Thank you! You may now go and login with YZED. You may need to login again. Click
-                below to go to the login page. If you are already logged in you will be taken directly to
-                YZED.
+                below to go to the login page. If you are already logged in you will be taken
+                directly to YZED.
               </p>
               <button onClick={() => window.reload()}>LOGIN</button>
             </div>
