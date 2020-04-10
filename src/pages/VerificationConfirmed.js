@@ -83,7 +83,7 @@ const VerificationConfirmed = props => {
   const location = useLocation();
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
-  const [confirmed, setConfirmed] = useState(true);
+  const [confirmed, setConfirmed] = useState(false);
   const [resent, setReset] = useState(false);
   const [unverifiedUser, setUnverifiedUser] = useState(false);
   const [email, setEmail] = useState('');
@@ -94,7 +94,7 @@ const VerificationConfirmed = props => {
   const [loginError, setLoginError] = useState(null);
   const [alreadyVerified, setAlreadyVerified] = useState(false);
 
-  const { firebase, userData } = useContext(FirebaseContext);
+  const { firebase, userData, onAuthStateChange, setUserData } = useContext(FirebaseContext);
 
   const oobCode = location.search.slice(
     location.search.indexOf('oobCode=') + 8,
@@ -102,6 +102,24 @@ const VerificationConfirmed = props => {
   );
 
   const history = useHistory();
+
+  const verify = async () => {
+    setLoading(true);
+    await firebase
+      .auth()
+      .applyActionCode(oobCode)
+      .then(function(resp) {
+        onAuthStateChange(setUserData);
+        const user = firebase.auth().currentUser;
+        console.log(user);
+        setConfirmed(true);
+        setLoading(false);
+      })
+      .catch(function(error) {
+        setError('Oops. This token is either not valid or has been used.');
+        setLoading(false);
+      });
+  };
 
   const resendEmailVerification = e => {
     setSendLoading(true);
@@ -113,33 +131,16 @@ const VerificationConfirmed = props => {
     setSendLoading(false);
   };
 
-  const verify = async () => {
-    setLoading(true);
-    await firebase
-      .auth()
-      .applyActionCode(oobCode)
-      .then(function(resp) {
-        setConfirmed(true);
-        setLoading(false);
-      })
-      .catch(function(error) {
-        setError('Oops. This token is either not valid or has been used.');
-        setLoading(false);
-      });
-  };
-
   const loginAndSendEmailVerification = e => {
-    // TODO: FINISH LOGIN AND NEW CODE
     setSendLoading(true);
     e.preventDefault();
     firebase
       .auth()
       .signInWithEmailAndPassword(email, password)
       .then(() => {
-        const user = firebase.auth().currentUser;
-        user.sendEmailVerification();
         setSendClicked(true);
         setSendLoading(false);
+        window.reload();
       })
       .catch(function(error) {
         setLoginError(error.message);
@@ -148,11 +149,12 @@ const VerificationConfirmed = props => {
   };
 
   useEffect(() => {
+    setLoading(true);
     if (userData.loggedIn) {
       setAlreadyVerified(true);
       setTimeout(() => {
         history.push('/');
-      }, 3000);
+      }, 2000);
     } else {
       const verifyUser = async () => {
         await verify();
@@ -160,8 +162,17 @@ const VerificationConfirmed = props => {
         setCurrentUser(user);
       };
       verifyUser();
+      setLoading(false);
     }
   }, [currentUser, userData]);
+
+  if (alreadyVerified)
+    return (
+      <VerificationStyles>
+        <h1>Email address is verified. Redirecting back to YZED.</h1>
+        <LoadingSpinner color='#272727' />
+      </VerificationStyles>
+    );
 
   if (loading)
     return (
@@ -171,86 +182,118 @@ const VerificationConfirmed = props => {
       </VerificationStyles>
     );
 
-  if (alreadyVerified)
-    return (
-      <VerificationStyles>
-        <h1>Email address is already verified. Redirecting back to YZED.</h1>
-        <LoadingSpinner color='#272727' />
-      </VerificationStyles>
-    );
-
   return (
     <VerificationStyles>
       <Helmet>YZED - EMAIL VERIFICATION</Helmet>
-      {error && !confirmed && !sendClicked && (
-        <div>
-          <h1>{error}</h1>
-          {currentUser ? (
-            <>
-              <p>
-                You have already signed up for an account, but have not verified your email address
-                yet. Please click below to resend the the verification email.
-              </p>
-              <form
-                onSubmit={e => {
-                  resendEmailVerification(e);
-                }}>
-                <button type='submit' disabled={sendLoading || sendClicked}>
-                  SEND
-                </button>
-                {sendLoading && <LoadingSpinner color='#272727' />}
-              </form>
-            </>
-          ) : (
-            <>
-              <p>
-                Please enter your login information to send the validation email again. Shortly, a
-                link will arrive in your inbox.
-              </p>
+      {!oobCode.length && !userData.loggedIn ? (
+        <>
+          <h1>Hi</h1>
+          <p>
+            Please enter your login information to send the validation email again. Shortly, a link
+            will arrive in your inbox.
+          </p>
 
-              <form
-                onSubmit={e => {
-                  loginAndSendEmailVerification(e);
-                }}>
-                <input
-                  type='text'
-                  name='email'
-                  placeholder='Enter Email'
-                  required
-                  onChange={e => setEmail(e.target.value)}
-                />
-                <input
-                  type='password'
-                  name='password'
-                  placeholder='Enter Password'
-                  required
-                  onChange={e => setPassword(e.target.value)}
-                />
-                <button type='submit' disabled={sendLoading || (!password.length && !email.length)}>
-                  SEND
-                </button>
-              </form>
-              {loginError && <Error error={loginError} clearFunction={setLoginError} />}
-              {sendLoading && <LoadingSpinner color='#272727' />}
+          <form
+            onSubmit={e => {
+              loginAndSendEmailVerification(e);
+            }}>
+            <input
+              type='text'
+              name='email'
+              placeholder='Enter Email'
+              required
+              onChange={e => setEmail(e.target.value)}
+            />
+            <input
+              type='password'
+              name='password'
+              placeholder='Enter Password'
+              required
+              onChange={e => setPassword(e.target.value)}
+            />
+            <button type='submit' disabled={sendLoading || (!password.length && !email.length)}>
+              SEND
+            </button>
+          </form>
+          {loginError && <Error error={loginError} clearFunction={setLoginError} />}
+          {sendLoading && <LoadingSpinner color='#272727' />}
+        </>
+      ) : (
+        <>
+          {error && !confirmed && !sendClicked && (
+            <div>
+              <h1>{error}</h1>
+              {currentUser ? (
+                <>
+                  <p>
+                    You have already signed up for an account, but have not verified your email
+                    address yet. Please click below to resend the the verification email.
+                  </p>
+                  <form
+                    onSubmit={e => {
+                      resendEmailVerification(e);
+                    }}>
+                    <button type='submit' disabled={sendLoading || sendClicked}>
+                      SEND
+                    </button>
+                    {sendLoading && <LoadingSpinner color='#272727' />}
+                  </form>
+                </>
+              ) : (
+                <>
+                  <p>
+                    Please enter your login information to send the validation email again. Shortly,
+                    a link will arrive in your inbox.
+                  </p>
+
+                  <form
+                    onSubmit={e => {
+                      loginAndSendEmailVerification(e);
+                    }}>
+                    <input
+                      type='text'
+                      name='email'
+                      placeholder='Enter Email'
+                      required
+                      onChange={e => setEmail(e.target.value)}
+                    />
+                    <input
+                      type='password'
+                      name='password'
+                      placeholder='Enter Password'
+                      required
+                      onChange={e => setPassword(e.target.value)}
+                    />
+                    <button
+                      type='submit'
+                      disabled={sendLoading || (!password.length && !email.length)}>
+                      SEND
+                    </button>
+                  </form>
+                  {loginError && <Error error={loginError} clearFunction={setLoginError} />}
+                  {sendLoading && <LoadingSpinner color='#272727' />}
+                </>
+              )}
+            </div>
+          )}
+          {confirmed && (
+            <div className='confirm'>
+              <h1>Email Address Confirmed!</h1>
+              <CheckSVG />
+              <p>
+                Thank you! You may now go and login with YZED. You may need to login again. Click
+                below to go to the login page. If you are already logged in you will be taken to
+                YZED.
+              </p>
+              <button>LOGIN</button>
+            </div>
+          )}
+          {sendClicked && (
+            <>
+              <h1>Your request is on it's way.</h1>
+              <p>Thanks for request. Check your inbox for a validation email.</p>
             </>
           )}
-        </div>
-      )}
-      {confirmed && !error && !sendClicked && (
-        <div className='confirm'>
-          <h1>Email Address Confirmed!</h1>
-          <CheckSVG />
-          <p>
-            Thank you! You may now go and login with YZED. You may need to login again. Click below
-            to go to the login page. If you are already logged in you will be taken to YZED.
-          </p>
-          <Link to='/login'>LOGIN</Link>
-        </div>
-      )}
-      {sendClicked && (
-        <>
-          <h1>Your request is on it's way.</h1>
-          <p>Thanks for request. Check your inbox for a validation email.</p>
         </>
       )}
     </VerificationStyles>

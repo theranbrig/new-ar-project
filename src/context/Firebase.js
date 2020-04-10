@@ -96,7 +96,7 @@ const FirebaseProvider = ({ children }) => {
       });
   };
 
-  const registerUser = (email, password, userName) => {
+  const registerUser = (email, password, userName, callback) => {
     dbh
       .collection('users')
       .where('userName', '==', userName)
@@ -126,6 +126,9 @@ const FirebaseProvider = ({ children }) => {
                     .collection('newsletterSubscriptions')
                     .doc()
                     .set({ age: null, name: userName, email, gender: '' });
+                  const user = firebase.auth().currentUser;
+                  user.sendEmailVerification();
+                  callback(true);
                 });
             })
             .catch(function(error) {
@@ -203,12 +206,6 @@ const FirebaseProvider = ({ children }) => {
                 followers,
                 favoriteProducts,
               };
-              console.log({
-                loggedIn: true,
-                id: user.uid,
-                ...userDetails,
-                lastVisit: new Date(),
-              });
               callback({ loggedIn: true, id: user.uid, ...userDetails, lastVisit: new Date() });
               setUserLoading(false);
             }
@@ -271,6 +268,8 @@ const FirebaseProvider = ({ children }) => {
         uploadUserPhoto,
         forgotEmail,
         verifiedRegister,
+        onAuthStateChange,
+        setUserData,
       }}>
       {children}
     </FirebaseContext.Provider>

@@ -99,6 +99,14 @@ export const LoginStyles = styled.div`
       padding-bottom: 20px;
     }
   }
+  .success {
+    text-align: center;
+    svg {
+      height: 100px;
+      display: block;
+      margin: 0 auto;
+    }
+  }
 `;
 
 const BlackButton = styled.button`
@@ -179,6 +187,11 @@ const Login = () => {
             </form>
             <div className='forgot'>
               <Link to='/request_reset'>I forgot my password.</Link>
+            </div>
+            <div className='forgot'>
+              <p>
+                <Link to='/verified'>Can't log in? Send email validation request again.</Link>
+              </p>
             </div>
             {firebaseError && (
               <div className='error'>
