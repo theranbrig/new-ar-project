@@ -92,7 +92,7 @@ const ResetPassword = () => {
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
   const [passwordValid, setPasswordValid] = useState(false);
-  const [error, setError] = useState('Ooos');
+  const [error, setError] = useState('');
   const [success, setSuccess] = useState(false);
 
   const { firebase } = useContext(FirebaseContext);
