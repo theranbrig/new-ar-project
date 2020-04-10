@@ -1,7 +1,8 @@
-import { Link, useLocation } from 'react-router-dom';
+import { Link, useHistory, useLocation } from 'react-router-dom';
 import React, { useContext, useEffect, useState } from 'react';
 
 import CheckSVG from '../assets/icons/icon_success_check';
+import Error from '../components/Error';
 import { FirebaseContext } from '../context/Firebase';
 import { Helmet } from 'react-helmet';
 import LoadingSpinner from '../components/LoadingSpinner';
@@ -69,13 +70,16 @@ const VerificationConfirmed = props => {
   const [currentUser, setCurrentUser] = useState(null);
   const [sendLoading, setSendLoading] = useState(false);
   const [sendClicked, setSendClicked] = useState(false);
+  const [loginError, setLoginError] = useState(null);
 
-  const { firebase } = useContext(FirebaseContext);
+  const { firebase, userData } = useContext(FirebaseContext);
 
   const oobCode = location.search.slice(
     location.search.indexOf('oobCode=') + 8,
     location.search.indexOf('apiKey=') - 1
   );
+
+  const history = useHistory();
 
   const resendEmailVerification = e => {
     setSendLoading(true);
@@ -102,11 +106,31 @@ const VerificationConfirmed = props => {
       });
   };
 
-  const loginAndSendEmailVerification = () => {
+  const loginAndSendEmailVerification = e => {
     // TODO: FINISH LOGIN AND NEW CODE
+    setSendLoading(true);
+    e.preventDefault();
+    firebase
+      .auth()
+      .signInWithEmailAndPassword(email, password)
+      .then(() => {
+        const user = firebase.auth().currentUser;
+        console.log(user);
+
+        user.sendEmailVerification();
+        setSendClicked(true);
+        setSendLoading(false);
+      })
+      .catch(function(error) {
+        setLoginError(error.message);
+        setSendLoading(false);
+      });
   };
 
   useEffect(() => {
+    // if (userData.loggedIn) {
+    //   history.push('/');
+    // }
     const verifyUser = async () => {
       await verify();
       const user = await firebase.auth().currentUser;
@@ -114,7 +138,7 @@ const VerificationConfirmed = props => {
       setCurrentUser(user);
     };
     verifyUser();
-  }, [currentUser]);
+  }, [currentUser, userData]);
 
   if (loading)
     return (
@@ -152,8 +176,8 @@ const VerificationConfirmed = props => {
           ) : (
             <>
               <p>
-                Please enter your login information to send the confirmation email again. We will
-                send an email shortly with a link to validate your email.
+                Please enter your login information to send the validation email again. Shortly, a
+                link will arrive in your inbox.
               </p>
               <form
                 onSubmit={e => {
@@ -175,6 +199,7 @@ const VerificationConfirmed = props => {
                 />
                 <button>SEND</button>
               </form>
+              {loginError && <Error error={loginError} />}
             </>
           )}
           {resent && (
