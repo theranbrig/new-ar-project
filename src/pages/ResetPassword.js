@@ -227,7 +227,7 @@ const ResetPassword = () => {
               {(firebaseError || error) && (
                 <div className='error'>
                   <Error error={firebaseError || error} clearFunction={setError} />
-                  <Link to='/verified'>Resend password reset link.</Link>
+                  <Link to='/request_reset'>Resend password reset link.</Link>
                 </div>
               )}
             </>

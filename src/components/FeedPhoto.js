@@ -28,6 +28,7 @@ const Tag = ({ tag, setShowTags }) => {
   return (
     <TagStyles>
       <HideTagButton
+        aria-label='close tags'
         onClick={() => {
           setShowTags(false);
         }}>
@@ -134,6 +135,7 @@ const UserPhoto = ({ photo, userData }) => {
       <div className='image'>
         {!showTags && (
           <ShowTagButton
+            aria-label='tagged product'
             showTags={showTags}
             onClick={() => {
               setShowTags(true);
