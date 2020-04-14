@@ -1,6 +1,7 @@
 import '@firebase/firestore';
 import '@firebase/storage';
 import '@firebase/analytics';
+import '@firebase/messaging';
 import 'firebase/auth';
 
 import * as firebase from 'firebase/app';
@@ -22,6 +23,7 @@ const firebaseConfig = {
   messagingSenderId: process.env.REACT_APP_messagingSenderId,
   appId: process.env.REACT_APP_appId,
   measurementId: process.env.REACT_APP_measurementId,
+  vapidKey: process.env.REACT_APP_fcm_key,
 };
 
 // Initialize Firebase
