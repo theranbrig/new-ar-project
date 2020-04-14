@@ -2,6 +2,7 @@ import AppRouter from './components/AppRouter';
 import { BrowserRouter } from 'react-router-dom';
 import CartProvider from './context/Cart';
 import FirebaseProvider from './context/Firebase';
+import LocationProvider from './context/Location';
 import ModalProvider from './context/Modal';
 import ProductProvider from './context/Product';
 import React from 'react';
@@ -12,13 +13,15 @@ function App() {
     <BrowserRouter>
       <YZEDTheme>
         <FirebaseProvider>
-          <CartProvider>
-            <ProductProvider>
-              <ModalProvider>
-                <AppRouter />
-              </ModalProvider>
-            </ProductProvider>
-          </CartProvider>
+          <LocationProvider>
+            <CartProvider>
+              <ProductProvider>
+                <ModalProvider>
+                  <AppRouter />
+                </ModalProvider>
+              </ProductProvider>
+            </CartProvider>
+          </LocationProvider>
         </FirebaseProvider>
       </YZEDTheme>
     </BrowserRouter>

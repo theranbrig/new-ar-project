@@ -38,6 +38,7 @@ const Success = load(lazy(() => import('../pages/SubscribeSuccess')));
 const Threads = load(lazy(() => import('../pages/Threads')));
 const User = load(lazy(() => import('../pages/User')));
 const UserAction = load(lazy(() => import('../pages/UserAction')));
+const Location = load(lazy(() => import('../pages/Location')));
 
 export default function App() {
   const location = useLocation();
@@ -127,6 +128,9 @@ export default function App() {
             </Route>
             <Route path='/reset'>
               <ResetPassword />
+            </Route>
+            <Route path='/location'>
+              <Location />
             </Route>
             <Route>
               <Error />

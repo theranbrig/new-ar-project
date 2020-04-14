@@ -40,7 +40,7 @@ const responsive = {
 };
 
 const SliderStyles = styled.div`
-  font-family: ${props => props.theme.fonts.main};
+  font-family: ${(props) => props.theme.fonts.main};
   font-weight: 300;
   .carousel-section {
     margin: 30px 0;
@@ -77,7 +77,7 @@ const SliderStyles = styled.div`
   .selected-user {
     border-bottom-left-radius: 25px;
     border-bottom-right-radius: 25px;
-    box-shadow: ${props => props.theme.boxShadows.allAround};
+    box-shadow: ${(props) => props.theme.boxShadows.allAround};
     width: 300px;
     margin: 0 auto;
     svg {
@@ -85,7 +85,7 @@ const SliderStyles = styled.div`
       margin: 15%;
     }
     a .user-data-content {
-      color: ${props => props.theme.colors.black};
+      color: ${(props) => props.theme.colors.black};
       text-decoration: none;
     }
     .user-information {
@@ -100,9 +100,9 @@ const SliderStyles = styled.div`
       grid-gap: 10px;
       h4,
       h5 {
-        font-family: ${props => props.theme.fonts.main};
+        font-family: ${(props) => props.theme.fonts.main};
         margin: 3px auto;
-        color: ${props => props.theme.colors.black};
+        color: ${(props) => props.theme.colors.black};
       }
       h4 {
         font-size: 1.2rem;
@@ -148,9 +148,9 @@ const MainPageCarousel = ({ title, product, brand }) => {
     dbh
       .collection('userPhotos')
       .where('tag', '==', product)
-      .onSnapshot(querySnapshot => {
+      .onSnapshot((querySnapshot) => {
         let tempItems = [];
-        querySnapshot.docs.forEach(doc => {
+        querySnapshot.docs.forEach((doc) => {
           // const url = doc.data().url.replace('/yzed/', '/yzed/300x200/');
           tempItems.push({ id: doc.id, ...doc.data() });
         });
@@ -205,7 +205,7 @@ const FullSliderStyles = styled.div`
   background: #272727f9;
   height: 100vh;
   width: 100%;
-  font-family: ${props => props.theme.fonts.main};
+  font-family: ${(props) => props.theme.fonts.main};
   .carousel {
     width: 500px;
     max-width: 95%;
@@ -215,7 +215,7 @@ const FullSliderStyles = styled.div`
     background: none;
     border: none;
     .top {
-      color: ${props => props.theme.colors.white};
+      color: ${(props) => props.theme.colors.white};
       text-align: left;
       width: 325px;
       margin: 10px auto 20px;
@@ -239,7 +239,7 @@ const FullSliderStyles = styled.div`
         height: 40px;
         width: 40px;
         background: none;
-        border: 1px solid ${props => props.theme.colors.white};
+        border: 1px solid ${(props) => props.theme.colors.white};
         border-radius: 50%;
         svg {
           margin-top: 3px;
@@ -324,7 +324,7 @@ export const FullScreenSlider = ({
           }}>
           <section
             className='top'
-            onClick={e => {
+            onClick={(e) => {
               e.stopPropagation();
             }}>
             <div className='title'>
@@ -342,11 +342,11 @@ export const FullScreenSlider = ({
           </section>
           <section
             className='main-carousel'
-            onClick={e => {
+            onClick={(e) => {
               e.stopPropagation();
             }}>
             <Carousel ref={fullScreenRef} responsive={fullResponsive} swipeable>
-              {sliderPhotos.map(photo => (
+              {sliderPhotos.map((photo) => (
                 <PhotoCarouselFullScreenPhoto
                   key={photo.id}
                   photo={photo}
