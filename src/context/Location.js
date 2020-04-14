@@ -19,26 +19,25 @@ const LocationProvider = ({ children }) => {
 
   const getAddress = async () => {
     setLoading(true);
-    if (currentLocation.lat !== 0 && currentLocation.long !== 0) {
-      fetch(
-        `https://us1.locationiq.com/v1/reverse.php?key=${process.env.REACT_APP_location_iq_API_key}&lat=${currentLocation.lat}&lon=${currentLocation.long}&format=json`
-      )
-        .then((res) => {
-          res
-            .json()
-            .then((json) => {
-              setAddress(json.display_name);
-              setLoading(false);
-            })
-            .catch((err) => {
-              setLoading(false);
-            });
-          setLoading(false);
-        })
-        .catch((err) => {
-          setLoading(false);
-        });
-    }
+
+    fetch(
+      `https://us1.locationiq.com/v1/reverse.php?key=${process.env.REACT_APP_location_iq_API_key}&lat=${currentLocation.lat}&lon=${currentLocation.long}&format=json`
+    )
+      .then((res) => {
+        res
+          .json()
+          .then((json) => {
+            setAddress(json.display_name);
+            setLoading(false);
+          })
+          .catch((err) => {
+            setLoading(false);
+          });
+        setLoading(false);
+      })
+      .catch((err) => {
+        setLoading(false);
+      });
   };
 
   useEffect(() => {

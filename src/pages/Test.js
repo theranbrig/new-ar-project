@@ -1,18 +1,27 @@
 import React, { setState, useContext } from 'react';
 
 import { LocationContext } from '../context/Location';
+import styled from 'styled-components';
+
+export const TestStyles = styled.div`
+  width: 500px;
+  max-width: 95%;
+  margin: 0 auto;
+  min-height: 90vh;
+  padding-top: 10vh;
+`;
 
 export const Location = () => {
   const { currentLocation, address } = useContext(LocationContext);
 
   return (
-    <div>
+    <TestStyles>
       <h1>Location</h1>
       <p>
         You are located at "{currentLocation.lat}", "{currentLocation.long}"
       </p>
       <p>Your address is {address}</p>
-    </div>
+    </TestStyles>
   );
 };
 export default Location;
