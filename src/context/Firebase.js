@@ -29,9 +29,11 @@ firebase.initializeApp(firebaseConfig);
 
 export const FirebaseContext = React.createContext();
 
-export const dbh = firebase.firestore();
+const dbh = firebase.firestore();
 
-export const storage = firebase.storage();
+const storage = firebase.storage();
+
+const messaging = firebase.messaging();
 
 const FirebaseProvider = ({ children }) => {
   const [firebaseError, setFirebaseError] = useState('');
@@ -56,7 +58,7 @@ const FirebaseProvider = ({ children }) => {
       .collection('users')
       .where('userName', '==', userName)
       .get()
-      .then(querySnapshot => {
+      .then((querySnapshot) => {
         if (querySnapshot.docs.length) {
           setFirebaseError('Someone has already taken that username.');
         } else {
@@ -64,7 +66,7 @@ const FirebaseProvider = ({ children }) => {
           firebase
             .auth()
             .createUserWithEmailAndPassword(email, password)
-            .then(user => {
+            .then((user) => {
               console.log(user);
               if (user && user.user.emailVerified === false) {
                 user.user.sendEmailVerification().then(() => {
@@ -89,7 +91,7 @@ const FirebaseProvider = ({ children }) => {
                 });
               }
             })
-            .catch(function(error) {
+            .catch(function (error) {
               setFirebaseError(error.message);
             });
         }
@@ -101,7 +103,7 @@ const FirebaseProvider = ({ children }) => {
       .collection('users')
       .where('userName', '==', userName)
       .get()
-      .then(querySnapshot => {
+      .then((querySnapshot) => {
         if (querySnapshot.docs.length) {
           setFirebaseError('Someone has already taken that username.');
         } else {
@@ -131,7 +133,7 @@ const FirebaseProvider = ({ children }) => {
                   callback(true);
                 });
             })
-            .catch(function(error) {
+            .catch(function (error) {
               setFirebaseError(error.message);
             });
         }
@@ -142,7 +144,7 @@ const FirebaseProvider = ({ children }) => {
     firebase
       .auth()
       .signInWithEmailAndPassword(email, password)
-      .catch(function(error) {
+      .catch(function (error) {
         setFirebaseError(error.message);
       });
   };
@@ -152,7 +154,7 @@ const FirebaseProvider = ({ children }) => {
       firebase
         .auth()
         .signOut()
-        .catch(function(error) {
+        .catch(function (error) {
           setFirebaseError(error.message);
         });
     }
@@ -168,24 +170,24 @@ const FirebaseProvider = ({ children }) => {
     firebase
       .auth()
       .sendPasswordResetEmail(email, actionCodeSettings)
-      .then(function() {
+      .then(function () {
         callback(true);
       })
-      .catch(function(error) {
+      .catch(function (error) {
         setFirebaseError(error.message);
       });
   };
 
-  const onAuthStateChange = async callback => {
+  const onAuthStateChange = async (callback) => {
     setUserLoading(true);
-    await firebase.auth().onAuthStateChanged(user => {
+    await firebase.auth().onAuthStateChanged((user) => {
       console.log(user);
       if (user && user.emailVerified) {
         setUserValidated(true);
         dbh
           .collection('users')
           .doc(user.uid)
-          .onSnapshot(doc => {
+          .onSnapshot((doc) => {
             console.log(doc);
             if (doc.exists) {
               const {
@@ -270,6 +272,7 @@ const FirebaseProvider = ({ children }) => {
         verifiedRegister,
         onAuthStateChange,
         setUserData,
+        messaging,
       }}>
       {children}
     </FirebaseContext.Provider>
