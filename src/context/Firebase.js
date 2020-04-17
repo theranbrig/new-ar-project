@@ -54,6 +54,18 @@ const FirebaseProvider = ({ children }) => {
 
   firebase.analytics().logEvent('notification_received');
 
+  messaging
+    .requestPermission()
+    .then(() => {
+      return messaging
+        .getToken()
+        .then((token) => console.log(token))
+        .catch((err) => console.log(err));
+    })
+    .catch((err) => console.log(err));
+
+  messaging.onMessage((payload) => console.log(payload));
+
   const verifiedRegister = (email, password, userName) => {
     //  Check if user name is taken.
     dbh

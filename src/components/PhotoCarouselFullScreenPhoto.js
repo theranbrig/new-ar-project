@@ -1,5 +1,3 @@
-import 'react-lazy-load-image-component/src/effects/blur.css';
-
 import React, { useContext, useEffect, useState } from 'react';
 
 import EmptyUpVoteSVG from '../assets/icons/icon_upvote_empty';
@@ -27,13 +25,13 @@ export const FullScreenPhotoStyles = styled.div`
     }
   }
   .photo-info {
-    font-family: ${props => props.theme.fonts.main};
-    color: ${props => props.theme.colors.white};
+    font-family: ${(props) => props.theme.fonts.main};
+    color: ${(props) => props.theme.colors.white};
     p {
       font-size: 0.9rem;
     }
     a {
-      color: ${props => props.theme.colors.white};
+      color: ${(props) => props.theme.colors.white};
       text-decoration: none;
       font-weight: 600;
       margin-right: 10px;
@@ -83,7 +81,7 @@ export const FullScreenPhotoStyles = styled.div`
       a {
         background: none;
         border: none;
-        color: ${props => props.theme.colors.white};
+        color: ${(props) => props.theme.colors.white};
         margin-left: 10px;
         font-size: 0.9rem;
         font-weight: 600;
@@ -138,14 +136,14 @@ const PhotoCarouselFullScreenPhoto = ({ photo, userData }) => {
       .collection('users')
       .doc(photo.userId)
       .get()
-      .then(doc => {
+      .then((doc) => {
         setUser({ id: doc.id, ...doc.data() });
         dbh
           .collection('userPhotos')
           .doc(photo.id)
           .collection('comments')
           .get()
-          .then(querySnapshot => {
+          .then((querySnapshot) => {
             setComments(querySnapshot.docs.length);
             setLoading(false);
           });
@@ -239,9 +237,9 @@ const PhotoLikes = ({ photo }) => {
     dbh
       .collection('userPhotos')
       .doc(photo.id)
-      .onSnapshot(querySnapshot => {
+      .onSnapshot((querySnapshot) => {
         if (userData.loggedIn) {
-          setIsLiked(querySnapshot.data().likes.some(like => like === userData.id));
+          setIsLiked(querySnapshot.data().likes.some((like) => like === userData.id));
           setLikes(querySnapshot.data().likes);
         }
       });
