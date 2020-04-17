@@ -41,6 +41,7 @@ const FirebaseProvider = ({ children }) => {
   const [firebaseError, setFirebaseError] = useState('');
   const [userLoading, setUserLoading] = useState(true);
   const [userValidated, setUserValidated] = useState(false);
+  const [messagingToken, setMessagingToken] = useState('');
   const [userData, setUserData] = useState({
     id: '',
     loggedIn: false,
@@ -53,18 +54,24 @@ const FirebaseProvider = ({ children }) => {
   });
 
   firebase.analytics().logEvent('notification_received');
+  if (!messagingToken) {
+    messaging
+      .requestPermission()
+      .then(() => {
+        return messaging
+          .getToken()
+          .then((token) => {
+            console.log(token);
+            setMessagingToken(token);
+          })
+          .catch((err) => console.log(err));
+      })
+      .catch((err) => console.log(err));
+  }
 
-  messaging
-    .requestPermission()
-    .then(() => {
-      return messaging
-        .getToken()
-        .then((token) => console.log(token))
-        .catch((err) => console.log(err));
-    })
-    .catch((err) => console.log(err));
-
-  messaging.onMessage((payload) => console.log(payload));
+  messaging.onMessage((payload) => {
+    console.log('Message received. ', payload);
+  });
 
   const verifiedRegister = (email, password, userName) => {
     //  Check if user name is taken.
@@ -81,7 +88,6 @@ const FirebaseProvider = ({ children }) => {
             .auth()
             .createUserWithEmailAndPassword(email, password)
             .then((user) => {
-              console.log(user);
               if (user && user.user.emailVerified === false) {
                 user.user.sendEmailVerification().then(() => {
                   dbh
