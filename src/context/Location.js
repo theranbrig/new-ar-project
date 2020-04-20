@@ -25,7 +25,7 @@ const LocationProvider = ({ children }) => {
     },
     {
       loc: 'Theran',
-      coords: { latitude: 37.3653504, longitude: 127.172608 },
+      coords: { latitude: 37.35026, longitude: 127.165237 },
       model: 'PYNitFbzP6h5Lkf5Rcny',
     },
   ];
