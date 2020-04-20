@@ -91,7 +91,7 @@ const FirebaseProvider = ({ children }) => {
       });
   });
 
-  messaging.onMessage((payload) => {
+  messaging.onMessage(function (payload) {
     console.log('Message received. ', payload);
   });
 
