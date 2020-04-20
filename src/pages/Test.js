@@ -18,7 +18,7 @@ export const Location = () => {
     <TestStyles>
       <h1>Location</h1>
       <p>
-        You are located at "{currentLocation.lat}", "{currentLocation.long}"
+        You are located at "{currentLocation.latitude}", "{currentLocation.longitude}"
       </p>
       <p>Your address is {address}</p>
     </TestStyles>

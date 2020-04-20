@@ -3,7 +3,6 @@ import { BrowserRouter } from 'react-router-dom';
 import CartProvider from './context/Cart';
 import FirebaseProvider from './context/Firebase';
 import LocationProvider from './context/Location';
-import MessagingProvider from './context/Messaging';
 import ModalProvider from './context/Modal';
 import ProductProvider from './context/Product';
 import React from 'react';
@@ -15,15 +14,13 @@ function App() {
       <YZEDTheme>
         <FirebaseProvider>
           <LocationProvider>
-            <MessagingProvider>
-              <CartProvider>
-                <ProductProvider>
-                  <ModalProvider>
-                    <AppRouter />
-                  </ModalProvider>
-                </ProductProvider>
-              </CartProvider>
-            </MessagingProvider>
+            <CartProvider>
+              <ProductProvider>
+                <ModalProvider>
+                  <AppRouter />
+                </ModalProvider>
+              </ProductProvider>
+            </CartProvider>
           </LocationProvider>
         </FirebaseProvider>
       </YZEDTheme>

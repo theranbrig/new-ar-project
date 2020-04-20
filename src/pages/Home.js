@@ -9,6 +9,7 @@ import { Helmet } from 'react-helmet';
 import { LazyLoadComponent } from 'react-lazy-load-image-component';
 import { Link } from 'react-router-dom';
 import LoadingSpinner from '../components/LoadingSpinner';
+import { LocationContext } from '../context/Location';
 import MainPageCarousel from '../components/PhotoCarousel';
 import ModelViewer from '../components/ModelViewer';
 import { formatPrice } from '../utilities/formatting';
@@ -19,16 +20,17 @@ import styled from 'styled-components';
 const HomeStyles = styled.div`
   margin: 0 auto;
   text-align: center;
-  font-family: ${props => props.theme.fonts.main};
-  color: ${props => props.theme.colors.black};
+  font-family: ${(props) => props.theme.fonts.main};
+  color: ${(props) => props.theme.colors.black};
   padding-top: calc(10vh);
   width: 500px;
   max-width: 100%;
   min-height: 90vh;
-  background: ${props => props.theme.colors.white};
+  background: ${(props) => props.theme.colors.white};
   @media (max-width: 576px) {
     width: 100% !important ;
   }
+
   model-viewer {
     width: 90%;
     height: 300px;
@@ -55,10 +57,10 @@ const HomeStyles = styled.div`
         font-size: 1rem;
       }
       h3 {
-        color: ${props => props.theme.colors.grey};
+        color: ${(props) => props.theme.colors.grey};
       }
       h4 {
-        color: ${props => props.theme.colors.black};
+        color: ${(props) => props.theme.colors.black};
         font-weight: 700;
       }
     }
@@ -71,10 +73,10 @@ const HomeStyles = styled.div`
     font-weight: 400;
     margin-bottom: 50px;
     margin-top: 10px;
-    color: ${props => props.theme.colors.grey};
+    color: ${(props) => props.theme.colors.grey};
   }
   .discover-box {
-    color: ${props => props.theme.colors.mediumGrey};
+    color: ${(props) => props.theme.colors.mediumGrey};
     h3 {
       font-size: 0.9rem;
       margin: 50px 0 0;
@@ -100,10 +102,10 @@ const HomeStyles = styled.div`
       height: 25px;
       align-self: center;
       a {
-        color: ${props => props.theme.colors.grey};
+        color: ${(props) => props.theme.colors.grey};
         height: 16px;
         text-decoration: none;
-        /* border-bottom: 1px solid ${props => props.theme.colors.mediumGrey}; */
+        /* border-bottom: 1px solid ${(props) => props.theme.colors.mediumGrey}; */
         height: 1rem;
         font-size: 0.9rem;
         line-height: 1rem;
@@ -114,7 +116,7 @@ const HomeStyles = styled.div`
           bottom: 0;
           left: 6%;
           height: 1px;
-          background: ${props => props.theme.colors.grey};
+          background: ${(props) => props.theme.colors.grey};
           display: block;
           width: 90px;
         }
@@ -151,12 +153,12 @@ const HomeStyles = styled.div`
   .connected-content {
     .join-section {
       width: 80%:
-      font-family: ${props => props.theme.fonts.main};
+      font-family: ${(props) => props.theme.fonts.main};
       background: url('https://oneoone-resource.s3.ap-northeast-2.amazonaws.com/yzed/bg_home_1.jpg');
       background-size: cover;
       padding-top: 50px;
       padding-bottom: 80px;
-      color: ${props => props.theme.colors.black};
+      color: ${(props) => props.theme.colors.black};
       h3 {
         margin-top: 30px;
         font-size: 1.8rem;
@@ -178,7 +180,7 @@ const HomeStyles = styled.div`
       width: 100%;
       border-radius: 50px;
       padding-bottom: 20px;
-      background-color: ${props => props.theme.colors.white};
+      background-color: ${(props) => props.theme.colors.white};
       box-shadow: 0 0 6px #27272722;
       h3 {
         padding-top: 30px;
@@ -194,18 +196,18 @@ const HomeStyles = styled.div`
     width: 15px;
     height: 15px;
     transform: rotate(45deg);
-    border-bottom: 2px solid ${props => props.theme.colors.mediumGrey};
-    border-right: 2px solid ${props => props.theme.colors.mediumGrey};
+    border-bottom: 2px solid ${(props) => props.theme.colors.mediumGrey};
+    border-right: 2px solid ${(props) => props.theme.colors.mediumGrey};
     margin: 0 auto;
     margin-bottom: 20px;
   }
   footer {
     .footer-content {
-      font-family: ${props => props.theme.fonts.main};
+      font-family: ${(props) => props.theme.fonts.main};
       background: url('https://oneoone-resource.s3.ap-northeast-2.amazonaws.com/yzed/bg_home_2.jpg');
       background-size: cover;
       padding: 20px 0 20px;
-      color: ${props => props.theme.colors.black};
+      color: ${(props) => props.theme.colors.black};
       h3 {
         margin-top: 80px;
         font-size: 1.8rem;
@@ -229,22 +231,23 @@ const Home = () => {
   const [loading, setLoading] = useState(true);
   const [displayDate, setDisplayDate] = useState('');
   const { dbh, userData } = useContext(FirebaseContext);
+  const { currentMarker } = useContext(LocationContext);
 
   useEffect(() => {
     setLoading(true);
-    const fetchData = () => {
-      dbh
-        .collection('products')
-        .doc(process.env.REACT_APP_home_product_id)
-        .get()
-        .then(doc => {
-          setMainProduct({ id: doc.id, ...doc.data() });
-          setDisplayDate(moment().format('YYYY.MM.DD'));
-          setLoading(false);
-        });
-    };
-    fetchData();
-  }, []);
+    if (currentMarker) {
+      console.log('HOME', currentMarker);
+    }
+    dbh
+      .collection('products')
+      .doc(currentMarker ? currentMarker.model : process.env.REACT_APP_home_product_id)
+      .get()
+      .then((doc) => {
+        setMainProduct({ id: doc.id, ...doc.data() });
+        setDisplayDate(moment().format('YYYY.MM.DD'));
+        setLoading(false);
+      });
+  }, [currentMarker]);
 
   if (loading)
     return (

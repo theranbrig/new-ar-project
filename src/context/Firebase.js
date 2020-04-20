@@ -35,11 +35,14 @@ const dbh = firebase.firestore();
 
 const storage = firebase.storage();
 
-const messaging = firebase.messaging();
+let messaging;
+if (firebase.messaging.isSupported()) {
+  messaging = firebase.messaging();
+}
 
-messaging.usePublicVapidKey(
-  'BM028Nv2nOqCGguHkyoBNc1IRLMMUxa1m79PAT5FFChf_ZkKbeznwBC4V43_CwDYYXO-2E-MBPrUU11ZRVB8uLM'
-);
+if (messaging) {
+  messaging.usePublicVapidKey(process.env.REACT_APP_fcm_key);
+}
 
 const FirebaseProvider = ({ children }) => {
   const [firebaseError, setFirebaseError] = useState('');
@@ -56,8 +59,47 @@ const FirebaseProvider = ({ children }) => {
     followers: [],
     favoriteProducts: [],
   });
+  const [message, setMessage] = useState(null);
 
   firebase.analytics().logEvent('notification_received');
+
+  if (messaging) {
+    messaging
+      .requestPermission()
+      .then(() => {
+        return messaging
+          .getToken()
+          .then((token) => {
+            console.log(token);
+          })
+          .catch((err) => console.log(err));
+      })
+      .catch((err) => console.log(err));
+
+    messaging.onTokenRefresh(() => {
+      messaging
+        .getToken()
+        .then((refreshedToken) => {
+          console.log('Token refreshed.');
+          console.log(refreshedToken);
+          // Indicate that the new Instance ID token has not yet been sent to the
+          // app server.
+          // setTokenSentToServer(false);
+          // Send Instance ID token to app server.
+          // sendTokenToServer(refreshedToken);
+          // ...
+        })
+        .catch((err) => {
+          console.log('Unable to retrieve refreshed token ', err);
+          // showToken('Unable to retrieve refreshed token ', err);
+        });
+    });
+
+    messaging.onMessage(function (payload) {
+      console.log('Message received. ', payload);
+      setMessage(payload);
+    });
+  }
 
   const verifiedRegister = (email, password, userName) => {
     //  Check if user name is taken.
