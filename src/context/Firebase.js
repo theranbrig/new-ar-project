@@ -59,42 +59,6 @@ const FirebaseProvider = ({ children }) => {
 
   firebase.analytics().logEvent('notification_received');
 
-  messaging
-    .requestPermission()
-    .then(() => {
-      return messaging
-        .getToken()
-        .then((token) => {
-          console.log(token);
-          setMessagingToken(token);
-        })
-        .catch((err) => console.log(err));
-    })
-    .catch((err) => console.log(err));
-
-  messaging.onTokenRefresh(() => {
-    messaging
-      .getToken()
-      .then((refreshedToken) => {
-        console.log('Token refreshed.');
-        console.log(refreshedToken);
-        // Indicate that the new Instance ID token has not yet been sent to the
-        // app server.
-        // setTokenSentToServer(false);
-        // Send Instance ID token to app server.
-        // sendTokenToServer(refreshedToken);
-        // ...
-      })
-      .catch((err) => {
-        console.log('Unable to retrieve refreshed token ', err);
-        // showToken('Unable to retrieve refreshed token ', err);
-      });
-  });
-
-  messaging.onMessage(function (payload) {
-    console.log('Message received. ', payload);
-  });
-
   const verifiedRegister = (email, password, userName) => {
     //  Check if user name is taken.
     dbh
